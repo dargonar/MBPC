@@ -1,0 +1,76 @@
+#table1_length {
+  width: 40%;
+  float: left;
+	padding-left: 15px;
+}
+
+#table1_filter {
+	width: 30%;
+	float: right;
+	text-align: right;
+	padding-right: 15px;
+}
+
+#table1_info {
+	width: 50%;
+	float: left;
+}
+
+#table1_paginate {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+
+
+#table3_length {
+  width: 40%;
+  float: left;
+  padding-left: 15px;
+}
+
+#table3_filter {
+  width: 50%;
+  float: right;
+  text-align: right;
+  padding-right: 15px;
+}
+
+#table3_info {
+  width: 50%;
+  float: left;
+}
+
+#table3_paginate {
+  width: 50%;
+  float: right;
+  text-align: right;
+}
+
+
+
+
+#table4_length {
+  width: 40%;
+  float: left;
+  padding-left: 15px;
+}
+
+#table4_filter {
+  width: 50%;
+  float: right;
+  text-align: right;
+  padding-right: 15px;
+}
+
+#table4_info {
+  width: 50%;
+  float: left;
+}
+
+#table4_paginate {
+  width: 50%;
+  float: right;
+  text-align: right;
+}

@@ -1,0 +1,96 @@
+body {
+  font-family: 'Lucida Grande', verdana, arial, helvetica, sans-serif;
+	background-color: #E5E5E5;
+}
+
+#header {
+	height: 75px;
+	background-color: #036;
+  padding-left: 20px;
+}
+
+#header h1 {
+	color: #FC0;
+	padding-top: 15px;
+	
+}
+#header h3 {
+	color: #FFFFFF;
+}
+
+#header #navigation {
+	float:right;
+	margin: 5px;
+}
+#header #navigation a {
+	font-size: 10px;
+	color: #FFFFFF;
+	padding: 10px;
+}
+
+.content {
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-right: 20px;
+	background-color: #ffffff;
+}
+
+.info {
+	height: 40px;
+	background-color: #EDF3FE;
+}
+
+.info2 {
+	height: 40px;
+	background-color: #42577b;
+}
+
+h3, h4{
+	padding: 10px 0px 0px 15px;
+	float: left;
+}
+
+h4 {
+	 color: #FFFFFF;
+}
+
+.content .info a {
+	float:left;
+	margin-left:5px;
+	padding-top:13px;
+  font-size: 11px;
+}
+
+.puerto {
+	color: #FFCC00;
+}
+
+.content .shiptable {
+  padding: 10px;
+}
+
+.ysep {
+	height: 25px;
+	background-color: #E5E5E5;
+}
+
+#table2 {
+	border-color: #0;
+	border-width: 1px 0 1px 1px;
+	border-style: solid;
+}
+
+#table2 td {
+  border-color: #00;
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+}
+
+.row_selected {
+	color: #FFFFFF;
+	background-color: #000099;
+}
+
+p#dr div {
+	margin: 15px;
+}

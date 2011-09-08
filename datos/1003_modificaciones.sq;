@@ -1,0 +1,11 @@
+alter table
+   tbl_bq_buques
+add
+   (
+      
+    acompañante_id VARCHAR2(10) 
+   )
+    ADD CONSTRAINT fk_buque
+    FOREIGN KEY (acompañante_id)
+    REFERENCES tbl_bq_buques(matricula)
+   );

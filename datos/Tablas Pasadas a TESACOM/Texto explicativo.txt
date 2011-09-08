@@ -1,0 +1,47 @@
+Este es mi punto de vista lo pongo para que usted lo evalue y vea que es pertinente; 
+asi mismo le pido que le haga llegar a los Desarrolladores la copia de la ordenanza donde se explica el tema de los puntos de control. 
+Esta es la justificacion de todo este trabajo es incompleta pero da una idea cercana de como deberia funcionar. 
+Espero no ser el primero que les envie esto. 
+
+Y unas fotos para que tengan 1 idea de como es el lugar de trabajo. 
+
+Un viaje parte o llega: 
+    si o si de u muelle que; 
+
+A LOS MUELLES SE LES LLAMA TAMBIEN ZONAS DE AMARRE (MISMO NIVEL) 
+
+GENERALMENTE TIENEN UN PUERTO ASOCIADO PERO EXISTEN ZONAS DE AMARRE SIN PUERTOS ASOCIADOS. 
+
+
+    pertenece a un puerto que; 
+    si o si pertenece a una jurisdicción que; 
+    puede o no pertenecer a una instalación portuaria PBIP; 
+
+Si un viaje es de buque nacional o internacional indiferentemente. (PARA EL VIAJE EN SI, NO PARA LOS DATOS DE LA DECLARACION, INTERN – PBIP -) 
+Si Un viaje tiene diferentes puntos de control. 
+Si el viaje es una sucesión de tramos. 
+
+No el viaje salvo casos muy particulares tiene la misma carga en todos sus tramos. SALVO ARENEROS Y CONVOYES SI LAS BARCAZAS SE LAS TRATA COMO CARGAS. 
+
+Cada buque esta habilitado para llevar un tipo de carga. Un buque quimiquero no lleva contenedores ni granos. (OK. VALIDACIONES). 
+
+No dependiendo del tipo de barco el viaje puede tener: 
+-PRACTICO: 
+-BAQUENO: 
+Las zonas de los mismos son un conjuntos de tramos del viaje. 
+Y cada practico tiene una zona habilitada por DPSN (¿No se si esta en algún sistema?) – AVERIGUAR LA GESTION, ROL Y RESPONSABILIDADES 
+
+PARA UNA SEGUNDA ETAPA “CIRCUITO DE APROBACION DE CADA DATO”. 
+
+
+si lo puntos de control están conectados por un tramo entre ambos. 
+Si el viaje sufre diferentes eventos a lo largo de sus tramos 
+Si se pueden vincular los eventos con tipos particulares, SEG NAVEGACION, PROTECCION AMBIENTAL, OPERATIVA DEL BUQUE; 
+Esta relación no está escrita a menos que yo sepa. SENAV está en el convenio internacional callrec 
+
+SE ASOCIARA COMO NORMA (EL RIPA – REGLAMENTO INTERNACIONAL PARA PREVENCION DE ABORDAJES) – ADJUNTAR EL EXCEL - 
+
+Si un usuario debería poder controlar varios puntos de control sobre todo en zonas como PZRP que es muy complicada en el desempeño de su labor. 
+Los usuarios operadores deberían poder usar solo las consolas de sus puntos de control aunque sería factible que por destino halla un administrador que pueda asignar esas tareas. 
+27/08/2010 19:52
+ 

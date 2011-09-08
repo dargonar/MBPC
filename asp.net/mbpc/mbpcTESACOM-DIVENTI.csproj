@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DA743AC6-9789-44A5-91A2-A479DEC7D7F8}</ProjectGuid>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>mbpc</RootNamespace>
+    <AssemblyName>mbpc</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=2.111.6.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\oracle\product\10.2.0\client_1\ODP.NET\bin\2.x\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AutoCompleteController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ViajeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\daolib.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\planillaprint.css" />
+    <Content Include="Content\ui-lightness\images\ui-bg_flat_0_000000_40x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_flat_0_ffffff_40x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_0_b9e6ff_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_0_e6e6e6_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_glass_0_ffffff_1x400.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_highlight-soft_0_9bc8e1_1x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-bg_inset-soft_0_ffffff_1x100.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_000000_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_379bff_256x240.png" />
+    <Content Include="Content\ui-lightness\images\ui-icons_c80000_256x240.png" />
+    <Content Include="img\ajax-loader2.gif" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon-0.6.js" />
+    <Content Include="Content\ui-lightness\jquery-ui-1.8.4.custom.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\layout.css" />
+    <Content Include="img\ajax-loader.gif" />
+    <Content Include="img\ico_clock.jpg" />
+    <Content Include="img\logo.jpg" />
+    <Content Include="Scripts\jquery-ui-1.8.4.custom.min.js" />
+    <Content Include="Views\Home\reporteDiario.aspx" />
+    <Content Include="Views\Home\reporteDiarioPrint.aspx" />
+    <Content Include="Views\Shared\_capitanes.aspx" />
+    <Content Include="Views\Shared\_cargas.aspx" />
+    <Content Include="Views\Shared\_buques.aspx" />
+    <Content Include="Views\Shared\_filareporte.aspx" />
+    <Content Include="Views\Shared\_muelles.aspx" />
+    <Content Include="Views\Home\columnas.aspx" />
+    <Content Include="Views\Shared\_practicos.aspx" />
+    <Content Include="Views\Shared\_tablareporte.aspx" />
+    <Content Include="Views\Viaje\agregarCarga.aspx" />
+    <Content Include="Views\Viaje\barcoenzona.aspx" />
+    <Content Include="Views\Viaje\columnas.aspx" />
+    <Content Include="Views\Home\detallesTecnicos.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Auth\ShowForm.aspx" />
+    <Content Include="Views\Viaje\reactivarViaje.aspx" />
+    <Content Include="Views\Viaje\viajesTerminados.aspx" />
+    <Content Include="Views\Viaje\noHayBarcazas.aspx" />
+    <Content Include="Views\Viaje\editarPbip.aspx" />
+    <Content Include="Views\Viaje\editarBarcazas.aspx" />
+    <Content Include="Views\Viaje\editarEtapa.aspx" />
+    <Content Include="Views\Viaje\editarCargas.aspx" />
+    <Content Include="Views\Viaje\editarViaje.aspx" />
+    <Content Include="Views\Viaje\instport.aspx" />
+    <Content Include="Views\Viaje\noHayBarcos.aspx" />
+    <Content Include="Views\Viaje\nuevoBuque.aspx" />
+    <Content Include="Views\Viaje\nuevoMuelle.aspx" />
+    <Content Include="Views\Viaje\seleccionMuelles.aspx" />
+    <Content Include="Views\Viaje\nuevoViaje.aspx" />
+    <Content Include="Views\Home\zonasAdyacentes.aspx" />
+    <Content Include="Views\Shared\ShipItem.ascx" />
+    <Content Include="Views\Shared\_columnas.aspx" />
+    <Content Include="Views\Viaje\seleccionBuques.aspx" />
+    <Content Include="Views\Viaje\transferirBarcazas.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Shared\Site.Master" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4396</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/mbpc</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

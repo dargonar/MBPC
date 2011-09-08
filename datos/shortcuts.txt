@@ -1,0 +1,15 @@
+Ctrl + V    =   Nuevo Viaje
+Alt + E     =   Agregar Evento
+Ctrl + L    =   Pasar Barco
+Ctrl + M    =   Editar Etapa
+Ctrl + I    =   Editar Viaje
+Ctrl + D    =   Agregar Posición
+Alt + 1     =   Cambiar a punto de control 1
+Alt + 2     =   Cambiar a punto de control 2
+Alt + 3     =   Cambiar a punto de control 3
+...
+Alt + 0     =   Cambiar a punto de control 10
+Ctrl + S  (En home) = Mostrar Campo de Seleccion de Buque
+Ctrl + S  (En Crear Viaje) = Mostrar Form de seleccion de buque y muelle dependiendo de donde este posicionado
+Flechas arriba, abajo = moverse entre los resultados
+Enter = seleccionar

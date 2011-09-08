@@ -1,0 +1,1 @@
+alter table tbl_viaje add estado_buque varchar (2);

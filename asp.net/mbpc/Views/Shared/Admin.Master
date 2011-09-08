@@ -1,0 +1,110 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<% Dictionary<string, string> datos_del_usuario = (DaoLib.datos_del_usuario(Session["usuario"].ToString()) as List<object>)[0] as Dictionary<string, string>;   %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+<link href="<%= Url.Content("~/Content/layout_admin.css") %>" rel="stylesheet" type="text/css" />
+<link href="<%= Url.Content("~/Content/styles.css") %>" rel="stylesheet" type="text/css" />
+
+<script src="<%= Url.Content("~/Scripts/ajaxs.js") %>" type="text/javascript" ></script>
+
+
+<script src="<%= Url.Content("~/Scripts/jquery-1.4.2.min.js") %>" type="text/javascript" > </script>
+<script src="<%= Url.Content("~/Scripts/jquery-ui-1.8.5.custom.min.js") %>" type="text/javascript" ></script>
+<script src="<%= Url.Content("~/Scripts/jquery-ui-timepicker-addon-0.6.js") %>" type="text/javascript" ></script>
+<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+
+</head>
+<body id="homepage">
+	<div id="header">
+    	<a href="" title=""><img src="<%= Url.Content("~/img/cp_logo.png") %>" alt="Control Panel" class="logo" /></a>
+  </div>
+        
+    <!-- Top Breadcrumb Start -->
+    <div id="breadcrumb">
+    	<ul>	
+        	<li><img src="<%= Url.Content("~/img/icons/icon_breadcrumb.png") %>" alt="Location" /></li>
+        	<li><strong>Location:</strong></li>
+            <li><a href="#" title="">Sub Section</a></li>
+            <li>/</li>
+            <li class="current">Control Panel</li>
+        </ul>
+    </div>
+    <!-- Top Breadcrumb End -->
+     
+
+     <div id="rightside">
+
+      <asp:ContentPlaceHolder ID="MainContent" runat="server">
+      </asp:ContentPlaceHolder>
+
+    <div id="footer">
+      MBPC - Panel de control
+    </div> 
+
+
+     </div>
+     
+    
+        <!-- Left Dark Bar Start -->
+    <div id="leftside">
+    	<div class="user">
+        	<img src="<%= Url.Content("~/img/avatar.png") %>" width="44" height="44" class="hoverimg" alt="Avatar" />
+            <p>Logged in as:</p>
+            <p class="username"><%= datos_del_usuario["APELLIDO"] + ", " + datos_del_usuario["NOMBRES"] %></p>
+            <p class="userbtn"><a href="<%= Url.Action("Logout","Auth") %>" title="">Log out</a></p>
+        </div>
+        
+        <ul id="nav">
+             <li>
+                <a class="collapsed heading">Usuario</a>
+                 <ul class="navigation">
+                    <% if (ViewData["menu"] == "usuario") { %><li class="heading selected">Agregar</li><% } else{ %> <li><a href="<%= Url.Content("~/Item/nuevoUsuario") %>" title="">Agregar Usuario</a></li> <% } %>
+                    <li><a href="<%= Url.Content("~/admin/pager/int_usuarios/usuario_id/1/10") %>" title="">Listar</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="collapsed heading">Practicos</a>
+                 <ul class="navigation">
+                    <% if (ViewData["menu"] == "practico") { %><li class="heading selected">Agregar Practico</li><% } else{ %> <li><a href="<%= Url.Content("~/Item/nuevoPractico") %>" title="">Agregar Practico</a></li> <% } %>
+                    <li><a href="#" title="">Editar</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="collapsed heading">Buques</a>
+                 <ul class="navigation">
+                    <% if (ViewData["menu"] == "buque") { %><li class="heading selected">Agregar Buque</li><% } else{ %> <li><a href="<%= Url.Content("~/Item/nuevoBuque") %>" title="">Agregar Buque</a></li> <% } %>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- Left Dark Bar End --> 
+    
+    
+    <script type="text/javascript" src="<%= Url.Content("~/Scripts/enhance.js") %>"></script>	
+    <script type='text/javascript' src='<%= Url.Content("~/Scripts/excanvas.js") %>'"></script>
+    <!--
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js'></script> -->
+    <script type='text/javascript' src='<%= Url.Content("~/Scripts/visualize.jQuery.js") %>'></script>
+    <script type="text/javascript" src='<%= Url.Content("~/Scripts/functions.js") %>'></script>
+    
+    <!--[if IE 6]>
+    <script type='text/javascript' src='scripts/png_fix.js'></script>
+    <script type='text/javascript'>
+      DD_belatedPNG.fix('img, .notifycount, .selected');
+    </script>
+    <![endif]--> 
+
+
+
+</body>
+</html>
+
+
+

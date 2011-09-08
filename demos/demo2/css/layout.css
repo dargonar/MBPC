@@ -1,0 +1,142 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin:0px;
+	padding:0px;
+	width:100%;
+	min-width:770px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+img {
+	border:none;
+}
+
+#header {
+	background-image:url(../img/logo.jpg);
+	background-repeat:no-repeat;
+	background-color:#9bc8e1;
+	height:70px;
+}
+
+#header .user {
+	text-align:right;
+	padding:20px 10px 0 0;
+}
+
+.col {
+	width:50%;
+	float:left;
+}
+
+.col .container {
+	padding:10px;
+}
+
+.col .container .box {
+	border:1px solid #e6e6e6;
+	padding:10px;
+	margin:5px 0 5px 0;
+}
+
+.col .container .box .title {
+	background-color:#e6e6e6;
+	color:#000000;
+	margin:0 0 10px 0;
+	padding: 5px;
+}
+
+.col .container .box .title:hover {
+	background-color:#326496;
+	color:#ffffff;
+}
+
+.col .container .box .title
+label {
+	float:left;
+	font-weight:bold;
+}
+
+.col .container .box .data {
+	float:left;
+	width:50%;
+}
+
+.col .container .box .data
+table td, table th {
+	border:1px solid #e6e6e6;
+	padding:4px;
+	margin:0px;
+}
+
+.col .container .box .status {
+	float:left;
+	width:50%;
+	text-align:right;
+}
+
+.col .container .box .status 
+input, select {
+	border:1px solid #e6e6e6;
+	padding:2px;
+	width:120px;
+}
+
+.col .container .box .status img {
+	margin:5px 5px 0 0;
+	vertical-align:text-bottom;
+}
+
+.split {
+	clear:both;
+	margin:0px;
+	padding:0px;
+	height:5px;
+	background-color:#9bc8e1;
+}
+
+.split-hide {
+	clear:both;
+	margin:0px;
+	padding:0px;
+}
+
+.row {
+	border:1px solid #e6e6e6;
+	margin:0 10px 0 10px;
+	padding:10px;
+	#padding:5px 10px 10px 10px;
+}
+
+.row
+label {
+	float:left;
+}
+
+.status-icons {  
+	float:right;
+	margin-top:1px;
+}
+.status-icons .st-blue {
+	width:14px;
+	height:14px;
+	background-color:#6496c8;
+	margin:0 2px 0 2px;
+	float:left;
+}
+.status-icons .st-yellow {
+	width:14px;
+	height:14px;
+	background-color:#fafa00;
+	margin:0 2px 0 2px;
+	float:left;
+}
+.status-icons .st-red {
+	width:14px;
+	height:14px;
+	background-color:#c83232;
+	margin:0 2px 0 2px;
+	float:left;
+}
