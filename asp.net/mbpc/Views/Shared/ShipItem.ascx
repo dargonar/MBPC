@@ -123,7 +123,7 @@
         <td class="grisado">MMSI:</td>
         <td class="dato"><%= ship["NRO_ISMM"]%></td>
         <td class="grisado">Inscripcion:</td>
-        <td class="dato"><%= ship["INSCRIP_PROVISORIA"]%></td>
+        <td class="dato">N/A</td>
       </tr>
     </table>
 

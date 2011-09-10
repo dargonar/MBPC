@@ -18,7 +18,7 @@
 
   <label>Buque</label><br />
   <input autocomplete="off" type="text" style="width:200px;float:left;" id="buquetext" readonly="readonly"  value="<%= viaje["NOMBRE"] %>" /><br />
-  <input id="buque_id" name="buque_id" type="hidden" value="<%= viaje["MATRICULA"] %>"/>
+  <input id="buque_id" name="buque_id" type="hidden" value="<%= viaje["ID_BUQUE"] %>"/>
   <input id="internacional" name="internacional" type="hidden" value="<%=  viaje["TIPO"] == "nacional" ? 0 : 1 %>"/>
 
   <label>Desde</label><br />
@@ -312,7 +312,7 @@
             return {
               label: item.NOMBRE,
               value: item.NOMBRE,
-              MATRICULA: item.MATRICULA
+              MATRICULA: item.ID_BUQUE
             }
           }));
         }

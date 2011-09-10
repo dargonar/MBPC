@@ -1,0 +1,22 @@
+delete from tbl_evento;
+delete from tbl_cargaetapa;
+delete from tbl_practicoetapa;
+delete from tbl_etapa;
+delete from tbl_viaje;
+
+alter table tbl_viaje drop column buque_id;
+alter table tbl_viaje drop column buque_int_id;
+alter table tbl_viaje add buque_id NUMBER(10);
+
+alter table tbl_etapa drop column acompanante_id;
+alter table tbl_viaje add acompanante_id NUMBER(10);
+
+alter table tbl_cargaetapa drop column buque_id;
+alter table tbl_cargaetapa add buque_id NUMBER(10);
+
+create sequence SQ_FLUVIAL_ID
+start with 80000 
+increment by 1 
+nomaxvalue;
+
+

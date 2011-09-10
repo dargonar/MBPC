@@ -3,6 +3,7 @@ create or replace package mbpc as
   type posdepdc is record (lat number, lon number, uso number);
   posicion posdepdc;
   logged number(1,0);
+  var_buque buques%ROWTYPE;
   usuario int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
   cetapa tbl_cargaetapa%ROWTYPE;
@@ -97,6 +98,16 @@ create or replace package mbpc as
   procedure count_rows(vTabla in varchar2, number_of_rows out number);
   procedure traer_banderas(vCursor out cur);
 end;
+
+
+
+
+
+
+
+
+
+
 /
 create or replace package body mbpc as
 
@@ -157,7 +168,7 @@ create or replace package body mbpc as
       from tbl_viaje v
        left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
        left join buques b on v.buque_id = b.ID_BUQUE
-       left join buques acomp on e.acompanante_id = b.ID_BUQUE
+       left join buques acomp on e.acompanante_id = acomp.ID_BUQUE
        left join tbl_puntodecontrol p on p.id = e.destino_id
        left join rios_canales_km rck on rck.id = p.rios_canales_km_id
        left join rios_canales rc on rck.id_rio_canal = rc.id
@@ -268,7 +279,7 @@ create or replace package body mbpc as
   procedure hist_evt(vViaje in varchar2, vCursor out cur) is
   begin
     open vCursor for
-      select p.etapa_id, p.latitud, p.longitud, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal from tbl_evento p
+      select p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal from tbl_evento p
       left join tbl_tipoevento e on p.tipo_id = e.id
       left join rios_canales_km rck on p.rios_canales_km_id = rck.id
       left join rios_canales rc on rck.id_rio_canal = rc.id
@@ -352,7 +363,7 @@ create or replace package body mbpc as
 
   procedure traer_viaje(vViaje in varchar2, vCursor out cur) is
   begin
-      open vCursor for select v.id, b.nombre, b.matricula, b.tipo, m.id origen_id, m.nombre_m origen, u.id destino_id, u.nombre_m destino, v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
+      open vCursor for select v.id, b.id_buque, b.nombre, b.matricula, b.tipo, m.id origen_id, m.nombre_m origen, u.id destino_id, u.nombre_m destino, v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
       from tbl_viaje v 
       join buques b on v.buque_id = b.ID_BUQUE
       join view_muelles m on v.origen_id = m.id
@@ -506,13 +517,26 @@ create or replace package body mbpc as
     --returning ID, NRO_ETAPA, VIAJE_ID,        ORIGEN_ID,        ACTUAL_ID, DESTINO_ID,          HRP,        ETA,         FECHA_SALIDA,  FECHA_LLEGADA, CANTIDAD_TRIPULANTES,       CANTIDAD_PASAJEROS,          CAPITAN_ID, SENTIDO,             CALADO_PROA,         CALADO_POPA,        CALADO_MAXIMO,       CALADO_INFORMADO,        KM,       ACOMPANANTE_ID,       CREATED_AT                            
     
     --casa
-    insert into tbl_etapa (   VIAJE_ID,       ORIGEN_ID,        ACTUAL_ID,                      HRP,        ETA,          FECHA_SALIDA,                 CANTIDAD_TRIPULANTES,       CANTIDAD_PASAJEROS,         CAPITAN_ID, SENTIDO,              CALADO_PROA,         CALADO_POPA,       CALADO_MAXIMO,       CALADO_INFORMADO,        KM,       CREATED_AT, ACOMPANANTE_ID) 
-    VALUES (                  etapa.viaje_id, etapa.actual_id,  vZonaId,                  etapa.hrp,  vEta,         etapa.fecha_llegada,                etapa.cantidad_tripulantes, etapa.cantidad_pasajeros,    etapa.capitan_id, null,       etapa.calado_proa,   etapa.calado_popa,  etapa.calado_maximo, etapa.calado_informado,  etapa.km,  sysdate, etapa.acompanante_id ) 
-    returning ID, NRO_ETAPA, VIAJE_ID,        ORIGEN_ID,        ACTUAL_ID, DESTINO_ID,          HRP,        ETA,         FECHA_SALIDA,  FECHA_LLEGADA, CANTIDAD_TRIPULANTES,       CANTIDAD_PASAJEROS,          CAPITAN_ID, SENTIDO,             CALADO_PROA,         CALADO_POPA,        CALADO_MAXIMO,       CALADO_INFORMADO,        KM,     CREATED_AT,  ACOMPANANTE_ID
+    insert into tbl_etapa ( VIAJE_ID, ORIGEN_ID, ACTUAL_ID, HRP, ETA,
+                           FECHA_SALIDA, CANTIDAD_TRIPULANTES, CANTIDAD_PASAJEROS, 
+                           CAPITAN_ID, SENTIDO, CALADO_PROA, CALADO_POPA, CALADO_MAXIMO, 
+                           CALADO_INFORMADO, KM, CREATED_AT, ACOMPANANTE_ID ) 
     
-    into etapa ;
+    VALUES ( etapa.viaje_id, etapa.actual_id, vZonaId, etapa.hrp, vEta, 
+            etapa.fecha_llegada, etapa.cantidad_tripulantes, etapa.cantidad_pasajeros, 
+            etapa.capitan_id, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo, 
+            etapa.calado_informado, etapa.km, sysdate, etapa.acompanante_id )
     
-    insert into tbl_cargaetapa ( id, tipocarga_id, cantidad, unidad_id, etapa_id, buque_id ) ( select carga_seq.nextval, tipocarga_id, cantidad, unidad_id, replace(etapa_id, etapa_id, etapa.id), buque_id from tbl_cargaetapa where etapa_id = temp );
+    returning ID,NRO_ETAPA,VIAJE_ID,ORIGEN_ID,ACTUAL_ID,DESTINO_ID,HRP,ETA,FECHA_SALIDA,FECHA_LLEGADA,
+    CANTIDAD_TRIPULANTES,CANTIDAD_PASAJEROS,CAPITAN_ID,CALADO_PROA,CALADO_POPA,CALADO_MAXIMO,
+    CALADO_INFORMADO,KM,CREATED_AT,SENTIDO,ACOMPANANTE_ID
+
+    into etapa;
+    
+    insert into tbl_cargaetapa ( id, tipocarga_id, cantidad, unidad_id, etapa_id, buque_id ) 
+    ( select carga_seq.nextval, tipocarga_id, cantidad, unidad_id, replace(etapa_id, etapa_id, etapa.id), buque_id 
+    from tbl_cargaetapa where etapa_id = temp );
+    
     insert into tbl_practicoetapa ( practico_id, etapa_id, activo) ( select practico_id, replace(etapa_id, etapa_id, etapa.id), activo from tbl_practicoetapa where etapa_id = temp );
     
     
@@ -658,8 +682,8 @@ create or replace package body mbpc as
     open vCursor for 
       --select matricula, nombre from view_buques b where UPPER(nombre) like 'BARCAZA%'
       --VERIFICAR: TIPOS (CHAR99)
-      select matricula, nombre from buques b where TIPO_SERVICIO = 99
-      and UPPER(matricula) not in (
+      select id_buque, nombre from buques b where UPPER(TIPO_SERVICIO) like 'BARCAZA%'
+      and UPPER(id_buque) not in (
       select unique( UPPER(c.buque_id)) from tbl_viaje v 
       left join tbl_etapa e on e.viaje_id = v.id
       left join tbl_cargaetapa c on c.etapa_id = e.id
@@ -744,7 +768,7 @@ create or replace package body mbpc as
     open vCursor for 
       select *
       from buques b 
-      where matricula = vShipId;
+      where id_buque = vShipId;
   end detalles_tecnicos;
   
   -------------------------------------------------------------------------------------------------------------
@@ -810,16 +834,19 @@ create or replace package body mbpc as
   procedure autocompleterbnacionales(vQuery in varchar2, vCursor out cur) is
   begin
     --VERIFICAR TIPO_BUQUE 'nacional'
-    sql_stmt := 'select b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
                     from buques b
                     where
-                    b.matricula not in (select buque_id from tbl_viaje where estado != 1)
+                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
+                    --and
+                    --b.id_buque not in (select ACOMPANANTE_ID from tbl_viaje where estado != 1)
                     and 
                     (upper(b.nombre) like upper(:vQuery) or 
-                    upper(b.bandera) like upper(:vQuery) or 
-                    upper(b.matricula) like 
-                    upper(:vQuery) or upper(b.nro_omi) like upper(:vQuery) or upper(b.nro_ismm) like upper(:vQuery)) and b.tipo = :tipo and rownum <= 6';
-    open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery,vQuery, 'nacional'; 
+                    upper(b.matricula) like upper(:vQuery) or 
+                    upper(b.nro_omi) like upper(:vQuery) or 
+                    upper(b.nro_ismm) like upper(:vQuery)) 
+                    and b.bandera = ''ARGENTINA'' and rownum <= 6';
+    open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery; 
   end autocompleterbnacionales;
 
   -------------------------------------------------------------------------------------------------------------
@@ -827,11 +854,13 @@ create or replace package body mbpc as
   
   procedure autocompleterbdisponibles(vQuery in varchar2, vCursor out cur) is
   begin
-    sql_stmt := 'select b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
                     from buques b
                     where
-                    b.matricula not in (select buque_id from tbl_viaje where estado != 1)
+                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
                     and 
+                    b.id_buque not in (select ACOMPANANTE_ID from tbl_viaje where estado != 1)
+                    and                     
                     (upper(b.nombre) like upper(:vQuery) or 
                     upper(b.bandera) like upper(:vQuery) or 
                     upper(b.matricula) like 
@@ -853,8 +882,8 @@ create or replace package body mbpc as
   procedure autocompleterball(vQuery in varchar2, vEstado in varchar2, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
-    sql_stmt := 'select b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
-                  case when (b.matricula in 
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
+                  case when (b.id_buque, in 
                     (select v.buque_id from tbl_viaje v where v.estado = :vEstado 
                       union 
                       select e.acompanante_id from tbl_viaje v 
@@ -889,8 +918,8 @@ create or replace package body mbpc as
   procedure autocompleterbenzona(vQuery in varchar2, vZonaId in varchar2, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
-    sql_stmt := 'select b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
-                  case when (b.matricula in 
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
+                  case when (b.id_buque in 
                     (select v.buque_id from tbl_viaje v where v.estado = 0 
                       union 
                       select e.acompanante_id from tbl_viaje v 
@@ -917,10 +946,13 @@ create or replace package body mbpc as
   --
   procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vCursor out cur) is
   begin
-    insert into buques (MATRICULA, NOMBRE, BANDERA, TIPO_SERVICIO, SDIST ) 
-      VALUES ( vMatricula, vNombre, 'ARGENTINA', vServicio, vSDist );
-      
-    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    insert into buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST ) 
+      VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, 'tp', vServicio, vSDist )
+    returning ID_BUQUE into var_buque;
+    
+    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, var_buque.ID_BUQUE, SYSDATE);
+    open vCursor for 
+      select * from buques where id_buque=var_buque.ID_BUQUE;
   end crear_buque;
   
   -------------------------------------------------------------------------------------------------------------
@@ -928,9 +960,14 @@ create or replace package body mbpc as
   
   procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vCursor out cur) is
   begin
-    insert into buques ( NOMBRE, BANDERA, SDIST, NROOMI)
-      VALUES (  vNombre,  vBandera, vSDist, vMatricula);
-    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, SDIST, NRO_OMI)
+      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, 'tp', vSDist, vMatricula)
+    returning ID_BUQUE into var_buque;
+      
+    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, var_buque.ID_BUQUE, SYSDATE);
+    open vCursor for 
+      select * from buques where id_buque=var_buque.ID_BUQUE;
+    
   end crear_buque_int;
   
   -------------------------------------------------------------------------------------------------------------
