@@ -651,13 +651,7 @@ public static class DaoLib
         //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
     };
 
-    doCall("mbpc.crear_buque", parameters);
-
-    List<object> lista = new List<object>();
-    Dictionary<string, string> vv = new Dictionary<string, string>();
-     lista.Add(vv);
-    return lista;
-
+    return doCall("mbpc.crear_buque", parameters);
   }
 
 
@@ -674,13 +668,7 @@ public static class DaoLib
         //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
     };
 
-    doCall("mbpc.crear_buque_int", parameters);
-
-    List<object> lista = new List<object>();
-    Dictionary<string, string> vv = new Dictionary<string, string>();
-    lista.Add(vv);
-    return lista;
-
+    return doCall("mbpc.crear_buque_int", parameters);
   }
 
   public static List<object> barcazas_utilizadas()
