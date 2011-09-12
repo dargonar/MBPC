@@ -552,8 +552,8 @@
           $('#dialogdiv3').html(data);
           $('#dialogdiv3').dialog({
             title: 'Nuevo Muelle',
-            height: 340,
-            width: 700,
+            height: 200,
+            width: 300,
             modal: true
           });
         }),

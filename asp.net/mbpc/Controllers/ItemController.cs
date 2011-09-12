@@ -32,14 +32,15 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public JsonResult crearMuelle(string puerto, string instport, string mNombre)
+      public JsonResult crearMuelle(string cod, string puerto, string pais)
       {
-        return Json(DaoLib.crear_muelle(puerto, instport, mNombre));
+        return Json(DaoLib.crear_muelle(cod, puerto, pais));
       }
 
       public ActionResult nuevoMuelle()
       {
-        ViewData["puertos"] = DaoLib.traer_puertos();
+        ViewData["banderas"] = DaoLib.traer_banderas();
+        //ViewData["puertos"] = DaoLib.traer_puertos();
         return View();
       }
 

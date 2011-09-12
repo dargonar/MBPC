@@ -120,9 +120,9 @@
             success: function (data) {
               response($.map(data, function (item) {
                 return {
-                  label: item.NOMBRE_M,
-                  value: item.NOMBRE_M,
-                  id: item.ID
+                  label: '(' + item.COD + ') ' + item.PUERTO,
+                  value: '(' + item.COD + ') ' + item.PUERTO,
+                  id: item.COD
                 }
               }));
             }
