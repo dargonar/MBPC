@@ -20,85 +20,86 @@ create or replace package mbpc as
   strtemp3 varchar(50);
   --Login/Home
   procedure login( vid in varchar2, vpassword in varchar2, logged out number);
-  procedure zonas_del_usuario( vId in varchar2, vCursor out cur);
-  procedure barcos_en_zona( vZonaId in varchar2, vCursor out cur);
-  procedure barcos_entrantes( vZonaId in varchar2, vCursor out cur);
-  procedure barcos_salientes( vZonaId in varchar2, vCursor out cur);
-  procedure reporte_diario (vUsuario in varchar2, vCursor out cur);
-  procedure datos_del_usuario(vid in varchar2, vCursor out cur );
-  procedure todos_los_pdc(vCursor out cur);
+  procedure zonas_del_usuario( vId in varchar2, usrid in number, vCursor out cur);
+  procedure barcos_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
+  procedure barcos_entrantes( vZonaId in varchar2, usrid in number, vCursor out cur);
+  procedure barcos_salientes( vZonaId in varchar2, usrid in number, vCursor out cur);
+  procedure reporte_diario (vUsuario in varchar2, usrid in number, vCursor out cur);
+  procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur );
+  procedure todos_los_pdc(usrid in number, vCursor out cur);
   --Viaje
-  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCursor out cur);
-  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCursor out cur);
-  procedure traer_viaje(vViaje in varchar2, vCursor out cur);
-  procedure terminar_viaje(vViajeId in number, vFecha in date, vCursor out cur);
-  procedure viajes_terminados(vZona in number, vCursor out cur);
-  procedure reactivar_viaje(vViajeId in number , vCursor out cur);
-  procedure traer_pbip(vViaje in varchar2, vCursor out cur);
-  procedure modificar_pbip(vViaje in varchar2, vPuertoDeMatricula in varchar2, vNroInmarsat in varchar2, vArqueoBruto in varchar2, vCompania in varchar2, vContactoOCPM in varchar2, vObjetivo in varchar2, vCursor out cur);
-  procedure traer_notas(vViaje in varchar2, vCursor out cur);
-  procedure guardar_notas(vViaje in varchar2, vNotas in varchar2, vCursor out cur);
-  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, vCursor out cur);
-  procedure quitar_acompanante(vEtapa in varchar2, vCursor out cur);
-  procedure separar_convoy(vViaje in varchar2, vPartida in date, vCursor out cur);
-  procedure hist_rvp(vViaje in varchar2, vCursor out cur);
-  procedure hist_pos(vViaje in varchar2, vCursor out cur);
-  procedure hist_evt(vViaje in varchar2, vCursor out cur);
-  procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in varchar2, vRumbo in varchar2, vEstado in varchar2, vFecha in date, vCursor out cur);
-  procedure posicion_de_puntodecontrol(vPdc in varchar2, vCursor out cur);
-  procedure eventos_usuario(vCursor out cur);
-  procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in date, vEstado in varchar2, vRiocanal in varchar2, vCursor out cur);
+  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
+  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
+  procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure terminar_viaje(vViajeId in number, vFecha in date, usrid in number, vCursor out cur);
+  procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur);
+  procedure reactivar_viaje(vViajeId in number , usrid in number, vCursor out cur);
+  procedure traer_pbip(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_pbip(vViaje in varchar2, vPuertoDeMatricula in varchar2, vNroInmarsat in varchar2, vArqueoBruto in varchar2, vCompania in varchar2, vContactoOCPM in varchar2, vObjetivo in varchar2, usrid in number, vCursor out cur);
+  procedure traer_notas(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure guardar_notas(vViaje in varchar2, vNotas in varchar2, usrid in number, vCursor out cur);
+  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
+  procedure quitar_acompanante(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure separar_convoy(vViaje in varchar2, vPartida in date, usrid in number, vCursor out cur);
+  procedure hist_rvp(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure hist_pos(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure hist_evt(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in varchar2, vRumbo in varchar2, vEstado in varchar2, vFecha in date, usrid in number, vCursor out cur);
+  procedure posicion_de_puntodecontrol(vPdc in varchar2, usrid in number, vCursor out cur);
+  procedure eventos_usuario(usrid in number, vCursor out cur);
+  procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in date, vEstado in varchar2, vRiocanal in varchar2, usrid in number, vCursor out cur);
   --Etapas
-  procedure id_ultima_etapa(vViaje in number, vCursor out cur);
-  procedure indicar_proximo(vViajeId in number, vZonaId in number, vCursor out cur);  
-  procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in date, vLlegada in date, vCursor out cur);
-  procedure zonas_adyacentes(vZonaId in varchar2, vCursor out cur);
-  procedure traer_etapa(vViaje in varchar2, vCursor out cur);
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in date, vETA in date, vFechaSalida in date, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vCursor out cur);
-  procedure traer_buque_de_etapa(vEtapa in varchar2, vCursor out cur);
-  procedure traer_practicos(vEtapa in varchar2, vCursor out cur);
+  procedure id_ultima_etapa(vViaje in number, usrid in number, vCursor out cur);
+  procedure indicar_proximo(vViajeId in number, vZonaId in number, usrid in number, vCursor out cur);  
+  procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in date, vLlegada in date, usrid in number, vCursor out cur);
+  procedure zonas_adyacentes(vZonaId in varchar2, usrid in number, vCursor out cur);
+  procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in date, vETA in date, vFechaSalida in date, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, usrid in number, vCursor out cur);
+  procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure agregar_practicos(vPractico in varchar2, vEtapa in varchar2, vActivo in varchar2);
-  procedure eliminar_practicos(vEtapa in varchar2, vCursor out cur);
+  procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   --Cargas  
-  procedure barcazas_utilizadas(vCursor out cur);
-  procedure traer_cargas( vEtapaId in varchar2, vCursor out cur);
-  procedure traer_carga_por_codigo(vCodigo in varchar2, vCursor out cur);
-  procedure traer_barcazas(vCursor out cur);
-  procedure traer_barcazas_de_buque(vEtapa in varchar2, vCursor out cur);
-  procedure traer_unidades(vCursor out cur);
-  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, vCursor out cur);
-  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, vCursor out cur);
-  procedure eliminar_carga(vCarga in varchar2, vCursor out cur);--
-  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2);
+  procedure barcazas_utilizadas(usrid in number, vCursor out cur);
+  procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur);
+  procedure traer_carga_por_codigo(vCodigo in varchar2, usrid in number, vCursor out cur);
+  procedure traer_barcazas(usrid in number, vCursor out cur);
+  procedure traer_barcazas_de_buque(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure traer_unidades(usrid in number, vCursor out cur);
+  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, usrid in number, vCursor out cur);
+  procedure eliminar_carga(vCarga in varchar2, usrid in number, vCursor out cur);--
+  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
   ---autocompletes
-  procedure autocompleter( vVista in varchar2, vQuery in varchar2, vCursor out cur);
-  procedure autocompleterm( vQuery in varchar2, vCursor out cur);
-  procedure autocompleterb( vQuery in varchar2, vCursor out cur);
-  procedure autocompleterball( vQuery in varchar2, vEstado in varchar2, vCursor out cur);
-  procedure autocompleterbdisponibles( vQuery in varchar2, vCursor out cur);
-  procedure autocompleterbnacionales( vQuery in varchar2, vCursor out cur);
-  procedure autocompleterioscanales( vQuery in varchar2, vCursor out cur); 
-  procedure autocompleterestados( vQuery in varchar2, vCursor out cur);
-  procedure autocompleterbenzona( vQuery in varchar2, vZonaId in varchar2, vCursor out cur);
-  procedure autocompletebactivos( vQuery in varchar2, vCursor out cur);
+  procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterb( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterball( vQuery in varchar2, vEstado in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterbdisponibles( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterbnacionales( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterioscanales( vQuery in varchar2, usrid in number, vCursor out cur); 
+  procedure autocompleterestados( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocompleterbenzona( vQuery in varchar2, vZonaId in varchar2, usrid in number, vCursor out cur);
+  procedure autocompletebactivos( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure paginator(p_statment in varchar2, p_offset in number, p_count in number, sqlquery out varchar2);
  --Buque/Puertos/Muelles
-  procedure detalles_tecnicos( vShipId in varchar2, vCursor out cur);
-  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vCursor out cur);
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vCursor out cur);
-  procedure traer_puertos(vCursor out cur);
-  procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, vCursor out cur);
-  --procedure traer_instports(vPuerto in varchar2, vCursor out cur);
-  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, vCursor out cur);
-  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, vCursor out cur);  
-  procedure crear_practico(vNombre in varchar2, vCursor out cur);
-  procedure update_practico(vNombre in varchar2, vCursor out cur);
+  procedure detalles_tecnicos( vShipId in varchar2, usrid in number, vCursor out cur);
+  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur);
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, usrid in number, vCursor out cur);
+  procedure traer_puertos(usrid in number, vCursor out cur);
+  procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, usrid in number, vCursor out cur);
+  --procedure traer_instports(vPuerto in varchar2, usrid in number, vCursor out cur);
+  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur);
+  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur);  
+  procedure crear_practico(vNombre in varchar2, usrid in number, vCursor out cur);
+  procedure update_practico(vNombre in varchar2, usrid in number, vCursor out cur);
   procedure asignar_pdc(vUsuario in varchar2, vPdc in varchar2);
-  procedure columnas_de(vTabla in varchar2, vCursor out cur);
-  procedure pager(vTabla in varchar2, vOrderBy in varchar2, vCantidad in number, vDesde in number, vCursor out cur );
+  procedure columnas_de(vTabla in varchar2, usrid in number, vCursor out cur);
+  procedure pager(vTabla in varchar2, vOrderBy in varchar2, vCantidad in number, vDesde in number, usrid in number, vCursor out cur );
   procedure count_rows(vTabla in varchar2, number_of_rows out number);
-  procedure traer_banderas(vCursor out cur);
+  procedure traer_banderas(usrid in number, vCursor out cur);
 end;
+
 
 
 
@@ -130,7 +131,7 @@ create or replace package body mbpc as
 
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure datos_del_usuario(vid in varchar2, vCursor out cur ) is
+  procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur ) is
   begin
     open vCursor for
     SELECT * FROM int_usuarios WHERE usuario_id = vid;
@@ -140,7 +141,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --Retorna todos los puntos de control que el usuario tiene asignado  
   
-  procedure zonas_del_usuario( vId in varchar2, vCursor out cur) is
+  procedure zonas_del_usuario( vId in varchar2, usrid in number, vCursor out cur) is
   begin 
     --open vCursor for SELECT * FROM tbl_zonausuario;
     open vCursor for 
@@ -158,7 +159,7 @@ create or replace package body mbpc as
   --la etapa actual (que indica el punto de control del que viene, **donde esta**, donde se dirige y previamente calculado si esta en bajada o subida)
   --coincida con el punto de control que se este verificando
   
-  procedure barcos_en_zona( vZonaId in varchar2, vCursor out cur) is
+  procedure barcos_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin 
     open vCursor for 
       --COLUMNA 'INSCRIPCION PROVISIORIA' reemplazada por constante 'INS.PROV.'
@@ -182,7 +183,7 @@ create or replace package body mbpc as
   --la etapa actual (que indica el punto de control del que viene, donde esta, **donde se dirige** y previamente calculado si esta en bajada o subida)
   --coincida con el punto de control que se este verificando
   
-  procedure barcos_entrantes( vZonaId in varchar2, vCursor out cur) is
+  procedure barcos_entrantes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select v.id, v.buque_id, v.notas,capitan.nombre capitan, acomp.nombre acompanante, e.calado_maximo, e.calado_informado,  e.origen_id, e.destino_id, e.sentido, e.eta, 'INSC.PROV.', b.matricula, b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total, b.tipo, z.cuatrigrama, rck.km, st.estado estado_text,v.estado_buque
@@ -206,7 +207,7 @@ create or replace package body mbpc as
   --coincida con el punto de control que se este verificando
   --NOTA: Sólo aparece si, desde el punto de control procedente, indicaron el punto de control actual como Proximo Destino
   
-  procedure barcos_salientes( vZonaId in varchar2, vCursor out cur) is
+  procedure barcos_salientes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select v.id, v.buque_id, v.notas,capitan.nombre capitan, acomp.nombre acompanante, e.calado_maximo, e.calado_informado, e.origen_id, e.destino_id, e.sentido, e.eta, 'INSCR.PROV.', b.matricula, b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total,b.tipo, z.cuatrigrama, rck.km, st.estado estado_text,v.estado_buque
@@ -223,7 +224,7 @@ create or replace package body mbpc as
       WHERE e.origen_id = vZonaId and v.estado = 0;
   end barcos_salientes;
   
-  procedure reporte_diario (vUsuario in varchar2, vCursor out cur) is
+  procedure reporte_diario (vUsuario in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select p.id pdc, b.nombre, b.sdist, b.bandera band, origen.puerto fm, destino.puerto tox, e.calado_proa cal, v.zoe, z.cuatrigrama, rc.nombre CANAL, rck.km KM, rck.unidad, to_char(e.eta,'HH:MM') eta, to_char(e.hrp,'HH:MM') hrp, e.sentido
@@ -240,7 +241,7 @@ create or replace package body mbpc as
       and e.actual_id in (select puntodecontrol from tbl_puntodecontrolusuario where usuario = vUsuario) order by nombre, rck.km;
   end reporte_diario;
 
-  procedure todos_los_pdc(vCursor out cur) is
+  procedure todos_los_pdc(usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select * from tbl_puntodecontrol;
@@ -255,7 +256,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------  
   --
 
-  procedure hist_rvp(vViaje in varchar2, vCursor out cur) is
+  procedure hist_rvp(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select rc.nombre canal, rck.km km, nro_etapa, to_char(created_at ,'YYYY-MM-DD HH:MI:SS') created_at, e.id from tbl_etapa e
@@ -265,7 +266,7 @@ create or replace package body mbpc as
         where viaje_id = vViaje order by created_at desc;
   end hist_rvp;
   
-  procedure hist_pos(vViaje in varchar2, vCursor out cur) is
+  procedure hist_pos(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.estado  from tbl_evento p
@@ -274,7 +275,7 @@ create or replace package body mbpc as
   end hist_pos;  
 
   
-  procedure hist_evt(vViaje in varchar2, vCursor out cur) is
+  procedure hist_evt(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal from tbl_evento p
@@ -284,22 +285,22 @@ create or replace package body mbpc as
       where viaje_id = vViaje and e.tipo = 1 order by created_at desc;
   end hist_evt;    
   
-  procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in varchar2, vRumbo in varchar2, vEstado in varchar2, vFecha in date, vCursor out cur) is
+  procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in varchar2, vRumbo in varchar2, vEstado in varchar2, vFecha in date, usrid in number, vCursor out cur) is
   begin
     select * into viaje from tbl_viaje where id = vViaje;
     select * into etapa from tbl_etapa where nro_etapa = viaje.etapa_actual and viaje_id = viaje.id;
-    insert into tbl_evento (viaje_id, etapa_id, tipo_id, latitud, longitud, fecha, velocidad, rumbo, estado) values (vViaje, etapa.id, 19, replace(vLat, ',', '.') , replace(vLon, ',', '.'), vFecha, vVelocidad, vRumbo, vEstado);
+    insert into tbl_evento (usuario_id, viaje_id, etapa_id, tipo_id, latitud, longitud, fecha, velocidad, rumbo, estado) values (usrid, vViaje, etapa.id, 19, vLat, vLon, vFecha, vVelocidad, vRumbo, vEstado);
     if length(vEstado) = 2 THEN
       update tbl_viaje set estado_buque = vEstado where id = vViaje;
     end if;
   end insertar_reporte;
 
---  procedure insertar_posicion(vEtapa in varchar2, vLat in varchar2, vLon in varchar2, vCursor out cur) is
+--  procedure insertar_posicion(vEtapa in varchar2, vLat in varchar2, vLon in varchar2, usrid in number, vCursor out cur) is
 --  begin
 --    update tbl_etapa set latitud = vLat , longitud = vLon where id = vEtapa;
 --  end insertar_posicion;
   
-  procedure posicion_de_puntodecontrol(vPdc in varchar2, vCursor out cur) is
+  procedure posicion_de_puntodecontrol(vPdc in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select latitud, longitud, uso from tbl_puntodecontrol pdc
@@ -307,16 +308,16 @@ create or replace package body mbpc as
       where pdc.id = vPdc;
   end posicion_de_puntodecontrol;
   
-  procedure eventos_usuario(vCursor out cur) is
+  procedure eventos_usuario(usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select * from tbl_tipoevento where tipo = 1;
   end eventos_usuario;
   
-  procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in date, vEstado in varchar2, vRiocanal in varchar2, vCursor out cur) is
+  procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in date, vEstado in varchar2, vRiocanal in varchar2, usrid in number, vCursor out cur) is
   begin
       select * into etapa from tbl_etapa where id = vEtapa;
-      insert into tbl_evento ( usuario_id , viaje_id , etapa_id, tipo_id, fecha, comentario, latitud, longitud, estado, rios_canales_km_id) VALUES ( usuario.usuario_id , etapa.viaje_id , vEtapa, 20 , vFecha, vNotas, vLat, vLon, vEstado, vRiocanal);
+      insert into tbl_evento ( usuario_id , viaje_id , etapa_id, tipo_id, fecha, comentario, latitud, longitud, estado, rios_canales_km_id) VALUES ( usrid , etapa.viaje_id , vEtapa, 20 , vFecha, vNotas, vLat, vLon, vEstado, vRiocanal);
       update tbl_viaje set estado_buque = vEstado where id = etapa.viaje_id;
   end insertar_cambioestado;
   
@@ -325,7 +326,7 @@ create or replace package body mbpc as
   --se crea la etapa inicial, 
   --registra el evento
 
-  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCursor out cur) is
+  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur) is
   begin
   
     select latitud, longitud, uso into posicion from tbl_puntodecontrol pdc left join rios_canales_km rck on pdc.rios_canales_km_id = rck.id  where pdc.id = vProx;
@@ -337,7 +338,7 @@ create or replace package body mbpc as
     --insert into tbl_viaje ( id, buque_int_id, origen_id, destino_id, fecha_salida, eta, zoe, latitud, longitud, created_at, rios_canales_km_id) VALUES ( id_cargas.nextval, vBuque, vOrigen, vDestino, vInicio, vEta, vZoe, vLat, vLon, sysdate, vRiocanal ) returning id into temp;
     --END IF;
     insert into tbl_etapa ( viaje_id, actual_id, destino_id, fecha_salida, created_at, sentido ) VALUES ( temp, vZona, vProx, vInicio, sysdate, null ) returning id into temp2;
-    insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha) VALUES ( usuario.usuario_id, temp , temp2 , 1 , SYSDATE );
+    insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha) VALUES ( usrid, temp , temp2 , 1 , SYSDATE );
     open vCursor for select * from tbl_etapa where id = temp2;
   end crear_viaje;
 
@@ -345,7 +346,7 @@ create or replace package body mbpc as
   --Edita el viaje, se verifica si el buque seleccionado es internacional, 
   --registra el evento (TODO)
   
-  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCursor out cur) is
+  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in date, vEta in date, vZoe in date, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur) is
   begin
     --IF vInternacional = 0 THEN
     --Sacar ID de esta lista cuando se habilite el sequence para los viajes
@@ -359,7 +360,7 @@ create or replace package body mbpc as
   --Edita el viaje, la verificacion de si el buque es internacional o internacional esta incluida en la vista, 
   --registra el evento (TODO)
 
-  procedure traer_viaje(vViaje in varchar2, vCursor out cur) is
+  procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
       open vCursor for select v.id, b.id_buque, b.nombre, b.matricula, b.tipo, m.cod origen_id, m.puerto origen, u.cod destino_id, u.puerto destino, v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
       from tbl_viaje v 
@@ -375,16 +376,16 @@ create or replace package body mbpc as
   --Finaliza el viaje, (Lo pasa a estado 1)
   --Registra el evento
   
-  procedure terminar_viaje(vViajeId in number, vFecha in date, vCursor out cur) is
+  procedure terminar_viaje(vViajeId in number, vFecha in date, usrid in number, vCursor out cur) is
   begin
     update tbl_viaje set estado = 1, fecha_llegada = vFecha where id = vViajeId;
-    insert into tbl_evento ( usuario_id , viaje_id , tipo_id, fecha) VALUES ( usuario.usuario_id , vViajeId , 9 , SYSDATE);
+    insert into tbl_evento ( usuario_id , viaje_id , tipo_id, fecha) VALUES ( usrid , vViajeId , 9 , SYSDATE);
   end terminar_viaje;
 
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure viajes_terminados(vZona in number, vCursor out cur) is
+  procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select v.id, b.nombre, origen.puerto origen, destino.puerto destino,  v.etapa_actual ultima_etapa, e.actual_id 
@@ -400,17 +401,17 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure reactivar_viaje(vViajeId in number , vCursor out cur) is
+  procedure reactivar_viaje(vViajeId in number , usrid in number, vCursor out cur) is
   begin
     update tbl_viaje set estado = 0, fecha_llegada = null where id = vViajeId;
-    insert into tbl_evento ( usuario_id , viaje_id , tipo_id, fecha) VALUES ( usuario.usuario_id , vViajeId , 12 , SYSDATE);
+    insert into tbl_evento ( usuario_id , viaje_id , tipo_id, fecha) VALUES ( usrid , vViajeId , 12 , SYSDATE);
   end reactivar_viaje;
   
   
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure traer_pbip(vViaje in varchar2, vCursor out cur) is
+  procedure traer_pbip(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
       open vCursor for 
         select * from view_pbip where viaje = vViaje;
@@ -419,7 +420,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  puertodematricula, numeroinmarsat, arqueobruto, compania, contactoOCPM, objetivo
   
-  procedure modificar_pbip(vViaje in varchar2, vPuertoDeMatricula in varchar2, vNroInmarsat in varchar2, vArqueoBruto in varchar2, vCompania in varchar2, vContactoOCPM in varchar2, vObjetivo in varchar2, vCursor out cur) is
+  procedure modificar_pbip(vViaje in varchar2, vPuertoDeMatricula in varchar2, vNroInmarsat in varchar2, vArqueoBruto in varchar2, vCompania in varchar2, vContactoOCPM in varchar2, vObjetivo in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into tbl_pbip (viaje_id, puertodematricula, nroinmarsat, arqueobruto, compania, contactoOCPM, objetivo ) VALUES (vViaje, vPuertoDeMatricula, vNroInmarsat, vArqueoBruto, vCompania, vContactoOCPM, vObjetivo );
   exception
@@ -427,37 +428,37 @@ create or replace package body mbpc as
     UPDATE tbl_pbip b SET puertodematricula = vPuertoDeMatricula,  nroinmarsat = vNroInmarsat,  arqueobruto = vArqueoBruto, compania = vCompania, contactoOCPM = vContactoOCPM, objetivo = vObjetivo where b.viaje_id = vViaje ;
   end modificar_pbip;
 
-  procedure guardar_notas(vViaje in varchar2, vNotas in varchar2, vCursor out cur) is
+  procedure guardar_notas(vViaje in varchar2, vNotas in varchar2, usrid in number, vCursor out cur) is
   begin
     UPDATE tbl_viaje v SET v.notas = vNotas where v.id = vViaje ;
   end guardar_notas;
 
-  procedure traer_notas(vViaje in varchar2, vCursor out cur) is
+  procedure traer_notas(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
       select notas from tbl_viaje where id = vViaje;
   end traer_notas;
 
-  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, vCursor out cur) is
+  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur) is
     begin
       UPDATE tbl_etapa e SET e.acompanante_id = vBuque where e.id = vEtapa returning e.viaje_id into temp;
-      insert into tbl_evento ( usuario_id , viaje_id, etapa_id, tipo_id, fecha, acompanante_id ) VALUES ( usuario.usuario_id , temp, vEtapa , 13 , SYSDATE, vBuque);
+      insert into tbl_evento ( usuario_id , viaje_id, etapa_id, tipo_id, fecha, acompanante_id ) VALUES ( usrid , temp, vEtapa , 13 , SYSDATE, vBuque);
   end editar_acompanante;
   
-  procedure quitar_acompanante(vEtapa in varchar2, vCursor out cur) is
+  procedure quitar_acompanante(vEtapa in varchar2, usrid in number, vCursor out cur) is
     begin
       UPDATE tbl_etapa e SET e.acompanante_id = NULL where e.id = vEtapa returning e.viaje_id into temp;
-      insert into tbl_evento ( usuario_id , viaje_id, etapa_id, tipo_id, fecha, acompanante_id ) VALUES ( usuario.usuario_id , temp, vEtapa , 14 , SYSDATE, NULL);
+      insert into tbl_evento ( usuario_id , viaje_id, etapa_id, tipo_id, fecha, acompanante_id ) VALUES ( usrid , temp, vEtapa , 14 , SYSDATE, NULL);
   end quitar_acompanante;  
   
-  procedure separar_convoy(vViaje in varchar2, vPartida in date, vCursor out cur) is
+  procedure separar_convoy(vViaje in varchar2, vPartida in date, usrid in number, vCursor out cur) is
     begin
       select * into viaje from tbl_viaje where id = vViaje;
       select * into etapa from tbl_etapa e where (viaje.id = e.viaje_id and e.nro_etapa = viaje.etapa_actual);
       update tbl_etapa set acompanante_id = null where id = etapa.id;
       insert into tbl_viaje ( id, buque_id, origen_id, destino_id, fecha_salida, eta, zoe, viaje_padre ) VALUES ( id_cargas.nextval, etapa.acompanante_id, viaje.origen_id, viaje.destino_id, SYSDATE, viaje.eta, viaje.zoe, viaje.id ) returning id into temp ;
       insert into tbl_etapa ( nro_etapa, viaje_id, actual_id, sentido ) VALUES ( 0, temp, etapa.actual_id, etapa.sentido) returning id into temp2;
-      insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , buque_id, fecha, acompanante_id) VALUES ( usuario.usuario_id, viaje.id , etapa.id , 14 , viaje.buque_id, SYSDATE, etapa.acompanante_id );
+      insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , buque_id, fecha, acompanante_id) VALUES ( usrid, viaje.id , etapa.id , 14 , viaje.buque_id, SYSDATE, etapa.acompanante_id );
       open vCursor for 
         select id from tbl_etapa where id = temp2;
   end separar_convoy;
@@ -467,7 +468,7 @@ create or replace package body mbpc as
   ---------------------------------------------------------------------------------------------------------------  
 
   ---------------------------------------------------------------------------------------------------------------
-  procedure id_ultima_etapa(vViaje in number, vCursor out cur) is
+  procedure id_ultima_etapa(vViaje in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for select e.id from tbl_viaje v left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual) where v.id = vViaje;
   end id_ultima_etapa;
@@ -476,14 +477,14 @@ create or replace package body mbpc as
   --Trae el viaje, trae la etapa
   --Actualiza la etapa indicando el punto de control como destino
   
-  procedure indicar_proximo(vViajeId in number, vZonaId in number, vCursor out cur) is
+  procedure indicar_proximo(vViajeId in number, vZonaId in number, usrid in number, vCursor out cur) is
   begin
     select * into viaje from tbl_viaje where id = vViajeId;
     select * into etapa from tbl_etapa where nro_etapa = viaje.etapa_actual and viaje_id = viaje.id;
     temp := etapa.id;
     update tbl_etapa set destino_id = vZonaId where id = etapa.id;
     --insert into tbl_evento (      usuario_id , viaje_id , etapa_id, tipo_id, fecha, comentario)
-    --values ( usuario.usuario_id, viaje.id , etapa.id, 1, SYSDATE, 'de ' || etapa.origen_id || ' a ' || etapa.actual_id);
+    --values ( usrid, viaje.id , etapa.id, 1, SYSDATE, 'de ' || etapa.origen_id || ' a ' || etapa.actual_id);
   end indicar_proximo;
 
   ---------------------------------------------------------------------------------------------------------------
@@ -493,7 +494,7 @@ create or replace package body mbpc as
   --Copia las cargas de la etapa anterior en la recien creada,
   --Registra el evento
   
-  procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in date, vLlegada in date, vCursor out cur) is
+  procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in date, vLlegada in date, usrid in number, vCursor out cur) is
   begin
 
     select latitud, longitud, uso into posicion from tbl_puntodecontrol pdc left join rios_canales_km rck on pdc.rios_canales_km_id = rck.id  where pdc.id = vZonaId;
@@ -525,9 +526,9 @@ create or replace package body mbpc as
             etapa.capitan_id, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo, 
             etapa.calado_informado, etapa.km, sysdate, etapa.acompanante_id )
     
-    returning ID,NRO_ETAPA,VIAJE_ID,ORIGEN_ID,ACTUAL_ID,DESTINO_ID,HRP,ETA,FECHA_SALIDA,FECHA_LLEGADA,
-    CANTIDAD_TRIPULANTES,CANTIDAD_PASAJEROS,CAPITAN_ID,SENTIDO,CALADO_PROA,CALADO_POPA,CALADO_MAXIMO,
-    CALADO_INFORMADO,KM,CREATED_AT,acompanante_id
+    returning ID,NRO_ETAPA,VIAJE_ID,ORIGEN_ID,ACTUAL_ID,DESTINO_ID,HRP,ETA,FECHA_SALIDA,
+              FECHA_LLEGADA,CANTIDAD_TRIPULANTES,CANTIDAD_PASAJEROS,CAPITAN_ID,CALADO_PROA,
+              CALADO_POPA,CALADO_MAXIMO,CALADO_INFORMADO,KM,CREATED_AT,ACOMPANANTE_ID,SENTIDO
 
     into etapa;
     
@@ -539,7 +540,7 @@ create or replace package body mbpc as
     
     
     if posicion.uso = 0 THEN
-      insert into tbl_evento (viaje_id, etapa_id, tipo_id, latitud, longitud, fecha) values (etapa.viaje_id, etapa.id, 19, posicion.lat, posicion.lon, sysdate);
+      insert into tbl_evento (usuario_id, viaje_id, etapa_id, tipo_id, latitud, longitud, fecha) values (usrid, etapa.viaje_id, etapa.id, 19, posicion.lat, posicion.lon, sysdate);
     end if;
     
     --BEGIN_NOTA: esto siempre? o solo para los puntos de control fluviales?
@@ -547,7 +548,7 @@ create or replace package body mbpc as
     --ENDNOTA
     
     insert into tbl_evento (usuario_id , viaje_id , etapa_id, tipo_id, puntodecontrol1_id, puntodecontrol2_id, fecha)
-    values ( usuario.usuario_id, viaje.id , etapa.id, 7, etapa.origen_id, etapa.actual_id , SYSDATE  );
+    values ( usrid, viaje.id , etapa.id, 7, etapa.origen_id, etapa.actual_id , SYSDATE  );
     
     open vCursor for select * from tbl_etapa where id = etapa.id;
   end pasar_barco;
@@ -556,7 +557,7 @@ create or replace package body mbpc as
   --Procedimiento auxiliar utilizado por los dos anteriores para crear los menues de los puntos de control a los que es posible pasar el buque
   --usando la matriz. Ignora si el buque esta en bajada o subida
   
-  procedure zonas_adyacentes( vZonaId in varchar2, vCursor out cur) is
+  procedure zonas_adyacentes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
       select unique(p.id), CUATRIGRAMA, rck.KM from tbl_puntodecontrol p
@@ -578,7 +579,7 @@ create or replace package body mbpc as
   --Trae la etapa actual del viaje
   --con sus practicos y capitanes
   
-  procedure traer_etapa(vViaje in varchar2, vCursor out cur) is
+  procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
     select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id, e.calado_proa, e.calado_popa, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id
@@ -592,7 +593,7 @@ create or replace package body mbpc as
   --Edita la informacion etapa
   --Registra el evento
 
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in date, vETA in date, vFechaSalida in date, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vCursor out cur) is
+  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in date, vETA in date, vFechaSalida in date, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, usrid in number, vCursor out cur) is
   begin
       update tbl_etapa SET
         calado_proa = vCaladoProa,
@@ -606,10 +607,10 @@ create or replace package body mbpc as
         capitan_id = vCapitan
       where id = vEtapa;
       select * into etapa from tbl_etapa where id=vEtapa;
-      insert into tbl_evento ( viaje_id, usuario_id , etapa_id, tipo_id, fecha ) VALUES ( etapa.viaje_id, usuario.usuario_id, vEtapa , 8, SYSDATE);
+      insert into tbl_evento ( viaje_id, usuario_id , etapa_id, tipo_id, fecha ) VALUES ( etapa.viaje_id, usrid, vEtapa , 8, SYSDATE);
   end editar_etapa;    
   
-  procedure traer_buque_de_etapa(vEtapa in varchar2, vCursor out cur) is
+  procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select * from buques b
@@ -618,7 +619,7 @@ create or replace package body mbpc as
       where e.id = vEtapa;
   end traer_buque_de_etapa;
 
-  procedure traer_practicos(vEtapa in varchar2, vCursor out cur) is
+  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select * from tbl_practicoetapa pe 
@@ -626,7 +627,7 @@ create or replace package body mbpc as
         where pe.etapa_id = vEtapa;
   end traer_practicos;
   
-  procedure eliminar_practicos(vEtapa in varchar2, vCursor out cur) is
+  procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     delete from tbl_practicoetapa where etapa_id = vEtapa;
   end eliminar_practicos;
@@ -647,7 +648,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure barcazas_utilizadas(vCursor out cur) is
+  procedure barcazas_utilizadas(usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select unique(c.buque_id) from tbl_viaje v 
@@ -659,7 +660,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure traer_cargas( vEtapaId in varchar2, vCursor out cur) is
+  procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
     select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, c.buque_id barcaza from tbl_cargaetapa c
@@ -671,7 +672,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure traer_carga_por_codigo(vCodigo in varchar2, vCursor out cur) is
+  procedure traer_carga_por_codigo(vCodigo in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for select * from tbl_tipo_carga where codigo = vCodigo;
   end traer_carga_por_codigo;
@@ -679,7 +680,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure traer_barcazas(vCursor out cur) is
+  procedure traer_barcazas(usrid in number, vCursor out cur) is
   begin
     open vCursor for 
       --select matricula, nombre from view_buques b where UPPER(nombre) like 'BARCAZA%'
@@ -696,7 +697,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure traer_barcazas_de_buque(vEtapa in varchar2, vCursor out cur) is
+  procedure traer_barcazas_de_buque(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
     select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, c.buque_id barcaza from tbl_cargaetapa c
@@ -708,16 +709,16 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2) is
+  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
       -- a este viaje (vCarga.etapa.viaje) se le fue la carga (vCarga)
       select * into cetapa from tbl_cargaetapa where id = vCarga;
       select * into etapa from tbl_etapa where id = cetapa.etapa_id;
-      insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usuario.usuario_id, 11, cetapa.buque_id, vCarga, SYSDATE);
+      insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 11, cetapa.buque_id, vCarga, SYSDATE);
   
       -- a este viaje (vEtapa.viaje) se le agregp la carga (vCarga)
       select * into etapa from tbl_etapa where id = vEtapa;
-      insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usuario.usuario_id, 10, cetapa.buque_id, vCarga, SYSDATE);
+      insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 10, cetapa.buque_id, vCarga, SYSDATE);
  
       UPDATE tbl_cargaetapa ce set etapa_id = vEtapa where id = vCarga returning id, etapa_id, buque_id into temp, temp2, temp3;
 
@@ -726,7 +727,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure traer_unidades(vCursor out cur) is
+  procedure traer_unidades(usrid in number, vCursor out cur) is
   begin
     open vCursor for select * from tbl_unidad;
     
@@ -735,37 +736,37 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, vCursor out cur) is
+  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = vEtapa;
     insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID ) VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque) returning id into temp; 
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usuario.usuario_id, 4, temp, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
   end insertar_carga;  
   
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, vCursor out cur) is
+  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCarga);
     update tbl_cargaetapa set cantidad = vCantidad where id = vCarga returning id into temp;
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usuario.usuario_id, 5, temp, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 5, temp, SYSDATE);
   end modificar_carga;
 
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure eliminar_carga(vCarga in varchar2, vCursor out cur) is
+  procedure eliminar_carga(vCarga in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCarga);
     delete from tbl_cargaetapa where id = vCarga;
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usuario.usuario_id, 6, vCarga, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 6, vCarga, SYSDATE);
   end eliminar_carga;
 
   -------------------------------------------------------------------------------------------------------------
   --
  
-  procedure detalles_tecnicos( vShipId in varchar2, vCursor out cur) is
+  procedure detalles_tecnicos( vShipId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
       select *
@@ -776,7 +777,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleter(vVista in varchar2, vQuery in varchar2, vCursor out cur) is
+  procedure autocompleter(vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     sql_stmt := 'select * from ' || vVista || ' where upper(nombre) like upper(:vQuery) and rownum <= 6';
     open vCursor for sql_stmt USING vQuery;
@@ -784,9 +785,9 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure autocompletebactivos(vQuery in varchar2, vCursor out cur) is
+  procedure autocompletebactivos(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    sql_stmt := 'select v.id viaje_id, e.id etapa_id, b.nombre from buques b 
+    sql_stmt := 'select v.id, v.buque_id, viaje_id, e.id etapa_id, b.nombre from buques b 
                         left join tbl_viaje v on v.buque_id = b.ID_BUQUE 
                         left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual) 
                         where v.estado=0 and (upper(b.nombre) like upper(:vQuery) or 
@@ -801,7 +802,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterioscanales(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterioscanales(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
   
     select upper(SUBSTR(vQuery, 1 ,INSTR(vQuery,' ', 1, 1)-1)) || '%' into strtemp1  from dual;
@@ -833,7 +834,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterbnacionales(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterbnacionales(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     --VERIFICAR TIPO_BUQUE 'nacional'
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
@@ -854,7 +855,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterbdisponibles(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterbdisponibles(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
                     from buques b
@@ -873,15 +874,15 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterb(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterb(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    mbpc.autocompleterball(vQuery, '0', vCursor); 
+    mbpc.autocompleterball(vQuery, '0', usrid, vCursor); 
   end autocompleterb;
   
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterball(vQuery in varchar2, vEstado in varchar2, vCursor out cur) is
+  procedure autocompleterball(vQuery in varchar2, vEstado in varchar2, usrid in number, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
@@ -902,7 +903,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterestados(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterestados(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     sql_stmt := 'select * from ( select a.*, ROWNUM rnum from (
                     select COD,RESUMEN,ESTADO,AGRUPA, case when upper(cod) like upper(:vQuery) then 1 else 0 end as groovy from tbl_bq_estados 
@@ -917,7 +918,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterbenzona(vQuery in varchar2, vZonaId in varchar2, vCursor out cur) is
+  procedure autocompleterbenzona(vQuery in varchar2, vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
@@ -937,7 +938,7 @@ create or replace package body mbpc as
 
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure autocompleterm(vQuery in varchar2, vCursor out cur) is
+  procedure autocompleterm(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     sql_stmt := 'select * from ( select a.*, ROWNUM rnum from (
                     select COD,PUERTO,LAT,LON,PAIS, case when upper(cod) like upper(:vQuery) then 1 else 0 end as groovy from tbl_kstm_puertos 
@@ -949,13 +950,13 @@ create or replace package body mbpc as
   end autocompleterm;  
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vCursor out cur) is
+  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST) 
       VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, 'tp', vServicio, vSDist )
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
     
-    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, var_buque.ID_BUQUE, SYSDATE);
+    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);
     open vCursor for 
       select * from buques where id_buque=var_buque.ID_BUQUE;
   end crear_buque;
@@ -963,13 +964,13 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vCursor out cur) is
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, SDIST, NRO_OMI)
       VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, 'tp', vSDist, vMatricula)
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
       
-    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, var_buque.ID_BUQUE, SYSDATE);
+    insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);
     open vCursor for 
       select * from buques where id_buque=var_buque.ID_BUQUE;
     
@@ -978,7 +979,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure traer_puertos(vCursor out cur) is
+  procedure traer_puertos(usrid in number, vCursor out cur) is
   begin
     open vCursor for select * from tbl_kstm_puertos;
   end traer_puertos;
@@ -986,7 +987,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  --procedure traer_instports(vPuerto in varchar2, vCursor out cur) is
+  --procedure traer_instports(vPuerto in varchar2, usrid in number, vCursor out cur) is
   --begin
   --  open vCursor for select * from tbl_insta_puert where puerto_id = vPuerto;
   --end traer_instports;
@@ -994,48 +995,48 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, vCursor out cur) is
+  procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into tbl_kstm_puertos ( COD,PUERTO,PAIS ) VALUES ( vCod , vPuerto, vPais);
     open vCursor for select COD,PUERTO from tbl_kstm_puertos where cod = vCod and rownum=1;
-    --insert into tbl_evento (usuario_id, tipo_id, muelle_id, fecha) VALUES (usuario.usuario_id, 3, vId, SYSDATE);
+    --insert into tbl_evento (usuario_id, tipo_id, muelle_id, fecha) VALUES (usrid, 3, vId, SYSDATE);
   end crear_puerto;
 
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, vCursor out cur) is
+  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into int_usuarios VALUES ( vNdoc, vPassword, vApellido, vNombres, vDestino, vFechavenc, vTedirecto, vTeinterno, vEmail, vEstado, vSeccion, vNdoc_admin, vFecha_audit, vNombredeusuario, vUsuario_id);
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
   end crear_usuario;
 
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, vCursor out cur) is
+  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur) is
   begin
     update int_usuarios set NDOC = vNdoc, PASSWORD = vPassword, APELLIDO = vApellido, NOMBRES = vNombres, DESTINO = vDestino, FECHAVENC = vFechavenc, TEDIRECTO = vTedirecto, TEINTERNO = vTeinterno, EMAIL = vEmail, ESTADO = vEstado, SECCION = vSeccion, NDOC_ADMIN = vNdoc_admin, FECHA_AUDIT = vFecha_audit, NOMBREDEUSUARIO = vNombredeusuario where USUARIO_ID = vUsuario_id;
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
   end update_usuario;
 
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_practico(vNombre in varchar2, vCursor out cur) is
+  procedure crear_practico(vNombre in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into tbl_practico ( NOMBRE ) 
       VALUES ( vNombre);
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
   end crear_practico;
 
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure update_practico(vNombre in varchar2, vCursor out cur) is
+  procedure update_practico(vNombre in varchar2, usrid in number, vCursor out cur) is
   begin
     update tbl_practico set NOMBRE = vNombre;
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usuario.usuario_id, 2, vMatricula, SYSDATE);
+    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
   end update_practico;
  
   -------------------------------------------------------------------------------------------------------------
@@ -1049,7 +1050,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
  
-  procedure columnas_de(vTabla in varchar2, vCursor out cur) is
+  procedure columnas_de(vTabla in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       SELECT COLUMN_NAME, NULLABLE FROM all_tab_cols WHERE TABLE_name=vTabla order by COLUMN_ID asc;
@@ -1058,7 +1059,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure pager(vTabla in varchar2, vOrderBy in varchar2, vCantidad in number, vDesde in number, vCursor out cur ) is
+  procedure pager(vTabla in varchar2, vOrderBy in varchar2, vCantidad in number, vDesde in number, usrid in number, vCursor out cur ) is
   begin
     sql_stmt := 'SELECT *
         FROM (SELECT a.*, ROWNUM rnum
@@ -1095,7 +1096,7 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure traer_banderas(vCursor out cur) is
+  procedure traer_banderas(usrid in number, vCursor out cur) is
   begin
     open vCursor for
       SELECT DESCRIPCION FROM TBL_PAISES_CIALA;

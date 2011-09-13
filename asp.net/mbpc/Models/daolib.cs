@@ -10,11 +10,13 @@ using System.Threading;
 
 public static class DaoLib
 {
-    public static decimal?[] parsePos(string pos)
-    {
-      decimal?[] latlon = { decimal.Parse(pos.Substring(0, 4).Insert(2, ",")) * -1 , decimal.Parse(pos.Substring(5, 5).Insert(3, ",")) * -1 }; 
-      return latlon;
-    }
+  public static int userid;
+
+  public static decimal?[] parsePos(string pos)
+  {
+    decimal?[] latlon = { decimal.Parse(pos.Substring(0, 4).Insert(2, ",")) * -1 , decimal.Parse(pos.Substring(5, 5).Insert(3, ",")) * -1 }; 
+    return latlon;
+  }
 
 
   public static bool loguser(string username, string password)
@@ -950,6 +952,7 @@ public static class DaoLib
         cmd.Parameters.Add(param);
       }
 
+      cmd.Parameters.Add("usrid", OracleDbType.Decimal, userid, System.Data.ParameterDirection.Input);
       cmd.Parameters.Add("vCursor", OracleDbType.RefCursor, DBNull.Value, System.Data.ParameterDirection.Output);
 
       OracleDataReader reader = cmd.ExecuteReader();
