@@ -1,0 +1,24 @@
+set echo off
+set feedback off
+set pagesize 0
+Spool c:\buques.csv
+Select cellno||','||calldate||','||answertime from temp;
+Spool off;
+
+select ID_BUQUE||','''||TRIM(MATRICULA)||''','||TRIM(NRO_OMI)||','''||TRIM(NOMBRE)||''','''||TRIM(BANDERA)||''','||ANIO_CONSTRUCCION
+||','||NRO_ISMM||','''||TRIM(NRO_ISMM)||''','''||TRIM(ASTILL_PARTIC)||''','''||TRIM(REGISTRO)||''','''||TRIM(TIPO_BUQUE)
+||''','''||TRIM(TIPO_SERVICIO)||''','''||TRIM(TIPO_EXPLOTACION)||''','''||TRIM(ARBOLADURA)||''','''||TRIM(SDIST)
+||''','''||TRIM(VELOCIDAD)||''','''||TRIM(ESLORA)||''','''||TRIM(MANGA)||''','''||TRIM(PUNTAL)||''','''||TRIM(ARQUEO_TOTAL)
+||''','''||TRIM(CALADO_MAX)||''','''||TRIM(PUERTO_ASIENTO)||''','''||TRIM(MATERIAL)||''','''||TRIM(SOCIEDADCLASIF)
+||''','''||TRIM(ARQUEO_NETO)||''','''||TRIM(DOTACION_MINIMA)||''','''||TRIM(TIPO)||'''' from buques where rownum<10;
+
+(ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO)
+
+insert into buques  values(500006,'2070PROV',1,'V 696','PARAGUAY',0,1,'1','1','1','barcaza carga general','1','1','1','0000','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500008,'9342217',1,'BW SEINE','PANAMA',2008,1,'1','1','1','Petrolero','1','1','1','3EQX7','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500012,'HRB-290',1,'TRIUNFO','BOLIVIA',1974,1,'1','1','1','empujador','1','1','1','CPY 217','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500013,'HRB-387',1,'SCF 2135 B','PARAGUAY',0,1,'1','1','1','barcaza carga general','1','1','1','NIL','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500019,'3145',1,'NCH 26002','PARAGUAY',0,1,'1','1','1','barcaza carga general','1','1','1','NIL','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500023,'8507183',1,'STELLAR GRACE','MALTA',1986,1,'1','1','1','Buque de carga seca general','1','1','1','9HUO9','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500031,'8812784',1,'CHAMPION STAR','NORUEGA',1991,1,'1','1','1','Petrolero','1','1','1','LAEG6','1','1','1','1','1','1','1','1','1','1','Rivereño');
+insert into buques  values(500036,'2407-PROV',1,'G 624','PARAGUAY',0,1,'1','1','1','barcaza carga general','1','1','1','NIL','1','1','1','1','1','1','1','1','1','1','Rivereño');

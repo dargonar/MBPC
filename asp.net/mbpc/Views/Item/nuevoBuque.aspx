@@ -55,31 +55,30 @@
 
     $("#nuevoBuque").submit(function () {
 
-        $('.botonsubmitb').attr('disabled', 'disabled');
+      $('.botonsubmitb').attr('disabled', 'disabled');
 
       if ($("#matriculaN").val() == "") {
-          alert("Debe ingresar la matricula");
-          $('.botonsubmitb').removeAttr('disabled');
+        alert("Debe ingresar la matricula");
+        $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
       if ($("#nombreN").val() == "") {
-          alert("Debe ingresar un nombre");
-          $('.botonsubmitb').removeAttr('disabled');
+        alert("Debe ingresar un nombre");
+        $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
       if ($("#sdist").val() == "") {
-          alert("Debe ingresar la señal distintiva");
-          $('.botonsubmitb').removeAttr('disabled');
+        alert("Debe ingresar la señal distintiva");
+        $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
 
 
-      if ($("input[name=internacional]:checked").val() == 1 && isNaN($("#matriculaN").val())) 
-        {
-            alert("El MMSI debe ser numerico");
-            $('.botonsubmitb').removeAttr('disabled');
-          return false;
-        }
+      if ($("input[name=internacional]:checked").val() == 1 && isNaN($("#matriculaN").val())) {
+        alert("El MMSI debe ser numerico");
+        $('.botonsubmitb').removeAttr('disabled');
+        return false;
+      }
 
       $.ajax({
         type: "POST",
@@ -88,7 +87,8 @@
         data: $(this).serialize(),
         success: (function (data) {
           $('#dialogdiv3').dialog('close');
-          pegar_y_cerrar($('#nombreN').val(), $("#matriculaN").val(), $("input[name=internacional]:checked").val());
+          //alert(data[0].ID_BUQUE);
+          pegar_y_cerrar($('#nombreN').val(), data[0].ID_BUQUE, $("input[name=internacional]:checked").val());
         }),
         error: (function (data) {
           //alert(data.responseXML);

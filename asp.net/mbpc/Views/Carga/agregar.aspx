@@ -34,7 +34,7 @@
   <%  foreach (Dictionary<string, string> barcaza in barcazas)
       {
  %>    
-        <option value="<%= barcaza["MATRICULA"] %>"> <%= barcaza["NOMBRE"] %></option>        
+        <option value="<%= barcaza["ID_BUQUE"] %>"> <%= barcaza["NOMBRE"] %></option>        
  <%
       }
      %>

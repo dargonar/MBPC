@@ -552,8 +552,8 @@
           $('#dialogdiv3').html(data);
           $('#dialogdiv3').dialog({
             title: 'Nuevo Muelle',
-            height: 340,
-            width: 700,
+            height: 200,
+            width: 300,
             modal: true
           });
         }),
@@ -1013,22 +1013,23 @@ function validatedate(inputelement) {
 
 function dateFromStr(datestring)
 {
+    //alert(datestring);
     var ano = parseInt('20' + datestring.substring(6, 8));
-    var mes = parseInt(datestring.substring(3, 6));
+    var mes = parseInt(datestring.substring(4, 6));
     var dia = datestring.substring(0, 2);
     var hora = datestring.substring(9, 11);
     var minuto = datestring.substring(12)
 
     var fecha = new Date(ano, mes - 1, dia, hora, minuto);
 
-    if (ano < 2010) {fecha = new Date("NONES"); }
-    if (mes > 12) { fecha = new Date("NONES"); }
-    if (dia > 31) { fecha = new Date("NONES"); }
-    if (hora > 23) { fecha = new Date("NONES"); }
-    if (minuto > 59) { fecha = new Date("NONES"); }
+    //if (ano < 2010) {fecha = new Date("NONES"); }
+    //if (mes > 12) { fecha = new Date("NONES"); }
+    //if (dia > 31) { fecha = new Date("NONES"); }
+    //if (hora > 23) { fecha = new Date("NONES"); }
+    //if (minuto > 59) { fecha = new Date("NONES"); }
 
-    console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
-    console.log(fecha)
+    //console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
+    //console.log(fecha)
 
     var temp = { fecha: fecha, ano:ano, mes:mes, dia:dia, hora:hora, minuto:minuto };
     return temp;

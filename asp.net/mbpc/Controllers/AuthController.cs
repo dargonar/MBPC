@@ -30,6 +30,8 @@ namespace mbpc.Controllers
           //Marcar sesion logeado
           Session["logged"] = 1;
           Session["usuario"] = Request.Form["username"];
+          DaoLib.userid = int.Parse(Session["usuario"].ToString());
+
           return Redirect( Url.Content("~/") );
 
         }

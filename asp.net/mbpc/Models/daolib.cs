@@ -10,11 +10,13 @@ using System.Threading;
 
 public static class DaoLib
 {
-    public static decimal?[] parsePos(string pos)
-    {
-      decimal?[] latlon = { decimal.Parse(pos.Substring(0, 4).Insert(2, ",")) * -1 , decimal.Parse(pos.Substring(5, 5).Insert(3, ",")) * -1 }; 
-      return latlon;
-    }
+  public static int userid;
+
+  public static decimal?[] parsePos(string pos)
+  {
+    decimal?[] latlon = { decimal.Parse(pos.Substring(0, 4).Insert(2, ",")) * -1 , decimal.Parse(pos.Substring(5, 5).Insert(3, ",")) * -1 }; 
+    return latlon;
+  }
 
 
   public static bool loguser(string username, string password)
@@ -651,13 +653,7 @@ public static class DaoLib
         //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
     };
 
-    doCall("mbpc.crear_buque", parameters);
-
-    List<object> lista = new List<object>();
-    Dictionary<string, string> vv = new Dictionary<string, string>();
-     lista.Add(vv);
-    return lista;
-
+    return doCall("mbpc.crear_buque", parameters);
   }
 
 
@@ -674,13 +670,7 @@ public static class DaoLib
         //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
     };
 
-    doCall("mbpc.crear_buque_int", parameters);
-
-    List<object> lista = new List<object>();
-    Dictionary<string, string> vv = new Dictionary<string, string>();
-    lista.Add(vv);
-    return lista;
-
+    return doCall("mbpc.crear_buque_int", parameters);
   }
 
   public static List<object> barcazas_utilizadas()
@@ -810,25 +800,18 @@ public static class DaoLib
     return doCall("mbpc.traer_practicos", parameters);
   }
 
-  public static List<object> crear_muelle(string puerto, string instport, string nombre)
+  public static List<object> crear_muelle(string cod, string puerto, string pais)
   {
     decimal muelle_id = 0;
 
     var parameters = new OracleParameter[] 
     { 
+        new OracleParameter("vCod", OracleDbType.Varchar2, cod, System.Data.ParameterDirection.Input),
         new OracleParameter("vPuerto", OracleDbType.Varchar2, puerto, System.Data.ParameterDirection.Input),
-        new OracleParameter("vInstPort", OracleDbType.Varchar2, instport, System.Data.ParameterDirection.Input),
-        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
-        new OracleParameter("vId", OracleDbType.Decimal, muelle_id, System.Data.ParameterDirection.Output)
+        new OracleParameter("vPais", OracleDbType.Varchar2, pais, System.Data.ParameterDirection.Input),
     };
 
-    doCall("mbpc.crear_muelle", parameters);
-
-    List<object> lista = new List<object>();
-    Dictionary<string, string> vv = new Dictionary<string, string>();
-    vv["muelle_id"] = parameters[3].Value.ToString();
-    lista.Add(vv);
-    return lista;
+    return doCall("mbpc.crear_puerto", parameters);
   }
 
   public static List<object> autocomplete(string tabla, string query)
@@ -969,6 +952,7 @@ public static class DaoLib
         cmd.Parameters.Add(param);
       }
 
+      cmd.Parameters.Add("usrid", OracleDbType.Decimal, userid, System.Data.ParameterDirection.Input);
       cmd.Parameters.Add("vCursor", OracleDbType.RefCursor, DBNull.Value, System.Data.ParameterDirection.Output);
 
       OracleDataReader reader = cmd.ExecuteReader();

@@ -33,7 +33,7 @@
             return {
               label: item.NOMBRE,
               value: item.NOMBRE,
-              MATRICULA: item.MATRICULA
+              MATRICULA: item.ID_BUQUE
             }
           }));
         }

@@ -1,34 +1,32 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<% List<Object> banderas = ViewData["banderas"] as List<object>; %>
+
 <form id="nuevomuelle" action="<%= Url.Content("~/Item/crearMuelle") %>" >
- <table>
- <tr><th>Puerto</th><th>Instalacion Port.</th><th>Muelle</th></tr>
- <tr>
- 
- <td>
- <select id="puerto" name="puerto" size="15" style="width: 220px;float:left;">
+<table>
+<tr>
+<td><label>Codigo</label></td>
+<td><input type="text" name="cod" id="cod" /></td>
+</tr>
 
-  <% foreach (Dictionary<string, string> puerto in (ViewData["puertos"] as List<object>))
-      { %>
-         <option onclick="traer_instport(<%= puerto["ID"] %>,'<%= Url.Content("~/Item/instport") %>')" value="<%= puerto["ID"] %>"><%= puerto["NOMBRE"] %></option>
-   <% } 
-  %>
+<tr>
+<td><label>Nombre</label></td>
+<td><input type="text" name="puerto" id="puerto" /></td>
+</tr>
 
-  </select>
-  </td>
-   
-  <td>
-  <select id="instport" name="instport" size="15" style="width: 220px;float:left;">
-  </select>
-  </td>
-  
-  <td style="vertical-align:top;">
-  <label title="Nombre"></label>
-    <input id="mNombre" name="mNombre" autocomplete="off" type="text" style="width: 220px;" />
-    <input type="submit" class="botonsubmit" value="Crear Muelle" />
-  </td>
-
-  </tr>
-  </table>
+<tr>
+<td><label>Pais</label></td>
+<td><select name="pais" id="paus" style="width:200px">
+<% foreach (Dictionary<string,string> bandera in banderas) 
+    {
+      Response.Write("<option value=\"" + bandera["DESCRIPCION"] + "\">" + bandera["DESCRIPCION"] + "</option>");   
+    }
+%>
+</td>
+</tr>
+<tr>
+<td colspan="2"><input type="submit" class="botonsubmit" value="crear" /></td>
+</tr>
+</table>
 </form>
 
 <script type="text/javascript">
@@ -37,18 +35,13 @@
 
       $('.botonsubmit').attr('disabled', 'disabled');
 
+      if ($("#cod").val() == "") {
+          alert("Debe escribir un codigo");
+          $('.botonsubmit').removeAttr('disabled');
+        return false;
+      }
       if ($("#puerto").val() == "") {
-          alert("Debe seleccionar un puerto");
-          $('.botonsubmit').removeAttr('disabled');
-        return false;
-      }
-      if ($("#instport").val() == "") {
-          alert("Debe seleccionar una instalacion portuaria");
-          $('.botonsubmit').removeAttr('disabled');
-        return false;
-      }
-      if ($("#mNombre").val() == "") {
-          alert("Debe ingresar un nombre");
+          alert("Debe escribir un nombre");
           $('.botonsubmit').removeAttr('disabled');
         return false;
       }
@@ -60,7 +53,7 @@
         data: $(this).serialize(),
         success: (function (data) {
           $('#dialogdiv3').dialog('close');
-          pegar_y_cerrar($('#mNombre').val(), data[0].muelle_id );
+          pegar_y_cerrar(data[0].COD, data[0].muelle_id);
         }),
         error: (function (data) {
           var titletag = /<title\b[^>]*>.*?<\/title>/
