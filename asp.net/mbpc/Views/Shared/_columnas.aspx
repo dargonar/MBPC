@@ -5,8 +5,14 @@
        {
          string classstr = string.Empty;
          if ( Session["zona"].ToString() == zona["ID"].ToString() ) classstr = "class=\"megaestiloselected\"";
+         string nombre = string.Empty;
+         
+        if( zona["KM"] == "0" )
+             nombre = zona["CANAL"];
+         else
+             nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
         %>
-        <li <%=classstr%>><a href="<%= Url.Action("cambiarZona", "Home", new { @id = zona["ID"] }) %>" onclick="return cambiarZona(this);"><%= zona["CUATRIGRAMA"] + " - "+  zona["CANAL"]  + " - "+ zona["UNIDAD"]+" " + zona["KM"] %></a></li>
+            <li <%=classstr%>><a href="<%= Url.Action("cambiarZona", "Home", new { @id = zona["ID"] }) %>" onclick="return cambiarZona(this);"><%=nombre%></a></li>
 
        <% } %>
 
