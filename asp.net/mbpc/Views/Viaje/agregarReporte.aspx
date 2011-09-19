@@ -53,8 +53,8 @@
               success: function (data) {
                     response($.map(data, function (item) {
                       return {
-                        label: item.NOMBRE,
-                        value: item.NOMBRE,
+                        label: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
+                        value: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
                         viaje_id: item.VIAJE_ID
                       }
                     }));

@@ -560,10 +560,11 @@ create or replace package body mbpc as
   procedure zonas_adyacentes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-      select unique(p.id), CUATRIGRAMA, rck.KM from tbl_puntodecontrol p
+      select unique(p.id), CUATRIGRAMA, rc.NOMBRE CANAL, rck.KM, rck.UNIDAD from tbl_puntodecontrol p
       inner join tbl_conexionpuntodecontrol cxz on p.id = cxz.puntodecontrol1 or p.id = cxz.puntodecontrol2
       inner join tbl_zonas z on p.zona_id = z.id
       left join rios_canales_km rck on rck.id = p.rios_canales_km_id
+      left join rios_canales rc on rc.id = rck.ID_RIO_CANAL
       
       where (cxz.puntodecontrol1 = vZonaId or cxz.puntodecontrol2 = vZonaId) and p.id != vZonaId;
     
@@ -787,7 +788,7 @@ create or replace package body mbpc as
 
   procedure autocompletebactivos(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    sql_stmt := 'select v.id, v.buque_id, viaje_id, e.id etapa_id, b.nombre from buques b 
+    sql_stmt := 'select v.id, v.buque_id, viaje_id, e.id etapa_id, b.nombre, b.sdist, b.nro_omi from buques b 
                         left join tbl_viaje v on v.buque_id = b.ID_BUQUE 
                         left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual) 
                         where v.estado=0 and (upper(b.nombre) like upper(:vQuery) or 
@@ -837,7 +838,7 @@ create or replace package body mbpc as
   procedure autocompleterbnacionales(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     --VERIFICAR TIPO_BUQUE 'nacional'
-    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b
                     where
                     b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
@@ -857,7 +858,7 @@ create or replace package body mbpc as
   
   procedure autocompleterbdisponibles(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b
                     where
                     b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
@@ -885,7 +886,7 @@ create or replace package body mbpc as
   procedure autocompleterball(vQuery in varchar2, vEstado in varchar2, usrid in number, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
-    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.sdist, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
                   case when (b.id_buque, in 
                     (select v.buque_id from tbl_viaje v where v.estado = :vEstado 
                       union 
@@ -921,7 +922,7 @@ create or replace package body mbpc as
   procedure autocompleterbenzona(vQuery in varchar2, vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     --sql_stmt := 'select * from view_buques left join tbl_viaje on tbl_viaje.buque_id = view_buques.matricula where (upper(nombre) like upper(:vQuery) or upper(bandera) like upper(:vQuery) or upper(matricula) like upper(:vQuery) or upper(nro_omi) like upper(:vQuery)) and rownum <= 6';
-    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
+    sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.sdist, b.nombre, b.bandera, b.nro_ismm, b.tipo , 
                   case when (b.id_buque in 
                     (select v.buque_id from tbl_viaje v where v.estado = 0 
                       union 

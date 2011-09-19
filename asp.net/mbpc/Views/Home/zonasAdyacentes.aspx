@@ -13,8 +13,16 @@
       <select id="listadezonas" style="width: 270px;">
 
       <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>))
-          { %>
-             <option value="<%= zona["ID"] %>"><%= zona["CUATRIGRAMA"] + " - Km " + zona["KM"]%></option>
+          {
+            string nombre = string.Empty;
+
+            if (zona["KM"] == "0")
+                nombre = zona["CANAL"];
+            else
+                nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
+             
+             %>
+             <option value="<%= zona["ID"] %>"><%=nombre%></option>
        <% } 
       %>
       </select>

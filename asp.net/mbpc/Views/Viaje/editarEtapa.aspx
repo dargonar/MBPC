@@ -310,8 +310,8 @@
         success: function (data) {
           response($.map(data, function (item) {
             return {
-              label: item.NOMBRE,
-              value: item.NOMBRE,
+              label: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
+              value: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
               MATRICULA: item.ID_BUQUE
             }
           }));
