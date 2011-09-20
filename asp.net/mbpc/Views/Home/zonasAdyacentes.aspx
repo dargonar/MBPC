@@ -17,7 +17,7 @@
             string nombre = string.Empty;
 
             if (zona["KM"] == "0")
-                nombre = zona["CANAL"];
+                nombre = zona["CANAL"] + " - " + zona["UNIDAD"];
             else
                 nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
              

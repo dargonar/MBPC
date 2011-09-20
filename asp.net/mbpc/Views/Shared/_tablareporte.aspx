@@ -34,8 +34,14 @@
         <th rowspan="2" scope="col">VEL.</th>
         <th rowspan="2" scope="col">INICIO<BR />de ZOE</th>
         <% foreach (Dictionary<string, string> zona in zonas)
-           { %>
-            <th colspan="2" ><%= zona["CUATRIGRAMA"] + " - "+  zona["CANAL"]  + " - "+ zona["UNIDAD"]+" " + zona["KM"] %></th>
+           {
+               string nombre = string.Empty;
+               if (zona["KM"] == "0")
+                   nombre = zona["CANAL"] + " - " + zona["UNIDAD"];
+               else
+                   nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];               
+            %>
+            <th colspan="2" ><%= nombre %></th>
         <% } %>
         <th rowspan="2" scope="col">OBSEV.</th>
       </tr>
