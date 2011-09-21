@@ -8,9 +8,9 @@
          string nombre = string.Empty;
          
         if( zona["KM"] == "0" )
-             nombre = zona["CANAL"];
+            nombre = zona["CANAL"] + " - " + zona["UNIDAD"];
          else
-             nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
+            nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
         %>
             <li <%=classstr%>><a href="<%= Url.Action("cambiarZona", "Home", new { @id = zona["ID"] }) %>" onclick="return cambiarZona(this);"><%=nombre%></a></li>
 
