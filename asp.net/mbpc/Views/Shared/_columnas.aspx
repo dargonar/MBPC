@@ -100,7 +100,7 @@
       %>
     </div>
 	<div class="split-bar"></div>
-	<h1>Viajes recientemente despachados</h1>
+	<h1>Viajes liberados de mi zona de responsabilidad</h1>
     <!-- bottom -->
     <div class="container">
 
@@ -134,7 +134,7 @@
 <!-- RIGHT COL -->
 <div class="col">
 	<div class="split-bar"></div>
-	<h1>Viajes recientemente despachados</h1>
+	<h1>Viajes liberados de mi zona de responsabilidad</h1>
 
     <!-- top -->
     <div class="container">

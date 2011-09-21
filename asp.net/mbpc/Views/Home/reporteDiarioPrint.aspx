@@ -7,12 +7,9 @@
 	<div class="header">
     	<div class="title">
             PREFECTURA NAVAL ARGENTINA<br />
-            PREFECTURA DE ZONA RIO DE LA PLATA<br />
-            CENTRO DE CONTROL DE TRAFICO RIO DE LA PLATA
         </div>
 
 		<div class="date">
-			CANAL MARTIN GARCIA<br /><br />
             FECHA: <label><%= DateTime.Now.ToString("dd/MM/yyyy") %></label>
         </div>
 
