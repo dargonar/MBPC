@@ -14,18 +14,18 @@
     <td>Año de construcción</td>
     <td><%= barco["ANIO_CONSTRUCCION"] %></td>
   </tr>
-  <tr>
+  <!--<tr>
     <td>Fecha Incripto</td>
-    <td><%= barco["FECHA_INSCRIP"] %></td>
-  </tr>
+    <td></td>
+  </tr>-->
   <tr>
     <td>Astillero</td>
     <td><%= barco["ASTILL_PARTIC"] %></td>
   </tr>
-  <tr>
+  <!--<tr>
     <td>Expediente</td>
-    <td><%= barco["EXPTE_INSCRIP"] %></td>
-  </tr>
+    <td></td>
+  </tr>-->
   <tr>
     <td>Arqueo Neto</td>
     <td><%= barco["ARQUEO_NETO"] %></td>

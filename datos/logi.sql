@@ -69,7 +69,8 @@ create or replace package mbpc as
   procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
   procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, usrid in number, vCursor out cur);
   procedure eliminar_carga(vCarga in varchar2, usrid in number, vCursor out cur);--
-  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
+  --procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2);
   ---autocompletes
   procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
@@ -664,9 +665,10 @@ create or replace package body mbpc as
   procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-    select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, c.buque_id barcaza from tbl_cargaetapa c
+    select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, b.nombre barcaza from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on c.unidad_id = u.id
+    left join buques b on b.id_buque = c.buque_id
     where c.etapa_id = vEtapaId;
   end traer_cargas;
   
@@ -686,13 +688,13 @@ create or replace package body mbpc as
     open vCursor for 
       --select matricula, nombre from view_buques b where UPPER(nombre) like 'BARCAZA%'
       --VERIFICAR: TIPOS (CHAR99)
-      select id_buque, nombre from buques b where UPPER(TIPO_SERVICIO) like 'BARCAZA%'
+      select id_buque, nombre from buques b where UPPER(TIPO_BUQUE) like 'BARCAZA%'
       and UPPER(id_buque) not in (
       select unique( UPPER(c.buque_id)) from tbl_viaje v 
       left join tbl_etapa e on e.viaje_id = v.id
       left join tbl_cargaetapa c on c.etapa_id = e.id
       where v.estado = 0 and c.buque_id is not null
-      ); 
+      ) order by nombre;
   end traer_barcazas;
   
   -------------------------------------------------------------------------------------------------------------
@@ -701,16 +703,17 @@ create or replace package body mbpc as
   procedure traer_barcazas_de_buque(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-    select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, c.buque_id barcaza from tbl_cargaetapa c
+    select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.id carga_id, b.nombre barcaza from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on c.unidad_id = u.id
+    left join buques b on b.id_buque = c.buque_id
     where c.etapa_id = vEtapa and c.buque_id IS NOT NULL;
   end traer_barcazas_de_buque;
   
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur) is
+  procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2) is
   begin
       -- a este viaje (vCarga.etapa.viaje) se le fue la carga (vCarga)
       select * into cetapa from tbl_cargaetapa where id = vCarga;
@@ -841,7 +844,7 @@ create or replace package body mbpc as
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b
                     where
-                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
+                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1 and buque_id != null)
                     --and
                     --b.id_buque not in (select acompanante_id from tbl_viaje where estado != 1)
                     and 
@@ -861,7 +864,7 @@ create or replace package body mbpc as
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b
                     where
-                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1)
+                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1 and buque_id != null)
                     --and 
                     --b.id_buque not in (select acompanante_id from tbl_viaje where estado != 1)
                     and                     

@@ -21,8 +21,16 @@
   <label>Pr&oacute;ximo punto de control</label><br />
   <select name="proximo_punto" style="margin:0; width:274px;" class="nexttab">
   <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>))
-      { %>
-         <option value="<%= zona["ID"] %>"><%= zona["CUATRIGRAMA"] + " - Km " + zona["KM"] %></option>
+      { 
+         string nombre = string.Empty;
+         
+        if( zona["KM"] == "0" )
+            nombre = zona["CANAL"] + " - " + zona["UNIDAD"];
+         else
+            nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
+
+	%>
+         <option value="<%= zona["ID"] %>"><%= nombre %></option>
    <% } 
   %>
   </select><br /><br />

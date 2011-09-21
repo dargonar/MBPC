@@ -8,12 +8,12 @@
     <td><%= row["FM"]%></td>
     <td><%= row["TOX"]%></td>
     <td><%= row["CAL"]%></td>
-    <td><%= row["VEL"]%></td>
+    <td>---</td>
     <td><%= row["ZOE"]%></td>
 
     <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>)) { %>
-    <td><%= row.Keys.Contains("ETAKM. " + zona["KM"]) ? row["ETAKM. " + zona["KM"]] : "--"%></td>
-    <td><%= row.Keys.Contains("HRPKM. " + zona["KM"]) ? row["HRPKM. " + zona["KM"]] : "--"%></td>
+    <td><%= row.Keys.Contains("ETA" + zona["ID"]) ? row["ETA" + zona["ID"]] : "--"%></td>
+    <td><%= row.Keys.Contains("HRP" + zona["ID"]) ? row["HRP" + zona["ID"]] : "--"%></td>
     <% } %>
     <td></td>
     </tr>

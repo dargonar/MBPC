@@ -32,7 +32,7 @@
         <th rowspan="2" scope="col">T.O</th>
         <th rowspan="2" scope="col">CAL.</th>
         <th rowspan="2" scope="col">VEL.</th>
-        <th rowspan="2" scope="col">INICIO<BR />de ZOE</th>
+        <th rowspan="2" scope="col">INICIO<BxR />de ZOE</th>
         <% foreach (Dictionary<string, string> zona in zonas)
            {
                string nombre = string.Empty;
@@ -69,8 +69,8 @@
             continue;
           }
           
-          row["ETA"+row["ZONA"]] = row["ETA"];
-          row["HRP"+row["ZONA"]] = row["HRP"];
+          row["ETA"+row["PDC"]] = row["ETA"];
+          row["HRP"+row["PDC"]] = row["HRP"];
           
           i++;
           
@@ -81,8 +81,8 @@
               break;
             
             var nextrow = reporte[i] as Dictionary<string, string>;
-            row["ETA" + nextrow["ZONA"]] = nextrow["ETA"];
-            row["HRP" + nextrow["ZONA"]] = nextrow["HRP"];
+            row["ETA" + nextrow["PDC"]] = nextrow["ETA"];
+            row["HRP" + nextrow["PDC"]] = nextrow["HRP"];
             i++;
           }
 
