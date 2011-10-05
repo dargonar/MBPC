@@ -77,7 +77,8 @@
     <div id="leftcol" class="container" style="height: 351px;">
 
     <% var listEnZona = (ViewData["barcos_en_zona"] as List<object>); %>
-    <% if (listEnZona.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
+    <% var barcazas = (ViewData["barcazas_en_zona"] as List<object>); %>
+    <% if (listEnZona.Find(c => ((Dictionary<string, string>)c)["SENTIDO"] != "1") == null && barcazas.Count == 0)
        { %>
 
          <div class="box-large">
@@ -86,6 +87,11 @@
             </div>
         </div><!-- box -->
     <% } %>
+      <% foreach (Dictionary<string, string> barcaza in barcazas)
+         {
+           Html.RenderPartial("BarcazaItem", barcaza);
+         }
+      %>
 
       <% foreach (Dictionary<string, string> barco in listEnZona)
          {

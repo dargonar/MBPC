@@ -105,11 +105,14 @@
     <Content Include="Scripts\shortcuts.js" />
     <Content Include="Views\Admin\pager.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Carga\barcazas_fondeadas.aspx" />
     <Content Include="Views\Carga\noHayBarcazas.aspx" />
+    <Content Include="Views\Carga\zona_fondeo.aspx" />
     <Content Include="Views\Home\reporteDiario.aspx" />
     <Content Include="Views\Home\reporteDiarioPrint.aspx" />
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
+    <Content Include="Views\Shared\BarcazaItem.ascx" />
     <Content Include="Views\Shared\_buques.aspx" />
     <Content Include="Views\Shared\_capitanes.aspx" />
     <Content Include="Views\Shared\_cargas.aspx" />
@@ -118,7 +121,6 @@
     <Content Include="Views\Home\columnas.aspx" />
     <Content Include="Views\Shared\_practicos.aspx" />
     <Content Include="Views\Shared\_tablareporte.aspx" />
-    <Content Include="Views\Carga\agregar.aspx" />
     <Content Include="Views\Carga\barcoenzona.aspx" />
     <Content Include="Views\Viaje\agregarReporte.aspx" />
     <Content Include="Views\Viaje\columnas.aspx" />
@@ -136,7 +138,7 @@
     <Content Include="Views\Viaje\editarPbip.aspx" />
     <Content Include="Views\Carga\editarBarcazas.aspx" />
     <Content Include="Views\Viaje\editarEtapa.aspx" />
-    <Content Include="Views\Carga\editar.aspx" />
+    <Content Include="Views\Carga\ver.aspx" />
     <Content Include="Views\Item\instport.aspx" />
     <Content Include="Views\Carga\noHayBarcos.aspx" />
     <Content Include="Views\Item\nuevoBuque.aspx" />

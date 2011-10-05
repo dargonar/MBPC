@@ -15,7 +15,7 @@
         <select multiple id="barcazas_origen" name="barcazas_origen" size="15" style="width: 220px;float:left;">
         <% foreach (Dictionary<string, string> barcaza in (ViewData["barcazas1"] as List<object>))
             { %>
-               <option value="<%= barcaza["CARGA_ID"] %>"><%= barcaza["BARCAZA"]%></option>
+               <option value="<%= barcaza["BUQUE_ID"] %>"><%= barcaza["NOMBRE"]%></option>
          <% } 
         %>
         </select>
@@ -30,7 +30,7 @@
         <select multiple id="barcazas_destino" name="barcazas_destino" size="15" style="width: 220px;float:left;">
         <% foreach (Dictionary<string, string> barcaza in (ViewData["barcazas2"] as List<object>))
             { %>
-               <option value="<%= barcaza["CARGA_ID"] %>"><%= barcaza["BARCAZA"] %></option>
+               <option value="<%= barcaza["BUQUE_ID"] %>"><%= barcaza["NOMBRE"]%></option>
          <% } %>
         </select>
       </td>
