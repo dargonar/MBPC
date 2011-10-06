@@ -735,7 +735,7 @@
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
           $('#dialogdiv').dialog({
-            height: 410,
+            height: 500,
             width: 690,
             modal: true,
             title: 'Editar Etapa/Viaje'

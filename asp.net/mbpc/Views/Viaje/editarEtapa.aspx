@@ -79,78 +79,90 @@
 
   
   <div class="columna">
-  <label>Calado Proa</label><br />
-  <input autocomplete="off" type="text" class="editaretapatext" id="caladoproatext" name="calado_proa" value="<%= etapa["CALADO_PROA"] %>"/><br />
+    <label>Calado Proa</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="caladoproatext" name="calado_proa" value="<%= etapa["CALADO_PROA"] %>"/><br />
 
-  <label>Calado Popa</label><br />
-  <input autocomplete="off" type="text" class="editaretapatext" id="caladopopatext" name="calado_popa" value="<%= etapa["CALADO_POPA"] %>"/><br />
+    <label>HRP</label><br />
+    <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
+    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-  <label>HRP</label><br />
-  <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
-  <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+    
+    <label>Fecha de salida</label><br />
+    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
+    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-  <label>ETA</label><br />
-  <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
-  <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+    <label>Cantidad de tripulantes</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
+    
+    <label>Practico</label><br />
+    <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
+  
+    <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
+      <br />
 
-  <label>Fecha de salida</label><br />
-  <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
-  <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+      <%
+        for (var i = 0; i < practicolist.Count ; i++) {
+           Dictionary<string, string> PR = practicolist[i] as Dictionary<string,string>;
+           Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + i + "\" name=\"practico" + i + "\" value=\"" + PR["ID"] + "\" />");
+           if (PR["ACTIVO"] == "1")
+             Response.Write("<input type=\"hidden\" id=\"practicoh\" name=\"activoh\" value=\"" + PR["ID"] + "\" />");
+         }
+
+        for (var j = practicolist.Count; j < 3; j++)
+        {
+          Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + j + "\" name=\"practico" + j + "\" value=\"\" />");
+        }    
+   
+      %>
+
+      <select id="practicoselect" name="activo" size="3" style="width:213px;float: left;">
+      <% for (var i = 0; i < practicolist.Count; i++)
+         {
+           Dictionary<string, string> PR = practicolist[i] as Dictionary<string, string>;
+           string sel = "";
+           if (PR["ACTIVO"] == "1")
+               sel = "selected=\"selected\"";
+           var optstring = "<option class=\"practicopt\"" + sel + "\" onclick=\"seleccionarPractico(this)\" value=\"" + PR["ID"] + "\">" + PR["NOMBRE"] + "</option>";
+           Response.Write(optstring);
+         }     
+      %>
+      </select>
+      <div style="clear:both"></div>
+      <label class="desc">Listado de prácticos</label> 
+      <button type="button" id="quitar" style="float:right;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
   </div>
 
   <div class="columna">
+    <label>Calado Popa</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="caladopopatext" name="calado_popa" value="<%= etapa["CALADO_POPA"] %>"/><br />
 
-  <label>Cantidad de tripulantes</label><br />
-  <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
+    <label>ETA</label><br />
+    <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
+    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+
+    <label>&nbsp;</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" value="" style="opacity:0;" /><br />
+    <label class="desc">&nbsp;</label><br /><br />
+
+    <label>Cantidad de pasajeros</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
+
+    <label>Capitan</label><br />
+    <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
   
+    <label>Velocidad</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value="<%= etapa["VELOCIDAD"] %>"/><br />
+
+    <label>Rumbo</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value="<%= etapa["RUMBO"] %>"/><br />
 
 
-  <label>Cantidad de pasajeros</label><br />
-  <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
-
+    <input type="hidden" id="capitanh" name="capitan_id" value="<%= etapa["CAPITAN_ID"] %>" />
+    <div class="latabla" style="position:absolute;z-index:5;width: 250px;"> </div>
   
-  <label>Practico</label><br />
-  <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
-  <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
-  <br />
-
-
-  <%
-    for (var i = 0; i < practicolist.Count ; i++) {
-       Dictionary<string, string> PR = practicolist[i] as Dictionary<string,string>;
-       Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + i + "\" name=\"practico" + i + "\" value=\"" + PR["ID"] + "\" />");
-       if (PR["ACTIVO"] == "1")
-         Response.Write("<input type=\"hidden\" id=\"practicoh\" name=\"activoh\" value=\"" + PR["ID"] + "\" />");
-     }
-
-    for (var j = practicolist.Count; j < 3; j++)
-    {
-      Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + j + "\" name=\"practico" + j + "\" value=\"\" />");
-    }    
-   
-  %>
-
-  <select id="practicoselect" name="activo" size="3" style="width:213px;float: left;">
-  <% for (var i = 0; i < practicolist.Count; i++)
-     {
-       Dictionary<string, string> PR = practicolist[i] as Dictionary<string, string>;
-       string sel = "";
-       if (PR["ACTIVO"] == "1")
-           sel = "selected=\"selected\"";
-       var optstring = "<option class=\"practicopt\"" + sel + "\" onclick=\"seleccionarPractico(this)\" value=\"" + PR["ID"] + "\">" + PR["NOMBRE"] + "</option>";
-       Response.Write(optstring);
-     }     
-  %>
-  </select>
-
-  <button type="button" id="quitar" >Quitar</button>
-  <div style="clear:both"></div>
-  <label>Capitan</label><br />
-  <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
-  <input type="hidden" id="capitanh" name="capitan_id" value="<%= etapa["CAPITAN_ID"] %>" />
-  <div class="latabla" style="position:absolute;z-index:5;width: 250px;"> </div>
   </div>
-  <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa" />
+
+  <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa: <%= etapa["VELOCIDAD"] %>" />
 </form>
 
 </div>
@@ -159,7 +171,11 @@
 
 
 
+  $("#velocidad").mask("99.9");
+  $("#rumbo").mask("999");
 
+  $("#velocidad").val("<%= etapa["VELOCIDAD"] %>");
+  $("#rumbo").val("<%= etapa["RUMBO"] %>");
 
   $("#partidav, #etav, #zoev,#fecha_salidae, #etae, #hrpe").mask("99-99-99 99:99");
 
@@ -398,8 +414,6 @@
     });
 
   }
-
-
 
 
   $("#practicotext").autocomplete({

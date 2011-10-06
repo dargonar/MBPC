@@ -36,6 +36,13 @@
           <label>ETA</label><br />
           <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px" /><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
+
+          <label>Velocidad</label><br />
+          <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />
+
+          <label>Rumbo</label><br />
+          <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value=""/><br />
+
       <% } %> 
 
        <input type="hidden" id="viajeid" name="viaje_id" value="<%= ViewData["viaje"] %>"/>
@@ -45,6 +52,8 @@
 </form>
 
   <script type="text/javascript">
+  $("#velocidad").mask("99.9");
+  $("#rumbo").mask("999");
 
   <% if (pasar)  { %>
 
