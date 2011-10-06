@@ -940,8 +940,8 @@ create or replace package body mbpc as
         ---Barcazas usadas en la ultima etapa por los otros viajes
         select c.buque_id
           from tbl_viaje v   
-            left join tbl_etapa e on v.id = e.viaje_id and v.estado = 0 and v.etapa_actual = e.nro_etapa and e.id != vEtapaId
-            left join tbl_cargaetapa c on e.id = c.etapa_id and c.buque_id is not null 
+            join tbl_etapa e on v.id = e.viaje_id and v.estado = 0 and v.etapa_actual = e.nro_etapa and e.id != vEtapaId
+            join tbl_cargaetapa c on e.id = c.etapa_id and c.buque_id is not null 
         union
         select v.buque_id from tbl_viaje v where estado=100
       ) and rownum < 6 and upper(nombre) like '%'||vQuery||'%' order by nombre ;
