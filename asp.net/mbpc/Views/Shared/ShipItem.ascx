@@ -1,20 +1,14 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
-
-<script runat="server">
-    public bool showlinks;
-</script>
 <%  Dictionary<string, string> ship = Model as Dictionary<string,string>; %>
-<div class="box" id="B<%=ship["ID"]%>">
+<div class="box" id="B<%=ship["ID"]%>" style="height:30px">
   <div class="searchmeta" style="display:none">
   <%= ship["NOMBRE"] %> &nbsp; <%= ship["NRO_ISMM"] %> &nbsp; <%= ship["MATRICULA"] %> &nbsp; <%= ship["SDIST"] %> &nbsp; <%= ship["NRO_OMI"] %> 
   <div><%= ship["NOMBRE"] %></div>
   </div>
 
   <!-- status icons -->
-  <div class="status-icons">
-    <div class="st-blue"></div>
-    <div class="st-yellow"></div>
-    <div class="st-red"></div>
+  <div class="status-icons" style="background:#aaaaaa;margin-right:10px" >
+    <%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%>
   </div>
   
     <% if (ViewData["showlinks"].ToString() != "0")
@@ -40,8 +34,8 @@
                              <li><a href="<%= Url.Content("~/Viaje/quitarAcompanante/") + ship["ETAPA_ID"] %>"                    onclick="return quitaracompanante(this);return false;">      Quitar Acompanante</a></li>
                              <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this);return false;">          Separar Convoy</a></li>
                       <% }%>
-                      <li><a href="<%= Url.Content("~/Carga/editar/") +  ship["ID"] + "/" + ship["ETAPA_ID"] %>"              onclick="return editarcargas(this);">                              Editar Cargas </a></li>
-                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ID"] + "/" + ship["ETAPA_ID"] %>"          onclick="return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
+                      <li><a href="<%= Url.Content("~/Carga/ver/") +  ship["ETAPA_ID"] %>"              onclick="return editarcargas(this);">                              Editar Cargas </a></li>
+                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>"          onclick="return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
                       <li><a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>"                                   onclick="return editarnotas(this);return false;">            Editar Notas</a></li>
                       <!--<li><a href="<%= Url.Content("~/Viaje/editarPbip/") + ship["ID"] %>"                                    onclick="return pbip(this);">                                Formulario PBIP </a></li>-->
                       <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>
@@ -61,12 +55,12 @@
       <label class="nombrebarco"><%= ship["NOMBRE"] %></label>
     </td>
     <td>
-      <span class="info" title="     <table>
-        <tr>
+      <span class="info" title="<table>
+        <!--<tr>
           <td>Practico</td>
           <td><% //ship["PRACTICO"] %></td>
-        </tr>
-<%--    <tr>
+        </tr>-->
+        <tr>
           <td>Latitud</td>
           <td><%= ship["LATITUD"] %></td>
         </tr>
@@ -74,7 +68,7 @@
           <td>Longitud</td>
           <td><%= ship["LONGITUD"] %></td>
         </tr>
---%>        <tr>
+        <tr>
           <td>Km</td>
           <td><%= ship["KM"] %></td>
         </tr>
@@ -87,15 +81,43 @@
           <td><%= ship["CALADO_INFORMADO"] %></td>
         </tr>
         <tr>
-          <td>Cargas</td>
+          <td>Matricula</td>
+          <td><%= ship["MATRICULA"]%></td>
         </tr>
         <tr>
-          <td>Estados</td>
+          <td>OMI:</td>
+          <td><%= ship["NRO_OMI"]%></td>
         </tr>
-      </table>     
-">
+        <tr>
+          <td>Bandera:</td>
+          <td><%= ship["BANDERA"]%></td>
+        </tr>
+        <tr>
+          <td>Señal:</td>
+          <td><%= ship["SDIST"]%></td>
+        </tr>
+        <tr>
+          <td>MMSI:</td>
+          <td><%= ship["NRO_ISMM"]%></td>
+        </tr>
+        <tr>
+          <td>Inscripcion:</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td>Estado:</td>
+          <td><%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%></td>
+        </tr>
+        <tr>
+          <td>ETA:</td>
+          <td><%= ship["ETA"]%></td>
+        </tr>
 
-<img src="<%= Url.Content("~/img/i_icon.png") %>" style="width: 20px;height: 20px;"/></span>
+      <label><span></span></label>
+
+      </table>">     
+
+      <img src="<%= Url.Content("~/img/i_icon.png") %>" style="width: 20px;height: 20px;"/></span>
     </td>
   <td>
     <label class="nombreacomp"><%=  ship["ACOMPANANTE"] != "" ? "&nbsp;-&nbsp;" + ship["ACOMPANANTE"] : ""%></label>
@@ -107,32 +129,5 @@
   <div class="split"></div>
   </div><!-- title -->
 
-  <div class="data">
-    <table width="100%" cellpadding="0" cellspacing="0" style="float: left">
-      <tr>
-        <td class="grisado">Matricula:</td>
-        <td class="dato"><%= ship["MATRICULA"]%></td>
-        <td class="grisado">OMI:</td>
-        <td class="dato"><%= ship["NRO_OMI"]%></td>
-        <td class="grisado">Bandera:</td>
-        <td class="dato"><%= ship["BANDERA"]%></td>
-      </tr>
-      <tr>
-        <td class="grisado">Señal:</td>
-        <td class="dato"><%= ship["SDIST"]%></td>
-        <td class="grisado">MMSI:</td>
-        <td class="dato"><%= ship["NRO_ISMM"]%></td>
-        <td class="grisado">Inscripcion:</td>
-        <td class="dato">N/A</td>
-      </tr>
-    </table>
-
-  </div><!-- data -->
-
-  <div class="status">
-      <span class="estado" style="cursor:default" title="<%= ship["ESTADO_TEXT"] %>">Estado: <%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%></span>
-      <br />
-      <label><span><%= ship["ETA"]%></span></label>
-  </div><!-- status -->
   <div class="split"></div>
 </div>

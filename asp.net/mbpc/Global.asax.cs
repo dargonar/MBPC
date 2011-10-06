@@ -45,8 +45,8 @@ namespace mbpc
 
 
             routes.MapRoute(
-              "EliminarEditarAgregarCarga",                            // Route name
-              "Carga/{action}/{viaje_id}/{id2}",                   // URL with parameters
+              "EliminarEditarAgregarCarga",                  // Route name
+              "Carga/{action}/{etapa_id}",                   // URL with parameters
               new { controller = "Carga" }
             );
 

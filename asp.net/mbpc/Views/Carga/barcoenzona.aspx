@@ -10,4 +10,4 @@
 %>
 </select>
 <button type="button" style="margin-left: 161px;margin-top: 20px" onclick="return editarBarcazas('<% Response.Write(Url.Content("~/Carga/editarBarcazas/" + ViewData["etapa_id"] )); %>/' + $('#barcoszona').val() );">
-                                            <% Response.Write("Siguiente"); %> </button>
+<% Response.Write("Siguiente"); %> </button>

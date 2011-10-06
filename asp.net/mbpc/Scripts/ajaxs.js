@@ -481,34 +481,6 @@
       return false;
     }
 
-    // url, llena dialogdiv3
-    function agregarcarga(url)
-    {
-
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: url,
-        dataType: "text/html",
-        success: (function (data) {          
-          $('#dialogdiv3').html(data);
-          $('#dialogdiv3').dialog({
-            height: 315,
-            width: 284,
-            modal: true,
-            title: 'Nueva Carga'
-          });
-
-        }),
-        error: (function (data) {
-          var titletag = /<title\b[^>]*>.*?<\/title>/
-          alert(titletag.exec(data.responseText));
-        })
-      });
-
-      return false;
-    }
-
     var g_campo_destino;
 
     // url, llena dialogdiv3
@@ -1013,23 +985,16 @@ function validatedate(inputelement) {
 
 function dateFromStr(datestring)
 {
-    //alert(datestring);
+    var dia = parseInt(datestring.substring(0, 2).replace(/^[0]+/g,""));
+    var mes = parseInt(datestring.substring(3, 5).replace(/^[0]+/g,""));
     var ano = parseInt('20' + datestring.substring(6, 8));
-    var mes = parseInt(datestring.substring(4, 6));
-    var dia = datestring.substring(0, 2);
-    var hora = datestring.substring(9, 11);
-    var minuto = datestring.substring(12)
-
-    var fecha = new Date(ano, mes - 1, dia, hora, minuto);
-
-    //if (ano < 2010) {fecha = new Date("NONES"); }
-    //if (mes > 12) { fecha = new Date("NONES"); }
-    //if (dia > 31) { fecha = new Date("NONES"); }
-    //if (hora > 23) { fecha = new Date("NONES"); }
-    //if (minuto > 59) { fecha = new Date("NONES"); }
+    var hora   = parseInt(datestring.substring(9, 11).replace(/^[0]+/g,""));
+    var minuto = parseInt(datestring.substring(12,14).replace(/^[0]+/g,""));
 
     //console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
     //console.log(fecha)
+
+    var fecha = new Date(ano, mes - 1, dia, hora, minuto);
 
     var temp = { fecha: fecha, ano:ano, mes:mes, dia:dia, hora:hora, minuto:minuto };
     return temp;
