@@ -56,6 +56,8 @@
   $("#rumbo").mask("999");
 
   <% if (pasar)  { %>
+    $("#velocidad").val("<%= ViewData["VELOCIDAD"] %>");
+    $("#rumbo").val("<%= ViewData["RUMBO"] %>");
 
         function validarfechas() {
 

@@ -799,7 +799,8 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: setcombo ? 300 : 160,
+            /*height: setcombo ? 300 : 160,*/
+            height: setcombo ? 375 : 160,
             width: 310,
             title: title,
             modal: true
@@ -991,8 +992,8 @@ function dateFromStr(datestring)
     var hora   = parseInt(datestring.substring(9, 11).replace(/^[0]+/g,""));
     var minuto = parseInt(datestring.substring(12,14).replace(/^[0]+/g,""));
 
-    //console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
-    //console.log(fecha)
+    console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
+    console.log(fecha)
 
     var fecha = new Date(ano, mes - 1, dia, hora, minuto);
 

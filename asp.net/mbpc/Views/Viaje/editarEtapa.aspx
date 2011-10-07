@@ -151,10 +151,10 @@
     <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
   
     <label>Velocidad</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value="<%= etapa["VELOCIDAD"] %>"/><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />
 
     <label>Rumbo</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value="<%= etapa["RUMBO"] %>"/><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value=""/><br />
 
 
     <input type="hidden" id="capitanh" name="capitan_id" value="<%= etapa["CAPITAN_ID"] %>" />
@@ -162,7 +162,7 @@
   
   </div>
 
-  <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa: <%= etapa["VELOCIDAD"] %>" />
+  <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa" />
 </form>
 
 </div>
@@ -174,7 +174,7 @@
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
 
-  $("#velocidad").val("<%= etapa["VELOCIDAD"] %>");
+  $("#velocidad").val("<%= Convert.ToString(etapa["VELOCIDAD"]).Replace(",", ".") %>");
   $("#rumbo").val("<%= etapa["RUMBO"] %>");
 
   $("#partidav, #etav, #zoev,#fecha_salidae, #etae, #hrpe").mask("99-99-99 99:99");

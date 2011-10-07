@@ -71,6 +71,12 @@ namespace mbpc.Controllers
           ViewData["zonas"] = DaoLib.zonas_adyacentes(zona);
           ViewData["viaje"] = viaje;
           ViewData["pasar"] = pasar;
+          if (!String.IsNullOrEmpty(pasar))
+          {
+            var ultima_etapa_viaje = DaoLib.traer_etapa(viaje)[0] as Dictionary<string, string>;
+            ViewData["VELOCIDAD"] = Convert.ToString(ultima_etapa_viaje["VELOCIDAD"]).Replace(",", ".");
+            ViewData["RUMBO"] = ultima_etapa_viaje["RUMBO"]; 
+          }
           return View();
         }
 

@@ -6,7 +6,7 @@ using Oracle.DataAccess.Types;
 using System.Configuration;
 using System.Globalization;
 using System.Threading;
-
+using mbpc.Models;
 
 public static class DaoLib
 {
@@ -183,13 +183,16 @@ public static class DaoLib
 
   public static List<object> insertar_reporte(string viaje_id, decimal? lat, decimal? lon, string velocidad, string rumbo, string estado, string fecha)
   {
+    decimal d_velocidad = Hlp.toDecimal(velocidad);
+    decimal d_rumbo = Convert.ToInt16(rumbo);
+
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vViaje", OracleDbType.Varchar2, viaje_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
         new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
-        new OracleParameter("vVelocidad", OracleDbType.Varchar2, velocidad, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRumbo", OracleDbType.Varchar2, rumbo, System.Data.ParameterDirection.Input),
+        new OracleParameter("vVelocidad", OracleDbType.Decimal, d_velocidad, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRumbo", OracleDbType.Int16, d_rumbo, System.Data.ParameterDirection.Input),
         new OracleParameter("vEstado", OracleDbType.Varchar2, estado, System.Data.ParameterDirection.Input),
         new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input)
     };
@@ -381,14 +384,17 @@ public static class DaoLib
 
   public static List<object> pasar_barco(string viajeId, string zonaId, string eta, string fecha, string velocidad, string rumbo)
   {
+    decimal d_velocidad = Hlp.toDecimal(velocidad);
+    decimal d_rumbo     = Convert.ToInt16(rumbo);
+
     var parameters = new OracleParameter[]
     { 
         new OracleParameter("vViajeId", OracleDbType.Varchar2, decimal.Parse(viajeId), System.Data.ParameterDirection.Input),
         new OracleParameter("vZonaId", OracleDbType.Varchar2, decimal.Parse(zonaId), System.Data.ParameterDirection.Input),
         new OracleParameter("vEta", OracleDbType.Varchar2, eta, System.Data.ParameterDirection.Input),
         new OracleParameter("vLlegada", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
-        new OracleParameter("vVelocidad", OracleDbType.Varchar2, velocidad, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRumbo", OracleDbType.Varchar2, rumbo, System.Data.ParameterDirection.Input)
+        new OracleParameter("vVelocidad", OracleDbType.Decimal , d_velocidad, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRumbo", OracleDbType.Int16, d_rumbo, System.Data.ParameterDirection.Input)
         
     };
 
@@ -495,6 +501,11 @@ public static class DaoLib
     return doCall("mbpc.editar_viaje", parameters);
   }
 
+  /// <summary>
+  /// Trae viaje con la última etapa.
+  /// </summary>
+  /// <param name="viaje"></param>
+  /// <returns></returns>
   public static List<object> traer_etapa(string viaje)
   {
     var parameters = new OracleParameter[] 
