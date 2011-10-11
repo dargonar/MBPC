@@ -16,7 +16,7 @@
             <div class="shipmenu">
                 <div class="dropdown">
                     <button class="rerun">Acciones</button>
-                    <button class="select" onclick="toggle_menu('<%=ship["ID"]%>');">Elija una accion</button>
+                    <button class="select" onclick="toggle_menu('<%=ship["ID"]%>'); " id="select_<%=ship["ID"]%>" >Elija una accion</button>
                 </div><!-- dropdown -->
                 <div class="items" id="Item<%=ship["ID"]%>" style="z-index:5">
                     <ul>

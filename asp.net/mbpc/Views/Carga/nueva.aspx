@@ -10,7 +10,7 @@
   <input type="text" id="carga" name="carga" style="width: 250px;" autocomplete="off"  /><br />
 
   <div class="latabla" style="position:absolute;z-index:5;width: 250px;"></div>
-    <label>Codigo</label><br />
+    <label>Código</label><br />
     <input type="text" id="codigo" name="codigo" autocomplete="off" style="width: 40px" /><br />
 
     <label style="float: left;width: 93px;">Cantidad</label><label style="float: left; width: 80px">Unidad</label><br />
@@ -26,7 +26,10 @@
     </select><br/><br/>
 
     <p>
-    <input type="checkbox" name="enbarcaza" value="enbarcaza" id="enbarcaza" />Esta en barcaza
+    <input type="checkbox" name="en_transito" value="" id="en_transito" />Está en tránsito
+    </p>
+    <p>
+    <input type="checkbox" name="enbarcaza" value="" id="enbarcaza" />Está en barcaza
     </p>
     <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" disabled="disabled"/><br />
     <br /><br /><br />

@@ -655,13 +655,14 @@ public static class DaoLib
     return doCall("mbpc.traer_cargas", parameters);
   }
 
-  public static List<object> modificar_carga(int carga_id, int cantidad)
+  public static List<object> modificar_carga(int carga_id, int cantidad_entrada, int cantidad_salida)
   {
 
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vCarga", OracleDbType.Varchar2, carga_id, System.Data.ParameterDirection.Input),
-        new OracleParameter("vCantidad", OracleDbType.Varchar2, cantidad, System.Data.ParameterDirection.Input)
+        new OracleParameter("vCantidadEntrada", OracleDbType.Int32, cantidad_entrada, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCantidadSalida", OracleDbType.Int32, cantidad_salida, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.modificar_carga", parameters);
@@ -689,7 +690,7 @@ public static class DaoLib
     return doCall("mbpc.traer_carga_por_codigo", parameters);
   }
 
-  public static List<object> insertar_carga(int etapa_id, int carga_id, int cantidad, int unidad_id, string buque_id)
+  public static List<object> insertar_carga(int etapa_id, int carga_id, int cantidad, int unidad_id, string buque_id, int en_transito)
   {
 
     var parameters = new OracleParameter[] 
@@ -698,7 +699,8 @@ public static class DaoLib
         new OracleParameter("vCarga", OracleDbType.Varchar2, carga_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vCantidad", OracleDbType.Varchar2, cantidad, System.Data.ParameterDirection.Input),
         new OracleParameter("vUnidad", OracleDbType.Varchar2, unidad_id, System.Data.ParameterDirection.Input),
-        new OracleParameter("vBuque", OracleDbType.Varchar2, buque_id, System.Data.ParameterDirection.Input)
+        new OracleParameter("vBuque", OracleDbType.Varchar2, buque_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vEnTransito", OracleDbType.Int32, en_transito, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.insertar_carga", parameters);

@@ -181,7 +181,7 @@
 
   $("#partidav, #etav, #zoev,#fecha_salidae, #etae, #hrpe").blur(function () {
 
-    isDate($(this).val());
+    //isDate($(this).val());
   });
 
 

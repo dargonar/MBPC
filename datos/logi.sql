@@ -68,8 +68,8 @@ create or replace package mbpc as
   procedure traer_carga_por_codigo(vCodigo in varchar2, usrid in number, vCursor out cur);
   procedure traer_barcazas_de_buque(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure traer_unidades(usrid in number, vCursor out cur);
-  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
-  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, usrid in number, vCursor out cur);
+  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, vEnTransito in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_carga(vCarga in varchar2, vCantidadEntrada in number, vCantidadSalida in number, usrid in number, vCursor out cur);
   procedure eliminar_carga(vCarga in varchar2, checkempty in number, usrid in number, vCursor out cur);
   procedure check_empty(vEtapaId in number, vBuqueId in number);
   procedure adjuntar_barcazas(vEtapaId in number, vViajeId in number);
@@ -705,8 +705,8 @@ create or replace package body mbpc as
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
     --  [412]
     select * into etapa from tbl_etapa where id = vEtapaId;
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID ) 
-      VALUES ( carga_seq.nextval, 412, 0, 0, vEtapaId, vBarcazaId) returning id into temp; 
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, UNIDAD_ID, ETAPA_ID, BUQUE_ID ) 
+      VALUES ( carga_seq.nextval, 412, 0, 0, 0, vEtapaId, vBarcazaId) returning id into temp; 
     
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, fecha) 
     VALUES (etapa.viaje_id, vEtapaId, usrid, 21, vBarcazaId, SYSDATE);
@@ -721,7 +721,7 @@ create or replace package body mbpc as
   procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-    select tc.nombre, c.cantidad, u.nombre unidad, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.id_buque from tbl_cargaetapa c
+    select tc.nombre, c.cantidad, c.cantidad_inicial, c.cantidad_entrada, c.cantidad_salida, u.nombre unidad, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.id_buque from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on c.unidad_id = u.id
     left join buques b on b.id_buque = c.buque_id
@@ -809,12 +809,11 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
   
-  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, usrid in number, vCursor out cur) is
+  procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2,  vEnTransito in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = vEtapa;
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID ) VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque) returning id into temp; 
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL ) VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque, vEnTransito, vCantidad) returning id into temp; 
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
-
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
     --  [412]
     delete from tbl_cargaetapa where etapa_id=vEtapa and TIPOCARGA_ID=412;
@@ -824,10 +823,11 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure modificar_carga(vCarga in varchar2, vCantidad in varchar2, usrid in number, vCursor out cur) is
+  procedure modificar_carga(vCarga in varchar2, vCantidadEntrada in number, vCantidadSalida in number, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCarga);
-    update tbl_cargaetapa set cantidad = vCantidad where id = vCarga returning id into temp;
+    select * into cetapa from tbl_cargaetapa where id=vCarga;
+    update tbl_cargaetapa set cantidad_entrada = vCantidadEntrada, cantidad_salida = vCantidadSalida, cantidad= (cetapa.cantidad_inicial + vCantidadEntrada - vCantidadSalida) where id = vCarga returning id into temp;
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 5, temp, SYSDATE);
   end modificar_carga;
 
