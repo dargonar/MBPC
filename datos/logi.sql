@@ -1013,17 +1013,25 @@ create or replace package body mbpc as
   begin
     --VERIFICAR TIPO_BUQUE 'nacional'
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
-                    from buques b
+                    from buques b 
                     where
-                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1 and buque_id != null)
-                    --and
-                    --b.id_buque not in (select acompanante_id from tbl_viaje where estado != 1)
+                    --Que no sea un barco en viaje
+                    b.id_buque not in (
+                      select buque_id from tbl_viaje where estado=0 and buque_id is not null
+                    )
+                    and
+                    --Que no sea un barco acompanando
+                    b.id_buque not in (
+                      select acompanante_id from tbl_etapa e join tbl_viaje v 
+                      on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante_id is not null
+                    )
                     and 
                     (upper(b.nombre) like upper(:vQuery) or 
                     upper(b.matricula) like upper(:vQuery) or 
                     upper(b.nro_omi) like upper(:vQuery) or 
                     upper(b.nro_ismm) like upper(:vQuery)) 
                     and b.bandera = ''ARGENTINA'' and rownum <= 6';
+    
     open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery; 
   end autocompleterbnacionales;
 
@@ -1035,12 +1043,17 @@ create or replace package body mbpc as
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b
                     where
-                    --Que no sea un buque que esta en viaje
-                    b.id_buque not in (select buque_id from tbl_viaje where estado != 1 and buque_id != null)
-                    and 
-                    --Que no sea un buque que esta acompanando
-                    --b.id_buque not in (select acompanante_id from tbl_etapa where where estado != 1 and buque_id != null )
-                    --and                     
+                    --Que no sea un barco en viaje
+                    b.id_buque not in (
+                      select buque_id from tbl_viaje where estado=0 and buque_id is not null
+                    )
+                    and
+                    --Que no sea un barco acompanando
+                    b.id_buque not in (
+                      select acompanante_id from tbl_etapa e join tbl_viaje v 
+                      on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante_id is not null
+                    )
+                    and                     
                     (upper(b.nombre) like upper(:vQuery) or 
                     upper(b.bandera) like upper(:vQuery) or 
                     upper(b.sdist) like upper(:vQuery) or 
