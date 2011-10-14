@@ -107,6 +107,7 @@
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Carga\barcazas_fondeadas.aspx" />
     <Content Include="Views\Carga\noHayBarcazas.aspx" />
+    <Content Include="Views\Carga\nueva.aspx" />
     <Content Include="Views\Carga\zona_fondeo.aspx" />
     <Content Include="Views\Home\reporteDiario.aspx" />
     <Content Include="Views\Home\reporteDiarioPrint.aspx" />

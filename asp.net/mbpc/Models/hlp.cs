@@ -8,6 +8,13 @@ namespace mbpc.Models
 {
   public class Hlp
   {
+    public static Decimal toDecimal(string value, string format="00.0") 
+    {
+      if(String.IsNullOrEmpty(value))
+          return 0;
+      
+      return Convert.ToDecimal(String.Format("00.0",value.Replace(",", ".")));
+    }
 
     public static string Pager(int currentPage, int currentPageSize, int totalRecords)
     {

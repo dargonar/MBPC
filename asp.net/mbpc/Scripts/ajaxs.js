@@ -421,6 +421,7 @@
           text: false,
           icons: {
             primary: "ui-icon-triangle-1-s"
+            /*secondary: "ui-icon-triangle-1-n"*/
           }
         })
         .parent()
@@ -429,7 +430,13 @@
 
     function toggle_menu(ship)
     {
-      $('#Item'+ship).toggle(200);
+      $('#Item'+ship).toggle(200,
+        function() {
+        if($('#Item'+ship).is(":visible"))
+          $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-n"});
+        else 
+          $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-s"});
+        });
     }
 
     function fx(elem)
@@ -735,7 +742,7 @@
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
           $('#dialogdiv').dialog({
-            height: 410,
+            height: 500,
             width: 690,
             modal: true,
             title: 'Editar Etapa/Viaje'
@@ -766,7 +773,7 @@
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
           $('#dialogdiv').dialog({
-            height: 360,
+            height: 400,
             width: 580,
             modal: true,
             title: 'Editar Cargas'
@@ -799,7 +806,8 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: setcombo ? 300 : 160,
+            /*height: setcombo ? 300 : 160,*/
+            height: setcombo ? 375 : 160,
             width: 310,
             title: title,
             modal: true
@@ -991,22 +999,22 @@ function dateFromStr(datestring)
     var hora   = parseInt(datestring.substring(9, 11).replace(/^[0]+/g,""));
     var minuto = parseInt(datestring.substring(12,14).replace(/^[0]+/g,""));
 
-    //console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
-    //console.log(fecha)
+    hora = !isNaN(hora)?hora:0;
+    minuto = !isNaN(minuto )?minuto :0;
+    
+//    console.log( "#1 VarByVar -> dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
 
     var fecha = new Date(ano, mes - 1, dia, hora, minuto);
+//    console.log("#2 recv: ["+datestring+"] -- generado: ["+fecha+"}");
 
     var temp = { fecha: fecha, ano:ano, mes:mes, dia:dia, hora:hora, minuto:minuto };
     return temp;
     
 }
 
-function isDate(datestring)
+function isDate(datestring) /* is NOT date*/
 {
-    var thedate = dateFromStr(datestring);
-    if ( thedate.ano == "" || thedate.mes == "" || thedate.dia == "" || thedate.hora == "" || thedate.minuto == "")
-        return true;
-    return isNaN( thedate.fecha.getTime() );
+    return isNaN( dateFromStr(datestring).fecha.getTime() );
 }
 
 
