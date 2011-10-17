@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
+using System.Threading;
 
 namespace mbpc.Models
 {
   public class Hlp
   {
-    public static Decimal toDecimal(string value, string format="00.0") 
+    public static Decimal toDecimal(string value) 
     {
       if(String.IsNullOrEmpty(value))
           return 0;
-      
-      return Convert.ToDecimal(String.Format("00.0",value.Replace(",", ".")));
+
+      string s = value.Replace(".", Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator)
+                      .Replace(",", Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+      return Convert.ToDecimal(s);
     }
+
+    public static string toString(decimal value, string format="{0:0.00}")
+    {
+      return String.Format(format, value).Replace(",", ".");
+    }
+
 
     public static string Pager(int currentPage, int currentPageSize, int totalRecords)
     {

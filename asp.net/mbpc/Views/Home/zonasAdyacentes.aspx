@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="mbpc.Models" %>
  <%
       var pasar = bool.Parse(ViewData["pasar"].ToString());
       var url = string.Empty;
@@ -55,9 +56,13 @@
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
 
-  <% if (pasar)  { %>
-    $("#velocidad").val("<%= ViewData["VELOCIDAD"] %>");
-    $("#rumbo").val("<%= ViewData["RUMBO"] %>");
+  <% if (pasar)  {
+    var svel = Hlp.toString( Hlp.toDecimal((string)ViewData["VELOCIDAD"]), "{0:00.0}" );
+    var srum = Hlp.toString( Hlp.toDecimal((string)ViewData["RUMBO"]), "{0:000}" );
+  %>
+
+    $("#velocidad").val("<%= svel %>");
+    $("#rumbo").val("<%= srum %>");
 
         function validarfechas() {
 

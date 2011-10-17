@@ -184,7 +184,7 @@ public static class DaoLib
   public static List<object> insertar_reporte(string viaje_id, decimal? lat, decimal? lon, string velocidad, string rumbo, string estado, string fecha)
   {
     decimal d_velocidad = Hlp.toDecimal(velocidad);
-    decimal d_rumbo = Convert.ToInt16(rumbo);
+    decimal d_rumbo = Hlp.toDecimal(rumbo);
 
     var parameters = new OracleParameter[] 
     { 
@@ -192,7 +192,7 @@ public static class DaoLib
         new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
         new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
         new OracleParameter("vVelocidad", OracleDbType.Decimal, d_velocidad, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRumbo", OracleDbType.Int16, d_rumbo, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRumbo", OracleDbType.Decimal, d_rumbo, System.Data.ParameterDirection.Input),
         new OracleParameter("vEstado", OracleDbType.Varchar2, estado, System.Data.ParameterDirection.Input),
         new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input)
     };
@@ -385,7 +385,7 @@ public static class DaoLib
   public static List<object> pasar_barco(string viajeId, string zonaId, string eta, string fecha, string velocidad, string rumbo)
   {
     decimal d_velocidad = Hlp.toDecimal(velocidad);
-    decimal d_rumbo     = Convert.ToInt16(rumbo);
+    decimal d_rumbo     = Hlp.toDecimal(rumbo);
 
     var parameters = new OracleParameter[]
     { 
@@ -394,7 +394,7 @@ public static class DaoLib
         new OracleParameter("vEta", OracleDbType.Varchar2, eta, System.Data.ParameterDirection.Input),
         new OracleParameter("vLlegada", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
         new OracleParameter("vVelocidad", OracleDbType.Decimal , d_velocidad, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRumbo", OracleDbType.Int16, d_rumbo, System.Data.ParameterDirection.Input)
+        new OracleParameter("vRumbo", OracleDbType.Decimal, d_rumbo, System.Data.ParameterDirection.Input)
         
     };
 
@@ -579,6 +579,9 @@ public static class DaoLib
 
   public static List<object> editar_etapa(string etapa, string calado_proa, string calado_popa, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
   {
+    decimal d_velocidad = Hlp.toDecimal(velocidad);
+    decimal d_rumbo = Hlp.toDecimal(rumbo);
+
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa, System.Data.ParameterDirection.Input),
@@ -590,8 +593,8 @@ public static class DaoLib
         new OracleParameter("vCantidadTripulantes", OracleDbType.Varchar2, cantidad_tripulantes, System.Data.ParameterDirection.Input),
         new OracleParameter("vCantidadPasajeros", OracleDbType.Varchar2, cantidad_pasajeros, System.Data.ParameterDirection.Input),
         new OracleParameter("vCapitan", OracleDbType.Varchar2, capitan, System.Data.ParameterDirection.Input),
-        new OracleParameter("vVelocidad", OracleDbType.Varchar2, velocidad, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRumbo", OracleDbType.Varchar2, rumbo, System.Data.ParameterDirection.Input)
+        new OracleParameter("vVelocidad", OracleDbType.Decimal, d_velocidad, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRumbo", OracleDbType.Decimal, d_rumbo, System.Data.ParameterDirection.Input)
 
     };
 

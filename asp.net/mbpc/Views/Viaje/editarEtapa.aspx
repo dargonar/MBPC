@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="mbpc.Models" %>
+
 <% List<object> etapalist = ViewData["etapa"] as List<object>; %>
 <% Dictionary<string, string> etapa = etapalist[0] as Dictionary<string, string>; %>
 <% List<object> practicolist = ViewData["practicos"] as List<object>; %>
@@ -169,13 +171,17 @@
 
 <script type="text/javascript">
 
-
-
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
 
-  $("#velocidad").val("<%= Convert.ToString(etapa["VELOCIDAD"]).Replace(",", ".") %>");
-  $("#rumbo").val("<%= etapa["RUMBO"] %>");
+  //Comment
+  <%
+    var svel = Hlp.toString( Hlp.toDecimal((string)etapa["VELOCIDAD"]), "{0:00.0}" );
+    var srum = Hlp.toString( Hlp.toDecimal((string)etapa["RUMBO"]), "{0:000}" );
+  %>
+
+  $("#velocidad").val("<%= svel %>");
+  $("#rumbo").val("<%= srum %>");
 
   $("#partidav, #etav, #zoev,#fecha_salidae, #etae, #hrpe").mask("99-99-99 99:99");
 
