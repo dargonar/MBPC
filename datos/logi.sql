@@ -56,7 +56,7 @@ create or replace package mbpc as
   procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in varchar2, vLlegada in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure zonas_adyacentes(vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
+  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure agregar_practicos(vPractico in varchar2, vEtapa in varchar2, vActivo in varchar2);
@@ -330,7 +330,9 @@ create or replace package body mbpc as
   procedure reporte_diario (vUsuario in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      select p.id pdc, b.nombre, b.sdist, b.bandera band, origen.puerto fm, destino.puerto tox, e.calado_proa cal, v.zoe, z.cuatrigrama, rc.nombre CANAL, rck.km KM, rck.unidad, to_char(e.eta,'HH:MM') eta, to_char(e.hrp,'HH:MM') hrp, e.sentido
+      select p.id pdc, b.nombre, b.sdist, b.bandera band, origen.puerto fm, destino.puerto tox, 
+             e.calado_proa cal, v.zoe, z.cuatrigrama, rc.nombre CANAL, rck.km KM, rck.unidad, 
+             to_char(e.eta,'HH:MM') eta, to_char(e.hrp,'HH:MM') hrp, e.sentido
       from tbl_etapa e
       left join tbl_viaje v on e.viaje_id = v.id
       left join buques b on v.buque_id = b.ID_BUQUE
@@ -340,7 +342,7 @@ create or replace package body mbpc as
       left join tbl_zonas z on p.zona_id = z.id
       left join rios_canales_km rck on rck.id = p.rios_canales_km_id
       left join rios_canales rc on rck.id_rio_canal = rc.id
-      where to_char(e.hrp, 'YYDD-MM-yy')= to_char(sysdate, 'YYDD-MM-yy')
+      where to_char(e.fecha_salida, 'YYDD-MM-yy')= to_char(sysdate, 'YYDD-MM-yy')
       and e.actual_id in (select puntodecontrol from tbl_puntodecontrolusuario where usuario = vUsuario) order by nombre, rck.km;
   end reporte_diario;
 
@@ -695,7 +697,7 @@ create or replace package body mbpc as
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id, e.calado_proa, e.calado_popa, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad
+    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id, e.calado_proa, e.calado_popa, e.calado_maximo, e.calado_informado, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad
     from tbl_viaje v 
     left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual) 
     left join tbl_capitan c on (e.capitan_id = c.id)
@@ -706,11 +708,12 @@ create or replace package body mbpc as
   --Edita la informacion etapa
   --Registra el evento
 
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur) is
+  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur) is
   begin
       update tbl_etapa SET
         calado_proa          = vCaladoProa,
         calado_popa          = vCaladoPopa,
+        calado_informado     = vCaladoInformado,
         hrp                  = TO_DATE(vHPR, 'DD-MM-yy HH24:mi'),
         eta                  = TO_DATE(vETA, 'DD-MM-yy HH24:mi'),
         fecha_salida         = TO_DATE(vFechaSalida, 'DD-MM-yy HH24:mi'),

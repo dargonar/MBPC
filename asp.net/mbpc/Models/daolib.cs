@@ -577,7 +577,7 @@ public static class DaoLib
     return doCall("mbpc.modificar_pbip", parameters);
   }
 
-  public static List<object> editar_etapa(string etapa, string calado_proa, string calado_popa, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
+  public static List<object> editar_etapa(string etapa, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
   {
     decimal d_velocidad = Hlp.toDecimal(velocidad);
     decimal d_rumbo = Hlp.toDecimal(rumbo);
@@ -587,6 +587,7 @@ public static class DaoLib
         new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa, System.Data.ParameterDirection.Input),
         new OracleParameter("vCaladoProa", OracleDbType.Varchar2, calado_proa, System.Data.ParameterDirection.Input),
         new OracleParameter("vCaladoPopa", OracleDbType.Varchar2, calado_popa, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCaladoInformado", OracleDbType.Varchar2, calado_informado, System.Data.ParameterDirection.Input),
         new OracleParameter("vHPR", OracleDbType.Varchar2, hrp, System.Data.ParameterDirection.Input),
         new OracleParameter("vETA", OracleDbType.Varchar2, eta, System.Data.ParameterDirection.Input),
         new OracleParameter("vFechaSalida", OracleDbType.Varchar2, fecha_salida, System.Data.ParameterDirection.Input),

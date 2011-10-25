@@ -84,6 +84,9 @@
     <label>Calado Proa</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="caladoproatext" name="calado_proa" value="<%= etapa["CALADO_PROA"] %>"/><br />
 
+    <label>Calado Informado</label><br />
+    <input autocomplete="off" type="text" class="editaretapatext" id="Text1" name="calado_informado" value="<%= etapa["CALADO_INFORMADO"] %>"/><br />
+
     <label>HRP</label><br />
     <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />

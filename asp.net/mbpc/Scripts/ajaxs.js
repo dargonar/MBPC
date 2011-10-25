@@ -428,8 +428,16 @@
         .buttonset();
     }
 
-    function toggle_menu(ship)
+    function toggle_menu(el, ship)
     {
+        var pos = $(el).offset();
+
+//      pos.left -= 100;
+//      pos.top  += 20;
+        $('#Item'+ship).css('top',pos.top+20);
+//      
+//      .toggle();
+
       $('#Item'+ship).toggle(200,
         function() {
         if($('#Item'+ship).is(":visible"))
@@ -437,6 +445,7 @@
         else 
           $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-s"});
         });
+
     }
 
     function fx(elem)

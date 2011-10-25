@@ -227,7 +227,7 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult modificarEtapa(string etapa_id, string calado_proa, string calado_popa, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string activo, string practico0, string practico1, string practico2, string capitan_id, string velocidad, string rumbo, string latitud, string longitud)
+        public ActionResult modificarEtapa(string etapa_id, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string activo, string practico0, string practico1, string practico2, string capitan_id, string velocidad, string rumbo, string latitud, string longitud)
         {
           
           if (activo != null) 
@@ -250,7 +250,7 @@ namespace mbpc.Controllers
             DaoLib.agregar_practicos(practicos.ToArray(), etapas.ToArray(), activos.ToArray());
           }
 
-          DaoLib.editar_etapa(etapa_id, calado_proa, calado_popa, hrp, eta, fecha_salida, cantidad_tripulantes, cantidad_pasajeros, capitan_id, rumbo, velocidad);
+          DaoLib.editar_etapa(etapa_id, calado_proa, calado_popa, calado_informado, hrp, eta, fecha_salida, cantidad_tripulantes, cantidad_pasajeros, capitan_id, rumbo, velocidad);
 
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
