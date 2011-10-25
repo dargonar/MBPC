@@ -31,7 +31,7 @@
   </head>
 
   <body>
-    <div>
+    <div style="height:100%;width:100%;">
       <div id="header">
         <div class="user">
           <label><strong> <%= datos_del_usuario["APELLIDO"] + ", " + datos_del_usuario["NOMBRES"] %></strong></label>
