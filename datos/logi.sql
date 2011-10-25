@@ -106,6 +106,8 @@ create or replace package mbpc as
   procedure pager(vTabla in varchar2, vOrderBy in varchar2, vCantidad in number, vDesde in number, usrid in number, vCursor out cur );
   procedure count_rows(vTabla in varchar2, number_of_rows out number);
   procedure traer_banderas(usrid in number, vCursor out cur);
+  --reportes
+  procedure obtener_reportes(usrid in number, vCursor out cur);
 end;
 
 
@@ -1378,6 +1380,12 @@ create or replace package body mbpc as
     open vCursor for
       SELECT DESCRIPCION FROM TBL_PAISES_CIALA;
   end traer_banderas;
+
+  procedure obtener_reportes(usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      SELECT ID, NOMBRE, DESCRIPCION, CONSULTA_SQL FROM TBL_REPORTE;
+  end obtener_reportes;
 
   
 end;

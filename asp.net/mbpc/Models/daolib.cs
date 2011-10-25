@@ -975,8 +975,20 @@ public static class DaoLib
     return doCall("mbpc.autocompleterm", parameters);
   }
 
+  /// <summary>
+  /// Nuevo metodo para obtener listado reportes
+  /// </summary>
+  /// <param name="functionName"></param>
+  /// <param name="parameters"></param>
+  /// <param name="arraybindcount"></param>
+  /// <returns></returns>
+  public static List<object> get_reportes()
+  {
+    var parameters = new OracleParameter[0]; 
+    
+    return doCall("mbpc.obtener_reportes", parameters);
 
-
+  }
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
