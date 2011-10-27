@@ -107,7 +107,8 @@ create or replace package mbpc as
   procedure count_rows(vTabla in varchar2, number_of_rows out number);
   procedure traer_banderas(usrid in number, vCursor out cur);
   --reportes
-  procedure obtener_reportes(usrid in number, vCursor out cur);
+  procedure reporte_lista(usrid in number, vCursor out cur);
+  procedure reporte_obtener_parametros(vReporte in number, usrid in number, vCursor out cur);
 end;
 
 
@@ -1381,12 +1382,25 @@ create or replace package body mbpc as
       SELECT DESCRIPCION FROM TBL_PAISES_CIALA;
   end traer_banderas;
 
-  procedure obtener_reportes(usrid in number, vCursor out cur) is
+  -------------------------------------------------------------------------------------------------------------
+  --
+  
+  procedure reporte_lista(usrid in number, vCursor out cur) is
   begin
     open vCursor for 
       SELECT ID, NOMBRE, DESCRIPCION, CONSULTA_SQL FROM TBL_REPORTE;
-  end obtener_reportes;
+  end reporte_lista;
 
+  -------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure reporte_obtener_parametros(vReporte in number, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      SELECT INDICE,NOMBRE,TIPO_DATO FROM TBL_REPORTE_PARAM WHERE REPORTE_ID=vReporte ORDER BY INDICE;
+  
+  end reporte_obtener_parametros;
+  
   
 end;
 /

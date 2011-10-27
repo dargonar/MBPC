@@ -982,13 +982,24 @@ public static class DaoLib
   /// <param name="parameters"></param>
   /// <param name="arraybindcount"></param>
   /// <returns></returns>
-  public static List<object> get_reportes()
+  public static List<object> reporte_lista()
   {
-    var parameters = new OracleParameter[0]; 
-    
-    return doCall("mbpc.obtener_reportes", parameters);
+    var parameters = new OracleParameter[0];
 
+    return doCall("mbpc.reporte_lista", parameters);
   }
+
+  public static List<object> reporte_obtener_parametros(int id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporte", OracleDbType.Varchar2, id, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_obtener_parametros", parameters);
+  }
+
+  
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {

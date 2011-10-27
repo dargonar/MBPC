@@ -14,7 +14,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 <div id="columnas">
-  <% Html.RenderPartial("~/Views/Reporte/_reporte_content.aspx"); %>
+  <% Html.RenderPartial("~/Views/Reporte/_content.aspx"); %>
 </div>
 
 <div id="sueltos" style="display: none;">

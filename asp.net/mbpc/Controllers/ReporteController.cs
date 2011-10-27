@@ -16,10 +16,17 @@ namespace mbpc.Controllers
         {
           if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
             return this.RedirectToAction("ShowForm", "Auth");
+          
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
 
-          ViewData["reportes"] = DaoLib.get_reportes();
+          ViewData["reportes"] = DaoLib.reporte_lista();
           return View();
+        }
+
+        public ActionResult ParamsFor(int id)
+        {
+          ViewData["params"] = DaoLib.reporte_obtener_parametros(id);
+          return View("_params");
         }
 
         public ActionResult VerReporte()

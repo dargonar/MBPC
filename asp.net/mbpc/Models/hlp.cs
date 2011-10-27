@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace mbpc.Models
 {
-  public class Hlp
+  public static class Hlp
   {
     public static Decimal toDecimal(string value) 
     {

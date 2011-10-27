@@ -115,7 +115,8 @@
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
     <Content Include="Views\Reporte\Index.aspx" />
-    <Content Include="Views\Reporte\_reporte_content.aspx" />
+    <Content Include="Views\Reporte\_content.aspx" />
+    <Content Include="Views\Reporte\_params.aspx" />
     <Content Include="Views\Shared\BarcazaItem.ascx" />
     <Content Include="Views\Shared\_buques.aspx" />
     <Content Include="Views\Shared\_capitanes.aspx" />

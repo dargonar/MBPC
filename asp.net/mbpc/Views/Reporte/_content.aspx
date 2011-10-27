@@ -1,25 +1,4 @@
 ﻿<%@ Page Title="" Language="C#"  Inherits="System.Web.Mvc.ViewPage" %>
-<div id="area">
-      <ul id="tabs">
-        <li><a href="#" onclick="return false;">Something</a></li>
-
-
-       <div class="btn-new-class">
-        <a href="#" onclick="return false;"> Exportar a CSV</a>
-       </div>
-
-       <div class="btn-new-class">
-        <a href="#" onclick="return false;"> Exportar a TXT</a>
-       </div>
-
-
-       <div id="btn-new">
-        <a href="#" onclick="return false;"> Exportar a PDF</a>
-       </div>
-
-      </ul>
-  <div class="split"></div>	
-</div>
 
 <!-- LEFT COL -->
 <div class="col" style="width:100%;height:100%;">
@@ -31,7 +10,7 @@
   <div style="padding:20px;">
     <form id="reporte" action="<%= Url.Content("~/Reporte/VerReporte") %>" method="post">
 
-      <label>Reporte</label>
+      <label>Seleccione un reporte: </label>
       <select name="reporte_id" id="reporte_id" style="margin:0; width:274px;" class="nexttab">
       <% foreach (Dictionary<string, string> reporte in (ViewData["reportes"] as List<object>))
           { 
@@ -41,30 +20,12 @@
       %>
       </select><br /><br />
       <div style="clear:both;"></div>
-      <h4>Parámetros del reporte</h4>
-      <div id="reporte_params" class="reporte_params">
-        <div class="reporte_params_container">
-          <label>Param #1</label><br />
-          <input autocomplete="off" type="text" id="partida" name="partida" style="width:270px"/><br />
-          <label class="desc">Formato: dd/mm/aa/ hh:mm</label><br />
-        </div>
-        
-        <div class="reporte_params_container">
-          <label>Param #2</label><br />
-          <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px"/><br />
-        </div>
-        
-        <div class="reporte_params_container">
-          <label>Param #3</label><br />
-          <input autocomplete="off" type="text" id="Text1" name="partida" style="width:270px"/><br />
-        </div>
-        
-        <div class="reporte_params_container">
-          <label>Param #4</label><br />
-          <input autocomplete="off" type="text" id="Text2" name="eta" style="width:270px"/><br />
-          <label class="desc">Formato: dd/mm/aa/ hh:mm</label><br />
-        </div>
+      
+      <h4 style="display:none">Parámetros del reporte</h4>
+      <div style="display:none" id="reporte_params" class="reporte_params">
       </div>
+
+
       <div style="clear:both;"></div>
       <br/>
       <input type="submit" class="botonsubmit" style="margin-left: 190px;display: block;padding: 7px 15px 7px 15px;margin: 0;text-decoration: none;text-align: center;font-size: 12px;color: black;background-color: #E6E6E6;border: #B4B4B4 solid 1px;" value="Ver Reporte" />
