@@ -89,12 +89,23 @@ public static class DaoLib
 
   }
 
-  public static List<object> hist_evt(string viaje)
+  public static List<object> eliminar_evento(string id, string etapa_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEvento", OracleDbType.Varchar2, id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vEtapa" , OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.eliminar_evento", parameters);
+  }
+
+  public static List<object> hist_evt(string etapa_id)
   {
 
     var parameters = new OracleParameter[] 
     { 
-        new OracleParameter("vViaje", OracleDbType.Varchar2, viaje, System.Data.ParameterDirection.Input)
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.hist_evt", parameters);
@@ -171,11 +182,11 @@ public static class DaoLib
 
 
 
-  public static List<object> hist_rvp(string viaje)
+  public static List<object> hist_rvp(string etapa_id)
   {
     var parameters = new OracleParameter[] 
     { 
-        new OracleParameter("vViaje", OracleDbType.Varchar2, viaje, System.Data.ParameterDirection.Input)
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.hist_rvp", parameters);
@@ -999,6 +1010,36 @@ public static class DaoLib
     return doCall("mbpc.reporte_obtener_parametros", parameters);
   }
 
+  public static List<object> reporte_obtener_parametros_str(string nombre)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_obtener_parametros_str", parameters);
+  }
+
+  public static object reporte_obtener(int id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporte", OracleDbType.Varchar2, id, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_obtener", parameters)[0];
+  }
+
+  public static object reporte_obtener_str(string nombre)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporte", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_obtener_str", parameters)[0];
+  }
+
   
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
@@ -1065,8 +1106,6 @@ public static class DaoLib
       cmd.Parameters.Add("vCursor", OracleDbType.RefCursor, DBNull.Value, System.Data.ParameterDirection.Output);
 
       OracleDataReader reader = cmd.ExecuteReader();
-
-      Type typetemp = typeof(Boolean);
       
       while (reader.Read())
       {
@@ -1074,8 +1113,7 @@ public static class DaoLib
         Dictionary<string, string> vv = new Dictionary<string, string>();
         for (int i = 0; i < reader.FieldCount; i++)
         {
-          typetemp = typeof(Boolean);
-          typetemp = reader.GetFieldType(i);
+          var typetemp = reader.GetFieldType(i);
 
           var val = reader.GetValue(i);
           
@@ -1125,5 +1163,74 @@ public static class DaoLib
 
     return retVal;
   }
+
+
+  public static List<object> doSQL(OracleCommand cmd)
+  {
+    string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+    List<object> retVal = new List<object>();
+
+    using (OracleConnection con = new OracleConnection(constr))
+    {
+      con.Open();
+
+      cmd.Connection = con;
+      OracleDataReader reader = cmd.ExecuteReader();
+
+      while (reader.Read())
+      {
+        Dictionary<string, string> vv = new Dictionary<string, string>();
+        for (int i = 0; i < reader.FieldCount; i++)
+        {
+          var typetemp = reader.GetFieldType(i);
+          var val = reader.GetValue(i);
+
+          if (typetemp == typeof(DateTime))
+          {
+            if (val.GetType() == typeof(DBNull))
+            {
+              vv[reader.GetName(i).ToString()] = "";
+              vv[reader.GetName(i).ToString() + "_fmt"] = "";
+            }
+            else
+            {
+              vv[reader.GetName(i).ToString()] = DateTime.Parse(val.ToString()).ToString("u", DateTimeFormatInfo.InvariantInfo).Substring(0, 16);
+              vv[reader.GetName(i).ToString() + "_fmt"] = string.Format("{0:dd-MM-yy HH:mm}", (DateTime)val);
+            }
+            continue;
+          }
+          vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+        }
+
+        //Lat/Long de float a string
+        if (vv.ContainsKey("LATITUD") && vv.ContainsKey("LONGITUD"))
+        {
+          if (vv["LATITUD"] != "" || vv["LONGITUD"] != "")
+          {
+            double lat = 0.0;
+            double lon = 0.0;
+
+            double.TryParse(vv["LATITUD"], out lat);
+            double.TryParse(vv["LONGITUD"], out lon);
+
+            vv["LATLONG_fmt"] = string.Format("{0:00}{1:00}{2}{3:000}{4:00}{5}",
+                                    Math.Abs((int)lat), Math.Abs((int)((lat - Math.Truncate(lat)) * 100.0f)),
+                                    Math.Sign(lat) > 0 ? 'N' : 'S',
+                                    Math.Abs((int)lon), Math.Abs((int)((lon - Math.Truncate(lon)) * 100.0f)),
+                                    Math.Sign(lon) > 0 ? 'E' : 'W');
+          }
+          else vv["LATLONG_fmt"] = "";
+        }
+
+        retVal.Add(vv);
+      }
+
+      cmd.Dispose();
+      con.Close();
+    }
+
+    return retVal;
+  }
+
 
 }

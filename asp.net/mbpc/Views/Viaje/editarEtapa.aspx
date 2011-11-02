@@ -82,10 +82,14 @@
   
   <div class="columna">
     <label>Calado Proa</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="caladoproatext" name="calado_proa" value="<%= etapa["CALADO_PROA"] %>"/><br />
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa" name="calado_proa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa_ft" name="calado_proa_ft"/>&nbsp;ft
+    <br />
 
     <label>Calado Informado</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="Text1" name="calado_informado" value="<%= etapa["CALADO_INFORMADO"] %>"/><br />
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado" name="calado_informado"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado_ft" name="calado_informado_ft"/>&nbsp;ft
+    <br />
 
     <label>HRP</label><br />
     <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
@@ -139,7 +143,9 @@
 
   <div class="columna">
     <label>Calado Popa</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="caladopopatext" name="calado_popa" value="<%= etapa["CALADO_POPA"] %>"/><br />
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa" name="calado_popa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa_ft" name="calado_popa_ft"/>&nbsp;ft
+    <br />
 
     <label>ETA</label><br />
     <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
@@ -176,6 +182,45 @@
 
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
+
+  //Calado proa
+  $("#caladoproa").mask("99").val("<%=etapa["CALADO_PROA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_PROA"]), "{0:00}") : ""%>");
+  $("#caladoproa_ft").mask("999.9").val("<%=etapa["CALADO_PROA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_PROA"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
+
+  $("#caladoinformado").mask("99").val("<%=etapa["CALADO_INFORMADO"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_INFORMADO"]), "{0:00}") : ""%>");
+  $("#caladoinformado_ft").mask("999.9").val("<%=etapa["CALADO_INFORMADO"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_INFORMADO"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
+
+  $("#caladopopa").mask("99").val("<%= etapa["CALADO_POPA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_POPA"]), "{0:00}") : ""%>");
+  $("#caladopopa_ft").mask("999.9").val("<%=etapa["CALADO_POPA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_POPA"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
+
+  //meters to feets
+  $("#caladoproa, #caladoinformado, #caladopopa").change( function() {
+    //alert('ddd');
+    var v = $(this).val();
+    var vv = '';
+    if( v != '')
+    {
+      var vint = parseInt(parseFloat(v)*3.2808399);
+      var vflo = parseInt(parseFloat(parseFloat(v)*3.2808399 - vint)*10.0);
+      vv = sprintf('%03d.%01d', vint, vflo);
+    }
+
+    $("#"+ $(this).attr('id') + '_ft').val(vv);
+  });
+
+  //feets to meters
+  $("#caladoproa_ft, #caladoinformado_ft, #caladopopa_ft").change( function() {
+    var v = $(this).val();
+    var vv = '';
+    if( v != '' )
+    {
+      var vint = parseInt(parseFloat(v)/3.2808399);
+      vv = sprintf('%02d', vint);
+    }
+
+    var iidd=$(this).attr('id').split('_')[0];
+    $("#"+ iidd).val(vv);
+  });
 
   //Comment
   <%
@@ -389,7 +434,6 @@
   });
 
 
-
   function pegarPractico(nombre, id) {
 
     //$('#practicoh').val(id);
@@ -407,13 +451,19 @@
       return false;
     }
 
+    /*
     if ($('#practicoselect').children().length > 2) {
       alert("solo puede agregar 3 practicos por etapa")
       $('.latabla').html('');
       return false;
     }
+    */
+    
+    var issel = '';
+    if( $(".practicopt").length == 0 )
+     issel = 'selected="selected"';
 
-    $('#practicoselect').append('<option class="practicopt" onclick="seleccionarPractico(this)" value="' + id + '">' + nombre + '</option>');
+    $('#practicoselect').append('<option class="practicopt" onclick="seleccionarPractico(this)" value="' + id + '" ' +issel+' >' + nombre + '</option>');
 
     $('.practicosh').each(function () {
       if ($(this).val() == "") {
@@ -595,8 +645,6 @@
     });
     return false;
   });
-
-
 
 </script>
 

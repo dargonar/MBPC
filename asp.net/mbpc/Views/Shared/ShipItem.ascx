@@ -39,7 +39,7 @@
                       <li><a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>"                                   onclick="return editarnotas(this);return false;">            Editar Notas</a></li>
                       <!--<li><a href="<%= Url.Content("~/Viaje/editarPbip/") + ship["ID"] %>"                                    onclick="return pbip(this);">                                Formulario PBIP </a></li>-->
                       <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>" onclick="return histrvp(this);">                                                                   Historial R/V/P</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>?etapa_id=<%=ship["ETAPA_ID"]%>" onclick="return histrvp(this);">                                                                   Historial R/V/P</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/cambiarEstado/") + ship["ETAPA_ID"] %>" onclick="return agregarevento(this);" class="agregareventolink">Cambiar Estado</a></li>
                      </ul>
                 </div><!-- items -->

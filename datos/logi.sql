@@ -12,6 +12,7 @@ create or replace package mbpc as
   practicoetapa tbl_practicoetapa%ROWTYPE;
   viaje tbl_viaje%ROWTYPE;
   pbipp tbl_pbip%ROWTYPE;
+  evento tbl_evento%ROWTYPE;
   sql_stmt varchar2(2048);
   temp number;
   temp2 number;
@@ -43,9 +44,10 @@ create or replace package mbpc as
   procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
   procedure quitar_acompanante(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure separar_convoy(vViaje in varchar2, vPartida in varchar2, usrid in number, vCursor out cur);
-  procedure hist_rvp(vViaje in varchar2, usrid in number, vCursor out cur);
-  procedure hist_pos(vViaje in varchar2, usrid in number, vCursor out cur);
-  procedure hist_evt(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure eliminar_evento(vEvento in number, vEtapa in number, usrid in number, vCursor out cur);
+  procedure hist_rvp(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure hist_pos(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure hist_evt(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in number, vRumbo in number, vEstado in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure posicion_de_puntodecontrol(vPdc in varchar2, usrid in number, vCursor out cur);
   procedure eventos_usuario(usrid in number, vCursor out cur);
@@ -109,16 +111,11 @@ create or replace package mbpc as
   --reportes
   procedure reporte_lista(usrid in number, vCursor out cur);
   procedure reporte_obtener_parametros(vReporte in number, usrid in number, vCursor out cur);
+  procedure reporte_obtener_parametros_str(vNombre in varchar2, usrid in number, vCursor out cur);
+  procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur);
+  procedure reporte_obtener_str(vNombre in varchar2, usrid in number, vCursor out cur);
+  
 end;
-
-
-
-
-
-
-
-
-
 
 
 
@@ -364,34 +361,82 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------  
   --
 
-  procedure hist_rvp(vViaje in varchar2, usrid in number, vCursor out cur) is
+  procedure hist_rvp(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
+    select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
       select rc.nombre canal, rck.km km, nro_etapa, to_char(created_at ,'YYDD-MM-yy HH:MI:SS') created_at, e.id from tbl_etapa e
         left join tbl_puntodecontrol pdc on actual_id = pdc.id 
         left join rios_canales_km rck on rck.id = pdc.rios_canales_km_id
         left join rios_canales rc on rck.id_rio_canal = rc.id
-        where viaje_id = vViaje order by created_at desc;
+        where viaje_id = etapa.viaje_id order by created_at desc;
   end hist_rvp;
+
+  -------------------------------------------------------------------------------------------------------------  
+  --
   
-  procedure hist_pos(vViaje in varchar2, usrid in number, vCursor out cur) is
+  procedure hist_pos(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
+    select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
       select p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.estado  from tbl_evento p
       left join tbl_bq_estados e on p.estado = e.cod
-      where viaje_id = vViaje and tipo_id = 19 order by created_at desc;
+      where viaje_id = etapa.viaje_id and tipo_id = 19 and p.borrado = 0
+      order by created_at desc;
   end hist_pos;  
 
-  
-  procedure hist_evt(vViaje in varchar2, usrid in number, vCursor out cur) is
+  -------------------------------------------------------------------------------------------------------------  
+  --
+  procedure eliminar_evento(vEvento in number, vEtapa in number, usrid in number, vCursor out cur) is
   begin
+      
+      select * into evento from tbl_evento where id=vEvento;
+      
+      temp := evento.viaje_id;
+      
+      --Soft delete
+      update tbl_evento set borrado=1 where id=evento.id;
+      
+      --Agregar evento 'Evento borrado'
+      insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, evento_id) 
+      VALUES ( usrid, evento.viaje_id , vEtapa , 24, SYSDATE, evento.id );
+ 
+      begin
+         --Traemos el ultimo evento tipo 20 (para sacar el estado) y actualizar el viaje
+        SELECT * into evento FROM 
+          (SELECT * FROM tbl_evento 
+              where viaje_id=evento.viaje_id and 
+                    tipo_id=20 and 
+                    borrado=0 
+              ORDER BY created_at DESC)
+        WHERE ROWNUM=1;
+
+        --Ponemos el ultimo estado en el viaje
+        update tbl_viaje set estado_buque=evento.estado where id=temp;
+      
+        exception when NO_DATA_FOUND THEN
+          update tbl_viaje set estado_buque=NULL where id=temp;
+      end;
+      
+  end eliminar_evento;    
+  
+  -------------------------------------------------------------------------------------------------------------  
+  --
+  
+  procedure hist_evt(vEtapa in varchar2, usrid in number, vCursor out cur) is
+  begin
+    select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
-      select p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal from tbl_evento p
+      select p.id, p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
+      from tbl_evento p
       left join tbl_tipoevento e on p.tipo_id = e.id
       left join rios_canales_km rck on p.rios_canales_km_id = rck.id
       left join rios_canales rc on rck.id_rio_canal = rc.id
-      where viaje_id = vViaje and e.tipo = 1 order by created_at desc;
+      where viaje_id = etapa.viaje_id and e.tipo = 1 and p.borrado=0
+      order by created_at desc;
   end hist_evt;    
+  -------------------------------------------------------------------------------------------------------------  
+  --
   
   procedure insertar_reporte(vViaje in varchar2, vLat in number, vLon in number, vVelocidad in number, vRumbo in number, vEstado in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
   begin
@@ -1400,6 +1445,39 @@ create or replace package body mbpc as
       SELECT INDICE,NOMBRE,TIPO_DATO FROM TBL_REPORTE_PARAM WHERE REPORTE_ID=vReporte ORDER BY INDICE;
   
   end reporte_obtener_parametros;
+  -------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure reporte_obtener_parametros_str(vNombre in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      SELECT p.INDICE, p.NOMBRE, p.TIPO_DATO FROM TBL_REPORTE_PARAM p
+      JOIN TBL_REPORTE r on p.REPORTE_ID=r.ID and r.NOMBRE=vNombre
+      ORDER BY INDICE;
+  
+  end reporte_obtener_parametros_str;
+  -------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL 
+      FROM TBL_REPORTE WHERE ID=vReporte;
+  
+  end reporte_obtener;
+  -------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure reporte_obtener_str(vNombre in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL 
+      FROM TBL_REPORTE WHERE NOMBRE=vNombre;
+  
+  end reporte_obtener_str;
+  
+  
   
   
 end;

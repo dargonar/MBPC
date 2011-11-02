@@ -19,7 +19,7 @@
   <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);"/> <br />
 
   <label>Pr&oacute;ximo punto de control</label><br />
-  <select name="proximo_punto" style="margin:0; width:274px;" class="nexttab">
+  <select id="proximo_punto" name="proximo_punto" style="margin:0; width:274px;" class="nexttab">
   <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>))
       { 
          string nombre = string.Empty;
@@ -33,19 +33,19 @@
          <option value="<%= zona["ID"] %>"><%= nombre %></option>
    <% } 
   %>
-  </select><br /><br />
-
+  </select>
+  <br/>
   <label>Fecha de partida</label><br />
   <input autocomplete="off" type="text" id="partida" name="partida" style="width:270px"/><br />
-  <label class="desc">Formato: dd/mm/aa/ hh:mm</label><br />
+  <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
 
   <label>ETA</label><br />
   <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px"/><br />
-  <label class="desc">Formato: dd/mm/aa/ hh:mm</label><br />
+  <label class="desc">Formato: dd-mm-aa/ hh:mm</label><br />
 
   <label>ZOE</label><br />
   <input autocomplete="off" type="text" id="zoe" name="zoe" style="width:270px"/><br />
-  <label class="desc">Formato: dd/mm/aa/ hh:mm</label><br />
+  <label class="desc">Formato: dd-mm-aa/ hh:mm</label><br />
   <br />
     <label>Posicion</label><br />
     <input autocomplete="off" type="text" id="pos" name="pos" style="width:270px"  /><br />
@@ -72,7 +72,17 @@
         return false;
     });
 
+    $("#proximo_punto").click(function () {
+      $(this).focus();
+      $(this).select();
+    });
 
+    $("#proximo_punto").combobox();
+    $("#proximo_punto").next()
+    .css('height','23px')
+    .css('margin-right','5px')
+    .css('padding-left','4px')
+    .css('width','268px');
 
 
       $("#partida, #eta, #zoe").mask("99-99-99 99:99");

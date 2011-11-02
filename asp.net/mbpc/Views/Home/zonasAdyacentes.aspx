@@ -22,8 +22,9 @@
             else
                 nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
              
+             
              %>
-             <option value="<%= zona["ID"] %>"><%=nombre%></option>
+             <option value="<%= zona["ID"] %>"  <%= ViewData["DESTINO_ID"].ToString() == zona["ID"].ToString() ? "selected=\"selected\"" : "" %> ><%=nombre%></option>
        <% } 
       %>
       </select>
@@ -53,6 +54,15 @@
 </form>
 
   <script type="text/javascript">
+    $("#listadezonas").combobox();
+    $("#listadezonas").next()
+      .css('height','23px')
+      .css('margin-right','5px')
+      .css('padding-left','4px')
+      .css('width','268px');
+
+  
+  
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
 

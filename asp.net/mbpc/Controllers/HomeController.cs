@@ -75,7 +75,8 @@ namespace mbpc.Controllers
           {
             var ultima_etapa_viaje = DaoLib.traer_etapa(viaje)[0] as Dictionary<string, string>;
             ViewData["VELOCIDAD"] = Convert.ToString(ultima_etapa_viaje["VELOCIDAD"]).Replace(",", ".");
-            ViewData["RUMBO"] = ultima_etapa_viaje["RUMBO"]; 
+            ViewData["RUMBO"] = ultima_etapa_viaje["RUMBO"];
+            ViewData["DESTINO_ID"] = ultima_etapa_viaje["DESTINO_ID"];
           }
           return View();
         }

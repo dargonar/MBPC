@@ -9,6 +9,11 @@ namespace mbpc.Models
 {
   public static class Hlp
   {
+    public static string toFeet(string value)
+    {
+      return toString(toDecimal(value) * 3.2808399M);
+    }
+    
     public static Decimal toDecimal(string value) 
     {
       if(String.IsNullOrEmpty(value))
