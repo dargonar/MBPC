@@ -1,3 +1,105 @@
+	(function( $ ) {
+		$.widget( "ui.combobox", {
+			_create: function() {
+				var self = this,
+					select = this.element.hide(),
+					selected = select.children( ":selected" ),
+					value = selected.val() ? selected.text() : "";
+				var input = this.input = $( "<input>" )
+					.insertAfter( select )
+					.val( value )
+					.autocomplete({
+						delay: 0,
+						minLength: 0,
+						source: function( request, response ) {
+							var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+							response( select.children( "option" ).map(function() {
+								var text = $( this ).text();
+								if ( this.value && ( !request.term || matcher.test(text) ) )
+									return {
+										label: text.replace(
+											new RegExp(
+												"(?![^&;]+;)(?!<[^<>]*)(" +
+												$.ui.autocomplete.escapeRegex(request.term) +
+												")(?![^<>]*>)(?![^&;]+;)", "gi"
+											), "<strong>$1</strong>" ),
+										value: text,
+										option: this
+									};
+							}) );
+						},
+						select: function( event, ui ) {
+							ui.item.option.selected = true;
+							self._trigger( "selected", event, {
+								item: ui.item.option
+							});
+						},
+						change: function( event, ui ) {
+							if ( !ui.item ) {
+								var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( $(this).val() ) + "$", "i" ),
+									valid = false;
+								select.children( "option" ).each(function() {
+									if ( $( this ).text().match( matcher ) ) {
+										this.selected = valid = true;
+										return false;
+									}
+								});
+								if ( !valid ) {
+									// remove invalid value, as it didn't match anything
+									$( this ).val( "" );
+									select.val( "" );
+									input.data( "autocomplete" ).term = "";
+									return false;
+								}
+							}
+						}
+					})
+					.addClass( "ui-widget ui-widget-content ui-corner-left" );
+
+				input.data( "autocomplete" )._renderItem = function( ul, item ) {
+					return $( "<li></li>" )
+						.data( "item.autocomplete", item )
+						.append( "<a>" + item.label + "</a>" )
+						.appendTo( ul );
+				};
+
+				this.button = $( "<button type='button'>&nbsp;</button>" )
+					.attr( "tabIndex", -1 )
+					.attr( "title", "Show All Items" )
+					.insertAfter( input )
+					.button({
+						icons: {
+							primary: "ui-icon-triangle-1-s"
+						},
+						text: false
+					})
+					.removeClass( "ui-corner-all" )
+					.addClass( "ui-corner-right ui-button-icon" )
+					.click(function() {
+						// close if already visible
+						if ( input.autocomplete( "widget" ).is( ":visible" ) ) {
+							input.autocomplete( "close" );
+							return;
+						}
+
+						// work around a bug (likely same cause as #5265)
+						$( this ).blur();
+
+						// pass empty string as value to search for, displaying all results
+						input.autocomplete( "search", "" );
+						input.focus();
+					});
+			},
+
+			destroy: function() {
+				this.input.remove();
+				this.button.remove();
+				this.element.show();
+				$.Widget.prototype.destroy.call( this );
+			}
+		});
+	})( jQuery );
+
   function mostraretapaform() {
     if ($('#botonetapa').hasClass('megaestiloselectedb') && $('#editarEtapaForm').css('display') == 'block')
       return false;
@@ -421,15 +523,31 @@
           text: false,
           icons: {
             primary: "ui-icon-triangle-1-s"
+            /*secondary: "ui-icon-triangle-1-n"*/
           }
         })
         .parent()
         .buttonset();
     }
 
-    function toggle_menu(ship)
+    function toggle_menu(el, ship)
     {
-      $('#Item'+ship).toggle(200);
+        var pos = $(el).offset();
+
+//      pos.left -= 100;
+//      pos.top  += 20;
+        $('#Item'+ship).css('top',pos.top+20);
+//      
+//      .toggle();
+
+      $('#Item'+ship).toggle(200,
+        function() {
+        if($('#Item'+ship).is(":visible"))
+          $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-n"});
+        else 
+          $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-s"});
+        });
+
     }
 
     function fx(elem)
@@ -735,11 +853,13 @@
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
           $('#dialogdiv').dialog({
-            height: 410,
+            height: 500,
             width: 690,
             modal: true,
             title: 'Editar Etapa/Viaje'
           });
+          $("#caladoproa").focus();
+
 
         }),
         error: (function (data) {
@@ -766,7 +886,7 @@
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
           $('#dialogdiv').dialog({
-            height: 360,
+            height: 400,
             width: 580,
             modal: true,
             title: 'Editar Cargas'
@@ -799,8 +919,9 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: setcombo ? 300 : 160,
-            width: 310,
+            /*height: setcombo ? 300 : 160,*/
+            height: setcombo ? 375 : 160,
+            width: 333,
             title: title,
             modal: true
           });
@@ -991,22 +1112,22 @@ function dateFromStr(datestring)
     var hora   = parseInt(datestring.substring(9, 11).replace(/^[0]+/g,""));
     var minuto = parseInt(datestring.substring(12,14).replace(/^[0]+/g,""));
 
-    //console.log( "dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
-    //console.log(fecha)
+    hora = !isNaN(hora)?hora:0;
+    minuto = !isNaN(minuto )?minuto :0;
+    
+//    console.log( "#1 VarByVar -> dia:" + dia + "mes:" + mes + "ano:" + ano + "hora:" + hora + "minuto:" + minuto );
 
     var fecha = new Date(ano, mes - 1, dia, hora, minuto);
+//    console.log("#2 recv: ["+datestring+"] -- generado: ["+fecha+"}");
 
     var temp = { fecha: fecha, ano:ano, mes:mes, dia:dia, hora:hora, minuto:minuto };
     return temp;
     
 }
 
-function isDate(datestring)
+function isDate(datestring) /* is NOT date*/
 {
-    var thedate = dateFromStr(datestring);
-    if ( thedate.ano == "" || thedate.mes == "" || thedate.dia == "" || thedate.hora == "" || thedate.minuto == "")
-        return true;
-    return isNaN( thedate.fecha.getTime() );
+    return isNaN( dateFromStr(datestring).fecha.getTime() );
 }
 
 

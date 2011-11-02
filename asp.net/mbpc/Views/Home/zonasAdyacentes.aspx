@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="mbpc.Models" %>
  <%
       var pasar = bool.Parse(ViewData["pasar"].ToString());
       var url = string.Empty;
@@ -21,8 +22,9 @@
             else
                 nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
              
+             
              %>
-             <option value="<%= zona["ID"] %>"><%=nombre%></option>
+             <option value="<%= zona["ID"] %>"  <%= ViewData["DESTINO_ID"].ToString() == zona["ID"].ToString() ? "selected=\"selected\"" : "" %> ><%=nombre%></option>
        <% } 
       %>
       </select>
@@ -36,6 +38,13 @@
           <label>ETA</label><br />
           <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px" /><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
+
+          <label>Velocidad</label><br />
+          <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />
+
+          <label>Rumbo</label><br />
+          <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value=""/><br />
+
       <% } %> 
 
        <input type="hidden" id="viajeid" name="viaje_id" value="<%= ViewData["viaje"] %>"/>
@@ -45,8 +54,25 @@
 </form>
 
   <script type="text/javascript">
+    $("#listadezonas").combobox();
+    $("#listadezonas").next()
+      .css('height','23px')
+      .css('margin-right','5px')
+      .css('padding-left','4px')
+      .css('width','268px');
 
-  <% if (pasar)  { %>
+  
+  
+  $("#velocidad").mask("99.9");
+  $("#rumbo").mask("999");
+
+  <% if (pasar)  {
+    var svel = Hlp.toString( Hlp.toDecimal((string)ViewData["VELOCIDAD"]), "{0:00.0}" );
+    var srum = Hlp.toString( Hlp.toDecimal((string)ViewData["RUMBO"]), "{0:000}" );
+  %>
+
+    $("#velocidad").val("<%= svel %>");
+    $("#rumbo").val("<%= srum %>");
 
         function validarfechas() {
 

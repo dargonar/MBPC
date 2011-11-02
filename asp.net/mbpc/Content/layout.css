@@ -718,3 +718,14 @@ label span {
     width:16%;
 }
 
+.reporte_params{
+background-color: #f5f5f5;
+width: 100%;
+height: auto;
+min-height:80px;
+}
+.reporte_params_container{
+  float:left;width:auto;height:auto;
+  padding:10px;
+  min-height:60px;
+}

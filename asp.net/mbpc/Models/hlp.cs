@@ -3,11 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
+using System.Threading;
 
 namespace mbpc.Models
 {
-  public class Hlp
+  public static class Hlp
   {
+    public static string toFeet(string value)
+    {
+      return toString(toDecimal(value) * 3.2808399M);
+    }
+    
+    public static Decimal toDecimal(string value) 
+    {
+      if(String.IsNullOrEmpty(value))
+          return 0;
+
+      string s = value.Replace(".", Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator)
+                      .Replace(",", Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+      return Convert.ToDecimal(s);
+    }
+
+    public static string toString(decimal value, string format="{0:0.00}")
+    {
+      return String.Format(format, value).Replace(",", ".");
+    }
+
 
     public static string Pager(int currentPage, int currentPageSize, int totalRecords)
     {

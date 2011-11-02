@@ -10,11 +10,19 @@ namespace mbpc.Controllers
     public class ViajeController : Controller
     {
 
-        public ActionResult histRVP(string id)
+      public ActionResult borrar_evento(string etapa_id, string id)
+      {
+        DaoLib.eliminar_evento(id, etapa_id);
+        ViewData["refresh_viajes"] = "1";
+        return histRVP(etapa_id);
+      }
+
+        public ActionResult histRVP(string etapa_id)
         {
-          ViewData["historial"] = DaoLib.hist_rvp(id);
-          ViewData["eventos"] = DaoLib.hist_evt(id);
-          return View();
+          ViewData["historial"] = DaoLib.hist_rvp(etapa_id);
+          ViewData["eventos"] = DaoLib.hist_evt(etapa_id);
+          ViewData["etapa_id"]  = etapa_id;
+          return View("histRVP");
         }
 
         public ActionResult cambiarEstado(string id)
@@ -86,9 +94,9 @@ namespace mbpc.Controllers
           return View("columnas");
         }
 
-        public ActionResult pasarBarco(string viaje_id, string id2, string eta, string fecha)
+        public ActionResult pasarBarco(string viaje_id, string id2, string eta, string fecha, string velocidad, string rumbo)
         {
-          DaoLib.pasar_barco(viaje_id, id2, eta, fecha);
+          DaoLib.pasar_barco(viaje_id, id2, eta, fecha, velocidad, rumbo);
 
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
@@ -152,7 +160,7 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult modificar(string viaje_id, string buque_id, string desde_id, string hasta_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal)
+        public ActionResult modificar(string viaje_id, string buque_id, string desde_id, string hasta_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal, string rumbo, string velocidad)
         {
             decimal?[] latlon = {null, null};
             if (pos != "")
@@ -227,9 +235,10 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult modificarEtapa(string etapa_id, string calado_proa, string calado_popa, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string activo, string practico0, string practico1, string practico2, string capitan_id, string velocidad, string rumbo, string latitud, string longitud)
+        public ActionResult modificarEtapa(string etapa_id, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string activo, string practico0, string practico1, string practico2, string capitan_id, string velocidad, string rumbo, string latitud, string longitud)
         {
 
+          DaoLib.eliminar_practicos(etapa_id);
           if (activo != null) 
           {
             List<string> practicos = new List<string>();
@@ -245,12 +254,14 @@ namespace mbpc.Controllers
               activos.Add(activo == pr ? "1" : "0");
             }
 
-
-            DaoLib.eliminar_practicos(etapa_id);
             DaoLib.agregar_practicos(practicos.ToArray(), etapas.ToArray(), activos.ToArray());
           }
 
-          DaoLib.editar_etapa(etapa_id, calado_proa, calado_popa, hrp, eta, fecha_salida, cantidad_tripulantes, cantidad_pasajeros, capitan_id);
+          if (calado_proa != null && (calado_proa == "" || calado_proa.LastIndexOf("_") != -1) ) calado_proa = null;
+          if (calado_popa != null && (calado_popa == "" || calado_popa.LastIndexOf("_") != -1)) calado_popa = null;
+          if (calado_informado != null && (calado_informado == "" || calado_informado.LastIndexOf("_") != -1)) calado_informado = null;
+
+          DaoLib.editar_etapa(etapa_id, calado_proa, calado_popa, calado_informado, hrp, eta, fecha_salida, cantidad_tripulantes, cantidad_pasajeros, capitan_id, rumbo, velocidad);
 
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());

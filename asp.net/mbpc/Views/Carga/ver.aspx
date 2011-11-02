@@ -46,20 +46,34 @@
           </td>
           <% if (carga["TIPOCARGA_ID"] != "412") { //LASTRE?%>
           <td>
-            <span id="q<%=carga["CARGA_ID"]%>">
+            <div id="q<%=carga["CARGA_ID"]%>">
               <%=carga["CANTIDAD"]%></br>
-              <a href="#" onclick="return editar_carga(<%= carga["CARGA_ID"]%>);" >Modificar</a>
-            </span>
-            <span id="e<%=carga["CARGA_ID"]%>" style="display:none">
-              <form action="<%= Url.Content("~/Carga/modificar/") %>" onsubmit="return modificarcarga(this,<%=carga["CARGA_ID"]%>)" >
-              <div style="background:#aaaaaa">
-                <!--<a style="position:relative; right:5px; float:right; top:4px; z-index:5" href="#" onclick="cancelar_edicion_carga(<%=carga["CARGA_ID"]%>)">X</a>-->
-                <input type="hidden" name="carga_id" value="<%= carga["CARGA_ID"]%>" />
-                <input type="text" name="cantidad" autocomplete="off" value="<%=carga["CANTIDAD"]%>" style="width:50px;" /> <br />
-                <input type="submit" value="OK" style="width: 40px" />
-              </div>
-              </form>
-            </span>
+              <span id="e<%=carga["CARGA_ID"]%>" style="display:none">
+                <form action="<%= Url.Content("~/Carga/modificar/") %>" onsubmit="return modificarcarga(this,<%=carga["CARGA_ID"]%>)" >
+                <div style="background:#aaaaaa">
+                  <!--<a style="position:relative; right:5px; float:right; top:4px; z-index:5" href="#" onclick="cancelar_edicion_carga(<%=carga["CARGA_ID"]%>)">X</a>-->
+                  <input type="hidden" name="carga_id" value="<%= carga["CARGA_ID"]%>" />
+                  <input type="hidden" name="etapa_id" value="<%= ViewData["etapa_id"]%>" />
+                  <table>
+                    <tr>
+                      <td>Carga: </td>
+                      <td>
+                        <input type="text" name="cantidad_entrada" autocomplete="off" value="<%=carga["CANTIDAD_ENTRADA"]%>" style="width:40px;" title="Cantidad de entrada"/><br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Descarga: </td>
+                      <td><input type="text" name="cantidad_salida" autocomplete="off" value="<%=carga["CANTIDAD_SALIDA"]%>" style="width:40px;" title="Cantidad de salida" /> <br />
+                      </td>
+                    </tr>
+                  </table>
+                  <input type="submit" value="OK" style="width: 40px" />
+                </div>
+                </form>
+              </span>
+              <a href="#" id="modify_q_button<%=carga["CARGA_ID"]%>" onclick="return editar_carga(<%= carga["CARGA_ID"]%>);" >Modificar</a>
+            </div>
+            
           </td>
           <td><%=carga["UNIDAD"]%></td>
           <td><%=carga["CODIGO"]%></td>
@@ -151,14 +165,17 @@
 
 
   function editar_carga(carga_id) {
-    $("#q" + carga_id).hide();
+    //$("#q" + carga_id).hide();
+    $("#modify_q_button" + carga_id).hide();
     var e = $("#e" + carga_id);
     e.show();
     e.find("input[type=text]").focus().select();
+
   }
 
   function cancelar_edicion_carga(carga_id) {
-    $("#q" + carga_id).show();
+    //$("#q" + carga_id).show();
+    $("#modify_q_button" + carga_id).show();
     $("#e" + carga_id).hide();
   }
   
@@ -170,7 +187,7 @@
       success: (function (data) {
         $('#dialogdiv3').html(data);
         $('#dialogdiv3').dialog({
-          height: 340,
+          height: 380,
           width: 300,
           modal: true,
           title: 'Nueva Carga'
@@ -212,8 +229,9 @@
       url: form.attr('action'),
       data: form.serialize(),
       success: function (data) {
-        $('#q' + carga_id).html(form.find('input[name=cantidad]').val());
-        cancelar_edicion_carga(carga_id);
+//        $('#q' + carga_id).html(form.find('input[name=cantidad]').val());
+//        cancelar_edicion_carga(carga_id);
+        $('#dialogdiv').html(data);
       },
       error: showTitle
     });

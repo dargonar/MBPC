@@ -16,6 +16,9 @@
 
        <% } %>
 
+       <div class="btn-new-class" style="margin-left:10px;">
+        <a id="a1" href="<%= Url.Content("~/Reporte/Index/") %>" target="_blank" class="agregarreportelink"> Reportes</a>
+       </div>
 
        <div class="btn-new-class">
         <a href="<%= Url.Content("~/Home/reporteDiario/") %>" onclick="return reportediario(this);"> Reporte Diario</a>
