@@ -80,6 +80,7 @@ create or replace package mbpc as
   --procedure transferir_barcazas(vCarga in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure transferir_barcazas(vBarcaza in varchar2, vEtapa in varchar2);
   ---autocompletes
+  procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_barcazas(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
@@ -95,7 +96,7 @@ create or replace package mbpc as
  --Buque/Puertos/Muelles
   procedure detalles_tecnicos( vShipId in varchar2, usrid in number, vCursor out cur);
   procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur);
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, usrid in number, vCursor out cur);
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, usrid in number, vCursor out cur);
   procedure traer_puertos(usrid in number, vCursor out cur);
   procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, usrid in number, vCursor out cur);
   --procedure traer_instports(vPuerto in varchar2, usrid in number, vCursor out cur);
@@ -944,12 +945,14 @@ create or replace package body mbpc as
   
   procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2,  vEnTransito in varchar2, usrid in number, vCursor out cur) is
   begin
-    select * into etapa from tbl_etapa where id = vEtapa;
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL ) VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque, vEnTransito, vCantidad) returning id into temp; 
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
+      
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
     --  [412]
     delete from tbl_cargaetapa where etapa_id=vEtapa and TIPOCARGA_ID=412;
+
+    select * into etapa from tbl_etapa where id = vEtapa;
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL ) VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque, vEnTransito, vCantidad) returning id into temp; 
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
     
   end insertar_carga;  
   
@@ -1069,7 +1072,8 @@ create or replace package body mbpc as
   begin
     open vCursor for 
       --Todas las barcazas
-      select id_buque, nombre from buques b where UPPER(TIPO_BUQUE) like 'BARCAZA%'
+      select id_buque, nombre from buques b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' )
+                                              and   UPPER(nombre) like '%'||UPPER(vQuery)||'%' 
       --Que no sean las ...
       and UPPER(id_buque) not in (
         ---Barcazas usadas en la ultima etapa por los otros viajes
@@ -1079,7 +1083,7 @@ create or replace package body mbpc as
             join tbl_cargaetapa c on e.id = c.etapa_id and c.buque_id is not null 
         union
         select v.buque_id from tbl_viaje v where estado=100
-      ) and rownum < 6 and upper(nombre) like '%'||vQuery||'%' order by nombre ;
+      ) and rownum < 6 order by nombre ;
   end autocomplete_barcazas;
 
   -------------------------------------------------------------------------------------------------------------
@@ -1090,6 +1094,17 @@ create or replace package body mbpc as
     sql_stmt := 'select * from ' || vVista || ' where upper(nombre) like upper(:vQuery) and rownum <= 6';
     open vCursor for sql_stmt USING vQuery;
   end autocompleter;
+  -------------------------------------------------------------------------------------------------------------
+  --
+  
+  procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+      select tc.ID, tc.NOMBRE, tc.CODIGO, tc.UNIDAD_ID, un.NOMBRE UNOMBRE
+      from tbl_tipo_carga tc left join tbl_unidad un on tc.unidad_id=un.id
+      where ( upper(tc.nombre) like '%'||UPPER(vQuery)||'%' or upper(tc.codigo) like '%'||UPPER(vQuery)||'%'  )
+      and rownum < 6;
+  end autocomplete_cargas;
   -------------------------------------------------------------------------------------------------------------
   --
 
@@ -1278,7 +1293,7 @@ create or replace package body mbpc as
   procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST) 
-      VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, 'tp', vServicio, vSDist )
+      VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, vServicio, vServicio, vSDist )
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
     
     insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);
@@ -1289,10 +1304,10 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, usrid in number, vCursor out cur) is
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
   begin
-    insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, SDIST, NRO_OMI)
-      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, 'tp', vSDist, vMatricula)
+    insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_OMI)
+      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, vServicio, vServicio, vSDist, vMatricula)
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
       
     insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);

@@ -602,8 +602,11 @@
     var g_campo_destino;
 
     // url, llena dialogdiv3
-    function nuevoBuque(url)
+    function nuevoBuque(url, defa)
     {
+      if( defa==null )
+        defa = '3';
+
       g_campo_destino = 1;
 
       $.ajax({
@@ -612,12 +615,12 @@
         url: url,
         dataType: "text/html",
         success: (function (data) {
-          $('#dialogdiv3').html(data);
-          $('#dialogdiv3').dialog({
+          $('#dialogdiv' + defa).html(data);
+          $('#dialogdiv' + defa).dialog({
             height: 375,
             width: 240,
             modal: true,
-            title: 'Nuevo Buque'
+            title: defa == 3 ? 'Nuevo Buque' : 'Nueva Barcaza',
           });
         }),
         error: (function (data) {

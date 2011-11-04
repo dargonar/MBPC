@@ -26,7 +26,7 @@
       </select><br /><br />
 
     <label>Tipo de Servicio</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="servicio" id="servicio"/><br />
+    <input autocomplete="off" type="text" style="width:200px" name="servicio" id="servicio" <% if( ViewData["noint"] != null ) { %> value="BARCAZA" readonly="readonly" <% } %> /><br />
     <input type="submit" class="botonsubmitb" value="nuevo" style="margin-left: 149px"/>
   </form>
 
@@ -44,8 +44,9 @@
 
 
     function internacion() {
-
+      <% if( ViewData["noint"] == null ) { %>
       $('#servicio').attr('disabled', 'disabled');
+      <% } %>
       $('#bandera').removeAttr('disabled');
       $('#bandera').val('');
       $('#matlabel').html('NRO OMI');
@@ -86,20 +87,19 @@
         url: $(this).attr('action'),
         data: $(this).serialize(),
         success: (function (data) {
+          <% if( ViewData["noint"] == null ) { %>
           $('#dialogdiv3').dialog('close');
-          //alert(data[0].ID_BUQUE);
           pegar_y_cerrar($('#nombreN').val(), data[0].ID_BUQUE, $("input[name=internacional]:checked").val());
+          <% } else { %>
+          $('#buque_id').val(data[0].ID_BUQUE);
+          $('#barcaza_text').val(data[0].NOMBRE);
+          $('#dialogdiv4').dialog('close');
+          <% } %>
         }),
         error: (function (data) {
-          //alert(data.responseXML);
-          //var xmlDoc;
-          //xmlDoc = data.responseXml;
-          //x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
-          //alert(x.nodeValue);
           var titletag = /<title\b[^>]*>.*?<\/title>/
           alert(unescape(titletag.exec(data.responseText)));
           $('.botonsubmitb').removeAttr('disabled');
-
         })
       });
       return false;

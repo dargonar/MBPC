@@ -5,25 +5,19 @@
   <input type="hidden" value="<%= ViewData["etapa_id"] %>"  name="etapa_id"/>
   <input type="hidden" id="carga_id" name="carga_id" />
   <input type="hidden" id="buque_id" name="buque_id" />
+  <input type="hidden" id="unidad_id" name="unidad_id"/>
 
   <label>Carga</label><br />
   <input type="text" id="carga" name="carga" style="width: 250px;" autocomplete="off"  /><br />
 
   <div class="latabla" style="position:absolute;z-index:5;width: 250px;"></div>
     <label>Código</label><br />
-    <input type="text" id="codigo" name="codigo" autocomplete="off" style="width: 40px" /><br />
+    <input type="text" id="codigo" name="codigo" autocomplete="off" style="width: 40px" readonly="readonly"/><br />
 
     <label style="float: left;width: 93px;">Cantidad</label><label style="float: left; width: 80px">Unidad</label><br />
     <input style="float: left;width: 80px;height: 20px;" autocomplete="off" type="text" id="cantidad" name="cantidad" />
-  
-    <select style="float: left; width: 87px" id="unidad_id" name="unidad_id">
-    <%  
-    foreach (Dictionary<string, string> unidad in unidades)
-    {
-      %><option value="<%= unidad["ID"] %>" ><%= unidad["NOMBRE"] %></option><%
-    }
-    %>
-    </select><br/><br/>
+    <input style="float: left;margin-left:10px;width: 80px;height: 20px;" autocomplete="off" type="text" id="unidad_txt" name="unidad_txt" disabled="disabled"/>
+    <br/><br/>
 
     <p>
     <input type="checkbox" name="en_transito" value="" id="en_transito" />Está en tránsito
@@ -32,7 +26,9 @@
     <input type="checkbox" name="enbarcaza" value="" id="enbarcaza" />Está en barcaza
     </p>
     <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" disabled="disabled"/><br />
+    <a id="newbarcaza" style="visibility:hidden" href="#" onclick="nuevoBuque('/Item/nuevoBuque?noint=1',4);">Nueva Barcaza</a>
     <br /><br /><br />
+
     
     <input type="submit" class="botonsubmit" style="margin-left: 180px"value="agregar" />
 </form>
@@ -55,7 +51,9 @@
               label: item.NOMBRE,
               value: item.NOMBRE,
               id:    item.ID,
-              cod:   item.CODIGO
+              cod:   item.CODIGO,
+              unom:  item.UNOMBRE,
+              uid:   item.UNIDAD_ID
             }
           }));
         }
@@ -65,6 +63,8 @@
     select: function (event, ui) {
       $("#carga_id").val(ui.item.id);
       $('#codigo').val(ui.item.cod);
+      $('#unidad_txt').val(ui.item.unom);
+      $('#unidad_id').val(ui.item.uid);
     },
     open: function () {
       $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
@@ -106,10 +106,12 @@
 
     if ($(this).is(":checked")) {
       $('#barcaza_text').removeAttr('disabled');
+      $('#newbarcaza').css('visibility','visible');
     }
     else {
       $('#barcaza_text').attr('disabled', 'disabled');
       $("#buque_id").val('');
+      $('#newbarcaza').css('visibility','hidden');
     }
     return false;
   });

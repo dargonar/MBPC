@@ -83,12 +83,10 @@ namespace mbpc.Controllers
 
     public JsonResult cargas(string query)
     {
-      //TODO: Borrar
-      //System.Threading.Thread.Sleep(1000);
       var cargas = new List<object>();
       if (query != "")
       {
-        cargas = DaoLib.autocomplete("tbl_tipo_carga", '%' + query + '%');
+        cargas = DaoLib.autocomplete_cargas(query);
       }
       return Json(cargas, JsonRequestBehavior.AllowGet);
     }

@@ -16,13 +16,14 @@ namespace mbpc.Controllers
         if (internacional != "1")
           return Json(DaoLib.crear_buque(nombre, matricula, sdist, servicio));
         else
-          return Json(DaoLib.crear_buque_int(nombre, matricula, sdist, bandera));
+          return Json(DaoLib.crear_buque_int(nombre, matricula, sdist, bandera, servicio));
       }
 
-      public ActionResult nuevoBuque()
+      public ActionResult nuevoBuque(string noint)
       {
         ViewData["menu"] = "buque";
         ViewData["banderas"] = DaoLib.traer_banderas();
+        ViewData["noint"] = noint;
         return View();
       }
 

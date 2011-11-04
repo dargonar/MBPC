@@ -740,7 +740,7 @@ public static class DaoLib
   }
 
 
-  public static List<object> crear_buque_int(string nombre, string matricula, string sdist, string bandera)
+  public static List<object> crear_buque_int(string nombre, string matricula, string sdist, string bandera, string servicio)
   {
     string matri = string.Empty;
 
@@ -749,8 +749,8 @@ public static class DaoLib
         new OracleParameter("vMatricula", OracleDbType.Varchar2, matricula, System.Data.ParameterDirection.Input),
         new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
         new OracleParameter("vSDist", OracleDbType.Varchar2, sdist, System.Data.ParameterDirection.Input),
-        new OracleParameter("vBandera", OracleDbType.Varchar2, bandera, System.Data.ParameterDirection.Input)
-        //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
+        new OracleParameter("vBandera", OracleDbType.Varchar2, bandera, System.Data.ParameterDirection.Input),
+        new OracleParameter("vServicio", OracleDbType.Varchar2, servicio, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.crear_buque_int", parameters);
@@ -916,6 +916,16 @@ public static class DaoLib
     };
 
     return doCall("mbpc.autocompleterbnacionales", parameters);
+  }
+
+  public static List<object> autocomplete_cargas(string query)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.autocomplete_cargas", parameters);
   }
 
   public static List<object> autocompleterioscanales(string query)
