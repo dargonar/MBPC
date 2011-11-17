@@ -9,7 +9,7 @@ using Oracle.DataAccess.Types;
 
 namespace mbpc.Controllers
 {
-    public class ReporteController : Controller
+    public class ReporteController : MyController
     {
         //
         // GET: /Reporte/

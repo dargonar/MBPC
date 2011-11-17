@@ -10,6 +10,10 @@
       <input autocomplete="off" type="text" id="riocanal" style="width:270px" /><br />
       <input  type="hidden" id="riocanalh" name="riocanal" />
 
+      <label>Muelle</label><br />
+      <input autocomplete="off" type="text" id="muelle" style="width:270px" /><br />
+      <input  type="hidden" id="muelleh" name="muelle" />
+
       <label>Notas:</label><br />
       <textarea cols="31" rows="8" name="notas" /><br /><br />
 
@@ -32,6 +36,7 @@
 
       var url = '<%= Url.Content("~/Autocomplete/estados") %>';
       var url2 = '<%= Url.Content("~/Autocomplete/rioscanales") %>';
+      var url3 = '<%= Url.Content("~/Autocomplete/view_muelles") %>';
       
 
         $("#estado").autocomplete({
@@ -100,6 +105,40 @@
             $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
           }
         });
+
+        $("#muelle").autocomplete({
+          source: function (request, response) {
+            $.ajax({
+              type: "POST",
+              url: url3,
+              dataType: "json",
+              data: {
+                query: request.term
+              },
+              success: function (data) {
+                response($.map(data, function (item) {
+                  return {
+                    label: item.PUERTO,
+                    value: item.PUERTO,
+                    cod  : item.COD,
+                  }
+                }));
+              }
+            });
+          },
+          minLength: 2,
+          select: function (event, ui) {
+            $("#muelleh").val(ui.item.cod);
+          },
+          open: function () {
+            $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
+          },
+          close: function () {
+            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+          }
+        });
+
+        
 
       var fecha = new Date()
       $("#fecha").val("<%= ViewData["fecha"]%>");

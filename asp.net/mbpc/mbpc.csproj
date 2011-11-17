@@ -66,6 +66,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\ViajeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -108,6 +109,9 @@
     <Content Include="Views\Admin\pager.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Carga\barcazas_fondeadas.aspx" />
+    <Content Include="Views\Carga\pasarCargas.aspx" />
+    <Content Include="Views\Carga\noHayCargas.aspx" />
+    <Content Include="Views\Carga\seleccionar_nueva_barcaza.aspx" />
     <Content Include="Views\Carga\noHayBarcazas.aspx" />
     <Content Include="Views\Carga\nueva.aspx" />
     <Content Include="Views\Carga\zona_fondeo.aspx" />

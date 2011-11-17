@@ -30,9 +30,10 @@
           <% } else if (IsFirst) { %>
           <td rowspan="<%=item.Value.Count %>"><%=carga["BARCAZA"]%><br />
           <% if (carga["TIPOCARGA_ID"] != "412") { //LASTRE?%>
-          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)">Descargar</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)">Desc.</a>&nbsp;-&nbsp;
           <% } %>
-          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)">Fondear</a>
+          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)">Fond.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)">Correg.</a>
           </td>
           <% }%>
           <td colspan="<%= (carga["TIPOCARGA_ID"] != "412") ? "1" : "4" %>" ><%=carga["NOMBRE"]%></br>
@@ -124,6 +125,27 @@
 
     return false;
   }
+
+  function seleccionar_nueva_barcaza(obj) {
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: $(obj).attr('href'),
+      success: (function (data) {
+        $('#dialogdiv3').html(data);
+        $('#dialogdiv3').dialog({
+          height: 200,
+          width: 300,
+          modal: true,
+          title: 'Corregir Barcaza'
+        });
+      }),
+      error: showTitle
+    });
+
+    return false;
+  }
+  
 
   function zona_fondeo(obj) {
     $.ajax({

@@ -86,6 +86,9 @@
 
 
       $("#partida, #eta, #zoe").mask("99-99-99 99:99");
+      $("#partida").val("<%=string.Format("{0:dd-MM-yy HH:mm}", DateTime.Now) %>");
+      
+
       $("#pos").mask("9999S99999W");
 
        url1 = '<%= Url.Content("~/Autocomplete/view_buques_disponibles/") %>';

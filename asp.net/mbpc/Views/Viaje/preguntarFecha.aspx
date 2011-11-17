@@ -23,6 +23,12 @@
     <label><%= titulo %></label>
     <input style="float:left; width: 300px" autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/>
     <div style="clear:both"></div>
+    <% if (ViewData["action"].ToString() == "terminarviaje") { %>
+    <label>Escalas</label>
+    <input style="float:left; width: 300px" autocomplete="off"  name="escalas" id="escalas" type="text" value=""/>
+    <div style="clear:both"></div>
+    <% } %>
+
     <input type="submit" class="botonsubmit" style="margin-left: 226px;" value="<%= boton %>" />
   </form>
 

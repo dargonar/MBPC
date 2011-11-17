@@ -131,7 +131,7 @@
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
                 title: 'Cambiar Estado',
-                height: 500,
+                height: 550,
                 width: 300,
                 modal: true
               });
@@ -299,7 +299,7 @@
       return false;
     }
 
- function preguntarfecha(aelement) {
+ function preguntarfecha(aelement,vv) {
  
       $("#fullscreen").css("display", "block");
 
@@ -311,7 +311,7 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: 150,
+            height: vv == 1 ? 150 : 250,
             width: 333,
             modal: true,
             title: 'Ingrese Fecha'

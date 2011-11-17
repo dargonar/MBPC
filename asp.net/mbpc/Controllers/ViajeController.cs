@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace mbpc.Controllers
 {
-    public class ViajeController : Controller
+    public class ViajeController : MyController
     {
 
       public ActionResult borrar_evento(string etapa_id, string id)
@@ -34,14 +34,14 @@ namespace mbpc.Controllers
             return View();
         }
 
-        public ActionResult insertarEventoCambioEstado(string etapa_id, string notas, string pos, string fecha, string estado, string riocanal)
+        public ActionResult insertarEventoCambioEstado(string etapa_id, string notas, string pos, string fecha, string estado, string riocanal, string muelle)
         {
             decimal?[] latlon = new decimal?[2];
             if (pos != "")
             {
               latlon = DaoLib.parsePos(pos);
             }
-            DaoLib.insertar_cambioestado(etapa_id, notas, latlon[0], latlon[1], fecha, estado, riocanal);
+            DaoLib.insertar_cambioestado(etapa_id, notas, latlon[0], latlon[1], fecha, estado, riocanal, muelle);
 
             ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
             ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
@@ -192,9 +192,9 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult terminar(string viaje_id, string fecha)
+        public ActionResult terminar(string viaje_id, string fecha, string escalas)
         {
-          DaoLib.terminar_viaje(viaje_id, fecha);
+          DaoLib.terminar_viaje(viaje_id, fecha, escalas);
 
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());

@@ -43,6 +43,12 @@ namespace mbpc
               new { controller = "Carga", action = "editarBarcazas" }
             );
 
+          routes.MapRoute(
+              "pasarCargas",                              // Route name
+              "Carga/pasarCargas/{shipfrom}/{shipto}",                   // URL with parameters
+              new { controller = "Carga", action = "pasarCargas" }
+            );
+
 
             routes.MapRoute(
               "EliminarEditarAgregarCarga",                  // Route name

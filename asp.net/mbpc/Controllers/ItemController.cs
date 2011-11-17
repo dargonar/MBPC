@@ -7,7 +7,7 @@ using Oracle.DataAccess.Client;
 
 namespace mbpc.Controllers
 {
-    public class ItemController : Controller
+    public class ItemController : MyController
     {
 
 

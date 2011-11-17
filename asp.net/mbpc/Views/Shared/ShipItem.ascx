@@ -23,7 +23,7 @@
                       <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] + "/false"%>" onclick="return dialogozonas(this,'Proximo Destino');">   Proximo Destino </a></li>
                       <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] %>"        
                              onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="<%= ship["DESTINO_ID"] %>"   class="pasarbarcolink" >                              Pasar Barco</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/terminarviaje" %>"                                 onclick="return preguntarfecha(this);">                            Terminar Viaje</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/terminarviaje" %>"                                 onclick="return preguntarfecha(this,2);">                            Terminar Viaje</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/editarEtapa/") +  ship["ID"] + "/" + ship["ETAPA_ID"] %>"    onclick="return editaretapa(this);" class="editaretapalink">Editar Etapa/Viaje</a></li>
                       <% if ( ship["ACOMPANANTE"] == "")
                          {  %>
@@ -32,10 +32,11 @@
                          else
                          { %>
                              <li><a href="<%= Url.Content("~/Viaje/quitarAcompanante/") + ship["ETAPA_ID"] %>"                    onclick="return quitaracompanante(this);return false;">      Quitar Acompanante</a></li>
-                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this);return false;">          Separar Convoy</a></li>
+                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this,1);return false;">          Separar Convoy</a></li>
                       <% }%>
                       <li><a href="<%= Url.Content("~/Carga/ver/") +  ship["ETAPA_ID"] %>"              onclick="return editarcargas(this);">                              Editar Cargas </a></li>
                       <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>"          onclick="return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
+                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>&carga=1"          onclick="return transferirbarcazas(this);">                  Transferir Carga </a></li>
                       <li><a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>"                                   onclick="return editarnotas(this);return false;">            Editar Notas</a></li>
                       <!--<li><a href="<%= Url.Content("~/Viaje/editarPbip/") + ship["ID"] %>"                                    onclick="return pbip(this);">                                Formulario PBIP </a></li>-->
                       <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>

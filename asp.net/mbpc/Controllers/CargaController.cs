@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace mbpc.Controllers
 {
-    public class CargaController : Controller
+    public class CargaController : MyController
     {
       public ActionResult adjuntar_barcazas(int etapa_id, int[] barcazas)
       {
@@ -16,6 +16,19 @@ namespace mbpc.Controllers
         DaoLib.adjuntar_barcazas(etapas_ids, barcazas);
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
+
+      public ActionResult seleccionar_nueva_barcaza(int etapa_id)
+      {
+        ViewData["etapa_id"] = etapa_id;
+        return View();
+      }
+
+      public ActionResult corregir_barcaza(int buque_id, int etapa_id)
+      {
+        DaoLib.corregir_barcaza(etapa_id, buque_id);
+        return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
+      }
+
 
       public ActionResult barcazas_fondeadas(int etapa_id)
       {
@@ -99,10 +112,11 @@ namespace mbpc.Controllers
       }
 
 
-      public ActionResult barcoenzona(int etapa_id, int viaje_id)
+      public ActionResult barcoenzona(int etapa_id, int viaje_id, string carga)
       {
         ViewData["viaje_id"] = viaje_id;
         ViewData["etapa_id"] = etapa_id;
+        ViewData["carga"]    = carga;
 
         ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
         var i = 0;
@@ -139,6 +153,43 @@ namespace mbpc.Controllers
         return View();
       }
 
+      public ActionResult pasarCargas(string shipfrom, string shipto)
+      {
+        ViewData["buque_origen"] = DaoLib.traer_buque_de_etapa(shipfrom);
+        ViewData["buque_destino"] = DaoLib.traer_buque_de_etapa(shipto);
+
+        ViewData["etapa_origen"] = shipfrom;
+        ViewData["etapa_destino"] = shipto;
+
+        var tmp = DaoLib.traer_cargas_nobarcazas(int.Parse(shipfrom));
+        tmp.AddRange(DaoLib.traer_cargas_nobarcazas(int.Parse(shipto)));
+
+        if (tmp.Count == 0)
+          return View("noHayCargas");
+
+        var cargas = new Dictionary<string, Dictionary<string, Dictionary<string,string>> >();
+
+        foreach (Dictionary<string,string> carga in tmp)
+        {
+          if( !cargas.Keys.Contains(carga["TIPOCARGA_ID"]) )
+          {
+            cargas[carga["TIPOCARGA_ID"]] = new Dictionary<string, Dictionary<string, string>>();
+            cargas[carga["TIPOCARGA_ID"]]["from"] = null;
+            cargas[carga["TIPOCARGA_ID"]]["to"] = null;
+          }
+
+          if (carga["ETAPA_ID"] == shipfrom)
+            cargas[carga["TIPOCARGA_ID"]]["from"] = carga;
+          else
+            cargas[carga["TIPOCARGA_ID"]]["to"] = carga;
+        }
+
+        ViewData["cargas"] = cargas;
+
+        return View();
+      }
+
+
 
 
       public ActionResult separarConvoy(string viaje_id, string id2, string fecha)
@@ -149,7 +200,59 @@ namespace mbpc.Controllers
       }
 
 
+      public ActionResult transferirCargas()
+      {
 
+        var etapa_id = new List<string>();
+        var carga_id = new List<string>();
+        var cantidad = new List<string>();
+        var unidad_id = new List<string>();
+        var tipo_id = new List<string>();
+        var modo = new List<string>();
+
+        var total = int.Parse(Request.Params["cargas"]);
+        for (int i = 0; i < total; i++)
+        {
+
+          var eid = Request[string.Format("carga{0}[eid]",i+1)];
+          var cid = Request[string.Format("carga{0}[cid]",i+1)];
+          var uid = Request[string.Format("carga{0}[uid]",i+1)];
+          var val = Request[string.Format("carga{0}[val]",i+1)];
+          var tci = Request[string.Format("carga{0}[tci]",i+1)];
+          
+
+          etapa_id.Add(eid);
+          carga_id.Add(cid);
+          unidad_id.Add(uid);
+          cantidad.Add(val);
+          tipo_id.Add(tci);
+
+          //No tenia esta carga?
+          if (cid == "-1")
+          {
+            modo.Add("add");
+          }
+          //Tenia la carga
+          else
+          {
+            //Y ahora se la sacaron toda
+            if (val == "0")
+            {
+              modo.Add("del");
+            }
+            else
+            {
+              modo.Add("upd");
+            }
+          }
+          
+        }
+
+        DaoLib.transferir_cargas(etapa_id.ToArray(), carga_id.ToArray(), cantidad.ToArray(), unidad_id.ToArray(), tipo_id.ToArray(), modo.ToArray());
+
+
+        return null;
+      }
 
       public ActionResult transferirBarcazas(string[] barcazas_origen, string[] barcazas_destino, string etapa_origen, string etapa_destino)
       {

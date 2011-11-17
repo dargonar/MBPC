@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace mbpc.Controllers
 {
-  public class AutoCompleteController : Controller
+  public class AutoCompleteController : MyController
   {
     public JsonResult barcazas(string etapa_id, string query)
     {
@@ -70,6 +70,18 @@ namespace mbpc.Controllers
       return Json(estados, JsonRequestBehavior.AllowGet);
     }
 
+    public JsonResult muelles(string query)
+    {
+      var muelles = new List<object>();
+        if (query != "")
+        {
+          muelles = DaoLib.autocomplete_muelles(query);
+        }
+        return Json(muelles, JsonRequestBehavior.AllowGet);
+    }
+
+
+    
 
     public JsonResult view_muelles(string query)
     {

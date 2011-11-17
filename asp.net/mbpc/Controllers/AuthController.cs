@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace mbpc.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : MyController
     {
         public ActionResult ShowForm()
         {
@@ -30,7 +30,6 @@ namespace mbpc.Controllers
           //Marcar sesion logeado
           Session["logged"] = 1;
           Session["usuario"] = Request.Form["username"];
-          DaoLib.userid = int.Parse(Session["usuario"].ToString());
 
           return Redirect( Url.Content("~/") );
 

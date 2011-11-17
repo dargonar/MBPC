@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace mbpc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MyController
     {
         //
         // GET: /Home/
