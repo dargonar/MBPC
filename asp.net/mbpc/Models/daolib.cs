@@ -859,7 +859,7 @@ public static class DaoLib
     return doCall2("mbpc.transferir_barcazas", parameters, arraybindcount);
   }
 
-  public static List<object> transferir_cargas(string[] etapa_id, string[] carga_id, string[] cantidad, string[] unidad_id, string[] tipo_id, string[] modo)
+  public static List<object> transferir_cargas(string[] etapa_id, string[] carga_id, string[] cantidad, string[] unidad_id, string[] tipo_id, string[] modo, string[] original, string[] recibeemite)
   {
     OracleParameter[] parameters = new OracleParameter[] 
     { 
@@ -868,7 +868,9 @@ public static class DaoLib
         new OracleParameter("vCantidad", OracleDbType.Varchar2, cantidad, System.Data.ParameterDirection.Input),
         new OracleParameter("vUnidad", OracleDbType.Varchar2, unidad_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vTipo", OracleDbType.Varchar2, tipo_id, System.Data.ParameterDirection.Input),
-        new OracleParameter("vModo", OracleDbType.Varchar2, modo, System.Data.ParameterDirection.Input)
+        new OracleParameter("vModo", OracleDbType.Varchar2, modo, System.Data.ParameterDirection.Input),
+        new OracleParameter("vOriginal", OracleDbType.Varchar2, original, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRecEmi", OracleDbType.Varchar2, recibeemite, System.Data.ParameterDirection.Input)
     };
 
     var arraybindcount = etapa_id.Length;

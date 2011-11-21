@@ -33,8 +33,10 @@
       var url2 = '<%= Url.Content("~/Autocomplete/estados") %>'
 
 
-      //$("#fecha").val('');
+        //$("#fecha").val('');
         $("#fecha").mask("99-99-99 99:99");
+        $("#fecha").val('<%= DateTime.Now.ToString("dd-MM-yy HH:mm")%>');
+        
         $("#pos").mask("9999S99999W");
         $("#velocidad").mask("99.9");
         $("#rumbo").mask("999");

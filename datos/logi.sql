@@ -78,7 +78,7 @@ create or replace package mbpc as
   procedure check_empty(vEtapaId in number, vBuqueId in number);
   procedure adjuntar_barcazas(vEtapaId in number, vViajeId in number, usrid in number);
   procedure fondear_barcaza(vEtapaId in number, vBarcazaId in number, vRioCanalKM in varchar2, vLat in number, vLon in number, vFecha in varchar2, usrid in number, vCursor out cur);
-  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, usrid in number);
+  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number);
   procedure transferir_barcazas(vBarcaza in varchar2, vEtapa in varchar2, usrid in number);
   ---autocompletes
   procedure autocomplete_muelles(vQuery in varchar2, usrid in number, vCursor out cur);
@@ -443,9 +443,15 @@ create or replace package body mbpc as
     select * into viaje from tbl_viaje where id = vViaje;
     select * into etapa from tbl_etapa where nro_etapa = viaje.etapa_actual and viaje_id = viaje.id;
     insert into tbl_evento (usuario_id, viaje_id, etapa_id, tipo_id, latitud, longitud, fecha, velocidad, rumbo, estado) values (usrid, vViaje, etapa.id, 19, vLat, vLon, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vVelocidad, vRumbo, vEstado);
+    
     if length(vEstado) = 2 THEN
       update tbl_viaje set estado_buque = vEstado where id = vViaje;
     end if;
+
+    if vLat is not null and vLon is not null THEN
+      update tbl_viaje set latitud = vLat, longitud = vLon where id = vViaje;
+    end if;
+    
   end insertar_reporte;
 
 --  procedure insertar_posicion(vEtapa in varchar2, vLat in varchar2, vLon in varchar2, usrid in number, vCursor out cur) is
@@ -472,6 +478,11 @@ create or replace package body mbpc as
       select * into etapa from tbl_etapa where id = vEtapa;
       insert into tbl_evento ( usuario_id , viaje_id , etapa_id, tipo_id, fecha, comentario, latitud, longitud, estado, rios_canales_km_id, puerto_cod) VALUES ( usrid , etapa.viaje_id , vEtapa, 20 , TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vNotas, vLat, vLon, vEstado, vRiocanal, vPuerto);
       update tbl_viaje set estado_buque = vEstado where id = etapa.viaje_id;
+      
+      IF vLat is not null and vLon is not null THEN
+        update tbl_viaje set latitud = vLat, longitud=vLon where id = etapa.viaje_id;
+      END IF;
+      
   end insertar_cambioestado;
   
   -------------------------------------------------------------------------------------------------------------  
@@ -961,23 +972,43 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --  
 
-  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, usrid in number) is
+  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number) is
   begin
       DECLARE
 
       BEGIN
+        --traemos la etapa
+        select * into etapa from tbl_etapa where id=vEtapa;
+      
         IF vModo = 'add' THEN
           insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, EN_TRANSITO, CANTIDAD_INICIAL ) 
           VALUES ( carga_seq.nextval, vTipo, vCantidad, vUnidad, vEtapa, 0, vCantidad) returning id into temp; 
+          
           -- log usrid id in number  
+          insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id ) 
+          VALUES ( usrid, etapa.viaje_id , etapa.id , 26, SYSDATE, temp );
+          
         END IF;
         IF vModo = 'upd' THEN
           update tbl_cargaetapa set CANTIDAD = vCantidad where ID=vCarga;
-          -- log usrid vCarga in number  
+          
+          if vRecEmi = 'ree' THEN
+            -- log usrid vCarga in number  
+            insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id ) 
+            VALUES ( usrid, etapa.viaje_id , etapa.id , 26, SYSDATE, vCarga );
+          ELSE
+            -- log usrid vCarga in number  
+            insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id ) 
+            VALUES ( usrid, etapa.viaje_id , etapa.id , 27, SYSDATE, vCarga );
+          END IF;
+
         END IF;
         IF vModo = 'del' THEN
           delete from tbl_cargaetapa where ID=vCarga;
-          -- log usrid vCarga in number  
+          -- log usrid id in number  
+          insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id ) 
+          VALUES ( usrid, etapa.viaje_id , etapa.id , 27, SYSDATE, vCarga );
+          
         END IF;
       END;
 
@@ -1372,7 +1403,7 @@ create or replace package body mbpc as
   procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
   begin
     insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_OMI)
-      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, vServicio, vServicio, vSDist, vMatricula)
+      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, 'n/a', 'n/a', vSDist, vMatricula)
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
       
     insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);

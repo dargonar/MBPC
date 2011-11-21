@@ -199,7 +199,7 @@ namespace mbpc.Controllers
         return RedirectToAction("editarBarcazas", new { shipfrom = id2, shipto = etapa_to["ID"] });
       }
 
-
+       
       public ActionResult transferirCargas()
       {
 
@@ -209,6 +209,8 @@ namespace mbpc.Controllers
         var unidad_id = new List<string>();
         var tipo_id = new List<string>();
         var modo = new List<string>();
+        var original = new List<string>();
+        var recibeemite = new List<string>();
 
         var total = int.Parse(Request.Params["cargas"]);
         for (int i = 0; i < total; i++)
@@ -219,18 +221,24 @@ namespace mbpc.Controllers
           var uid = Request[string.Format("carga{0}[uid]",i+1)];
           var val = Request[string.Format("carga{0}[val]",i+1)];
           var tci = Request[string.Format("carga{0}[tci]",i+1)];
+          var oci = Request[string.Format("carga{0}[oci]",i+1)];
+          var org = Request[string.Format("carga{0}[org]",i+1)];
+            
           
+          string ree = string.Empty;          
 
           etapa_id.Add(eid);
           carga_id.Add(cid);
           unidad_id.Add(uid);
           cantidad.Add(val);
           tipo_id.Add(tci);
+          original.Add(oci);
 
           //No tenia esta carga?
           if (cid == "-1")
           {
             modo.Add("add");
+            ree = "rec";
           }
           //Tenia la carga
           else
@@ -239,16 +247,24 @@ namespace mbpc.Controllers
             if (val == "0")
             {
               modo.Add("del");
+              ree = "emi";
             }
             else
             {
               modo.Add("upd");
+              if (int.Parse(val) > int.Parse(org))
+                ree = "rec";
+              else
+                ree = "emi";
             }
           }
-          
+
+          recibeemite.Add(ree);
+
         }
 
-        DaoLib.transferir_cargas(etapa_id.ToArray(), carga_id.ToArray(), cantidad.ToArray(), unidad_id.ToArray(), tipo_id.ToArray(), modo.ToArray());
+        DaoLib.transferir_cargas(etapa_id.ToArray(), carga_id.ToArray(), cantidad.ToArray(),
+          unidad_id.ToArray(), tipo_id.ToArray(), modo.ToArray(), original.ToArray(), recibeemite.ToArray());
 
 
         return null;

@@ -28,9 +28,9 @@
         <td><%=kv.Value[kv.Value["from"] != null ? "from" : "to"]["NOMBRE"]%></td>
         <td>
         <% if (kv.Value["from"] != null) { %>
-        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_origen["ID"]%>" cid="<%=kv.Value["from"]["CARGA_ID"]%>" style="width:40px" total="<%=total %>" id="f<%=cnt%>" class="cgo" cty="from" type="text" org="<%=kv.Value["from"]["CANTIDAD"]%>" value="<%=kv.Value["from"]["CANTIDAD"]%>" />&nbsp;<%=unidad%>
+        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_origen["ID"]%>" cid="<%=kv.Value["from"]["CARGA_ID"]%>" style="width:40px" total="<%=total %>" id="f<%=cnt%>" class="cgo" cty="from" type="text" org="<%=kv.Value["from"]["CANTIDAD"]%>" value="<%=kv.Value["from"]["CANTIDAD"]%>" ocid="-1" />&nbsp;<%=unidad%>
         <% } else { %>
-        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_origen["ID"]%>" cid="-1" style="width:40px" total="<%=total %>" id="f<%=cnt%>" class="cgo" cty="from" type="text" org="0" value="0" />&nbsp;<%=unidad%>
+        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_origen["ID"]%>" cid="-1" style="width:40px" total="<%=total %>" id="f<%=cnt%>" class="cgo" cty="from" type="text" org="0" value="0" ocid="<%=kv.Value["to"]["CARGA_ID"]%>" />&nbsp;<%=unidad%>
         <%}%>
         </td>
         <td align="center" valign="middle">
@@ -38,9 +38,9 @@
         </td>
         <td>
         <% if (kv.Value["to"] != null) { %>
-        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_destino["ID"]%>" cid="<%=kv.Value["to"]["CARGA_ID"]%>" style="width:40px" total="<%=total %>" id="t<%=cnt%>" class="cgo" cty="to" type="text" org="<%=kv.Value["to"]["CANTIDAD"]%>" value="<%=kv.Value["to"]["CANTIDAD"]%>" />&nbsp;<%=unidad%>
+        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_destino["ID"]%>" cid="<%=kv.Value["to"]["CARGA_ID"]%>" style="width:40px" total="<%=total %>" id="t<%=cnt%>" class="cgo" cty="to" type="text" org="<%=kv.Value["to"]["CANTIDAD"]%>" value="<%=kv.Value["to"]["CANTIDAD"]%>" ocid="-1" />&nbsp;<%=unidad%>
         <% } else { %>
-        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_destino["ID"]%>" cid="-1" style="width:40px" total="<%=total %>" id="t<%=cnt%>" class="cgo" cty="to" type="text" org="0" value="0" />&nbsp;<%=unidad%>
+        <input tcid="<%=tipocargaid%>" unid="<%=unidadid%>" eid="<%=buque_destino["ID"]%>" cid="-1" style="width:40px" total="<%=total %>" id="t<%=cnt%>" class="cgo" cty="to" type="text" org="0" value="0" ocid="<%=kv.Value["from"]["CARGA_ID"]%>" />&nbsp;<%=unidad%>
         <%}%>
         </td>
       </tr>
@@ -139,6 +139,7 @@
                                           'org': $(e).attr('org'),
                                           'uid': $(e).attr('unid'),
                                           'tci': $(e).attr('tcid'),
+                                          'oci': $(e).attr('ocid'),
                                           'val': $(e).val()
                                         };
           count = count + 1;

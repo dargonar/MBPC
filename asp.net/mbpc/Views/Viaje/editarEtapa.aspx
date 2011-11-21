@@ -100,10 +100,12 @@
     <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
+    <!--
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
+    -->
     
-    <label>Practico</label><br />
+    <label>Practico/Baqueano</label><br />
     <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
   
     <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
@@ -137,7 +139,7 @@
       %>
       </select>
       <div style="clear:both"></div>
-      <label class="desc">Listado de prácticos</label> 
+      <label class="desc">Listado de prácticos/baqueanos</label> 
       <button type="button" id="quitar" style="float:right;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
   </div>
 
@@ -155,8 +157,10 @@
     <input autocomplete="off" type="text" class="editaretapatext" value="" style="opacity:0;" /><br />
     <label class="desc">&nbsp;</label><br /><br />
 
+    <!--
     <label>Cantidad de pasajeros</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
+    -->
 
     <label>Capitan</label><br />
     <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
@@ -249,7 +253,7 @@
   function seleccionarPractico(opt) {
     $('#practicoh').val($(opt).val());
     $('#practicotext').val('');
-    alert('Practico '+ $(opt).html()+' quedara como activo de la etapa');
+    alert('Practico/Baqueano '+ $(opt).html()+' quedara como activo de la etapa');
   }
 
   $("#editarEtapaForm").submit(function () {
@@ -288,7 +292,7 @@
 
 
     if ($("#practicoselect").val() == null && $("#practicoselect").children().length != 0) {
-      alert("debe indicar el practico activo de la etapa");
+      alert("debe indicar el practico/baqueano activo de la etapa");
       $('.botonsubmit').removeAttr('disabled');
       return false;
     }
@@ -442,7 +446,7 @@
     var nono = false;
     $('#practicoselect').children().each(function () {
       if ($(this).html() == nombre) {
-        alert("Ya agregó a este practico")
+        alert("Ya agregó a este practico/baqueano")
         var nono = True;
       }
     });

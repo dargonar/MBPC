@@ -43,10 +43,12 @@
   <legend>2.0 Informacion del puerto y la instalación portuaria</legend>
 
   <label>2.1a Puerto de LLegada</label><br />
-  <input autocomplete="off" type="text" id="Text1" style="width:270px" value="<%= pbip["PUERTO"] %>" disabled="disabled" /><br />
+  <input autocomplete="off" type="text" id="Text1" style="width:270px" value="<%= pbip["DESTINO"] %>" disabled="disabled" /><br />
 
+  <!--
   <label>2.1b Instalación Portuaria</label><br />
-  <input autocomplete="off" type="text" id="Text2" style="width:270px" value="<%= pbip["INSTPORT"] %>" disabled="disabled" /><br />
+  <input autocomplete="off" type="text" id="Text2" style="width:270px" value="" disabled="disabled" /><br />
+  -->
 
   <label>2.2 Eta</label><br />
   <input autocomplete="off" type="text" style="width:270px" id="Text3" value="<%= pbip["ETA"] %>" disabled="disabled" /><br />
