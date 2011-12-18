@@ -98,7 +98,12 @@
         }),
         error: (function (data) {
           var titletag = /<title\b[^>]*>.*?<\/title>/
-          alert(unescape(titletag.exec(data.responseText)));
+
+          if(titletag != "")
+            alert(unescape(titletag.exec(data.responseText)));
+          else
+            alert(data);
+
           $('.botonsubmitb').removeAttr('disabled');
         })
       });

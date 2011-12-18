@@ -15,33 +15,51 @@ namespace mbpc.Controllers
           if ( Session["logged"] == null || int.Parse( Session["logged"].ToString() ) == 0 )
             return this.RedirectToAction("ShowForm", "Auth");
 
-          Session["zonas"] = DaoLib.zonas_del_usuario(int.Parse(Session["usuario"].ToString()));
-
-          if ((Session["zonas"] as List<object>).Count == 0)
+          Session["grupos"] = DaoLib.grupos_del_usuario(int.Parse(Session["usuario"].ToString()));
+          if ((Session["grupos"] as List<object>).Count == 0)
           {
-            //Session["logged"] = null;
             TempData["error"] = "Debe pedir el alta en el sistema";
             return RedirectToAction("Login", "Auth");
           }
+
+          Session["zonas"] = DaoLib.zonas_del_grupo(int.Parse(((Session["grupos"] as List<object>)[0] as Dictionary<string,string>)["GRUPO"]));
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
 
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+          recalcular_barcos_para_punto(id);
+
+          return View();
+        }
+
+        public string costera_de_zona(string id)
+        {
+          foreach( var x in Session["zonas"] as List<object>)
+          {
+            var t = x as Dictionary<string,string>;
+            if (t["ID"] == id)
+              return t["CUATRIGRAMA"];
+          }
+
+          return "";
+        }
+
+        public void recalcular_barcos_para_punto(string id)
+        {
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
           ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
           ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
 
-          return View();
+          ViewData["cuatrigrama"] = costera_de_zona(id);
+
         }
 
         public ActionResult RefrescarColumnas()
         {
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
+          string id = Session["zona"].ToString();
+          recalcular_barcos_para_punto(id);
 
           return View("_columnas");
         }
@@ -49,16 +67,21 @@ namespace mbpc.Controllers
         
         public ActionResult cambiarZona(string id)
         {
-          //TODO:
-          //if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
-          //return Action
+          Session["zona"] = id;
+          recalcular_barcos_para_punto(id);
+
+          return View("columnas");
+        }
+
+
+        public ActionResult CambiarGrupo(int grupo)
+        {
+          Session["zonas"] = DaoLib.zonas_del_grupo(grupo);
+
+          string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           
           Session["zona"] = id;
-          
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
+          recalcular_barcos_para_punto(id);
 
           return View("columnas");
         }
@@ -67,10 +90,10 @@ namespace mbpc.Controllers
         {
           var now = DateTime.Now;
           ViewData["fecha"] = now.ToString("dd-MM-yy HH:mm");
-
           ViewData["zonas"] = DaoLib.zonas_adyacentes(zona);
           ViewData["viaje"] = viaje;
           ViewData["pasar"] = pasar;
+
           if (!String.IsNullOrEmpty(pasar))
           {
             var ultima_etapa_viaje = DaoLib.traer_etapa(viaje)[0] as Dictionary<string, string>;
@@ -78,6 +101,7 @@ namespace mbpc.Controllers
             ViewData["RUMBO"] = ultima_etapa_viaje["RUMBO"];
             ViewData["DESTINO_ID"] = ultima_etapa_viaje["DESTINO_ID"];
           }
+
           return View();
         }
 
@@ -114,7 +138,8 @@ namespace mbpc.Controllers
               ViewData["entrada"] = ((Dictionary<string, string>)zonas[i])["ENTRADA"];
             }
           }
-            ViewData["zonas"] = zonas;
+          
+          ViewData["zonas"] = zonas;
         }
 
         private static int dictsort(Object aa, Object bb) 

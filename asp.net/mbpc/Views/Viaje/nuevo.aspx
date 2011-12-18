@@ -107,10 +107,13 @@
              success: function (data) {
                response($.map(data, function (item) {
                  return {
-                   label: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
-                   value: item.NOMBRE + ' (SD:' + item.SDIST + '-IMO:' + item.NRO_OMI + ')',
-                   MATRICULA: item.ID_BUQUE,
-                   TIPO: item.TIPO
+                   value    : item.NOMBRE,
+                   id_buque : item.ID_BUQUE,
+                   omi      : item.NRO_OMI,
+                   nombre   : item.NOMBRE,
+                   sdist    : item.SDIST,
+                   tipo     : item.TIPO,
+                   costera  : item.COSTERA
                  }
                }));
              }
@@ -118,8 +121,17 @@
          },
          minLength: 2,
          select: function (event, ui) {
-           $(this).nextAll('input[type=hidden]').first().val(ui.item.MATRICULA);
-           $('#internacional').val( (ui.item.TIPO == "nacional") ? "0" : "1");
+           
+           if( ui.item.costera != '' )
+           {
+            $("#buque_id").val('');
+            $("#buquetext").val('');
+            event.preventDefault();
+            return false;
+           }
+           
+           $("#buque_id").val(ui.item.id_buque);
+           $('#internacional').val( (ui.item.tipo == "nacional") ? "0" : "1");
          },
          open: function () {
            $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
@@ -127,7 +139,24 @@
          close: function () {
            $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
          }
-       });
+       }).data( "autocomplete" )._renderItem = function( ul, item ) {
+			      
+            var bg = '';
+            var mr = '';
+
+            if( item.costera != '' )
+            {
+               bg = 'style="background:#B99"';
+               mr = '</br>navegando en ' + item.costera;
+            }
+
+            return $( "<li "+ bg + "></li>" )
+				      .data( "item.autocomplete", item )
+				      .append( "<a>" + item.nombre + " (SD:" + item.sdist + " - IMO:" + item.omi + ")" 
+                             + mr
+                             + "</a>" )
+				      .appendTo( ul );
+		    };  
 
       $("#desdetext, #hastatext").autocomplete({
         source: function (request, response) {
@@ -202,7 +231,7 @@
 
          $('.botonsubmit').attr('disabled', 'disabled');
 
-         if ($("#buquetext").val() == "") {
+         if ($("#buque_id").val() == "") {
              alert("Debe seleccionar un buque");
              $("#buquetext").focus();
              $('.botonsubmit').removeAttr('disabled');

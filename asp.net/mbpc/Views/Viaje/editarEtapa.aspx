@@ -100,10 +100,8 @@
     <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-    <!--
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
-    -->
     
     <label>Practico/Baqueano</label><br />
     <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
@@ -188,13 +186,13 @@
   $("#rumbo").mask("999");
 
   //Calado proa
-  $("#caladoproa").mask("99").val("<%=etapa["CALADO_PROA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_PROA"]), "{0:00}") : ""%>");
+  $("#caladoproa").mask("99.99").val("<%=etapa["CALADO_PROA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_PROA"]), "{0:00.00}") : ""%>");
   $("#caladoproa_ft").mask("999.9").val("<%=etapa["CALADO_PROA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_PROA"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
 
-  $("#caladoinformado").mask("99").val("<%=etapa["CALADO_INFORMADO"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_INFORMADO"]), "{0:00}") : ""%>");
+  $("#caladoinformado").mask("99.99").val("<%=etapa["CALADO_INFORMADO"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_INFORMADO"]), "{0:00.00}") : ""%>");
   $("#caladoinformado_ft").mask("999.9").val("<%=etapa["CALADO_INFORMADO"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_INFORMADO"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
 
-  $("#caladopopa").mask("99").val("<%= etapa["CALADO_POPA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_POPA"]), "{0:00}") : ""%>");
+  $("#caladopopa").mask("99.99").val("<%= etapa["CALADO_POPA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_POPA"]), "{0:00.00}") : ""%>");
   $("#caladopopa_ft").mask("999.9").val("<%=etapa["CALADO_POPA"] != "" ? Hlp.toString( Hlp.toDecimal((string)etapa["CALADO_POPA"]) * 3.2808399M, "{0:000.0}" ) : ""%>");
 
   //meters to feets
@@ -218,8 +216,12 @@
     var vv = '';
     if( v != '' )
     {
-      var vint = parseInt(parseFloat(v)/3.2808399);
-      vv = sprintf('%02d', vint);
+      var xx = parseFloat(v)/3.280839;
+
+      var vint = parseInt(xx);
+      var vflo = parseInt(parseFloat(xx - vint)*10.0);
+
+      vv = sprintf('%02d.%01d', vint, vflo);
     }
 
     var iidd=$(this).attr('id').split('_')[0];

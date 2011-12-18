@@ -322,14 +322,24 @@ public static class DaoLib
     return doCall("mbpc.quitar_acompanante", parameters);
   }
 
-  public static List<object> zonas_del_usuario(int usuario)
+  public static List<object> zonas_del_grupo(int grupo)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vId", OracleDbType.Varchar2, grupo.ToString(), System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.zonas_del_grupo", parameters);
+  }
+
+  public static List<object> grupos_del_usuario(int usuario)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vId", OracleDbType.Varchar2, usuario.ToString(), System.Data.ParameterDirection.Input),
     };
 
-    return doCall("mbpc.zonas_del_usuario", parameters);
+    return doCall("mbpc.grupos_del_usuario", parameters);
   }
 
   public static List<object> barcos_en_zona(string zona)

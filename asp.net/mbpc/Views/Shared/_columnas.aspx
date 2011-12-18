@@ -234,6 +234,9 @@
 } %>
 
 <script type="text/javascript">
+
+  $("#ecuatrigrama").html('Costera <%=ViewData["cuatrigrama"]%>');
+  
   buildButtons();
   $('.info').hoverbox();
   $('.estados').hoverbox();

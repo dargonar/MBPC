@@ -13,6 +13,13 @@ namespace mbpc.Controllers
 
       public JsonResult crearBuque(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio)
       {
+
+        //'SELECT count(*) FROM
+        if (DaoLib.row_count(string.Format("buques where matricula ='{0}' or sdist='{1}'", matricula, sdist)) != 0)
+        {
+          throw new Exception("El barco ya existe");
+        }
+
         if (internacional != "1")
           return Json(DaoLib.crear_buque(nombre, matricula, sdist, servicio));
         else
