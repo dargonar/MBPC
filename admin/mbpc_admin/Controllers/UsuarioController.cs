@@ -25,8 +25,8 @@ namespace mbpc_admin.Controllers
 
         try
         {
-          var item = context.INT_USUARIOS.Where(c => c.USUARIO_ID == id).SingleOrDefault();
-          context.INT_USUARIOS.DeleteObject(item);
+          var item = context.VW_INT_USUARIOS.Where(c => c.NDOC == id).SingleOrDefault();
+          context.VW_INT_USUARIOS.DeleteObject(item);
           context.SaveChanges();
           return View("List");
         }
@@ -41,18 +41,18 @@ namespace mbpc_admin.Controllers
       public ActionResult Edit(decimal id)
       {
         ViewData["titulo"] = "Editar";
-        var item = context.INT_USUARIOS.Where(c => c.USUARIO_ID == id).First();
+        var item = context.VW_INT_USUARIOS.Where(c => c.NDOC == id).First();
         return View("New", item);
       }
 
       public ActionResult New()
       {
         ViewData["titulo"] = "Nuevo";
-        var item = new INT_USUARIOS();
+        var item = new VW_INT_USUARIOS();
         return View(item);
       }
 
-      public ActionResult Create(INT_USUARIOS item)
+      public ActionResult Create(VW_INT_USUARIOS item)
       {
         try
         {
@@ -62,31 +62,32 @@ namespace mbpc_admin.Controllers
             return View("New", item);
           }
 
-          if (item.USUARIO_ID == 0)
+          if (item.NDOC == 0)
           {
-            //context.INT_USUARIOS.AddObject(item);
+            //context.VW_INT_USUARIOS.AddObject(item);
 
             FlashError("El ID de usuario es incorrecto");
             return View("New", item);
           }
           else
           {
-            var updatedItem = context.INT_USUARIOS.Where(c => c.USUARIO_ID == item.USUARIO_ID).SingleOrDefault();
+            var updatedItem = context.VW_INT_USUARIOS.Where(c => c.NDOC == item.NDOC).SingleOrDefault();
             if (updatedItem != null)
-                updatedItem.SimpleCopyFrom(item, new string[] {"NDOC", "PASSWORD", "APELLIDO", "NOMBRES", "DESTINO", "FECHAVENC", "TEDIRECTO", "EMAIL", "ESTADO", "SECCION", "NDOC_ADMIN", "FECHA_AUDIT", "NOMBREDEUSUARIO", "USUARIO_ID"});
+              updatedItem.SimpleCopyFrom(item, new string[] { "NDOC", "PASSWORD", "APELLIDO", "NOMBRES", "DESTINO", "FECHAVENC", "TEDIRECTO", "EMAIL", "ESTADO", "NOMBREDEUSUARIO" });
             else
-                context.INT_USUARIOS.AddObject(item);
+              context.VW_INT_USUARIOS.AddObject(item);
             FlashOK("La accion se ejecuto correctamente");
           }
           
           context.SaveChanges();
 
           //HACK- Cambiar cuando el connector de Oracle funcione bien
-          var nuevoitem = context.INT_USUARIOS.OrderByDescending(c => c.USUARIO_ID).First();
+          //ESTO ROMPE!!!! VERIFICAR QUE NUNCA SE USEEE!!!
+          var nuevoitem = context.VW_INT_USUARIOS.OrderByDescending(c => c.NDOC).First();
           //HACK----------------------------------------------------------------------------
 
 
-          return Edit(nuevoitem.USUARIO_ID);
+          return Edit((decimal)nuevoitem.NDOC);
 
         }
         catch (Exception ex)
@@ -100,21 +101,21 @@ namespace mbpc_admin.Controllers
 
       public ActionResult ListJSON(string sidx, string sord, int page, int rows)
       {
-        var columns = new string[] { "NDOC", "PASSWORD", "APELLIDO", "NOMBRES", "DESTINO", "FECHAVENC", "TEDIRECTO", "TEINTERNO", "EMAIL", "ESTADO", "SECCION", "NDOC_ADMIN", "FECHA_AUDIT", "NOMBREDEUSUARIO", "USUARIO_ID" };
+        var columns = new string[] { "NDOC", "DESTINO", "PASSWORD", "APELLIDO", "NOMBRES", "DESTINO", "FECHAVENC", "TEDIRECTO", "EMAIL", "NOMBREDEUSUARIO" };
 
-        var tmp = JQGrid.Helper.PaginageS1<INT_USUARIOS>(Request.Params, columns, page, rows, sidx, sord);
+        var tmp = JQGrid.Helper.PaginageS1<VW_INT_USUARIOS>(Request.Params, columns, page, rows, sidx, sord);
 
-        var items = context.ExecuteStoreQuery<INT_USUARIOS>((string)tmp[0],(ObjectParameter[])tmp[1]);
+        var items = context.ExecuteStoreQuery<VW_INT_USUARIOS>((string)tmp[0], (ObjectParameter[])tmp[1]);
 
-        return Json(JQGrid.Helper.PaginateS2<INT_USUARIOS>(
+        return Json(JQGrid.Helper.PaginateS2<VW_INT_USUARIOS>(
           items.ToArray(),
-          columns, context.INT_USUARIOS.Count(), page, rows
+          columns, context.VW_INT_USUARIOS.Count(), page, rows
           ), JsonRequestBehavior.AllowGet);
       }
 
       public ActionResult Grupos(int usuario)
       {
-        var item = context.INT_USUARIOS.Where(c => c.USUARIO_ID == usuario).First();
+        var item = context.VW_INT_USUARIOS.Where(c => c.NDOC == usuario).First();
         ViewData["titulo"] = "Editando grupos del usuario " + item.NOMBRES + " " + item.APELLIDO;
         CreateCombo(usuario);
         return View(item);

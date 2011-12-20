@@ -92,7 +92,7 @@ namespace mbpc_admin.Controllers
 
       private void CreateCombo(decimal? userid, decimal? pdc)
       {
-          var user = context.INT_USUARIOS.Where(c => c.USUARIO_ID == userid).First();
+          var user = context.VW_INT_USUARIOS.Where(c => c.NDOC == userid).First();
           ViewData["user"] = userid;
           ViewData["nombres"] = user.APELLIDO + ", " + user.NOMBRES;
           ViewData["PUNTODECONTROL"] = new SelectList(context.VPUNTO_DE_CONTROL, "ID", "CANAL", pdc);
@@ -265,7 +265,7 @@ namespace mbpc_admin.Controllers
               if (item.ID == _HACKID_)
               { 
                   //Intento de usar la relacion de EF many to many (sin exito)
-                  //var userob = context.INT_USUARIOS.FirstOrDefault(e => e.ID == item.PUNTODECONTROL);
+                  //var userob = context.VW_INT_USUARIOS.FirstOrDefault(e => e.ID == item.PUNTODECONTROL);
                   //var pdcobj = context.TBL_PUNTODECONTROL.FirstOrDefault(e => e.ID == item.PUNTODECONTROL);
                   //userobj.TBL_PUNTODECONTROLUSUARIO.add(item);
                   //pdcobj.TBL_PUNTODECONTROLUSUARIO.Add(item);

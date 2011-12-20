@@ -7,6 +7,7 @@ create or replace package mbpc as
   var_buque buques%ROWTYPE;
   var_puerto tbl_kstm_puertos%ROWTYPE;
   usuario int_usuarios%ROWTYPE;
+  usuario2 vw_int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
   cetapa tbl_cargaetapa%ROWTYPE;
   practicoetapa tbl_practicoetapa%ROWTYPE;
@@ -23,6 +24,8 @@ create or replace package mbpc as
   tempdate date;
   --Login/Home
   procedure login( vid in varchar2, vpassword in varchar2, logged out number);
+  procedure login2( vid in varchar2, vpassword in varchar2, logged out number);
+  
   procedure grupos_del_usuario( vId in varchar2, usrid in number, vCursor out cur);
   procedure zonas_del_grupo( vId in varchar2, usrid in number, vCursor out cur);
   procedure barcazas_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
@@ -204,8 +207,39 @@ create or replace package body mbpc as
 -----------------------------------------Login/Home------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------
 
+-- vw_int_usuarios: usuarios internos (de Prefectura) habilitados a usar el MBPC
+-- vw_int_usuarios_ext: usuarios externos (empresas u organismos) habilitados para consumir datos del MBPC
+-- vw_pers_desti: personal de Prefectura con sus destinos actualizados
+
   -------------------------------------------------------------------------------------------------------------
-  --Verifica que exista un registro que coincida con el ID del usuario (Legajo) y el password  
+  procedure login2(vid in varchar2, vpassword in varchar2, logged out number ) is
+
+  begin
+    SELECT * INTO usuario2 FROM vw_int_usuarios WHERE ndoc = vid AND password = vpassword;
+      IF sql%ROWCOUNT != 0 THEN
+        SELECT count(*) into temp FROM vw_pers_desti WHERE ndoc=vid AND destino=usuario2.destino;
+        if temp != 0 THEN
+          if usuario2.fechavenc > SYSDATE THEN
+            --usuario ok / destino ok / fecha ok
+            logged := 1;
+          ELSE
+            --usuario ok / destino ok / fecha no
+            logged := 4;
+          END IF;
+          
+        ELSE
+          --usuario ok / destino no
+          logged := 2;
+        END IF;
+      END IF;
+  exception when NO_DATA_FOUND THEN
+    --usuario/pass invalido
+    logged := 3;
+    
+  end login2;
+
+  -------------------------------------------------------------------------------------------------------------
+  -- Verifica que exista un registro que coincida con el ID del usuario (Legajo) y el password  
   procedure login(vid in varchar2, vpassword in varchar2, logged out number ) is
 
   begin

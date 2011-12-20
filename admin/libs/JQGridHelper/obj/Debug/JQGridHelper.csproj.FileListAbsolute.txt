@@ -5,3 +5,10 @@ C:\wdir\mbpc_admin\libs\JQGridHelper\bin\Debug\Dynamic.pdb
 C:\wdir\mbpc_admin\libs\JQGridHelper\obj\Debug\ResolveAssemblyReference.cache
 C:\wdir\mbpc_admin\libs\JQGridHelper\obj\Debug\JQGridHelper.dll
 C:\wdir\mbpc_admin\libs\JQGridHelper\obj\Debug\JQGridHelper.pdb
+C:\wdir\mbpc\admin\libs\JQGridHelper\bin\Debug\JQGridHelper.dll
+C:\wdir\mbpc\admin\libs\JQGridHelper\bin\Debug\JQGridHelper.pdb
+C:\wdir\mbpc\admin\libs\JQGridHelper\bin\Debug\Dynamic.dll
+C:\wdir\mbpc\admin\libs\JQGridHelper\bin\Debug\Dynamic.pdb
+C:\wdir\mbpc\admin\libs\JQGridHelper\obj\Debug\ResolveAssemblyReference.cache
+C:\wdir\mbpc\admin\libs\JQGridHelper\obj\Debug\JQGridHelper.dll
+C:\wdir\mbpc\admin\libs\JQGridHelper\obj\Debug\JQGridHelper.pdb

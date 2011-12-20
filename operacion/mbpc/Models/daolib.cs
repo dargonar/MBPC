@@ -24,6 +24,35 @@ public static class DaoLib
     return latlon;
   }
 
+  public static int loguser2(string username, string password)
+  {
+    string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+    int result = -1;
+
+    using (OracleConnection con = new OracleConnection(constr))
+    {
+
+      con.Open();
+
+      OracleCommand cmd = new OracleCommand();
+
+      cmd.Connection = con;
+      cmd.CommandText = "mbpc.login2";
+      cmd.CommandType = CommandType.StoredProcedure;
+      cmd.Parameters.Add("vid", OracleDbType.Varchar2, username, System.Data.ParameterDirection.Input);
+      cmd.Parameters.Add("vpassword", OracleDbType.Varchar2, password, System.Data.ParameterDirection.Input);
+
+      OracleParameter param = cmd.Parameters.Add("logged", OracleDbType.Decimal, DBNull.Value, System.Data.ParameterDirection.Output);
+
+      OracleDataReader reader = cmd.ExecuteReader();
+      result = int.Parse(param.Value.ToString());
+
+      cmd.Dispose();
+      con.Close();
+    }
+
+    return result;
+  }
 
   public static bool loguser(string username, string password)
   {

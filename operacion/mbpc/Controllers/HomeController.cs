@@ -18,7 +18,7 @@ namespace mbpc.Controllers
           Session["grupos"] = DaoLib.grupos_del_usuario(int.Parse(Session["usuario"].ToString()));
           if ((Session["grupos"] as List<object>).Count == 0)
           {
-            TempData["error"] = "Debe pedir el alta en el sistema";
+            TempData["error"] = "Sin grupos.<br/>Debe pedir el alta en el sistema";
             return RedirectToAction("Login", "Auth");
           }
 

@@ -32,34 +32,29 @@
 <script type="text/javascript">
      
   $(document).ready(function () {
-
+    //"NDOC", "DESTINO", "PASSWORD", "APELLIDO", "NOMBRES", "DESTINO", "FECHAVENC", "TEDIRECTO", "EMAIL", "NOMBREDEUSUARIO"
     $(function () {
       var mygrid = $("#list").jqGrid({
         url: '/Usuario/ListJson',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ["Documento", "Password", "Apellido", "Nombres", "Destino", "Fechavenc", "Tel Directo", "Tel Interno", "email", "estado", "seccion", "ndoc admin", "fecha audit", "nombredeusuario", "id"],  
+        colNames: ["Documento", "Destino", "Password", "Apellido", "Nombres", "Destino", "Fechavenc", "Tel Directo", "email", "nombredeusuario"],  
         colModel: [
-      { name: 'NDOC', index: 'NDOC', width: 90, hidden: true },
+      { name: 'NDOC', index: 'NDOC', width: 90},
+      { name: 'DESTINO', index: 'DESTINO', width: 90},
       { name: 'PASSWORD', index: 'PASSWORD', width: 90 },
       { name: 'APELLIDO', index: 'APELLIDO', width: 80 },
       { name: 'NOMBRES', index: 'NOMBRES', width: 80 },
       { name: 'DESTINO', index: 'DESTINO', width: 80 },
 	    { name: 'FECHAVENC', index: 'FECHAVENC', width: 80 },
       { name: 'TEDIRECTO', index: 'TEDIRECTO', width: 80 },
-      { name: 'TEINTERNO', index: 'TEINTERNO', width: 80 },
       { name: 'EMAIL', index: 'EMAIL', width: 80 },
-      { name: 'ESTADO', index: 'ESTADO', width: 80 },
-      { name: 'SECCION', index: 'SECCION', width: 80 },
-      { name: 'NDOC_ADMIN', index: 'NDOC_ADMIN', width: 80 },
-      { name: 'FECHA_AUDIT', index: 'FECHA_AUDIT', width: 80 },
       { name: 'NOMBREDEUSUARIO', index: 'NOMBREDEUSUARIO', width: 80 },
-      { name: 'USUARIO_ID', index: 'USUARIO_ID', width: 80 }
     ],
         pager: '#pager',
         rowNum: 20,
         rowList: [10, 20, 30],
-        sortname: 'usuario_id',
+        sortname: 'NDOC',
         sortorder: 'desc',
         viewrecords: true,
         gridview: true,
@@ -76,7 +71,7 @@
         add: false,
         del: false,
         search: false
-      }).navButtonAdd('#pager', {
+      })/*.navButtonAdd('#pager', {
         caption: "Nuevo",
         buttonicon: "ui-icon-add",
         onClickButton: function () {
@@ -111,7 +106,7 @@
             window.location = '/Usuario/Remove?ID='+id;
         },
         position: "last"
-      }).navButtonAdd('#pager', {
+      })*/.navButtonAdd('#pager', {
         caption: "Ver Grupos",
         buttonicon: "ui-icon-view",
         onClickButton: function () {

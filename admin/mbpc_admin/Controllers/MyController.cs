@@ -11,15 +11,15 @@ namespace mbpc_admin.Controllers
   {
     public static int _HACKID_ = 9999999;
 
-    private MBPCEntities4 _context = null;
+    private MBPCEntities5 _context = null;
 
-    public MBPCEntities4 context
+    public MBPCEntities5 context
     {
       get
       {
         if (_context == null)
         {
-          _context = new MBPCEntities4();
+          _context = new MBPCEntities5();
         }
 
         return _context;

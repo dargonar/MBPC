@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<mbpc_admin.INT_USUARIOS>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<mbpc_admin.VW_INT_USUARIOS>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	<%= ViewData["titulo"]%> Usuario
@@ -25,7 +25,7 @@
 
             <p>
                 <%: Html.Label("USUARIO_ID") %>
-                <%: Html.TextBox("USUARIO_ID", String.Format("{0:0.}", Model.USUARIO_ID), new { @class = "inputbox" })%>
+                <%: Html.TextBox("USUARIO_ID", String.Format("{0:0.}", Model.NDOC), new { @class = "inputbox" })%>
                 <br />
                 <span class="smltxt red"><%: Html.ValidationMessage("USUARIO_ID") %></span>
             </p>
@@ -105,28 +105,7 @@
                 <br />
                 <span class="smltxt red"><%: Html.ValidationMessage("ESTADO") %></span>
             </p>
-            
-            <p>
-                <%: Html.Label("SECCION") %>
-                <%: Html.TextBox("SECCION", String.Format("{0:F}", Model.SECCION), new { @class = "inputbox" })%>
-                <br />
-                <span class="smltxt red"><%: Html.ValidationMessage("SECCION") %></span>
-            </p>
-            
-            <p>
-                <%: Html.Label("NDOC_ADMIN") %>
-                <%: Html.TextBox("NDOC_ADMIN", String.Format("{0:0.}", Model.NDOC_ADMIN), new { @class = "inputbox" })%>
-                <br />
-                <span class="smltxt red"><%: Html.ValidationMessage("NDOC_ADMIN") %></span>
-            </p>
-            
-            <p>
-                <%: Html.Label("FECHA_AUDIT") %>
-                <%: Html.TextBox("FECHA_AUDIT", String.Format("{0:F}", Model.FECHA_AUDIT), new { @class = "inputbox" })%>
-                <br />
-                <span class="smltxt red"><%: Html.ValidationMessage("FECHA_AUDIT") %></span>
-            </p>
-            
+          
             <p>
                 <%: Html.Label("NOMBREDEUSUARIO") %>
                 <%: Html.TextBox("NOMBREDEUSUARIO", Model.NOMBREDEUSUARIO, new { @class = "inputbox" })%>

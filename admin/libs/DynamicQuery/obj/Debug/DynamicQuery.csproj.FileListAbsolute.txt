@@ -3,3 +3,8 @@ C:\wdir\mbpc_admin\libs\DynamicQuery\bin\Debug\Dynamic.pdb
 C:\wdir\mbpc_admin\libs\DynamicQuery\obj\Debug\ResolveAssemblyReference.cache
 C:\wdir\mbpc_admin\libs\DynamicQuery\obj\Debug\Dynamic.dll
 C:\wdir\mbpc_admin\libs\DynamicQuery\obj\Debug\Dynamic.pdb
+C:\wdir\mbpc\admin\libs\DynamicQuery\bin\Debug\Dynamic.dll
+C:\wdir\mbpc\admin\libs\DynamicQuery\bin\Debug\Dynamic.pdb
+C:\wdir\mbpc\admin\libs\DynamicQuery\obj\Debug\ResolveAssemblyReference.cache
+C:\wdir\mbpc\admin\libs\DynamicQuery\obj\Debug\Dynamic.dll
+C:\wdir\mbpc\admin\libs\DynamicQuery\obj\Debug\Dynamic.pdb

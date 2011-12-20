@@ -9,3 +9,14 @@ C:\wdir\mbpc_admin\mbpc_admin\obj\Debug\ResolveAssemblyReference.cache
 C:\wdir\mbpc_admin\mbpc_admin\obj\Debug\mbpc_admin.dll
 C:\wdir\mbpc_admin\mbpc_admin\obj\Debug\mbpc_admin.pdb
 C:\wdir\mbpc_admin\mbpc_admin\bin\Oracle.DataAccess.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\mbpc_admin.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\mbpc_admin.pdb
+C:\wdir\mbpc\admin\mbpc_admin\bin\Dynamic.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\JQGridHelper.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\Oracle.DataAccess.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\System.Data.Entity.dll
+C:\wdir\mbpc\admin\mbpc_admin\bin\Dynamic.pdb
+C:\wdir\mbpc\admin\mbpc_admin\bin\JQGridHelper.pdb
+C:\wdir\mbpc\admin\mbpc_admin\obj\Debug\ResolveAssemblyReference.cache
+C:\wdir\mbpc\admin\mbpc_admin\obj\Debug\mbpc_admin.dll
+C:\wdir\mbpc\admin\mbpc_admin\obj\Debug\mbpc_admin.pdb

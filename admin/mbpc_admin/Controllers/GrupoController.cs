@@ -29,7 +29,7 @@ namespace mbpc_admin.Controllers
 
         return Json(JQGrid.Helper.PaginateS2<TBL_GRUPO>(
           items.ToArray(),
-          columns, context.INT_USUARIOS.Count(), page, rows
+          columns, context.VW_INT_USUARIOS.Count(), page, rows
           ), JsonRequestBehavior.AllowGet);
       }
 
