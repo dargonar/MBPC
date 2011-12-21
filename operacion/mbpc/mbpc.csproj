@@ -117,6 +117,7 @@
     <Content Include="Views\Carga\zona_fondeo.aspx" />
     <Content Include="Views\Home\reporteDiario.aspx" />
     <Content Include="Views\Home\reporteDiarioPrint.aspx" />
+    <Content Include="Views\Item\nuevaBarcaza.aspx" />
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
     <Content Include="Views\Reporte\_result_empty.aspx" />

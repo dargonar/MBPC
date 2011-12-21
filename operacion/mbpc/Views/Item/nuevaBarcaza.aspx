@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 <% List<Object> banderas = ViewData["banderas"] as List<object>; %>
 
-  <form id="nuevoBuque" action="<%= Url.Content("~/Item/crearBuque") %>">
+  <form id="nuevoBarcaza" action="<%= Url.Content("~/Item/crearBarcaza") %>">
     <table>
       <tr>
         <td><label>Nacional</label></td>
@@ -29,11 +29,11 @@
     </select><br /><br />
 
     <label>Tipo de Servicio</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="servicio" id="servicio"/><br />
+    <select name="servicio" style="width:200px">
+      <option value="BARCAZA">BARCAZA</option>
+      <option value="BALSA">BALSA (sin motor)</option>
+    </select>
 
-    <label>MMSI</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="mmsi" id="mmsi"/><br />
-    
     <input type="submit" class="botonsubmitb" value="nuevo" style="margin-left: 149px"/>
   </form>
 
@@ -42,23 +42,21 @@
     function nacion() {
       $('#bandera').val('ARGENTINA');
       $('#bandera').attr('disabled', 'disabled');
-      $('#matlabel').html('Matricula');
       return false;
     }
 
     function internacion() {
       $('#bandera').val('');
       $('#bandera').attr('disabled', false);
-      $('#matlabel').html('Numero OMI');
       return false;
     }
-
-    $("#nuevoBuque").submit(function () {
+    
+    $("#nuevoBarcaza").submit(function () {
 
       $('.botonsubmitb').attr('disabled', 'disabled');
 
       if ($("#matriculaN").val() == "") {
-        alert("Debe ingresar " + $('#matlabel').html() );
+        alert("Debe ingresar Matricula");
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
@@ -75,14 +73,8 @@
         return false;
       }
 
-      if( $("#inter").val() != 0 && $("#bandera").val() == null ) {
+      if ($("#inter").val() != 0 && $("#bandera").val() == null) {
         alert("Seleccione la bandera");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-      
-      if( $("#servicio").val() == "" ) {
-        alert("Debe seleccionar el tipo de servicio");
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
@@ -93,13 +85,14 @@
         url: $(this).attr('action'),
         data: $(this).serialize(),
         success: (function (data) {
-          $('#dialogdiv3').dialog('close');
-          pegar_y_cerrar($('#nombreN').val(), data[0].ID_BUQUE, $("input[name=internacional]:checked").val());
+          $('#buque_id').val(data[0].ID_BUQUE);
+          $('#barcaza_text').val(data[0].NOMBRE);
+          $('#dialogdiv4').dialog('close');
         }),
         error: (function (data) {
           var titletag = /<title\b[^>]*>.*?<\/title>/
 
-          if(titletag != "")
+          if (titletag != "")
             alert(unescape(titletag.exec(data.responseText)));
           else
             alert(data);
@@ -109,7 +102,6 @@
       });
       return false;
     });
-  
   
   
   </script>

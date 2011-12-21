@@ -792,7 +792,7 @@ public static class DaoLib
 
 
 
-  public static List<object> crear_buque(string nombre, string matricula, string sdist, string servicio)
+  public static List<object> crear_buque(string nombre, string matricula, string sdist, string servicio, string mmsi)
   {
     string matri = string.Empty;
 
@@ -802,14 +802,15 @@ public static class DaoLib
         new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
         new OracleParameter("vSDist", OracleDbType.Varchar2, sdist, System.Data.ParameterDirection.Input),
         new OracleParameter("vServicio", OracleDbType.Varchar2, servicio, System.Data.ParameterDirection.Input),
-        //new OracleParameter("vOutMatricula", OracleDbType.Varchar2, matri , System.Data.ParameterDirection.Output)
+        new OracleParameter("vMMSI", OracleDbType.Varchar2, mmsi, System.Data.ParameterDirection.Input),
+
     };
 
     return doCall("mbpc.crear_buque", parameters);
   }
 
 
-  public static List<object> crear_buque_int(string nombre, string matricula, string sdist, string bandera, string servicio)
+  public static List<object> crear_buque_int(string nombre, string matricula, string sdist, string bandera, string servicio, string mmsi)
   {
     string matri = string.Empty;
 
@@ -819,7 +820,8 @@ public static class DaoLib
         new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
         new OracleParameter("vSDist", OracleDbType.Varchar2, sdist, System.Data.ParameterDirection.Input),
         new OracleParameter("vBandera", OracleDbType.Varchar2, bandera, System.Data.ParameterDirection.Input),
-        new OracleParameter("vServicio", OracleDbType.Varchar2, servicio, System.Data.ParameterDirection.Input)
+        new OracleParameter("vServicio", OracleDbType.Varchar2, servicio, System.Data.ParameterDirection.Input),
+        new OracleParameter("vMMSI", OracleDbType.Varchar2, mmsi, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.crear_buque_int", parameters);

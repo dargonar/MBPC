@@ -10,27 +10,69 @@ namespace mbpc.Controllers
     public class ItemController : MyController
     {
 
-
-      public JsonResult crearBuque(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio)
+      public JsonResult crearBarcaza(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio)
       {
-
-        //'SELECT count(*) FROM
-        if (DaoLib.row_count(string.Format("buques where matricula ='{0}' or sdist='{1}'", matricula, sdist)) != 0)
+        if (internacional != "1")
         {
-          throw new Exception("El barco ya existe");
+          bandera = "ARGENTINA";
+        }
+
+        if (DaoLib.row_count(string.Format("buques where matricula='{0}' and bandera='{1}' and (Upper(TIPO_BUQUE) LIKE 'BARCAZA%' OR Upper(TIPO_BUQUE) LIKE 'BALSA%')", matricula, bandera)) != 0)
+        {
+          throw new Exception("Ya existe una barcaza con esa matricula");
+        }        
+        
+        if (internacional != "1")
+        {
+          return Json(DaoLib.crear_buque(nombre, matricula, sdist, servicio,""));
+        }
+        else
+        {
+          return Json(DaoLib.crear_buque_int(nombre, matricula, sdist, bandera, servicio, ""));
+        }
+      }
+
+      public ActionResult nuevaBarcaza(string barcaza)
+      {
+        ViewData["menu"] = "barcaza";
+        ViewData["banderas"] = DaoLib.traer_banderas();
+        return View();
+      }
+
+      public JsonResult crearBuque(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio, string mmsi)
+      {
+        if (DaoLib.row_count(string.Format("buques where sdist='{0}'",sdist)) != 0)
+        {
+          throw new Exception("Ya existe un buque con esa senal distintiva");
         }
 
         if (internacional != "1")
-          return Json(DaoLib.crear_buque(nombre, matricula, sdist, servicio));
+        {
+          bandera = "ARGENTINA";
+          if (DaoLib.row_count(string.Format("buques where matricula='{0}' and bandera='{1}'", matricula, bandera)) != 0)
+          {
+            throw new Exception("Ya existe un buque nacional con esa matricula");
+          }
+
+          return Json(DaoLib.crear_buque(nombre, matricula, sdist, servicio, mmsi));
+        }
         else
-          return Json(DaoLib.crear_buque_int(nombre, matricula, sdist, bandera, servicio));
+        {
+          
+          if (DaoLib.row_count(string.Format("buques where nro_omi='{0}'", matricula)) != 0)
+          {
+            throw new Exception("Ya existe un buque internacional con ese numero OMI");
+          }
+
+          return Json(DaoLib.crear_buque_int(nombre, matricula, sdist, bandera, servicio, mmsi));
+        }
       }
 
-      public ActionResult nuevoBuque(string noint)
+      public ActionResult nuevoBuque(string barcaza)
       {
         ViewData["menu"] = "buque";
         ViewData["banderas"] = DaoLib.traer_banderas();
-        ViewData["noint"] = noint;
+        ViewData["barcaza"] = barcaza;
         return View();
       }
 

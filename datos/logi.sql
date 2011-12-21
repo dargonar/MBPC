@@ -102,8 +102,8 @@ create or replace package mbpc as
   procedure paginator(p_statment in varchar2, p_offset in number, p_count in number, sqlquery out varchar2);
  --Buque/Puertos/Muelles
   procedure detalles_tecnicos( vShipId in varchar2, usrid in number, vCursor out cur);
-  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur);
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, usrid in number, vCursor out cur);
+  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur);
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur);
   procedure traer_puertos(usrid in number, vCursor out cur);
   procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, usrid in number, vCursor out cur);
   --procedure traer_instports(vPuerto in varchar2, usrid in number, vCursor out cur);
@@ -1486,10 +1486,10 @@ create or replace package body mbpc as
   end autocompleterm;  
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
+  procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur) is
   begin
-    insert into buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST) 
-      VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, vServicio, vServicio, vSDist )
+    insert into buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_ISMM) 
+      VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, vServicio, vServicio, vSDist, vMMSI )
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
     
     insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);
@@ -1500,10 +1500,10 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, usrid in number, vCursor out cur) is
+  procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur) is
   begin
-    insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_OMI)
-      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, vServicio, vServicio, vSDist, vMatricula)
+    insert into buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_OMI, NRO_ISMM)
+      VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, vServicio, vServicio, vSDist, vMatricula, vMMSI)
     returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
       
     insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, var_buque.ID_BUQUE, SYSDATE);

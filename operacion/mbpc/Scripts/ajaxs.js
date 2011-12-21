@@ -617,7 +617,7 @@
         success: (function (data) {
           $('#dialogdiv' + defa).html(data);
           $('#dialogdiv' + defa).dialog({
-            height: 375,
+            height: 405,
             width: 240,
             modal: true,
             title: defa == 3 ? 'Nuevo Buque' : 'Nueva Barcaza',
@@ -631,7 +631,7 @@
 
       return false;
     }
-    
+
     //url, llena dialogdiv3
     function nuevoMuelle(url, campo_destino)
     {

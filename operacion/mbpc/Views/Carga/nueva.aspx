@@ -26,7 +26,7 @@
     <input type="checkbox" name="enbarcaza" value="" id="enbarcaza" />Está en barcaza
     </p>
     <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" disabled="disabled"/><br />
-    <a id="newbarcaza" style="visibility:hidden" href="#" onclick="nuevoBuque('/Item/nuevoBuque?noint=1',4);">Nueva Barcaza</a>
+    <a id="newbarcaza" style="visibility:hidden" href="<%=Url.Content("~/Item/nuevaBarcaza")%>" onclick="return nuevaBarcaza(this);">Nueva Barcaza</a>
     <br /><br /><br />
 
     
@@ -34,6 +34,31 @@
 </form>
 
 <script type="text/javascript">
+
+    function nuevaBarcaza(obj)
+    {
+      $.ajax({
+        type: "GET",
+        cache: false,
+        url: $(obj).attr('href'),
+        dataType: "text/html",
+        success: (function (data) {
+          $('#dialogdiv4').html(data);
+          $('#dialogdiv4').dialog({
+            height: 375,
+            width: 240,
+            modal: true,
+            title: 'Nueva Barcaza',
+          });
+        }),
+        error: (function (data) {
+          var titletag = /<title\b[^>]*>.*?<\/title>/
+          alert(titletag.exec(data.responseText));
+        })
+      });
+
+      return false;
+    }
 
   url = '<%= Url.Content("~/Autocomplete/cargas") %>';
   $("#carga").autocomplete({
