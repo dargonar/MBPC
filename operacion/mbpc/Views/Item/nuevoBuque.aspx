@@ -45,7 +45,8 @@
 
     function internacion() {
       <% if( ViewData["noint"] == null ) { %>
-      $('#servicio').attr('disabled', 'disabled');
+      $('#servicio').val('');
+      $('#servicio').attr('readonly', 'readonly');
       <% } %>
       $('#bandera').removeAttr('disabled');
       $('#bandera').val('');

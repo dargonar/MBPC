@@ -21,6 +21,14 @@ namespace mbpc.Controllers
             return View("ShowForm");
           }
 
+          //numerico?
+          int dummy = 0;
+          if( int.TryParse(Request.Form["username"], out dummy) == false )
+          {
+              ViewData["error"] = "Combinacion de usuario / contraseña invalida"; 
+              return View("ShowForm");
+          }
+
           //Validar usuario
           //  1:  usuario ok / destino ok / fecha ok
           //  2:  usuario ok / destino no
