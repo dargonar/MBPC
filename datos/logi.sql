@@ -1146,7 +1146,7 @@ create or replace package body mbpc as
       
       -- Logueamos
       insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, fecha) 
-      VALUES (etapa.viaje_id, etapa.id, 0, 23, viaje.buque_id, SYSDATE);
+      VALUES (etapa.viaje_id, etapa.id, usrid, 23, viaje.buque_id, SYSDATE);
     
     --end loop;
     
