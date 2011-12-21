@@ -1,0 +1,761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="MBPCEntities5">
+    <EntitySetMapping Name="INT_USUARIOS">
+      <EntityTypeMapping TypeName="Model1.INT_USUARIOS">
+        <MappingFragment StoreEntitySet="INT_USUARIOS">
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
+          <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
+          <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="SECCION" ColumnName="SECCION" />
+          <ScalarProperty Name="NDOC_ADMIN" ColumnName="NDOC_ADMIN" />
+          <ScalarProperty Name="FECHA_AUDIT" ColumnName="FECHA_AUDIT" />
+          <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KSTM_PUERTOS">
+      <EntityTypeMapping TypeName="Model1.KSTM_PUERTOS">
+        <MappingFragment StoreEntitySet="KSTM_PUERTOS">
+          <ScalarProperty Name="COD" ColumnName="COD" />
+          <ScalarProperty Name="PUERTO" ColumnName="PUERTO" />
+          <ScalarProperty Name="CPAIS" ColumnName="CPAIS" />
+          <ScalarProperty Name="LAT" ColumnName="LAT" />
+          <ScalarProperty Name="LON" ColumnName="LON" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="AGRUP" ColumnName="AGRUP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RIOS_CANALES">
+      <EntityTypeMapping TypeName="Model1.RIOS_CANALES">
+        <MappingFragment StoreEntitySet="RIOS_CANALES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RIOS_CANALES_KM">
+      <EntityTypeMapping TypeName="Model1.RIOS_CANALES_KM">
+        <MappingFragment StoreEntitySet="RIOS_CANALES_KM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_RIO_CANAL" ColumnName="ID_RIO_CANAL" />
+          <ScalarProperty Name="KM" ColumnName="KM" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="UNIDAD" ColumnName="UNIDAD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_PERSONAL">
+      <EntityTypeMapping TypeName="Model1.SN_PERSONAL">
+        <MappingFragment StoreEntitySet="SN_PERSONAL">
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_USUARIOS_EXT">
+      <EntityTypeMapping TypeName="Model1.SN_USUARIOS_EXT">
+        <MappingFragment StoreEntitySet="SN_USUARIOS_EXT">
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+          <ScalarProperty Name="DOMICILIO" ColumnName="DOMICILIO" />
+          <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
+          <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
+          <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
+          <ScalarProperty Name="CELULAR" ColumnName="CELULAR" />
+          <ScalarProperty Name="MACADDRESS" ColumnName="MACADDRESS" />
+          <ScalarProperty Name="EMAIL_PARTICULAR" ColumnName="EMAIL_PARTICULAR" />
+          <ScalarProperty Name="EMAIL_CORPORATIVO" ColumnName="EMAIL_CORPORATIVO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="NDOC_ADMIN" ColumnName="NDOC_ADMIN" />
+          <ScalarProperty Name="SITIOWEB" ColumnName="SITIOWEB" />
+          <ScalarProperty Name="FECHA_AUDIT" ColumnName="FECHA_AUDIT" />
+          <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_USUARIOS_PNA">
+      <EntityTypeMapping TypeName="Model1.SN_USUARIOS_PNA">
+        <MappingFragment StoreEntitySet="SN_USUARIOS_PNA">
+          <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
+          <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="DTO" ColumnName="DTO" />
+          <ScalarProperty Name="SEC" ColumnName="SEC" />
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+          <ScalarProperty Name="NIVACC" ColumnName="NIVACC" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_BQ_ESTADOS">
+      <EntityTypeMapping TypeName="Model1.TBL_BQ_ESTADOS">
+        <MappingFragment StoreEntitySet="TBL_BQ_ESTADOS">
+          <ScalarProperty Name="COD" ColumnName="COD" />
+          <ScalarProperty Name="RESUMEN" ColumnName="RESUMEN" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="AGRUPA" ColumnName="AGRUPA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_CAPITAN">
+      <EntityTypeMapping TypeName="Model1.TBL_CAPITAN">
+        <MappingFragment StoreEntitySet="TBL_CAPITAN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_CARGAETAPA">
+      <EntityTypeMapping TypeName="Model1.TBL_CARGAETAPA">
+        <MappingFragment StoreEntitySet="TBL_CARGAETAPA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPOCARGA_ID" ColumnName="TIPOCARGA_ID" />
+          <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+          <ScalarProperty Name="UNIDAD_ID" ColumnName="UNIDAD_ID" />
+          <ScalarProperty Name="ETAPA_ID" ColumnName="ETAPA_ID" />
+          <ScalarProperty Name="BUQUE_ID" ColumnName="BUQUE_ID" />
+          <ScalarProperty Name="CANTIDAD_INICIAL" ColumnName="CANTIDAD_INICIAL" />
+          <ScalarProperty Name="CANTIDAD_ENTRADA" ColumnName="CANTIDAD_ENTRADA" />
+          <ScalarProperty Name="CANTIDAD_SALIDA" ColumnName="CANTIDAD_SALIDA" />
+          <ScalarProperty Name="EN_TRANSITO" ColumnName="EN_TRANSITO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_CARGAS">
+      <EntityTypeMapping TypeName="Model1.TBL_CARGAS">
+        <MappingFragment StoreEntitySet="TBL_CARGAS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO_CARGA_ID" ColumnName="TIPO_CARGA_ID" />
+          <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+          <ScalarProperty Name="MOVIMIENTO_ID" ColumnName="MOVIMIENTO_ID" />
+          <ScalarProperty Name="NOMBRE_USUARIO" ColumnName="NOMBRE_USUARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_CLASIFICACION">
+      <EntityTypeMapping TypeName="Model1.TBL_CLASIFICACION">
+        <MappingFragment StoreEntitySet="TBL_CLASIFICACION">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_CONEXIONPUNTODECONTROL">
+      <EntityTypeMapping TypeName="Model1.TBL_CONEXIONPUNTODECONTROL">
+        <MappingFragment StoreEntitySet="TBL_CONEXIONPUNTODECONTROL">
+          <ScalarProperty Name="PUNTODECONTROL1" ColumnName="PUNTODECONTROL1" />
+          <ScalarProperty Name="PUNTODECONTROL2" ColumnName="PUNTODECONTROL2" />
+          <ScalarProperty Name="AGUASARRIBA" ColumnName="AGUASARRIBA" />
+          <ScalarProperty Name="PESO" ColumnName="PESO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_ESTADO">
+      <EntityTypeMapping TypeName="Model1.TBL_ESTADO">
+        <MappingFragment StoreEntitySet="TBL_ESTADO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_ETAPA">
+      <EntityTypeMapping TypeName="Model1.TBL_ETAPA">
+        <MappingFragment StoreEntitySet="TBL_ETAPA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NRO_ETAPA" ColumnName="NRO_ETAPA" />
+          <ScalarProperty Name="VIAJE_ID" ColumnName="VIAJE_ID" />
+          <ScalarProperty Name="ORIGEN_ID" ColumnName="ORIGEN_ID" />
+          <ScalarProperty Name="ACTUAL_ID" ColumnName="ACTUAL_ID" />
+          <ScalarProperty Name="DESTINO_ID" ColumnName="DESTINO_ID" />
+          <ScalarProperty Name="HRP" ColumnName="HRP" />
+          <ScalarProperty Name="ETA" ColumnName="ETA" />
+          <ScalarProperty Name="FECHA_SALIDA" ColumnName="FECHA_SALIDA" />
+          <ScalarProperty Name="FECHA_LLEGADA" ColumnName="FECHA_LLEGADA" />
+          <ScalarProperty Name="CANTIDAD_TRIPULANTES" ColumnName="CANTIDAD_TRIPULANTES" />
+          <ScalarProperty Name="CANTIDAD_PASAJEROS" ColumnName="CANTIDAD_PASAJEROS" />
+          <ScalarProperty Name="CAPITAN_ID" ColumnName="CAPITAN_ID" />
+          <ScalarProperty Name="CALADO_PROA" ColumnName="CALADO_PROA" />
+          <ScalarProperty Name="CALADO_POPA" ColumnName="CALADO_POPA" />
+          <ScalarProperty Name="CALADO_MAXIMO" ColumnName="CALADO_MAXIMO" />
+          <ScalarProperty Name="CALADO_INFORMADO" ColumnName="CALADO_INFORMADO" />
+          <ScalarProperty Name="KM" ColumnName="KM" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="ACOMPANANTE_ID" ColumnName="ACOMPANANTE_ID" />
+          <ScalarProperty Name="SENTIDO" ColumnName="SENTIDO" />
+          <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+          <ScalarProperty Name="RUMBO" ColumnName="RUMBO" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_EVENTO">
+      <EntityTypeMapping TypeName="Model1.TBL_EVENTO">
+        <MappingFragment StoreEntitySet="TBL_EVENTO">
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="VIAJE_ID" ColumnName="VIAJE_ID" />
+          <ScalarProperty Name="ETAPA_ID" ColumnName="ETAPA_ID" />
+          <ScalarProperty Name="TIPO_ID" ColumnName="TIPO_ID" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="BUQUE_ID" ColumnName="BUQUE_ID" />
+          <ScalarProperty Name="BUQUE_INT_ID" ColumnName="BUQUE_INT_ID" />
+          <ScalarProperty Name="CARGA_ID" ColumnName="CARGA_ID" />
+          <ScalarProperty Name="PUNTODECONTROL1_ID" ColumnName="PUNTODECONTROL1_ID" />
+          <ScalarProperty Name="PUNTODECONTROL2_ID" ColumnName="PUNTODECONTROL2_ID" />
+          <ScalarProperty Name="MUELLE_ID" ColumnName="MUELLE_ID" />
+          <ScalarProperty Name="BARCAZA_ID" ColumnName="BARCAZA_ID" />
+          <ScalarProperty Name="COMENTARIO" ColumnName="COMENTARIO" />
+          <ScalarProperty Name="ACOMPANANTE_ID" ColumnName="ACOMPANANTE_ID" />
+          <ScalarProperty Name="PRACTICO_ID" ColumnName="PRACTICO_ID" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="RUMBO" ColumnName="RUMBO" />
+          <ScalarProperty Name="RIOS_CANALES_KM_ID" ColumnName="RIOS_CANALES_KM_ID" />
+          <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+          <ScalarProperty Name="BORRADO" ColumnName="BORRADO" />
+          <ScalarProperty Name="EVENTO_ID" ColumnName="EVENTO_ID" />
+          <ScalarProperty Name="PUERTO_COD" ColumnName="PUERTO_COD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_GRUPO">
+      <EntityTypeMapping TypeName="Model1.TBL_GRUPO">
+        <MappingFragment StoreEntitySet="TBL_GRUPO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_GRUPOPUNTO">
+      <EntityTypeMapping TypeName="Model1.TBL_GRUPOPUNTO">
+        <MappingFragment StoreEntitySet="TBL_GRUPOPUNTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="PUNTO" ColumnName="PUNTO" />
+          <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_INSTA_PUERT">
+      <EntityTypeMapping TypeName="Model1.TBL_INSTA_PUERT">
+        <MappingFragment StoreEntitySet="TBL_INSTA_PUERT">
+          <ScalarProperty Name="ID_PUERTO" ColumnName="ID_PUERTO" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="PUERTO" ColumnName="PUERTO" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="PROVINCIA" ColumnName="PROVINCIA" />
+          <ScalarProperty Name="CONTACTO" ColumnName="CONTACTO" />
+          <ScalarProperty Name="EVAL_RIESGO" ColumnName="EVAL_RIESGO" />
+          <ScalarProperty Name="FECHA_EVAL" ColumnName="FECHA_EVAL" />
+          <ScalarProperty Name="PLAN_PROTECT" ColumnName="PLAN_PROTECT" />
+          <ScalarProperty Name="FECHA_PLAN" ColumnName="FECHA_PLAN" />
+          <ScalarProperty Name="F_AUDI_INICIAL" ColumnName="F_AUDI_INICIAL" />
+          <ScalarProperty Name="DECL_CUMPL" ColumnName="DECL_CUMPL" />
+          <ScalarProperty Name="OPERATORIA" ColumnName="OPERATORIA" />
+          <ScalarProperty Name="BUQUES" ColumnName="BUQUES" />
+          <ScalarProperty Name="DEPE" ColumnName="DEPE" />
+          <ScalarProperty Name="ID_APV" ColumnName="ID_APV" />
+          <ScalarProperty Name="SPA" ColumnName="SPA" />
+          <ScalarProperty Name="F_DECL_CUMPL" ColumnName="F_DECL_CUMPL" />
+          <ScalarProperty Name="LOCALIDAD" ColumnName="LOCALIDAD" />
+          <ScalarProperty Name="CARGO_RESPONSABLE" ColumnName="CARGO_RESPONSABLE" />
+          <ScalarProperty Name="APELLIDO_RESPONSABLE" ColumnName="APELLIDO_RESPONSABLE" />
+          <ScalarProperty Name="USU_ALTA" ColumnName="USU_ALTA" />
+          <ScalarProperty Name="F_USU_ALTA" ColumnName="F_USU_ALTA" />
+          <ScalarProperty Name="USU_MODI" ColumnName="USU_MODI" />
+          <ScalarProperty Name="F_USU_MODI" ColumnName="F_USU_MODI" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="CP" ColumnName="CP" />
+          <ScalarProperty Name="OMI" ColumnName="OMI" />
+          <ScalarProperty Name="PUERTO_ID" ColumnName="PUERTO_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_KSTM_PUERTOS">
+      <EntityTypeMapping TypeName="Model1.TBL_KSTM_PUERTOS">
+        <MappingFragment StoreEntitySet="TBL_KSTM_PUERTOS">
+          <ScalarProperty Name="COD" ColumnName="COD" />
+          <ScalarProperty Name="PUERTO" ColumnName="PUERTO" />
+          <ScalarProperty Name="CPAIS" ColumnName="CPAIS" />
+          <ScalarProperty Name="LAT" ColumnName="LAT" />
+          <ScalarProperty Name="LON" ColumnName="LON" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="AGRUP" ColumnName="AGRUP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_MOVIMIENTOS_BUQUE">
+      <EntityTypeMapping TypeName="Model1.TBL_MOVIMIENTOS_BUQUE">
+        <MappingFragment StoreEntitySet="TBL_MOVIMIENTOS_BUQUE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VIAJE_ID" ColumnName="VIAJE_ID" />
+          <ScalarProperty Name="TIPO_VIA_ID" ColumnName="TIPO_VIA_ID" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="OBSERVACION" ColumnName="OBSERVACION" />
+          <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+          <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+          <ScalarProperty Name="FECHA" ColumnName="FECHA" />
+          <ScalarProperty Name="HORA" ColumnName="HORA" />
+          <ScalarProperty Name="KM_ID" ColumnName="KM_ID" />
+          <ScalarProperty Name="DETALLE_SUBCLASIFICACION_ID" ColumnName="DETALLE_SUBCLASIFICACION_ID" />
+          <ScalarProperty Name="DIRECCION_NAVEGACION_ID" ColumnName="DIRECCION_NAVEGACION_ID" />
+          <ScalarProperty Name="RUMBO" ColumnName="RUMBO" />
+          <ScalarProperty Name="PREFECTURA_ID" ColumnName="PREFECTURA_ID" />
+          <ScalarProperty Name="CALADO_ACTUAL" ColumnName="CALADO_ACTUAL" />
+          <ScalarProperty Name="PUERTO_ORIGEN_ID" ColumnName="PUERTO_ORIGEN_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_MUELLES">
+      <EntityTypeMapping TypeName="Model1.TBL_MUELLES">
+        <MappingFragment StoreEntitySet="TBL_MUELLES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PUERTO_ID" ColumnName="PUERTO_ID" />
+          <ScalarProperty Name="INSTA_PORT" ColumnName="INSTA_PORT" />
+          <ScalarProperty Name="TIPO_NAV_ID" ColumnName="TIPO_NAV_ID" />
+          <ScalarProperty Name="TIPO_CARG_ID" ColumnName="TIPO_CARG_ID" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="INT" ColumnName="INT" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="TE" ColumnName="TE" />
+          <ScalarProperty Name="FAX" ColumnName="FAX" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PBIP">
+      <EntityTypeMapping TypeName="Model1.TBL_PBIP">
+        <MappingFragment StoreEntitySet="TBL_PBIP">
+          <ScalarProperty Name="VIAJE_ID" ColumnName="VIAJE_ID" />
+          <ScalarProperty Name="PUERTODEMATRICULA" ColumnName="PUERTODEMATRICULA" />
+          <ScalarProperty Name="NROINMARSAT" ColumnName="NROINMARSAT" />
+          <ScalarProperty Name="ARQUEOBRUTO" ColumnName="ARQUEOBRUTO" />
+          <ScalarProperty Name="COMPANIA" ColumnName="COMPANIA" />
+          <ScalarProperty Name="CONTACTOOCPM" ColumnName="CONTACTOOCPM" />
+          <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PRACTICO">
+      <EntityTypeMapping TypeName="Model1.TBL_PRACTICO">
+        <MappingFragment StoreEntitySet="TBL_PRACTICO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PRACTICOETAPA">
+      <EntityTypeMapping TypeName="Model1.TBL_PRACTICOETAPA">
+        <MappingFragment StoreEntitySet="TBL_PRACTICOETAPA">
+          <ScalarProperty Name="PRACTICO_ID" ColumnName="PRACTICO_ID" />
+          <ScalarProperty Name="ETAPA_ID" ColumnName="ETAPA_ID" />
+          <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PUERTOS">
+      <EntityTypeMapping TypeName="Model1.TBL_PUERTOS">
+        <MappingFragment StoreEntitySet="TBL_PUERTOS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PREFECTURA_ID" ColumnName="PREFECTURA_ID" />
+          <ScalarProperty Name="TIPOUBICACION_ID" ColumnName="TIPOUBICACION_ID" />
+          <ScalarProperty Name="JURISDICCION_ID" ColumnName="JURISDICCION_ID" />
+          <ScalarProperty Name="PAIS_ID" ColumnName="PAIS_ID" />
+          <ScalarProperty Name="TIPO_PUERTO_ID" ColumnName="TIPO_PUERTO_ID" />
+          <ScalarProperty Name="CODIGO_ONU" ColumnName="CODIGO_ONU" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="TIPO_VIA_ID" ColumnName="TIPO_VIA_ID" />
+          <ScalarProperty Name="INSTALACION_TELEFONO" ColumnName="INSTALACION_TELEFONO" />
+          <ScalarProperty Name="INSTALACION_EMAIL" ColumnName="INSTALACION_EMAIL" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="CODIGO_OMI" ColumnName="CODIGO_OMI" />
+          <ScalarProperty Name="BAJA" ColumnName="BAJA" />
+          <ScalarProperty Name="FECHA_BAJA" ColumnName="FECHA_BAJA" />
+          <ScalarProperty Name="KM_ID" ColumnName="KM_ID" />
+          <ScalarProperty Name="EXTRA1" ColumnName="EXTRA1" />
+          <ScalarProperty Name="EXTRA2" ColumnName="EXTRA2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PUERTOS_KSTM">
+      <EntityTypeMapping TypeName="Model1.TBL_PUERTOS_KSTM">
+        <MappingFragment StoreEntitySet="TBL_PUERTOS_KSTM">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="COD_DEP" ColumnName="COD_DEP" />
+          <ScalarProperty Name="PUERTO_INTERNO" ColumnName="PUERTO INTERNO" />
+          <ScalarProperty Name="COD" ColumnName="COD" />
+          <ScalarProperty Name="LAT" ColumnName="LAT" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PUERTOS_OMI">
+      <EntityTypeMapping TypeName="Model1.TBL_PUERTOS_OMI">
+        <MappingFragment StoreEntitySet="TBL_PUERTOS_OMI">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODIGO_ACTUAL" ColumnName="CODIGO_ACTUAL" />
+          <ScalarProperty Name="CODIGO_ANTERIOR" ColumnName="CODIGO_ANTERIOR" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="PAIS_DESCRIPCION" ColumnName="PAIS_DESCRIPCION" />
+          <ScalarProperty Name="FECHA_INICIAL" ColumnName="FECHA_INICIAL" />
+          <ScalarProperty Name="FECHA_FINAL" ColumnName="FECHA_FINAL" />
+          <ScalarProperty Name="VIGENCIA" ColumnName="VIGENCIA" />
+          <ScalarProperty Name="TIPO_PUERTO" ColumnName="TIPO_PUERTO" />
+          <ScalarProperty Name="FECHA_ACT" ColumnName="FECHA_ACT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PUNTODECONTROL">
+      <EntityTypeMapping TypeName="Model1.TBL_PUNTODECONTROL">
+        <MappingFragment StoreEntitySet="TBL_PUNTODECONTROL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ZONA_ID" ColumnName="ZONA_ID" />
+          <ScalarProperty Name="RIOS_CANALES_KM_ID" ColumnName="RIOS_CANALES_KM_ID" />
+          <ScalarProperty Name="USO" ColumnName="USO" />
+          <ScalarProperty Name="ENTRADA" ColumnName="ENTRADA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_PUNTODECONTROLUSUARIO">
+      <EntityTypeMapping TypeName="Model1.TBL_PUNTODECONTROLUSUARIO">
+        <MappingFragment StoreEntitySet="TBL_PUNTODECONTROLUSUARIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PUNTODECONTROL" ColumnName="PUNTODECONTROL" />
+          <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_REPORTE">
+      <EntityTypeMapping TypeName="Model1.TBL_REPORTE">
+        <MappingFragment StoreEntitySet="TBL_REPORTE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+          <ScalarProperty Name="CONSULTA_SQL" ColumnName="CONSULTA_SQL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_REPORTE_PARAM">
+      <EntityTypeMapping TypeName="Model1.TBL_REPORTE_PARAM">
+        <MappingFragment StoreEntitySet="TBL_REPORTE_PARAM">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="REPORTE_ID" ColumnName="REPORTE_ID" />
+          <ScalarProperty Name="INDICE" ColumnName="INDICE" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="TIPO_DATO" ColumnName="TIPO_DATO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_TIPOCARGAUNIDAD">
+      <EntityTypeMapping TypeName="Model1.TBL_TIPOCARGAUNIDAD">
+        <MappingFragment StoreEntitySet="TBL_TIPOCARGAUNIDAD">
+          <ScalarProperty Name="TIPOCARGA_ID" ColumnName="TIPOCARGA_ID" />
+          <ScalarProperty Name="UNIDAD_ID" ColumnName="UNIDAD_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_TIPOEVENTO">
+      <EntityTypeMapping TypeName="Model1.TBL_TIPOEVENTO">
+        <MappingFragment StoreEntitySet="TBL_TIPOEVENTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_TIPO_CARGA">
+      <EntityTypeMapping TypeName="Model1.TBL_TIPO_CARGA">
+        <MappingFragment StoreEntitySet="TBL_TIPO_CARGA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+          <ScalarProperty Name="AGRUPACION_ID" ColumnName="AGRUPACION_ID" />
+          <ScalarProperty Name="UNIDAD_ID" ColumnName="UNIDAD_ID" />
+          <ScalarProperty Name="ESTADO_ID" ColumnName="ESTADO_ID" />
+          <ScalarProperty Name="TIPO_CARGA_PELIGROSA_ID" ColumnName="TIPO_CARGA_PELIGROSA_ID" />
+          <ScalarProperty Name="NOMBRE_USUARIO" ColumnName="NOMBRE_USUARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_TIPO_CARGAS_PELIGROSAS">
+      <EntityTypeMapping TypeName="Model1.TBL_TIPO_CARGAS_PELIGROSAS">
+        <MappingFragment StoreEntitySet="TBL_TIPO_CARGAS_PELIGROSAS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_UNIDAD">
+      <EntityTypeMapping TypeName="Model1.TBL_UNIDAD">
+        <MappingFragment StoreEntitySet="TBL_UNIDAD">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_USUARIOGRUPO">
+      <EntityTypeMapping TypeName="Model1.TBL_USUARIOGRUPO">
+        <MappingFragment StoreEntitySet="TBL_USUARIOGRUPO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_VIAJE">
+      <EntityTypeMapping TypeName="Model1.TBL_VIAJE">
+        <MappingFragment StoreEntitySet="TBL_VIAJE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FECHA_SALIDA" ColumnName="FECHA_SALIDA" />
+          <ScalarProperty Name="FECHA_LLEGADA" ColumnName="FECHA_LLEGADA" />
+          <ScalarProperty Name="ETA" ColumnName="ETA" />
+          <ScalarProperty Name="ZOE" ColumnName="ZOE" />
+          <ScalarProperty Name="ETAPA_ACTUAL" ColumnName="ETAPA_ACTUAL" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
+          <ScalarProperty Name="VIAJE_PADRE" ColumnName="VIAJE_PADRE" />
+          <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+          <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="ESTADO_BUQUE" ColumnName="ESTADO_BUQUE" />
+          <ScalarProperty Name="RIOS_CANALES_KM_ID" ColumnName="RIOS_CANALES_KM_ID" />
+          <ScalarProperty Name="BUQUE_ID" ColumnName="BUQUE_ID" />
+          <ScalarProperty Name="ORIGEN_ID" ColumnName="ORIGEN_ID" />
+          <ScalarProperty Name="DESTINO_ID" ColumnName="DESTINO_ID" />
+          <ScalarProperty Name="ESCALAS" ColumnName="ESCALAS" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="UPDATED_BY" ColumnName="UPDATED_BY" />
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="RIOKM_ACTUAL" ColumnName="RIOKM_ACTUAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBL_ZONAS">
+      <EntityTypeMapping TypeName="Model1.TBL_ZONAS">
+        <MappingFragment StoreEntitySet="TBL_ZONAS">
+          <ScalarProperty Name="CUATRIGRAMA" ColumnName="CUATRIGRAMA" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="NIVEL" ColumnName="NIVEL" />
+          <ScalarProperty Name="DIRECCION_POSTAL" ColumnName="DIRECCION_POSTAL" />
+          <ScalarProperty Name="UBIC_GEOG" ColumnName="UBIC_GEOG" />
+          <ScalarProperty Name="DEPENDENCIA" ColumnName="DEPENDENCIA" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="CODNUM" ColumnName="CODNUM" />
+          <ScalarProperty Name="ZONA" ColumnName="ZONA" />
+          <ScalarProperty Name="NIVELNUM" ColumnName="NIVELNUM" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RPV" ColumnName="RPV" />
+          <ScalarProperty Name="INT" ColumnName="INT" />
+          <ScalarProperty Name="MAIL" ColumnName="MAIL" />
+          <ScalarProperty Name="TE" ColumnName="TE" />
+          <ScalarProperty Name="FAX" ColumnName="FAX" />
+          <ScalarProperty Name="COD_CARGO" ColumnName="COD_CARGO" />
+          <ScalarProperty Name="DESCENTRALIZADO" ColumnName="DESCENTRALIZADO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TMP_BUQUES">
+      <EntityTypeMapping TypeName="Model1.TMP_BUQUES">
+        <MappingFragment StoreEntitySet="TMP_BUQUES">
+          <ScalarProperty Name="ID_BUQUE" ColumnName="ID_BUQUE" />
+          <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+          <ScalarProperty Name="NRO_OMI" ColumnName="NRO_OMI" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="BANDERA" ColumnName="BANDERA" />
+          <ScalarProperty Name="ANIO_CONSTRUCCION" ColumnName="ANIO_CONSTRUCCION" />
+          <ScalarProperty Name="NRO_ISMM" ColumnName="NRO_ISMM" />
+          <ScalarProperty Name="ASTILL_PARTIC" ColumnName="ASTILL_PARTIC" />
+          <ScalarProperty Name="REGISTRO" ColumnName="REGISTRO" />
+          <ScalarProperty Name="TIPO_BUQUE" ColumnName="TIPO_BUQUE" />
+          <ScalarProperty Name="TIPO_SERVICIO" ColumnName="TIPO_SERVICIO" />
+          <ScalarProperty Name="TIPO_EXPLOTACION" ColumnName="TIPO_EXPLOTACION" />
+          <ScalarProperty Name="ARBOLADURA" ColumnName="ARBOLADURA" />
+          <ScalarProperty Name="SDIST" ColumnName="SDIST" />
+          <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+          <ScalarProperty Name="ESLORA" ColumnName="ESLORA" />
+          <ScalarProperty Name="MANGA" ColumnName="MANGA" />
+          <ScalarProperty Name="PUNTAL" ColumnName="PUNTAL" />
+          <ScalarProperty Name="ARQUEO_TOTAL" ColumnName="ARQUEO_TOTAL" />
+          <ScalarProperty Name="CALADO_MAX" ColumnName="CALADO_MAX" />
+          <ScalarProperty Name="PUERTO_ASIENTO" ColumnName="PUERTO_ASIENTO" />
+          <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+          <ScalarProperty Name="SOCIEDADCLASIF" ColumnName="SOCIEDADCLASIF" />
+          <ScalarProperty Name="ARQUEO_NETO" ColumnName="ARQUEO_NETO" />
+          <ScalarProperty Name="DOTACION_MINIMA" ColumnName="DOTACION_MINIMA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BUQUES">
+      <EntityTypeMapping TypeName="Model1.BUQUE">
+        <MappingFragment StoreEntitySet="BUQUES">
+          <ScalarProperty Name="ID_BUQUE" ColumnName="ID_BUQUE" />
+          <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+          <ScalarProperty Name="NRO_OMI" ColumnName="NRO_OMI" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="BANDERA" ColumnName="BANDERA" />
+          <ScalarProperty Name="ANIO_CONSTRUCCION" ColumnName="ANIO_CONSTRUCCION" />
+          <ScalarProperty Name="NRO_ISMM" ColumnName="NRO_ISMM" />
+          <ScalarProperty Name="ASTILL_PARTIC" ColumnName="ASTILL_PARTIC" />
+          <ScalarProperty Name="REGISTRO" ColumnName="REGISTRO" />
+          <ScalarProperty Name="TIPO_BUQUE" ColumnName="TIPO_BUQUE" />
+          <ScalarProperty Name="TIPO_SERVICIO" ColumnName="TIPO_SERVICIO" />
+          <ScalarProperty Name="TIPO_EXPLOTACION" ColumnName="TIPO_EXPLOTACION" />
+          <ScalarProperty Name="ARBOLADURA" ColumnName="ARBOLADURA" />
+          <ScalarProperty Name="SDIST" ColumnName="SDIST" />
+          <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+          <ScalarProperty Name="ESLORA" ColumnName="ESLORA" />
+          <ScalarProperty Name="MANGA" ColumnName="MANGA" />
+          <ScalarProperty Name="PUNTAL" ColumnName="PUNTAL" />
+          <ScalarProperty Name="ARQUEO_TOTAL" ColumnName="ARQUEO_TOTAL" />
+          <ScalarProperty Name="CALADO_MAX" ColumnName="CALADO_MAX" />
+          <ScalarProperty Name="PUERTO_ASIENTO" ColumnName="PUERTO_ASIENTO" />
+          <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+          <ScalarProperty Name="SOCIEDADCLASIF" ColumnName="SOCIEDADCLASIF" />
+          <ScalarProperty Name="ARQUEO_NETO" ColumnName="ARQUEO_NETO" />
+          <ScalarProperty Name="DOTACION_MINIMA" ColumnName="DOTACION_MINIMA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEW_MUELLES">
+      <EntityTypeMapping TypeName="Model1.VIEW_MUELLES">
+        <MappingFragment StoreEntitySet="VIEW_MUELLES">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOMBRE_P" ColumnName="NOMBRE_P" />
+          <ScalarProperty Name="NOMBRE_IP" ColumnName="NOMBRE_IP" />
+          <ScalarProperty Name="NOMBRE_M" ColumnName="NOMBRE_M" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEW_PBIP">
+      <EntityTypeMapping TypeName="Model1.VIEW_PBIP">
+        <MappingFragment StoreEntitySet="VIEW_PBIP">
+          <ScalarProperty Name="VIAJE_ID" ColumnName="VIAJE_ID" />
+          <ScalarProperty Name="NRO_OMI" ColumnName="NRO_OMI" />
+          <ScalarProperty Name="BUQUE" ColumnName="BUQUE" />
+          <ScalarProperty Name="PUERTODEMATRICULA" ColumnName="PUERTODEMATRICULA" />
+          <ScalarProperty Name="BANDERA_ID" ColumnName="BANDERA_ID" />
+          <ScalarProperty Name="TIPO_BUQUE" ColumnName="TIPO_BUQUE" />
+          <ScalarProperty Name="SDIST" ColumnName="SDIST" />
+          <ScalarProperty Name="NROINMARSAT" ColumnName="NROINMARSAT" />
+          <ScalarProperty Name="ARQUEOBRUTO" ColumnName="ARQUEOBRUTO" />
+          <ScalarProperty Name="COMPANIA" ColumnName="COMPANIA" />
+          <ScalarProperty Name="CONTACTOOCPM" ColumnName="CONTACTOOCPM" />
+          <ScalarProperty Name="ETA" ColumnName="ETA" />
+          <ScalarProperty Name="VIAJE" ColumnName="VIAJE" />
+          <ScalarProperty Name="OBJETIVO" ColumnName="OBJETIVO" />
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="ORIGEN" ColumnName="ORIGEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPUNTO_DE_CONTROL">
+      <EntityTypeMapping TypeName="Model1.VPUNTO_DE_CONTROL">
+        <MappingFragment StoreEntitySet="VPUNTO_DE_CONTROL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USO" ColumnName="USO" />
+          <ScalarProperty Name="CUATRIGRAMA" ColumnName="CUATRIGRAMA" />
+          <ScalarProperty Name="CANAL" ColumnName="CANAL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_INT_USUARIOS">
+      <EntityTypeMapping TypeName="Model1.VW_INT_USUARIOS">
+        <MappingFragment StoreEntitySet="VW_INT_USUARIOS">
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
+          <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
+          <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+          <ScalarProperty Name="DTO" ColumnName="DTO" />
+          <ScalarProperty Name="SEC" ColumnName="SEC" />
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+          <ScalarProperty Name="NIVACC" ColumnName="NIVACC" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_INT_USUARIOS_EXT">
+      <EntityTypeMapping TypeName="Model1.VW_INT_USUARIOS_EXT">
+        <MappingFragment StoreEntitySet="VW_INT_USUARIOS_EXT">
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
+          <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+          <ScalarProperty Name="DOMICILIO" ColumnName="DOMICILIO" />
+          <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
+          <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
+          <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
+          <ScalarProperty Name="CELULAR" ColumnName="CELULAR" />
+          <ScalarProperty Name="MACADDRESS" ColumnName="MACADDRESS" />
+          <ScalarProperty Name="EMAIL_PARTICULAR" ColumnName="EMAIL_PARTICULAR" />
+          <ScalarProperty Name="EMAIL_CORPORATIVO" ColumnName="EMAIL_CORPORATIVO" />
+          <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+          <ScalarProperty Name="NDOC_ADMIN" ColumnName="NDOC_ADMIN" />
+          <ScalarProperty Name="SITIOWEB" ColumnName="SITIOWEB" />
+          <ScalarProperty Name="FECHA_AUDIT" ColumnName="FECHA_AUDIT" />
+          <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
+          <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VW_PERS_DESTI">
+      <EntityTypeMapping TypeName="Model1.VW_PERS_DESTI">
+        <MappingFragment StoreEntitySet="VW_PERS_DESTI">
+          <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
+          <ScalarProperty Name="NDOC" ColumnName="NDOC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

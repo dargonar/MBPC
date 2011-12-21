@@ -1,0 +1,1310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.DataAccess.Client" ProviderManifestToken="11g" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="BUQUES" EntityType="Model.Store.BUQUES" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="INT_SISTEMAS" EntityType="Model.Store.INT_SISTEMAS" store:Type="Tables" store:Schema="MARCIANO" store:Name="INT_SISTEMAS">
+      <DefiningQuery>SELECT 
+      "INT_SISTEMAS"."SISTEMA_ID" AS "SISTEMA_ID", 
+      "INT_SISTEMAS"."NOMBRE_SIST" AS "NOMBRE_SIST", 
+      "INT_SISTEMAS"."NRO_SISTEMA" AS "NRO_SISTEMA", 
+      "INT_SISTEMAS"."PAGINA_INICIO" AS "PAGINA_INICIO", 
+      "INT_SISTEMAS"."MAIL_RESPONSABLE" AS "MAIL_RESPONSABLE", 
+      "INT_SISTEMAS"."NDOC_ADMIN" AS "NDOC_ADMIN", 
+      "INT_SISTEMAS"."FECHA_AUDIT" AS "FECHA_AUDIT", 
+      "INT_SISTEMAS"."MOSTRAR" AS "MOSTRAR", 
+      "INT_SISTEMAS"."PAGINA_CONSULTA" AS "PAGINA_CONSULTA", 
+      "INT_SISTEMAS"."AGRUPAMIENTO" AS "AGRUPAMIENTO", 
+      "INT_SISTEMAS"."DESCRIPCION" AS "DESCRIPCION", 
+      "INT_SISTEMAS"."LENGUAJE" AS "LENGUAJE", 
+      "INT_SISTEMAS"."FUNCIONA" AS "FUNCIONA", 
+      "INT_SISTEMAS"."TIENE_DOCUMENTACION" AS "TIENE_DOCUMENTACION", 
+      "INT_SISTEMAS"."REPROGRAMAR" AS "REPROGRAMAR", 
+      "INT_SISTEMAS"."COD_FUENTE" AS "COD_FUENTE", 
+      "INT_SISTEMAS"."LOG_OPER" AS "LOG_OPER", 
+      "INT_SISTEMAS"."WEB" AS "WEB", 
+      "INT_SISTEMAS"."UBIC_DOCU" AS "UBIC_DOCU", 
+      "INT_SISTEMAS"."SOPORTE_TEC" AS "SOPORTE_TEC", 
+      "INT_SISTEMAS"."ID_DIRECCION" AS "ID_DIRECCION", 
+      "INT_SISTEMAS"."DES_CPAD" AS "DES_CPAD", 
+      "INT_SISTEMAS"."DICO" AS "DICO", 
+      "INT_SISTEMAS"."PROYECTO" AS "PROYECTO", 
+      "INT_SISTEMAS"."RESPONSABLE_CEPD" AS "RESPONSABLE_CEPD", 
+      "INT_SISTEMAS"."ORGAN_EXTERNO" AS "ORGAN_EXTERNO", 
+      "INT_SISTEMAS"."DIRECCION" AS "DIRECCION", 
+      "INT_SISTEMAS"."DEPTO_ORGANISMO" AS "DEPTO_ORGANISMO", 
+      "INT_SISTEMAS"."PAGINA_LOGIN" AS "PAGINA_LOGIN"
+      FROM "MARCIANO"."INT_SISTEMAS" "INT_SISTEMAS"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="INT_USER_SIST" EntityType="Model.Store.INT_USER_SIST" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="INT_USUARIOS" EntityType="Model.Store.INT_USUARIOS" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="PAISES" EntityType="Model.Store.PAISES" store:Type="Tables" store:Schema="MARCIANO" store:Name="PAISES">
+      <DefiningQuery>SELECT 
+      "PAISES"."PAISESID" AS "PAISESID", 
+      "PAISES"."DESCRIPCION" AS "DESCRIPCION", 
+      "PAISES"."CONVENIOSRAT" AS "CONVENIOSRAT", 
+      "PAISES"."CODALFABETICO" AS "CODALFABETICO", 
+      "PAISES"."RECTOR" AS "RECTOR", 
+      "PAISES"."OPERADOR" AS "OPERADOR", 
+      "PAISES"."ESTADO" AS "ESTADO", 
+      "PAISES"."FECHAAUDIT" AS "FECHAAUDIT", 
+      "PAISES"."DESCRIPCIONIN" AS "DESCRIPCIONIN", 
+      "PAISES"."EMAIL" AS "EMAIL"
+      FROM "MARCIANO"."PAISES" "PAISES"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PUERTOS_INTERNAC" EntityType="Model.Store.PUERTOS_INTERNAC" store:Type="Tables" store:Schema="MARCIANO" store:Name="PUERTOS_INTERNAC">
+      <DefiningQuery>SELECT 
+      "PUERTOS_INTERNAC"."PUERTOID" AS "PUERTOID", 
+      "PUERTOS_INTERNAC"."PAISESID" AS "PAISESID", 
+      "PUERTOS_INTERNAC"."CODIGOALFA" AS "CODIGOALFA", 
+      "PUERTOS_INTERNAC"."DESCRIPCION" AS "DESCRIPCION", 
+      "PUERTOS_INTERNAC"."OPERADOR" AS "OPERADOR", 
+      "PUERTOS_INTERNAC"."ESTADO" AS "ESTADO", 
+      "PUERTOS_INTERNAC"."FECHAAUDIT" AS "FECHAAUDIT", 
+      "PUERTOS_INTERNAC"."DIRECCION" AS "DIRECCION", 
+      "PUERTOS_INTERNAC"."LOCALIDAD" AS "LOCALIDAD", 
+      "PUERTOS_INTERNAC"."CODPOSTAL" AS "CODPOSTAL", 
+      "PUERTOS_INTERNAC"."TELEFONO" AS "TELEFONO", 
+      "PUERTOS_INTERNAC"."FAX" AS "FAX", 
+      "PUERTOS_INTERNAC"."EMAIL" AS "EMAIL", 
+      "PUERTOS_INTERNAC"."AUTORIDAD" AS "AUTORIDAD"
+      FROM "MARCIANO"."PUERTOS_INTERNAC" "PUERTOS_INTERNAC"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="RIOS_CANALES" EntityType="Model.Store.RIOS_CANALES" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="RIOS_CANALES_KM" EntityType="Model.Store.RIOS_CANALES_KM" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_BQ_BUQUES" EntityType="Model.Store.TBL_BQ_BUQUES" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_BQ_ESTADOS" EntityType="Model.Store.TBL_BQ_ESTADOS" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_BQ_INTERNAC" EntityType="Model.Store.TBL_BQ_INTERNAC" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_BQ_PROPBUQ" EntityType="Model.Store.TBL_BQ_PROPBUQ" store:Type="Tables" store:Schema="MARCIANO" store:Name="TBL_BQ_PROPBUQ">
+      <DefiningQuery>SELECT 
+      "TBL_BQ_PROPBUQ"."UNICO" AS "UNICO", 
+      "TBL_BQ_PROPBUQ"."CUIT" AS "CUIT", 
+      "TBL_BQ_PROPBUQ"."MATRICULA" AS "MATRICULA", 
+      "TBL_BQ_PROPBUQ"."NRO" AS "NRO", 
+      "TBL_BQ_PROPBUQ"."PROVDEF" AS "PROVDEF", 
+      "TBL_BQ_PROPBUQ"."PORCENTAJE" AS "PORCENTAJE", 
+      "TBL_BQ_PROPBUQ"."ESCRITURA" AS "ESCRITURA", 
+      "TBL_BQ_PROPBUQ"."DOMI1" AS "DOMI1", 
+      "TBL_BQ_PROPBUQ"."LOCA1" AS "LOCA1", 
+      "TBL_BQ_PROPBUQ"."PROV1" AS "PROV1", 
+      "TBL_BQ_PROPBUQ"."CODPOS1" AS "CODPOS1", 
+      "TBL_BQ_PROPBUQ"."TEL1" AS "TEL1", 
+      "TBL_BQ_PROPBUQ"."DOMI2" AS "DOMI2", 
+      "TBL_BQ_PROPBUQ"."LOCA2" AS "LOCA2", 
+      "TBL_BQ_PROPBUQ"."PROV2" AS "PROV2", 
+      "TBL_BQ_PROPBUQ"."CODPOS2" AS "CODPOS2", 
+      "TBL_BQ_PROPBUQ"."TEL2" AS "TEL2", 
+      "TBL_BQ_PROPBUQ"."CYGCUIT" AS "CYGCUIT", 
+      "TBL_BQ_PROPBUQ"."CYGAPENOM" AS "CYGAPENOM", 
+      "TBL_BQ_PROPBUQ"."CYGTIPODOC" AS "CYGTIPODOC", 
+      "TBL_BQ_PROPBUQ"."CYGNRODOC" AS "CYGNRODOC", 
+      "TBL_BQ_PROPBUQ"."CYGFECHANAC" AS "CYGFECHANAC", 
+      "TBL_BQ_PROPBUQ"."ESTADOCIVIL" AS "ESTADOCIVIL", 
+      "TBL_BQ_PROPBUQ"."EMAIL" AS "EMAIL", 
+      "TBL_BQ_PROPBUQ"."ESTADO_REG" AS "ESTADO_REG"
+      FROM "MARCIANO"."TBL_BQ_PROPBUQ" "TBL_BQ_PROPBUQ"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TBL_BQ_PROPIETARIOS" EntityType="Model.Store.TBL_BQ_PROPIETARIOS" store:Type="Tables" store:Schema="MARCIANO" store:Name="TBL_BQ_PROPIETARIOS">
+      <DefiningQuery>SELECT 
+      "TBL_BQ_PROPIETARIOS"."CUIT" AS "CUIT", 
+      "TBL_BQ_PROPIETARIOS"."TIPODOC" AS "TIPODOC", 
+      "TBL_BQ_PROPIETARIOS"."NRODOC" AS "NRODOC", 
+      "TBL_BQ_PROPIETARIOS"."CEDULA" AS "CEDULA", 
+      "TBL_BQ_PROPIETARIOS"."EXPPOR" AS "EXPPOR", 
+      "TBL_BQ_PROPIETARIOS"."APENOM" AS "APENOM", 
+      "TBL_BQ_PROPIETARIOS"."SOCIEDAD" AS "SOCIEDAD", 
+      "TBL_BQ_PROPIETARIOS"."ESTADO_REG" AS "ESTADO_REG", 
+      "TBL_BQ_PROPIETARIOS"."FECHANAC" AS "FECHANAC", 
+      "TBL_BQ_PROPIETARIOS"."PASAPORTE" AS "PASAPORTE", 
+      "TBL_BQ_PROPIETARIOS"."NACIONALIDAD" AS "NACIONALIDAD"
+      FROM "MARCIANO"."TBL_BQ_PROPIETARIOS" "TBL_BQ_PROPIETARIOS"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TBL_CAPITAN" EntityType="Model.Store.TBL_CAPITAN" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_CARGAETAPA" EntityType="Model.Store.TBL_CARGAETAPA" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_CARGAS" EntityType="Model.Store.TBL_CARGAS" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_CLASIFICACION" EntityType="Model.Store.TBL_CLASIFICACION" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_CONEXIONPUNTODECONTROL" EntityType="Model.Store.TBL_CONEXIONPUNTODECONTROL" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_ESTADO" EntityType="Model.Store.TBL_ESTADO" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_ETAPA" EntityType="Model.Store.TBL_ETAPA" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_EVENTO" EntityType="Model.Store.TBL_EVENTO" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_INSTA_PUERT" EntityType="Model.Store.TBL_INSTA_PUERT" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_KSTM_PUERTOS" EntityType="Model.Store.TBL_KSTM_PUERTOS" store:Type="Tables" store:Schema="MARCIANO" store:Name="TBL_KSTM_PUERTOS">
+      <DefiningQuery>SELECT 
+      "TBL_KSTM_PUERTOS"."COD" AS "COD", 
+      "TBL_KSTM_PUERTOS"."PUERTO" AS "PUERTO", 
+      "TBL_KSTM_PUERTOS"."CPAIS" AS "CPAIS", 
+      "TBL_KSTM_PUERTOS"."LAT" AS "LAT", 
+      "TBL_KSTM_PUERTOS"."LON" AS "LON", 
+      "TBL_KSTM_PUERTOS"."PAIS" AS "PAIS", 
+      "TBL_KSTM_PUERTOS"."AGRUP" AS "AGRUP"
+      FROM "MARCIANO"."TBL_KSTM_PUERTOS" "TBL_KSTM_PUERTOS"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TBL_MOVIMIENTOS_BUQUE" EntityType="Model.Store.TBL_MOVIMIENTOS_BUQUE" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_MUELLES" EntityType="Model.Store.TBL_MUELLES" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PBIP" EntityType="Model.Store.TBL_PBIP" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PRACTICO" EntityType="Model.Store.TBL_PRACTICO" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PRACTICOETAPA" EntityType="Model.Store.TBL_PRACTICOETAPA" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PUERTOS" EntityType="Model.Store.TBL_PUERTOS" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PUERTOS_KSTM" EntityType="Model.Store.TBL_PUERTOS_KSTM" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PUERTOS_OMI" EntityType="Model.Store.TBL_PUERTOS_OMI" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PUNTODECONTROL" EntityType="Model.Store.TBL_PUNTODECONTROL" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_PUNTODECONTROLUSUARIO" EntityType="Model.Store.TBL_PUNTODECONTROLUSUARIO" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_REPORTE" EntityType="Model.Store.TBL_REPORTE" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_REPORTE_PARAM" EntityType="Model.Store.TBL_REPORTE_PARAM" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_TIPOCARGAUNIDAD" EntityType="Model.Store.TBL_TIPOCARGAUNIDAD" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_TIPOEVENTO" EntityType="Model.Store.TBL_TIPOEVENTO" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_TIPO_CARGA" EntityType="Model.Store.TBL_TIPO_CARGA" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_TIPO_CARGAS_PELIGROSAS" EntityType="Model.Store.TBL_TIPO_CARGAS_PELIGROSAS" store:Type="Tables" store:Schema="MARCIANO" store:Name="TBL_TIPO_CARGAS_PELIGROSAS">
+      <DefiningQuery>SELECT 
+      "TBL_TIPO_CARGAS_PELIGROSAS"."ID" AS "ID", 
+      "TBL_TIPO_CARGAS_PELIGROSAS"."NOMBRE" AS "NOMBRE"
+      FROM "MARCIANO"."TBL_TIPO_CARGAS_PELIGROSAS" "TBL_TIPO_CARGAS_PELIGROSAS"</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TBL_UNIDAD" EntityType="Model.Store.TBL_UNIDAD" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_VIAJE" EntityType="Model.Store.TBL_VIAJE" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="TBL_ZONAS" EntityType="Model.Store.TBL_ZONAS" store:Type="Tables" Schema="MARCIANO" />
+    <EntitySet Name="VIEW_MUELLES" EntityType="Model.Store.VIEW_MUELLES" store:Type="Views" Schema="MARCIANO" />
+    <EntitySet Name="VPUNTO_DE_CONTROL" EntityType="Model.Store.VPUNTO_DE_CONTROL" store:Type="Views" Schema="MARCIANO" />
+    <AssociationSet Name="FK_PROPBUQ_MATRI" Association="Model.Store.FK_PROPBUQ_MATRI">
+      <End Role="TBL_BQ_BUQUES" EntitySet="TBL_BQ_BUQUES" />
+      <End Role="TBL_BQ_PROPBUQ" EntitySet="TBL_BQ_PROPBUQ" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUNTODECONTROL1" Association="Model.Store.FK_PUNTODECONTROL1">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_CONEXIONPUNTODECONTROL" EntitySet="TBL_CONEXIONPUNTODECONTROL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PUNTODECONTROL2" Association="Model.Store.FK_PUNTODECONTROL2">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_CONEXIONPUNTODECONTROL" EntitySet="TBL_CONEXIONPUNTODECONTROL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RIOS_CANALES" Association="Model.Store.FK_RIOS_CANALES">
+      <End Role="RIOS_CANALES_KM" EntitySet="RIOS_CANALES_KM" />
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RIO_CANAL" Association="Model.Store.FK_RIO_CANAL">
+      <End Role="RIOS_CANALES" EntitySet="RIOS_CANALES" />
+      <End Role="RIOS_CANALES_KM" EntitySet="RIOS_CANALES_KM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_USUARIO" Association="Model.Store.FK_TBL_USUARIO">
+      <End Role="INT_USUARIOS" EntitySet="INT_USUARIOS" />
+      <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007096" Association="Model.Store.SYS_C007096">
+      <End Role="TBL_ZONAS" EntitySet="TBL_ZONAS" />
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007100" Association="Model.Store.SYS_C007100">
+      <End Role="TBL_VIAJE" EntitySet="TBL_VIAJE" />
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007101" Association="Model.Store.SYS_C007101">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007102" Association="Model.Store.SYS_C007102">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007103" Association="Model.Store.SYS_C007103">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007105" Association="Model.Store.SYS_C007105">
+      <End Role="TBL_CAPITAN" EntitySet="TBL_CAPITAN" />
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007112" Association="Model.Store.SYS_C007112">
+      <End Role="TBL_TIPO_CARGA" EntitySet="TBL_TIPO_CARGA" />
+      <End Role="TBL_CARGAETAPA" EntitySet="TBL_CARGAETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007113" Association="Model.Store.SYS_C007113">
+      <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+      <End Role="TBL_CARGAETAPA" EntitySet="TBL_CARGAETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007114" Association="Model.Store.SYS_C007114">
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+      <End Role="TBL_CARGAETAPA" EntitySet="TBL_CARGAETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007118" Association="Model.Store.SYS_C007118">
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+      <End Role="TBL_EVENTO" EntitySet="TBL_EVENTO" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007119" Association="Model.Store.SYS_C007119">
+      <End Role="TBL_TIPOEVENTO" EntitySet="TBL_TIPOEVENTO" />
+      <End Role="TBL_EVENTO" EntitySet="TBL_EVENTO" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007121" Association="Model.Store.SYS_C007121">
+      <End Role="TBL_VIAJE" EntitySet="TBL_VIAJE" />
+      <End Role="TBL_PBIP" EntitySet="TBL_PBIP" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007123" Association="Model.Store.SYS_C007123">
+      <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
+      <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007126" Association="Model.Store.SYS_C007126">
+      <End Role="TBL_TIPO_CARGA" EntitySet="TBL_TIPO_CARGA" />
+      <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007127" Association="Model.Store.SYS_C007127">
+      <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
+      <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007131" Association="Model.Store.SYS_C007131">
+      <End Role="TBL_PRACTICO" EntitySet="TBL_PRACTICO" />
+      <End Role="TBL_PRACTICOETAPA" EntitySet="TBL_PRACTICOETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007132" Association="Model.Store.SYS_C007132">
+      <End Role="TBL_ETAPA" EntitySet="TBL_ETAPA" />
+      <End Role="TBL_PRACTICOETAPA" EntitySet="TBL_PRACTICOETAPA" />
+    </AssociationSet>
+    <AssociationSet Name="SYS_C007979" Association="Model.Store.SYS_C007979">
+      <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
+      <End Role="TBL_REPORTE_PARAM" EntitySet="TBL_REPORTE_PARAM" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BUQUES">
+    <Key>
+      <PropertyRef Name="ID_BUQUE" />
+    </Key>
+    <Property Name="ID_BUQUE" Type="number" Nullable="false" Precision="10" />
+    <Property Name="MATRICULA" Type="varchar2" Nullable="false" MaxLength="18" />
+    <Property Name="NRO_OMI" Type="number" />
+    <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="BANDERA" Type="varchar2" Nullable="false" MaxLength="60" />
+    <Property Name="ANIO_CONSTRUCCION" Type="number" Nullable="false" Precision="5" />
+    <Property Name="NRO_ISMM" Type="number" />
+    <Property Name="ASTILL_PARTIC" Type="char" MaxLength="60" />
+    <Property Name="REGISTRO" Type="char" MaxLength="4" />
+    <Property Name="TIPO_BUQUE" Type="varchar2" Nullable="false" MaxLength="80" />
+    <Property Name="TIPO_SERVICIO" Type="char" MaxLength="60" />
+    <Property Name="TIPO_EXPLOTACION" Type="char" MaxLength="60" />
+    <Property Name="ARBOLADURA" Type="char" MaxLength="60" />
+    <Property Name="SDIST" Type="varchar2" MaxLength="8" />
+    <Property Name="VELOCIDAD" Type="char" MaxLength="8" />
+    <Property Name="ESLORA" Type="char" MaxLength="10" />
+    <Property Name="MANGA" Type="char" MaxLength="10" />
+    <Property Name="PUNTAL" Type="char" MaxLength="10" />
+    <Property Name="ARQUEO_TOTAL" Type="char" MaxLength="10" />
+    <Property Name="CALADO_MAX" Type="char" MaxLength="10" />
+    <Property Name="PUERTO_ASIENTO" Type="char" MaxLength="80" />
+    <Property Name="MATERIAL" Type="char" MaxLength="50" />
+    <Property Name="SOCIEDADCLASIF" Type="char" MaxLength="120" />
+    <Property Name="ARQUEO_NETO" Type="char" MaxLength="10" />
+    <Property Name="DOTACION_MINIMA" Type="char" MaxLength="20" />
+    <Property Name="TIPO" Type="char" MaxLength="15" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.INT_SISTEMAS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="INT_SISTEMAS">
+    <Key>
+      <PropertyRef Name="NOMBRE_SIST" />
+    </Key>
+    <Property Name="SISTEMA_ID" Type="number" Precision="10" />
+    <Property Name="NOMBRE_SIST" Type="varchar2" Nullable="false" MaxLength="99" />
+    <Property Name="NRO_SISTEMA" Type="varchar2" MaxLength="8" />
+    <Property Name="PAGINA_INICIO" Type="varchar2" MaxLength="100" />
+    <Property Name="MAIL_RESPONSABLE" Type="varchar2" MaxLength="100" />
+    <Property Name="NDOC_ADMIN" Type="number" Precision="10" />
+    <Property Name="FECHA_AUDIT" Type="date" />
+    <Property Name="MOSTRAR" Type="number" Precision="1" />
+    <Property Name="PAGINA_CONSULTA" Type="varchar2" MaxLength="100" />
+    <Property Name="AGRUPAMIENTO" Type="number" Precision="1" />
+    <Property Name="DESCRIPCION" Type="varchar2" MaxLength="300" />
+    <Property Name="LENGUAJE" Type="varchar2" MaxLength="37" />
+    <Property Name="FUNCIONA" Type="varchar2" MaxLength="2" />
+    <Property Name="TIENE_DOCUMENTACION" Type="varchar2" MaxLength="2" />
+    <Property Name="REPROGRAMAR" Type="varchar2" MaxLength="2" />
+    <Property Name="COD_FUENTE" Type="varchar2" MaxLength="2" />
+    <Property Name="LOG_OPER" Type="varchar2" MaxLength="9" />
+    <Property Name="WEB" Type="varchar2" MaxLength="2" />
+    <Property Name="UBIC_DOCU" Type="varchar2" MaxLength="100" />
+    <Property Name="SOPORTE_TEC" Type="varchar2" MaxLength="2" />
+    <Property Name="ID_DIRECCION" Type="number" Precision="5" />
+    <Property Name="DES_CPAD" Type="varchar2" MaxLength="2" />
+    <Property Name="DICO" Type="varchar2" MaxLength="2" />
+    <Property Name="PROYECTO" Type="varchar2" MaxLength="2" />
+    <Property Name="RESPONSABLE_CEPD" Type="number" Precision="8" />
+    <Property Name="ORGAN_EXTERNO" Type="varchar2" MaxLength="300" />
+    <Property Name="DIRECCION" Type="varchar2" MaxLength="100" />
+    <Property Name="DEPTO_ORGANISMO" Type="number" Precision="6" />
+    <Property Name="PAGINA_LOGIN" Type="varchar2" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="INT_USER_SIST">
+    <Key>
+      <PropertyRef Name="UNICO" />
+    </Key>
+    <Property Name="UNICO" Type="number" Nullable="false" Precision="6" />
+    <Property Name="NRO_SISTEMA" Type="varchar2" Nullable="false" MaxLength="8" />
+    <Property Name="NRO_PRIV_SIST" Type="number" Precision="2" />
+    <Property Name="NDOC_ADMIN" Type="number" Precision="8" />
+    <Property Name="FECHA_AUDIT" Type="date" />
+    <Property Name="NDOC" Type="number" Precision="8" />
+    <Property Name="NOMBREDEUSUARIO" Type="number" Nullable="false" Precision="8" />
+    <Property Name="SISTEMA_ID" Type="number" Precision="3" />
+  </EntityType>
+  <EntityType Name="INT_USUARIOS">
+    <Key>
+      <PropertyRef Name="USUARIO_ID" />
+    </Key>
+    <Property Name="NDOC" Type="number" Precision="8" />
+    <Property Name="PASSWORD" Type="varchar2" MaxLength="80" />
+    <Property Name="APELLIDO" Type="varchar2" Nullable="false" MaxLength="25" />
+    <Property Name="NOMBRES" Type="varchar2" Nullable="false" MaxLength="40" />
+    <Property Name="DESTINO" Type="varchar2" Nullable="false" MaxLength="4" />
+    <Property Name="FECHAVENC" Type="date" />
+    <Property Name="TEDIRECTO" Type="varchar2" MaxLength="15" />
+    <Property Name="TEINTERNO" Type="varchar2" MaxLength="6" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
+    <Property Name="ESTADO" Type="number" Precision="2" />
+    <Property Name="SECCION" Type="varchar2" MaxLength="80" />
+    <Property Name="NDOC_ADMIN" Type="number" Precision="8" />
+    <Property Name="FECHA_AUDIT" Type="date" />
+    <Property Name="NOMBREDEUSUARIO" Type="number" Nullable="false" Precision="8" />
+    <Property Name="USUARIO_ID" Type="number" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.PAISES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PAISES">
+    <Key>
+      <PropertyRef Name="PAISESID" />
+      <PropertyRef Name="DESCRIPCION" />
+      <PropertyRef Name="CODALFABETICO" />
+      <PropertyRef Name="RECTOR" />
+      <PropertyRef Name="OPERADOR" />
+      <PropertyRef Name="ESTADO" />
+      <PropertyRef Name="FECHAAUDIT" />
+    </Key>
+    <Property Name="PAISESID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="DESCRIPCION" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="CONVENIOSRAT" Type="number" Precision="10" />
+    <Property Name="CODALFABETICO" Type="varchar2" Nullable="false" MaxLength="2" />
+    <Property Name="RECTOR" Type="number" Nullable="false" Precision="5" />
+    <Property Name="OPERADOR" Type="number" Nullable="false" Precision="5" />
+    <Property Name="ESTADO" Type="number" Nullable="false" Precision="5" />
+    <Property Name="FECHAAUDIT" Type="date" Nullable="false" />
+    <Property Name="DESCRIPCIONIN" Type="varchar2" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.PUERTOS_INTERNAC' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PUERTOS_INTERNAC">
+    <Key>
+      <PropertyRef Name="PUERTOID" />
+      <PropertyRef Name="PAISESID" />
+      <PropertyRef Name="DESCRIPCION" />
+      <PropertyRef Name="OPERADOR" />
+      <PropertyRef Name="ESTADO" />
+      <PropertyRef Name="FECHAAUDIT" />
+    </Key>
+    <Property Name="PUERTOID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="PAISESID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="CODIGOALFA" Type="varchar2" MaxLength="3" />
+    <Property Name="DESCRIPCION" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="OPERADOR" Type="number" Nullable="false" Precision="5" />
+    <Property Name="ESTADO" Type="number" Nullable="false" Precision="5" />
+    <Property Name="FECHAAUDIT" Type="date" Nullable="false" />
+    <Property Name="DIRECCION" Type="varchar2" MaxLength="70" />
+    <Property Name="LOCALIDAD" Type="varchar2" MaxLength="50" />
+    <Property Name="CODPOSTAL" Type="varchar2" MaxLength="10" />
+    <Property Name="TELEFONO" Type="varchar2" MaxLength="50" />
+    <Property Name="FAX" Type="varchar2" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
+    <Property Name="AUTORIDAD" Type="varchar2" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="RIOS_CANALES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="19" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="RIOS_CANALES_KM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="19" />
+    <Property Name="ID_RIO_CANAL" Type="number" Precision="19" />
+    <Property Name="KM" Type="number" Precision="19" Scale="2" />
+    <Property Name="LATITUD" Type="number" Precision="19" Scale="6" />
+    <Property Name="LONGITUD" Type="number" Precision="19" Scale="6" />
+    <Property Name="UNIDAD" Type="varchar2" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TBL_BQ_BUQUES">
+    <Key>
+      <PropertyRef Name="MATRICULA" />
+    </Key>
+    <Property Name="MATRICULA" Type="varchar2" Nullable="false" MaxLength="10" />
+    <Property Name="NRO_OMI" Type="number" Precision="7" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="50" />
+    <Property Name="BANDERA_ID" Type="number" Precision="3" />
+    <Property Name="ANIO_CONSTRUCCION" Type="number" Precision="4" />
+    <Property Name="ESTADO_REG" Type="number" Precision="1" />
+    <Property Name="NRO_ISMM" Type="number" Precision="9" />
+    <Property Name="FECHA_INSCRIP" Type="date" />
+    <Property Name="EXPTE_INSCRIP" Type="varchar2" MaxLength="15" />
+    <Property Name="ASTILL_PARTIC" Type="varchar2" MaxLength="70" />
+    <Property Name="INSCRIP_PROVISORIA" Type="varchar2" MaxLength="10" />
+    <Property Name="VARIANTE" Type="varchar2" MaxLength="1" />
+    <Property Name="IMPNAC" Type="varchar2" MaxLength="5" />
+    <Property Name="VALOR" Type="varchar2" MaxLength="12" />
+    <Property Name="CAUSA_ELIMINACION" Type="varchar2" MaxLength="60" />
+    <Property Name="EXPTE_ELIMINACION" Type="varchar2" MaxLength="15" />
+    <Property Name="FECHA_ELIMINACION" Type="date" />
+    <Property Name="ACTUALIZACION_USUARIO" Type="varchar2" MaxLength="15" />
+    <Property Name="ACTUALIZACION_FECHA" Type="date" />
+    <Property Name="REGISTRO" Type="varchar2" MaxLength="3" />
+    <Property Name="ELIMINACION" Type="varchar2" MaxLength="1" />
+    <Property Name="TIPO_BUQUE" Type="number" Precision="3" />
+    <Property Name="TIPO_SERVICIO" Type="number" Precision="3" />
+    <Property Name="TIPO_EXPLOTACION" Type="number" Precision="3" />
+    <Property Name="ARBOLADURA_ID" Type="number" Precision="3" />
+    <Property Name="BUQUE_ID" Type="number" Precision="10" />
+    <Property Name="SDIST" Type="varchar2" MaxLength="255" />
+    <Property Name="ARQUEO_NETO" Type="number" />
+    <Property Name="ARQUEO_TOTAL" Type="number" />
+    <Property Name="PROVISORIO" Type="varchar2" MaxLength="13" />
+  </EntityType>
+  <EntityType Name="TBL_BQ_ESTADOS">
+    <Key>
+      <PropertyRef Name="COD" />
+    </Key>
+    <Property Name="COD" Type="varchar2" Nullable="false" MaxLength="2" />
+    <Property Name="RESUMEN" Type="varchar2" MaxLength="15" />
+    <Property Name="ESTADO" Type="varchar2" MaxLength="49" />
+    <Property Name="AGRUPA" Type="varchar2" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TBL_BQ_INTERNAC">
+    <Key>
+      <PropertyRef Name="NROOMI" />
+    </Key>
+    <Property Name="NROOMI" Type="number" Nullable="false" Precision="7" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="50" />
+    <Property Name="BANDERA" Type="varchar2" MaxLength="50" />
+    <Property Name="SOCIEDADCLASIF" Type="varchar2" MaxLength="254" />
+    <Property Name="TIPOBUQUE" Type="varchar2" MaxLength="55" />
+    <Property Name="ESTADO" Type="varchar2" MaxLength="50" />
+    <Property Name="ANIOCONSTR" Type="varchar2" MaxLength="8" />
+    <Property Name="TONELAJEBR" Type="varchar2" MaxLength="20" />
+    <Property Name="PESOMUERTO" Type="varchar2" MaxLength="20" />
+    <Property Name="DISTLLAM" Type="varchar2" MaxLength="13" />
+    <Property Name="MMSI" Type="number" Precision="9" />
+    <Property Name="NROOMICIA" Type="number" Precision="7" />
+    <Property Name="NOMBRECIA" Type="varchar2" MaxLength="50" />
+    <Property Name="PAISREGCIA" Type="varchar2" MaxLength="255" />
+    <Property Name="CODARMADOR" Type="number" Precision="7" />
+    <Property Name="ARMADOR" Type="varchar2" MaxLength="50" />
+    <Property Name="PAISARMADOR" Type="varchar2" MaxLength="255" />
+    <Property Name="CODPROPIET" Type="number" Precision="7" />
+    <Property Name="PROPIETARIO" Type="varchar2" MaxLength="50" />
+    <Property Name="PAISREGISPROP" Type="varchar2" MaxLength="255" />
+    <Property Name="INSCRIP_PROVISORIA" Type="varchar2" MaxLength="15" />
+    <Property Name="SDIST" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.TBL_BQ_PROPBUQ' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="TBL_BQ_PROPBUQ">
+    <Key>
+      <PropertyRef Name="UNICO" />
+      <PropertyRef Name="MATRICULA" />
+    </Key>
+    <Property Name="UNICO" Type="number" Nullable="false" Precision="6" />
+    <Property Name="CUIT" Type="varchar2" MaxLength="13" />
+    <Property Name="MATRICULA" Type="varchar2" Nullable="false" MaxLength="10" />
+    <Property Name="NRO" Type="number" Precision="3" />
+    <Property Name="PROVDEF" Type="varchar2" MaxLength="1" />
+    <Property Name="PORCENTAJE" Type="number" Precision="6" Scale="3" />
+    <Property Name="ESCRITURA" Type="varchar2" MaxLength="255" />
+    <Property Name="DOMI1" Type="varchar2" MaxLength="50" />
+    <Property Name="LOCA1" Type="varchar2" MaxLength="30" />
+    <Property Name="PROV1" Type="varchar2" MaxLength="1" />
+    <Property Name="CODPOS1" Type="varchar2" MaxLength="8" />
+    <Property Name="TEL1" Type="varchar2" MaxLength="15" />
+    <Property Name="DOMI2" Type="varchar2" MaxLength="50" />
+    <Property Name="LOCA2" Type="varchar2" MaxLength="30" />
+    <Property Name="PROV2" Type="varchar2" MaxLength="1" />
+    <Property Name="CODPOS2" Type="varchar2" MaxLength="8" />
+    <Property Name="TEL2" Type="varchar2" MaxLength="15" />
+    <Property Name="CYGCUIT" Type="varchar2" MaxLength="13" />
+    <Property Name="CYGAPENOM" Type="varchar2" MaxLength="50" />
+    <Property Name="CYGTIPODOC" Type="varchar2" MaxLength="3" />
+    <Property Name="CYGNRODOC" Type="number" Precision="8" />
+    <Property Name="CYGFECHANAC" Type="date" />
+    <Property Name="ESTADOCIVIL" Type="number" Precision="2" />
+    <Property Name="EMAIL" Type="varchar2" MaxLength="255" />
+    <Property Name="ESTADO_REG" Type="number" Precision="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.TBL_BQ_PROPIETARIOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="TBL_BQ_PROPIETARIOS">
+    <Key>
+      <PropertyRef Name="CUIT" />
+    </Key>
+    <Property Name="CUIT" Type="varchar2" Nullable="false" MaxLength="13" />
+    <Property Name="TIPODOC" Type="varchar2" MaxLength="3" />
+    <Property Name="NRODOC" Type="number" Precision="8" />
+    <Property Name="CEDULA" Type="number" Precision="8" />
+    <Property Name="EXPPOR" Type="varchar2" MaxLength="2" />
+    <Property Name="APENOM" Type="varchar2" MaxLength="100" />
+    <Property Name="SOCIEDAD" Type="varchar2" MaxLength="255" />
+    <Property Name="ESTADO_REG" Type="number" Precision="1" />
+    <Property Name="FECHANAC" Type="date" />
+    <Property Name="PASAPORTE" Type="varchar2" MaxLength="10" />
+    <Property Name="NACIONALIDAD" Type="number" Precision="3" />
+  </EntityType>
+  <EntityType Name="TBL_CAPITAN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_CARGAETAPA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="TIPOCARGA_ID" Type="number" Nullable="false" />
+    <Property Name="CANTIDAD" Type="number" Nullable="false" />
+    <Property Name="UNIDAD_ID" Type="number" Nullable="false" />
+    <Property Name="ETAPA_ID" Type="number" Nullable="false" />
+    <Property Name="BUQUE_ID" Type="number" Precision="10" />
+    <Property Name="CANTIDAD_INICIAL" Type="number" Nullable="false" />
+    <Property Name="CANTIDAD_ENTRADA" Type="number" Nullable="false" />
+    <Property Name="CANTIDAD_SALIDA" Type="number" Nullable="false" />
+    <Property Name="EN_TRANSITO" Type="number" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBL_CARGAS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="TIPO_CARGA_ID" Type="number" Nullable="false" />
+    <Property Name="CANTIDAD" Type="number" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="MOVIMIENTO_ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE_USUARIO" Type="varchar2" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="TBL_CLASIFICACION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TBL_CONEXIONPUNTODECONTROL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="PUNTODECONTROL1" Type="number" Precision="6" />
+    <Property Name="PUNTODECONTROL2" Type="number" Precision="6" />
+    <Property Name="AGUASARRIBA" Type="number" Precision="1" />
+    <Property Name="PESO" Type="number" />
+    <Property Name="ID" Type="number" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBL_ESTADO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TBL_ETAPA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NRO_ETAPA" Type="number" Nullable="false" />
+    <Property Name="VIAJE_ID" Type="number" />
+    <Property Name="ORIGEN_ID" Type="number" Precision="6" />
+    <Property Name="ACTUAL_ID" Type="number" Precision="6" />
+    <Property Name="DESTINO_ID" Type="number" Precision="6" />
+    <Property Name="HRP" Type="date" />
+    <Property Name="ETA" Type="date" />
+    <Property Name="FECHA_SALIDA" Type="date" />
+    <Property Name="FECHA_LLEGADA" Type="date" />
+    <Property Name="CANTIDAD_TRIPULANTES" Type="number" />
+    <Property Name="CANTIDAD_PASAJEROS" Type="number" />
+    <Property Name="CAPITAN_ID" Type="number" />
+    <Property Name="CALADO_PROA" Type="number" Scale="8" />
+    <Property Name="CALADO_POPA" Type="number" Scale="8" />
+    <Property Name="CALADO_MAXIMO" Type="number" Scale="8" />
+    <Property Name="CALADO_INFORMADO" Type="number" Scale="8" />
+    <Property Name="KM" Type="number" Scale="8" />
+    <Property Name="CREATED_AT" Type="date" />
+    <Property Name="ACOMPANANTE_ID" Type="number" Precision="10" />
+    <Property Name="SENTIDO" Type="number" />
+    <Property Name="VELOCIDAD" Type="number" />
+    <Property Name="RUMBO" Type="number" />
+  </EntityType>
+  <EntityType Name="TBL_EVENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="USUARIO_ID" Type="number" />
+    <Property Name="VIAJE_ID" Type="number" />
+    <Property Name="ETAPA_ID" Type="number" />
+    <Property Name="TIPO_ID" Type="number" />
+    <Property Name="FECHA" Type="date" />
+    <Property Name="BUQUE_ID" Type="varchar2" MaxLength="255" />
+    <Property Name="BUQUE_INT_ID" Type="varchar2" MaxLength="255" />
+    <Property Name="CARGA_ID" Type="number" />
+    <Property Name="PUNTODECONTROL1_ID" Type="number" />
+    <Property Name="PUNTODECONTROL2_ID" Type="number" />
+    <Property Name="MUELLE_ID" Type="number" />
+    <Property Name="BARCAZA_ID" Type="varchar2" MaxLength="10" />
+    <Property Name="COMENTARIO" Type="varchar2" MaxLength="255" />
+    <Property Name="ACOMPANANTE_ID" Type="varchar2" MaxLength="10" />
+    <Property Name="PRACTICO_ID" Type="number" />
+    <Property Name="CREATED_AT" Type="date" />
+    <Property Name="LATITUD" Type="number" Scale="8" />
+    <Property Name="LONGITUD" Type="number" Scale="8" />
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="ESTADO" Type="varchar2" MaxLength="2" />
+    <Property Name="RUMBO" Type="number" Precision="3" />
+    <Property Name="RIOS_CANALES_KM_ID" Type="number" />
+    <Property Name="VELOCIDAD" Type="number" />
+  </EntityType>
+  <EntityType Name="TBL_INSTA_PUERT">
+    <Key>
+      <PropertyRef Name="ID_PUERTO" />
+    </Key>
+    <Property Name="ID_PUERTO" Type="number" Nullable="false" Precision="6" />
+    <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="400" />
+    <Property Name="PUERTO" Type="varchar2" Nullable="false" MaxLength="100" />
+    <Property Name="LATITUD" Type="varchar2" MaxLength="50" />
+    <Property Name="LONGITUD" Type="varchar2" MaxLength="50" />
+    <Property Name="DIRECCION" Type="varchar2" Nullable="false" MaxLength="400" />
+    <Property Name="PROVINCIA" Type="varchar2" Nullable="false" MaxLength="1" />
+    <Property Name="CONTACTO" Type="varchar2" Nullable="false" MaxLength="400" />
+    <Property Name="EVAL_RIESGO" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="FECHA_EVAL" Type="date" />
+    <Property Name="PLAN_PROTECT" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="FECHA_PLAN" Type="date" />
+    <Property Name="F_AUDI_INICIAL" Type="date" />
+    <Property Name="DECL_CUMPL" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="OPERATORIA" Type="varchar2" Nullable="false" MaxLength="400" />
+    <Property Name="BUQUES" Type="number" Nullable="false" Precision="3" />
+    <Property Name="DEPE" Type="number" Precision="6" />
+    <Property Name="ID_APV" Type="number" Precision="6" />
+    <Property Name="SPA" Type="varchar2" Nullable="false" MaxLength="2" />
+    <Property Name="F_DECL_CUMPL" Type="date" />
+    <Property Name="LOCALIDAD" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="CARGO_RESPONSABLE" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="APELLIDO_RESPONSABLE" Type="varchar2" Nullable="false" MaxLength="50" />
+    <Property Name="USU_ALTA" Type="varchar2" Nullable="false" MaxLength="30" />
+    <Property Name="F_USU_ALTA" Type="date" Nullable="false" />
+    <Property Name="USU_MODI" Type="varchar2" MaxLength="30" />
+    <Property Name="F_USU_MODI" Type="date" />
+    <Property Name="MAIL" Type="varchar2" MaxLength="70" />
+    <Property Name="CP" Type="varchar2" MaxLength="8" />
+    <Property Name="OMI" Type="varchar2" MaxLength="50" />
+    <Property Name="PUERTO_ID" Type="number" Nullable="false" Precision="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.TBL_KSTM_PUERTOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="TBL_KSTM_PUERTOS">
+    <Key>
+      <PropertyRef Name="COD" />
+    </Key>
+    <Property Name="COD" Type="varchar2" Nullable="false" MaxLength="3" />
+    <Property Name="PUERTO" Type="varchar2" MaxLength="30" />
+    <Property Name="CPAIS" Type="varchar2" MaxLength="2" />
+    <Property Name="LAT" Type="varchar2" MaxLength="6" />
+    <Property Name="LON" Type="varchar2" MaxLength="7" />
+    <Property Name="PAIS" Type="varchar2" MaxLength="30" />
+    <Property Name="AGRUP" Type="varchar2" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TBL_MOVIMIENTOS_BUQUE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="VIAJE_ID" Type="number" Nullable="false" />
+    <Property Name="TIPO_VIA_ID" Type="number" Nullable="false" Precision="1" />
+    <Property Name="LATITUD" Type="number" Precision="21" Scale="18" />
+    <Property Name="LONGITUD" Type="number" Precision="21" Scale="18" />
+    <Property Name="OBSERVACION" Type="varchar2" MaxLength="255" />
+    <Property Name="FECHA_CREACION" Type="date" Nullable="false" />
+    <Property Name="VELOCIDAD" Type="number" Nullable="false" />
+    <Property Name="FECHA" Type="date" Nullable="false" />
+    <Property Name="HORA" Type="varchar2" Nullable="false" MaxLength="5" />
+    <Property Name="KM_ID" Type="number" />
+    <Property Name="DETALLE_SUBCLASIFICACION_ID" Type="number" Nullable="false" />
+    <Property Name="DIRECCION_NAVEGACION_ID" Type="number" Precision="1" />
+    <Property Name="RUMBO" Type="number" Precision="3" />
+    <Property Name="PREFECTURA_ID" Type="number" Nullable="false" />
+    <Property Name="CALADO_ACTUAL" Type="number" Precision="6" Scale="3" />
+    <Property Name="PUERTO_ORIGEN_ID" Type="number" />
+  </EntityType>
+  <EntityType Name="TBL_MUELLES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="PUERTO_ID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="INSTA_PORT" Type="number" Nullable="false" Precision="6" />
+    <Property Name="TIPO_NAV_ID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="TIPO_CARG_ID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="LATITUD" Type="varchar2" MaxLength="50" />
+    <Property Name="LONGITUD" Type="varchar2" MaxLength="50" />
+    <Property Name="DIRECCION" Type="varchar2" MaxLength="400" />
+    <Property Name="INT" Type="varchar2" MaxLength="10" />
+    <Property Name="MAIL" Type="varchar2" MaxLength="255" />
+    <Property Name="TE" Type="varchar2" MaxLength="255" />
+    <Property Name="FAX" Type="varchar2" MaxLength="2" />
+    <Property Name="DESCRIPCION" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_PBIP">
+    <Key>
+      <PropertyRef Name="VIAJE_ID" />
+    </Key>
+    <Property Name="VIAJE_ID" Type="number" Nullable="false" />
+    <Property Name="PUERTODEMATRICULA" Type="varchar2" MaxLength="255" />
+    <Property Name="NROINMARSAT" Type="varchar2" MaxLength="255" />
+    <Property Name="ARQUEOBRUTO" Type="varchar2" MaxLength="255" />
+    <Property Name="COMPANIA" Type="varchar2" MaxLength="255" />
+    <Property Name="CONTACTOOCPM" Type="varchar2" MaxLength="255" />
+    <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_PRACTICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_PRACTICOETAPA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="PRACTICO_ID" Type="number" />
+    <Property Name="ETAPA_ID" Type="number" />
+    <Property Name="ACTIVO" Type="number" Precision="1" />
+    <Property Name="ID" Type="number" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBL_PUERTOS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="PREFECTURA_ID" Type="number" Nullable="false" />
+    <Property Name="TIPOUBICACION_ID" Type="number" Nullable="false" />
+    <Property Name="JURISDICCION_ID" Type="number" Nullable="false" />
+    <Property Name="PAIS_ID" Type="number" Nullable="false" />
+    <Property Name="TIPO_PUERTO_ID" Type="number" Nullable="false" />
+    <Property Name="CODIGO_ONU" Type="char" MaxLength="3" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+    <Property Name="TIPO_VIA_ID" Type="number" Nullable="false" />
+    <Property Name="INSTALACION_TELEFONO" Type="varchar2" MaxLength="100" />
+    <Property Name="INSTALACION_EMAIL" Type="varchar2" MaxLength="100" />
+    <Property Name="LONGITUD" Type="number" Nullable="false" Precision="21" Scale="18" />
+    <Property Name="LATITUD" Type="number" Nullable="false" Precision="21" Scale="18" />
+    <Property Name="CODIGO_OMI" Type="char" MaxLength="4" />
+    <Property Name="BAJA" Type="number" Nullable="false" />
+    <Property Name="FECHA_BAJA" Type="date" />
+    <Property Name="KM_ID" Type="number" />
+    <Property Name="EXTRA1" Type="number" />
+    <Property Name="EXTRA2" Type="number" />
+  </EntityType>
+  <EntityType Name="TBL_PUERTOS_KSTM">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar2" Nullable="false" MaxLength="20" />
+    <Property Name="COD_DEP" Type="varchar2" MaxLength="10" />
+    <Property Name="PUERTO INTERNO" Type="varchar2" MaxLength="255" />
+    <Property Name="COD" Type="varchar2" MaxLength="255" />
+    <Property Name="LAT" Type="varchar2" MaxLength="255" />
+    <Property Name="LONGITUD" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_PUERTOS_OMI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar2" Nullable="false" MaxLength="10" />
+    <Property Name="CODIGO_ACTUAL" Type="varchar2" MaxLength="255" />
+    <Property Name="CODIGO_ANTERIOR" Type="varchar2" MaxLength="255" />
+    <Property Name="DESCRIPCION" Type="varchar2" MaxLength="255" />
+    <Property Name="PAIS" Type="varchar2" MaxLength="255" />
+    <Property Name="PAIS_DESCRIPCION" Type="varchar2" MaxLength="255" />
+    <Property Name="FECHA_INICIAL" Type="varchar2" MaxLength="255" />
+    <Property Name="FECHA_FINAL" Type="varchar2" MaxLength="255" />
+    <Property Name="VIGENCIA" Type="varchar2" MaxLength="255" />
+    <Property Name="TIPO_PUERTO" Type="varchar2" MaxLength="255" />
+    <Property Name="FECHA_ACT" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="TBL_PUNTODECONTROL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="6" />
+    <Property Name="ZONA_ID" Type="number" Precision="6" />
+    <Property Name="RIOS_CANALES_KM_ID" Type="number" />
+    <Property Name="USO" Type="number" Precision="2" />
+    <Property Name="ENTRADA" Type="number" Precision="1" />
+  </EntityType>
+  <EntityType Name="TBL_PUNTODECONTROLUSUARIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="PUNTODECONTROL" Type="number" Precision="6" />
+    <Property Name="USUARIO" Type="number" />
+  </EntityType>
+  <EntityType Name="TBL_REPORTE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="255" />
+    <Property Name="DESCRIPCION" Type="varchar2" MaxLength="512" />
+    <Property Name="FECHA_CREACION" Type="date" />
+    <Property Name="CONSULTA_SQL" Type="varchar2" Nullable="false" MaxLength="2048" />
+  </EntityType>
+  <EntityType Name="TBL_REPORTE_PARAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="REPORTE_ID" Type="number" Nullable="false" />
+    <Property Name="INDICE" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="56" />
+    <Property Name="TIPO_DATO" Type="number" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBL_TIPOCARGAUNIDAD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="TIPOCARGA_ID" Type="number" />
+    <Property Name="UNIDAD_ID" Type="number" />
+    <Property Name="ID" Type="number" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TBL_TIPOEVENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar2" MaxLength="255" />
+    <Property Name="TIPO" Type="number" Precision="1" />
+  </EntityType>
+  <EntityType Name="TBL_TIPO_CARGA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
+    <Property Name="CODIGO" Type="char" MaxLength="3" />
+    <Property Name="AGRUPACION_ID" Type="number" Nullable="false" />
+    <Property Name="UNIDAD_ID" Type="number" Nullable="false" />
+    <Property Name="ESTADO_ID" Type="number" Nullable="false" />
+    <Property Name="TIPO_CARGA_PELIGROSA_ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE_USUARIO" Type="varchar2" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'MARCIANO.TBL_TIPO_CARGAS_PELIGROSAS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="TBL_TIPO_CARGAS_PELIGROSAS">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="NOMBRE" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TBL_UNIDAD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TBL_VIAJE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" />
+    <Property Name="FECHA_SALIDA" Type="date" />
+    <Property Name="FECHA_LLEGADA" Type="date" />
+    <Property Name="ETA" Type="date" />
+    <Property Name="ZOE" Type="date" />
+    <Property Name="ETAPA_ACTUAL" Type="number" />
+    <Property Name="ESTADO" Type="number" />
+    <Property Name="NOTAS" Type="varchar2" MaxLength="2048" />
+    <Property Name="VIAJE_PADRE" Type="number" />
+    <Property Name="LATITUD" Type="number" Scale="8" />
+    <Property Name="LONGITUD" Type="number" Scale="8" />
+    <Property Name="CREATED_AT" Type="date" />
+    <Property Name="ESTADO_BUQUE" Type="varchar2" MaxLength="2" />
+    <Property Name="RIOS_CANALES_KM_ID" Type="number" />
+    <Property Name="BUQUE_ID" Type="number" Precision="10" />
+    <Property Name="ORIGEN_ID" Type="varchar2" MaxLength="3" />
+    <Property Name="DESTINO_ID" Type="varchar2" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="TBL_ZONAS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="CUATRIGRAMA" Type="varchar2" Nullable="false" MaxLength="4" />
+    <Property Name="DESCRIPCION" Type="varchar2" Nullable="false" MaxLength="255" />
+    <Property Name="NIVEL" Type="varchar2" Nullable="false" MaxLength="1" />
+    <Property Name="DIRECCION_POSTAL" Type="varchar2" MaxLength="50" />
+    <Property Name="UBIC_GEOG" Type="varchar2" MaxLength="50" />
+    <Property Name="DEPENDENCIA" Type="varchar2" MaxLength="6" />
+    <Property Name="ESTADO" Type="number" Precision="1" />
+    <Property Name="CODNUM" Type="number" Precision="4" />
+    <Property Name="ZONA" Type="number" Precision="3" />
+    <Property Name="NIVELNUM" Type="varchar2" MaxLength="2" />
+    <Property Name="ID" Type="number" Nullable="false" Precision="6" />
+    <Property Name="RPV" Type="varchar2" MaxLength="10" />
+    <Property Name="INT" Type="varchar2" MaxLength="10" />
+    <Property Name="MAIL" Type="varchar2" MaxLength="255" />
+    <Property Name="TE" Type="varchar2" MaxLength="255" />
+    <Property Name="FAX" Type="varchar2" MaxLength="2" />
+    <Property Name="COD_CARGO" Type="varchar2" MaxLength="2" />
+    <Property Name="DESCENTRALIZADO" Type="varchar2" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="VIEW_MUELLES">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="10" />
+    <Property Name="NOMBRE_P" Type="varchar2" MaxLength="255" />
+    <Property Name="NOMBRE_IP" Type="varchar2" MaxLength="400" />
+    <Property Name="NOMBRE_M" Type="varchar2" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="VPUNTO_DE_CONTROL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="number" Nullable="false" Precision="6" />
+    <Property Name="USO" Type="varchar2" MaxLength="8" />
+    <Property Name="CUATRIGRAMA" Type="varchar2" MaxLength="4" />
+    <Property Name="CANAL" Type="varchar2" MaxLength="152" />
+  </EntityType>
+  <Association Name="FK_PROPBUQ_MATRI">
+    <End Role="TBL_BQ_BUQUES" Type="Model.Store.TBL_BQ_BUQUES" Multiplicity="1" />
+    <End Role="TBL_BQ_PROPBUQ" Type="Model.Store.TBL_BQ_PROPBUQ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_BQ_BUQUES">
+        <PropertyRef Name="MATRICULA" />
+      </Principal>
+      <Dependent Role="TBL_BQ_PROPBUQ">
+        <PropertyRef Name="MATRICULA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUNTODECONTROL1">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_CONEXIONPUNTODECONTROL" Type="Model.Store.TBL_CONEXIONPUNTODECONTROL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_CONEXIONPUNTODECONTROL">
+        <PropertyRef Name="PUNTODECONTROL1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PUNTODECONTROL2">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_CONEXIONPUNTODECONTROL" Type="Model.Store.TBL_CONEXIONPUNTODECONTROL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_CONEXIONPUNTODECONTROL">
+        <PropertyRef Name="PUNTODECONTROL2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RIOS_CANALES">
+    <End Role="RIOS_CANALES_KM" Type="Model.Store.RIOS_CANALES_KM" Multiplicity="0..1" />
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RIOS_CANALES_KM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="RIOS_CANALES_KM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RIO_CANAL">
+    <End Role="RIOS_CANALES" Type="Model.Store.RIOS_CANALES" Multiplicity="0..1" />
+    <End Role="RIOS_CANALES_KM" Type="Model.Store.RIOS_CANALES_KM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RIOS_CANALES">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RIOS_CANALES_KM">
+        <PropertyRef Name="ID_RIO_CANAL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_USUARIO">
+    <End Role="INT_USUARIOS" Type="Model.Store.INT_USUARIOS" Multiplicity="0..1" />
+    <End Role="TBL_PUNTODECONTROLUSUARIO" Type="Model.Store.TBL_PUNTODECONTROLUSUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INT_USUARIOS">
+        <PropertyRef Name="USUARIO_ID" />
+      </Principal>
+      <Dependent Role="TBL_PUNTODECONTROLUSUARIO">
+        <PropertyRef Name="USUARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007096">
+    <End Role="TBL_ZONAS" Type="Model.Store.TBL_ZONAS" Multiplicity="0..1" />
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_ZONAS">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ZONA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007100">
+    <End Role="TBL_VIAJE" Type="Model.Store.TBL_VIAJE" Multiplicity="0..1" />
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_VIAJE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_ETAPA">
+        <PropertyRef Name="VIAJE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007101">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_ETAPA">
+        <PropertyRef Name="ORIGEN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007102">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_ETAPA">
+        <PropertyRef Name="ACTUAL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007103">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_ETAPA">
+        <PropertyRef Name="DESTINO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007105">
+    <End Role="TBL_CAPITAN" Type="Model.Store.TBL_CAPITAN" Multiplicity="0..1" />
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_CAPITAN">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_ETAPA">
+        <PropertyRef Name="CAPITAN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007112">
+    <End Role="TBL_TIPO_CARGA" Type="Model.Store.TBL_TIPO_CARGA" Multiplicity="1" />
+    <End Role="TBL_CARGAETAPA" Type="Model.Store.TBL_CARGAETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_TIPO_CARGA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_CARGAETAPA">
+        <PropertyRef Name="TIPOCARGA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007113">
+    <End Role="TBL_UNIDAD" Type="Model.Store.TBL_UNIDAD" Multiplicity="1" />
+    <End Role="TBL_CARGAETAPA" Type="Model.Store.TBL_CARGAETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_UNIDAD">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_CARGAETAPA">
+        <PropertyRef Name="UNIDAD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007114">
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="1" />
+    <End Role="TBL_CARGAETAPA" Type="Model.Store.TBL_CARGAETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_ETAPA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_CARGAETAPA">
+        <PropertyRef Name="ETAPA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007118">
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="0..1" />
+    <End Role="TBL_EVENTO" Type="Model.Store.TBL_EVENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_ETAPA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_EVENTO">
+        <PropertyRef Name="ETAPA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007119">
+    <End Role="TBL_TIPOEVENTO" Type="Model.Store.TBL_TIPOEVENTO" Multiplicity="0..1" />
+    <End Role="TBL_EVENTO" Type="Model.Store.TBL_EVENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_TIPOEVENTO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_EVENTO">
+        <PropertyRef Name="TIPO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007121">
+    <End Role="TBL_VIAJE" Type="Model.Store.TBL_VIAJE" Multiplicity="1" />
+    <End Role="TBL_PBIP" Type="Model.Store.TBL_PBIP" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_VIAJE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PBIP">
+        <PropertyRef Name="VIAJE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007123">
+    <End Role="TBL_PUNTODECONTROL" Type="Model.Store.TBL_PUNTODECONTROL" Multiplicity="0..1" />
+    <End Role="TBL_PUNTODECONTROLUSUARIO" Type="Model.Store.TBL_PUNTODECONTROLUSUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PUNTODECONTROL">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PUNTODECONTROLUSUARIO">
+        <PropertyRef Name="PUNTODECONTROL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007126">
+    <End Role="TBL_TIPO_CARGA" Type="Model.Store.TBL_TIPO_CARGA" Multiplicity="0..1" />
+    <End Role="TBL_TIPOCARGAUNIDAD" Type="Model.Store.TBL_TIPOCARGAUNIDAD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_TIPO_CARGA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_TIPOCARGAUNIDAD">
+        <PropertyRef Name="TIPOCARGA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007127">
+    <End Role="TBL_UNIDAD" Type="Model.Store.TBL_UNIDAD" Multiplicity="0..1" />
+    <End Role="TBL_TIPOCARGAUNIDAD" Type="Model.Store.TBL_TIPOCARGAUNIDAD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_UNIDAD">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_TIPOCARGAUNIDAD">
+        <PropertyRef Name="UNIDAD_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007131">
+    <End Role="TBL_PRACTICO" Type="Model.Store.TBL_PRACTICO" Multiplicity="0..1" />
+    <End Role="TBL_PRACTICOETAPA" Type="Model.Store.TBL_PRACTICOETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_PRACTICO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PRACTICOETAPA">
+        <PropertyRef Name="PRACTICO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007132">
+    <End Role="TBL_ETAPA" Type="Model.Store.TBL_ETAPA" Multiplicity="0..1" />
+    <End Role="TBL_PRACTICOETAPA" Type="Model.Store.TBL_PRACTICOETAPA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_ETAPA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_PRACTICOETAPA">
+        <PropertyRef Name="ETAPA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SYS_C007979">
+    <End Role="TBL_REPORTE" Type="Model.Store.TBL_REPORTE" Multiplicity="1" />
+    <End Role="TBL_REPORTE_PARAM" Type="Model.Store.TBL_REPORTE_PARAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_REPORTE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TBL_REPORTE_PARAM">
+        <PropertyRef Name="REPORTE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'MARCIANO.DORIS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="DORIS">
+        <Property Name="ID" Type="number" Precision="10" />
+        <Property Name="ALGO" Type="varchar2" MaxLength="10" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'MARCIANO.PEPE' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="PEPE">
+        <Property Name="A" Type="date" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'MARCIANO.TBL_BQ_CODPROV' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="TBL_BQ_CODPROV">
+        <Property Name="PROV" Type="varchar2" MaxLength="23" />
+        <Property Name="CODIGO" Type="varchar2" MaxLength="1" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'MARCIANO.TBL_PAISES_CIALA' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="TBL_PAISES_CIALA">
+        <Property Name="PAISESID" Type="varchar2" MaxLength="10" />
+        <Property Name="DESCRIPCION" Type="varchar2" MaxLength="255" />
+        <Property Name="CONVENIOSRAT" Type="varchar2" MaxLength="320" />
+        <Property Name="CODALFABETICO" Type="varchar2" MaxLength="255" />
+        <Property Name="RECTOR" Type="varchar2" MaxLength="320" />
+        <Property Name="OPERADOR" Type="varchar2" MaxLength="320" />
+        <Property Name="ESTADO" Type="varchar2" MaxLength="320" />
+        <Property Name="FECHAAUDIT" Type="date" />
+        <Property Name="DESCRIPCIONIN" Type="varchar2" MaxLength="255" />
+      </EntityType>-->
+</Schema>
