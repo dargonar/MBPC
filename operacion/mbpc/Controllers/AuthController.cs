@@ -13,7 +13,7 @@ namespace mbpc.Controllers
             return View();
         }
 
-        public ActionResult Login()
+        public ActionResult Login2()
         {
           if (TempData.ContainsKey("error"))
           {
@@ -50,6 +50,28 @@ namespace mbpc.Controllers
 
           return View("ShowForm");
         }
+        
+      public ActionResult Login()
+        {
+          //Validar usuario
+
+          bool logok = DaoLib.loguser(Request.Form["username"], Request.Form["password"]);
+          if (logok == false)
+          {
+            if (!TempData.ContainsKey("error"))
+              ViewData["error"] = "Usuario / Password invalido";
+            else
+              ViewData["error"] = TempData["error"];
+            return View("ShowForm");
+          }
+
+          //Marcar sesion logeado
+          Session["logged"] = 1;
+          Session["usuario"] = Request.Form["username"];
+
+          return Redirect(Url.Content("~/"));
+        }
+
 
         public ActionResult Logout()
         {

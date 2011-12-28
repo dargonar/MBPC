@@ -16,8 +16,8 @@ public static class DaoLib
   public static decimal?[] parsePos(string pos)
   {
     decimal?[] latlon = {
-          decimal.Parse(pos.Substring(0, 2)) + decimal.Parse(pos.Substring(2, 2)) / 60.0m,
-          decimal.Parse(pos.Substring(5, 3)) + decimal.Parse(pos.Substring(8, 2)) / 60.0m
+          -1 * (decimal.Parse(pos.Substring(0, 2)) + decimal.Parse(pos.Substring(2, 2)) / 60.0m),
+          -1 * (decimal.Parse(pos.Substring(5, 3)) + decimal.Parse(pos.Substring(8, 2)) / 60.0m)
     };
 
     //decimal?[] latlon = { decimal.Parse(pos.Substring(0, 4).Insert(2, ",")) * -1 , decimal.Parse(pos.Substring(5, 5).Insert(3, ",")) * -1 }; 

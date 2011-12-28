@@ -5,51 +5,51 @@
     <table>
       <tr>
         <td><label>Nacional</label></td>
-        <td><input type="radio" name="internacional" id="nac" checked="checked" value="0" onclick="nacion()"/></td>
+        <td><input type="radio" name="internacional" id="bnac" checked="checked" value="0" onclick="nacionb()"/></td>
         
         <td><label>Internacional</label></td>
-        <td><input type="radio" name="internacional" id="inter" value="1" onclick="internacion()"/></td>
+        <td><input type="radio" name="internacional" id="binter" value="1" onclick="internacionb()"/></td>
       </tr>
     </table>
     
-    <label id="matlabel">Matricula</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="matricula" id="matriculaN"/><br />
+    <label id="bmatlabel">Matricula</label><br />
+    <input autocomplete="off" type="text" style="width:200px" name="matricula" id="bmatriculaN"/><br />
     
     <label>Nombre</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="nombre" id="nombreN"/><br />
+    <input autocomplete="off" type="text" style="width:200px" name="nombre" id="bnombreN"/><br />
 
     <label>Señal Distintiva</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="sdist" id="sdist"/><br />
+    <input autocomplete="off" type="text" style="width:200px" name="sdist" id="bsdist"/><br />
     
     <label>Bandera</label><br />
-    <select name="bandera" id="bandera" style="width:200px" disabled="disabled">
+    <select name="bandera" id="bbandera" style="width:200px" disabled="disabled">
     <% foreach (Dictionary<string,string> bandera in banderas) { %>
       <option value="<%=bandera["DESCRIPCION"]%>" <%=( bandera["DESCRIPCION"] == "ARGENTINA" ? "selected=\"selected\"" : "") %>><%=bandera["DESCRIPCION"]%></option>
     <% } %>
     </select><br /><br />
 
     <label>Tipo de Servicio</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="servicio" id="servicio"/><br />
+    <input autocomplete="off" type="text" style="width:200px" name="servicio" id="bservicio"/><br />
 
     <label>MMSI</label><br />
-    <input autocomplete="off" type="text" style="width:200px" name="mmsi" id="mmsi"/><br />
+    <input autocomplete="off" type="text" style="width:200px" name="mmsi" id="bmmsi"/><br />
     
     <input type="submit" class="botonsubmitb" value="nuevo" style="margin-left: 149px"/>
   </form>
 
   <script type="text/javascript">
 
-    function nacion() {
-      $('#bandera').val('ARGENTINA');
-      $('#bandera').attr('disabled', 'disabled');
-      $('#matlabel').html('Matricula');
+    function nacionb() {
+      $('#bbandera').val('ARGENTINA');
+      $('#bbandera').attr('disabled', 'disabled');
+      $('#bmatlabel').html('Matricula');
       return false;
     }
 
-    function internacion() {
-      $('#bandera').val('');
-      $('#bandera').attr('disabled', false);
-      $('#matlabel').html('Numero OMI');
+    function internacionb() {
+      $('#bbandera').val('');
+      $('#bbandera').attr('disabled', false);
+      $('#bmatlabel').html('Numero OMI');
       return false;
     }
 
@@ -57,31 +57,31 @@
 
       $('.botonsubmitb').attr('disabled', 'disabled');
 
-      if ($("#matriculaN").val() == "") {
-        alert("Debe ingresar " + $('#matlabel').html() );
+      if ($("#bmatriculaN").val() == "") {
+        alert("Debe ingresar " + $('#bmatlabel').html() );
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
 
-      if ($("#nombreN").val() == "") {
+      if ($("#bnombreN").val() == "") {
         alert("Debe ingresar un nombre");
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
 
-      if ($("#sdist").val() == "") {
+      if ($("#bsdist").val() == "") {
         alert("Debe ingresar la señal distintiva");
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
 
-      if( $("#inter").val() != 0 && $("#bandera").val() == null ) {
+      if( $("#binter").val() != 0 && $("#bbandera").val() == null ) {
         alert("Seleccione la bandera");
         $('.botonsubmitb').removeAttr('disabled');
         return false;
       }
       
-      if( $("#servicio").val() == "" ) {
+      if( $("#bservicio").val() == "" ) {
         alert("Debe seleccionar el tipo de servicio");
         $('.botonsubmitb').removeAttr('disabled');
         return false;

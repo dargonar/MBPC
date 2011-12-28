@@ -566,7 +566,7 @@ create or replace package body mbpc as
         lon := posicion.lon;
       END IF;
       
-      IF riokm is null THEN
+      IF riokm is null or riokm=0 THEN
         riokm := posicion.riokm;
       END IF;
       
@@ -580,7 +580,9 @@ create or replace package body mbpc as
     insert into tbl_etapa ( viaje_id, actual_id, destino_id, fecha_salida, created_at, sentido, created_by ) 
     VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid ) returning id into temp2;
     
-    insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha) VALUES ( usrid, temp , temp2 , 1 , tempdate );
+    insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, puntodecontrol1_id, puntodecontrol2_id) 
+    VALUES ( usrid, temp , temp2 , 1 , tempdate, vZona, vProx );
+    
     open vCursor for select * from tbl_etapa where id = temp2;
   end crear_viaje;
 

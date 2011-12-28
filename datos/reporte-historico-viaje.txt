@@ -1,0 +1,33 @@
+select e.tipo_id, us.destino, e.viaje_id, tbl_etapa.nro_etapa, te.descripcion,
+
+CASE WHEN e.tipo_id!=1 THEN cn.nombre ELSE cn1.nombre END AS nombre,
+CASE WHEN e.tipo_id!=1 THEN mk.unidad ELSE mk1.unidad END AS unidad,
+CASE WHEN e.tipo_id!=1 THEN mk.km ELSE mk1.km END AS km,
+
+tc.nombre as carga,bq.nombre as Nombre_Buque,bq.tipo_servicio,e.latitud,e.longitud
+
+from tbl_evento e 
+
+left join tbl_tipoevento te on e.tipo_id=te.id 
+
+left join tbl_tipo_carga tc on e.carga_id=tc.id 
+
+left join tbl_viaje vj on e.viaje_id=vj.id 
+
+left join buques bq on vj.buque_id=bq.id_buque
+
+left join int_usuarios us on e.usuario_id=us.usuario_id 
+
+left join tbl_etapa on e.etapa_id=tbl_etapa.id
+
+left join tbl_puntodecontrol pc1 on e.puntodecontrol1_id=PC1.id 
+left join rios_canales_km mk1 on pc1.rios_canales_km_id=mk1.id
+left join rios_canales cn1 on mk1.id_rio_canal=cn1.id
+
+left join tbl_puntodecontrol pc on e.puntodecontrol2_id=PC.id 
+left join rios_canales_km mk on pc.rios_canales_km_id=mk.id
+left join rios_canales cn on mk.id_rio_canal=cn.id
+
+where e.viaje_id=:p1
+
+order by e.viaje_id, e.created_at, e.etapa_id
