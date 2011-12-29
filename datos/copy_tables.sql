@@ -1,10 +1,10 @@
 CREATE  TABLE SN_USUARIOS_EXT (
 
 NDOC                                               NUMBER(8),
-PASSWORD                                  NOT NULL VARCHAR2(80),
-APELLIDO                                  NOT NULL VARCHAR2(25),
-NOMBRES                                   NOT NULL VARCHAR2(40),
-DOMICILIO                                 NOT NULL VARCHAR2(80),
+PASSWORD                                  VARCHAR2(80) NOT NULL ,
+APELLIDO                                  VARCHAR2(25) NOT NULL ,
+NOMBRES                                   VARCHAR2(40) NOT NULL ,
+DOMICILIO                                 VARCHAR2(80) NOT NULL ,
 FECHAVENC                                          DATE,
 TEDIRECTO                                          VARCHAR2(15),
 TEINTERNO                                          VARCHAR2(6),
@@ -16,11 +16,11 @@ ESTADO                                             NUMBER(2),
 NDOC_ADMIN                                         NUMBER(8),
 SITIOWEB                                           VARCHAR2(120),
 FECHA_AUDIT                                        DATE,
-NOMBREDEUSUARIO                           NOT NULL VARCHAR2(50),
+NOMBREDEUSUARIO                           VARCHAR2(50) NOT NULL ,
 USUARIO_ID                                         NUMBER,
 EMPRESA                                            VARCHAR2(120),
-NOMBRE                                    NOT NULL VARCHAR2(50),
-CODIGO                                    NOT NULL VARCHAR2(8) );
+NOMBRE                                    VARCHAR2(50) NOT NULL ,
+CODIGO                                    VARCHAR2(8) NOT NULL  );
 
 CREATE TABLE SN_USUARIOS_PNA (
 
