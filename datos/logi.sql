@@ -18,6 +18,7 @@ create or replace package mbpc as
   temp number;
   temp2 number;
   temp3 varchar2(1000);
+  temp4 number;
   strtemp1 varchar(50);
   strtemp2 varchar(50);
   strtemp3 varchar(50);
@@ -124,7 +125,6 @@ create or replace package mbpc as
   procedure reporte_obtener_str(vNombre in varchar2, usrid in number, vCursor out cur);
   
 end;
-
 
 
 
@@ -577,8 +577,8 @@ create or replace package body mbpc as
                 lat, lon, tempdate, riokm, riokm, usrid, tempdate, usrid ) returning id into temp;
     END;
    
-    insert into tbl_etapa ( viaje_id, actual_id, destino_id, fecha_salida, created_at, sentido, created_by ) 
-    VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid ) returning id into temp2;
+    insert into tbl_etapa ( viaje_id, actual_id, destino_id, hrp, fecha_salida, created_at, sentido, created_by ) 
+    VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid ) returning id into temp2;
     
     insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, puntodecontrol1_id, puntodecontrol2_id) 
     VALUES ( usrid, temp , temp2 , 1 , tempdate, vZona, vProx );
@@ -783,7 +783,7 @@ create or replace package body mbpc as
                            CAPITAN_ID, SENTIDO, CALADO_PROA, CALADO_POPA, CALADO_MAXIMO, 
                            CALADO_INFORMADO, KM, CREATED_AT, acompanante_id, VELOCIDAD, RUMBO, CREATED_BY ) 
     
-    VALUES ( etapa.viaje_id, etapa.actual_id, vZonaId, etapa.hrp, TO_DATE(vEta, 'DD-MM-yy HH24:mi'), 
+    VALUES ( etapa.viaje_id, etapa.actual_id, vZonaId, etapa.fecha_llegada, TO_DATE(vEta, 'DD-MM-yy HH24:mi'), 
             etapa.fecha_llegada, etapa.cantidad_tripulantes, etapa.cantidad_pasajeros, 
             etapa.capitan_id, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo, 
             etapa.calado_informado, etapa.km, tempdate, etapa.acompanante_id, vVelocidad, vRumbo, usrid )
@@ -858,6 +858,17 @@ create or replace package body mbpc as
 
   procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur) is
   begin
+      
+      --begin
+      --  temp  := CAST( REPLACE(vCaladoProa,'.',',') AS NUMBER);
+      --  temp2 := NVL(vCaladoPopa, CAST( REPLACE(vCaladoPopa,'.',',') AS NUMBER));
+      --  temp3 := CAST( REPLACE(vCaladoInformado,'.',',') AS NUMBER);
+      --EXCEPTION WHEN INVALID_NUMBER THEN
+      -- temp  := CAST( vCaladoProa AS NUMBER);
+      --  temp2 := CAST( vCaladoPopa AS NUMBER);
+      --  temp3 := CAST( vCaladoInformado AS NUMBER);
+      --END
+      
       update tbl_etapa SET
         calado_proa          = vCaladoProa,
         calado_popa          = vCaladoPopa,
@@ -1323,7 +1334,8 @@ create or replace package body mbpc as
     select upper('%' || SUBSTR(vQuery, INSTR(vQuery,' ', 1, 1)+1, INSTR(vQuery,' ',1,2)-INSTR(vQuery,' ',1,1)-1) || '%') into strtemp2  from dual;
     select '%' || upper(SUBSTR(vQuery, INSTR(vQuery,' ', -1, 1)+1)) into strtemp3 from dual;
     
-    temp3 := 'select rck.ID, rck.KM, rck.UNIDAD, rc.NOMBRE, rck.LATITUD, rck.LONGITUD from rios_canales_km rck left join rios_canales rc on rck.id_rio_canal = rc.id
+    --TRUNC(rck.LATITUD)+(rck.LATITUD-TRUNC(rck.LATITUD))*0.6,TRUNC(rck.LONGITUD)+(rck.LONGITUD-TRUNC(rck.LONGITUD))*0.6
+    temp3 := 'select rck.ID, rck.KM, rck.UNIDAD, rc.NOMBRE, TRUNC(rck.LATITUD)+(rck.LATITUD-TRUNC(rck.LATITUD))*0.6 LATITUD,TRUNC(rck.LONGITUD)+(rck.LONGITUD-TRUNC(rck.LONGITUD))*0.6 LONGITUD from rios_canales_km rck left join rios_canales rc on rck.id_rio_canal = rc.id
                     where
                       upper(rck.KM) like upper(''' || vQuery || ''') or 
                       upper(rck.UNIDAD) like upper(''' || vQuery || ''') or 
@@ -1350,15 +1362,17 @@ create or replace package body mbpc as
   
   procedure autocompleterbnacionales(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    --VERIFICAR TIPO_BUQUE 'nacional'
+    --VERIFICAR TIPO_BUQUE     'nacional'
+    --VERIFICAR TIPO_SERVICIO  'REMOLCADOR' 'EMPUJADOR' otros...
+    
     sql_stmt := 'select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
                     from buques b 
                     where
                     --Que no sea un barco en viaje
-                    b.id_buque not in (
-                      select buque_id from tbl_viaje where estado=0 and buque_id is not null
-                    )
-                    and
+                    --b.id_buque not in (
+                    --  select buque_id from tbl_viaje where estado=0 and buque_id is not null
+                    --)
+                    --and
                     --Que no sea un barco acompanando
                     b.id_buque not in (
                       select acompanante_id from tbl_etapa e join tbl_viaje v 
