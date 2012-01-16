@@ -34,7 +34,7 @@
       <option value="BALSA">BALSA (sin motor)</option>
     </select>
 
-    <input type="submit" class="botonsubmitb" value="nuevo" style="margin-left: 149px"/>
+    <input type="submit" class="botonsubmitb" value="Crear Barcaza" style="margin-left: 106px"/>
   </form>
 
   <script type="text/javascript">

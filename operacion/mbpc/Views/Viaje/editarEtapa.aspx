@@ -95,10 +95,9 @@
     <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-    
-    <label>Fecha de salida</label><br />
-    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
-    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+    <!--<label>Fecha de salida</label><br />
+    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="" /><br />
+    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />-->
 
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
@@ -273,14 +272,14 @@
     }
 
 
-    if ($("#fecha_salidae").val() != "") {
+    /*if ($("#fecha_salidae").val() != "") {
       if (isDate($("#fecha_salidae").val())) {
         alert("La fecha de salida es invalida");
         $("#fecha_salidae").focus();
         $('.botonsubmit').removeAttr('disabled');
         return false;
       }
-    }
+    }*/
 
     if ($("#hrpe").val() != "") {
       if (isDate($("#hrpe").val())) {
