@@ -33,6 +33,8 @@
 							self._trigger( "selected", event, {
 								item: ui.item.option
 							});
+                            select.trigger( "autocompleteselect", [ui.item != null? ui.item.value : '-']);
+                            //select.trigger("change");     
 						},
 						change: function( event, ui ) {
 							if ( !ui.item ) {
