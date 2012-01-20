@@ -1,10 +1,31 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 
-  <form id="elegirAcompanante" action="<%= Url.Content("~/Viaje/editarAcompanante") %>">
+  <form id="elegirAcompanante" action="<%= Url.Content("~/Viaje/editarAcompanantes") %>">
     <input type="hidden" id="etapa_id" name="etapa_id" value="<%= ViewData["etapa_id"] %>"/>
     
-    <input style="float:left; width: 300px" autocomplete="off" class="autocompletetext" name="acompanante" id="acompanante" type="text" />
-    <input type="hidden" id="buque_id" name="buque_id"/>
+    <label>Acompañante 1</label>
+    <input style="float:left; width: 300px" autocomplete="off" class="autocompletetext" name="acompanante" id="acompanante" type="text" value="<%=ViewData["NOMBRE"] %>"/>
+    <input type="hidden" id="buque_id" name="buque_id" value="<%=ViewData["ACOMPANANTE_ID"] %>"/>
+    <a href="#">Quitar</a>
+    </br>
+
+    <label>Acompañante 2</label>
+    <input style="float:left; width: 300px" autocomplete="off" class="autocompletetext" name="acompanante" id="acompanante2" type="text" value="<%=ViewData["NOMBRE2"] %>"/>
+    <input type="hidden" id="buque2_id" name="buque_id" value="<%=ViewData["ACOMPANANTE2_ID"] %>"/>
+    <a href="#">Quitar</a>
+    </br>
+
+    <label>Acompañante 3</label>
+    <input style="float:left; width: 300px" autocomplete="off" class="autocompletetext" name="acompanante" id="acompanante3" type="text" value="<%=ViewData["NOMBRE3"] %>"/>
+    <input type="hidden" id="buque3_id" name="buque_id" value="<%=ViewData["ACOMPANANTE3_ID"] %>"/>
+    <a href="#">Quitar</a>
+    </br>
+
+    <label>Acompañante 4</label>
+    <input style="float:left; width: 300px" autocomplete="off" class="autocompletetext" name="acompanante" id="acompanante4" type="text" value="<%=ViewData["NOMBRE4"] %>"/>
+    <input type="hidden" id="buque4_id" name="buque_id" value="<%=ViewData["ACOMPANANTE4_ID"] %>"/>
+    <a href="#">Quitar</a>
+    </br>
 
     <div style="clear:both"></div>
 
@@ -19,7 +40,7 @@
 
   url1 = '<%= Url.Content("~/Autocomplete/view_buquesnac/") %>';
 
-  $("#acompanante").autocomplete({
+  $("#acompanante, #acompanante2, #acompanante3, #acompanante4").autocomplete({
     source: function (request, response) {
       $.ajax({
         type: "POST",

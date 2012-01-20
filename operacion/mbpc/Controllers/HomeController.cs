@@ -8,6 +8,8 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
+      public static string VERSION = "1.24";
+      
         //
         // GET: /Home/
         public ActionResult Index()
@@ -168,6 +170,12 @@ namespace mbpc.Controllers
             return -1;
      
           return 0;       
+        }
+
+        public JsonResult Version()
+        {
+          System.Threading.Thread.Sleep(1500);
+          return Json(HomeController.VERSION, JsonRequestBehavior.AllowGet);
         }
 
     }

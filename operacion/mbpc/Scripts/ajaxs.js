@@ -283,10 +283,10 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: 150,
+            height: 250,
             width: 400,
             modal: true,
-            title: 'Elegir Acompañante'
+            title: 'Acompañantes'
           });
           $("#fullscreen").css("display", "none");
         }),

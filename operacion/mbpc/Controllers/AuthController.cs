@@ -77,6 +77,7 @@ namespace mbpc.Controllers
         {
           //Marcar sesion deslogeado
           Session["logged"] = 0;
+          Session.Abandon();
           return Redirect(Url.Content("~/"));
         }
     }

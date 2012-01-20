@@ -334,15 +334,28 @@ public static class DaoLib
     return doCall("mbpc.reporte_diario", parameters);
   }
 
-  public static List<object> editar_acompanante(string vEtapa, string vBuque)
+  public static List<object> editar_acompanante(string vEtapa, string vBuque, string vBuque2, string vBuque3, string vBuque4)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vEtapa", OracleDbType.Varchar2, vEtapa, System.Data.ParameterDirection.Input),
-        new OracleParameter("vBuque", OracleDbType.Varchar2, vBuque, System.Data.ParameterDirection.Input)
+        new OracleParameter("vBuque", OracleDbType.Varchar2, vBuque, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBuque2", OracleDbType.Varchar2, vBuque2, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBuque3", OracleDbType.Varchar2, vBuque3, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBuque4", OracleDbType.Varchar2, vBuque4, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.editar_acompanante", parameters);
+  }
+
+  public static List<object> traer_acompanantes(string vEtapa)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, vEtapa, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.traer_acompanantes", parameters);
   }
 
 
