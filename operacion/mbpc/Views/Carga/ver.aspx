@@ -29,11 +29,12 @@
           <td><%=carga["BARCAZA"]%></td>
           <% } else if (IsFirst) { %>
           <td rowspan="<%=item.Value.Count %>"><%=carga["BARCAZA"]%><br />
+          <input type="checkbox" etapa_id="<%= ViewData["ETAPA_ID"] %>" barcaza_id="<%=carga["ID_BUQUE"] %>" title="Seleccionar para operar múltiples barcazas" >
           <% if (carga["TIPOCARGA_ID"] != "412") { //LASTRE?%>
-          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)">Desc.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)" title="Descargar">Desc.</a>&nbsp;-&nbsp;
           <% } %>
-          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)">Fond.</a>&nbsp;-&nbsp;
-          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)">Correg.</a>
+          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)" title="Fondear">Fond.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)" title="Corregir">Correg.</a>
           </td>
           <% }%>
           <td colspan="<%= (carga["TIPOCARGA_ID"] != "412") ? "1" : "4" %>" ><%=carga["NOMBRE"]%></br>
@@ -85,6 +86,17 @@
     }
   }
   %>
+  <tr>
+    <td colspan="5" style="border: 1px solid #E6E6E6;padding: 4px;">
+        <div class="btn-new-class" style="float:left; margin-right:5px;">
+          <a onclick="return fondear_barcazas_seleccionadas(this);" href="#" title="Fondear barcazas seleccionadas">Fondear barcazas...</a>
+        </div>
+        <div class="btn-new-class" style="float:left;">
+          <a onclick="return descargar_barcazas_seleccionadas(this);" href="#" title="Descargar barcazas seleccionadas">Descargar barcazas...</a>
+        </div>
+
+    </td>
+  </tr>
 </table>
 <br />
 

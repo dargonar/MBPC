@@ -1301,11 +1301,21 @@ create or replace package body mbpc as
   --
   procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    open vCursor for 
-      select tc.ID, tc.NOMBRE, tc.CODIGO, tc.UNIDAD_ID, un.NOMBRE UNOMBRE
-      from tbl_tipo_carga tc left join tbl_unidad un on tc.unidad_id=un.id
-      where ( upper(tc.nombre) like '%'||UPPER(vQuery)||'%' or upper(tc.codigo) like '%'||UPPER(vQuery)||'%'  )
-      and rownum < 6;
+    sql_stmt := 'select * from ( select a.*, ROWNUM rnum from (
+                    select COD,RESUMEN,ESTADO,AGRUPA, case when upper(cod) like upper(:vQuery) then 1 else 0 end as groovy from tbl_bq_estados 
+                    order by groovy desc  ) a
+                  where upper(cod) like upper(:vQuery) or
+                        upper(estado) like upper(:vQuery) or 
+                        upper(resumen) like upper(:vQuery) )
+                  where rnum <= 10';
+
+
+  open vCursor for 
+      select * from( select a.*, ROWNUM rnum from (
+        select tc.ID, tc.NOMBRE||' ('||tc.codigo||')' NOMBRE, tc.CODIGO, tc.UNIDAD_ID, un.NOMBRE UNOMBRE, case when upper(tc.codigo) like '%'||UPPER(vQuery)||'%' then 1 else 0 end as groovy
+        from tbl_tipo_carga tc left join tbl_unidad un on tc.unidad_id=un.id order by groovy desc) a
+      where ( upper(a.nombre) like '%'||UPPER(vQuery)||'%' or upper(a.codigo) like '%'||UPPER(vQuery)||'%'  ) )
+      where rnum < 6;
   end autocomplete_cargas;
   -------------------------------------------------------------------------------------------------------------
   --
