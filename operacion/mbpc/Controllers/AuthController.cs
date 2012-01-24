@@ -52,7 +52,7 @@ namespace mbpc.Controllers
         }
         
       public ActionResult Login()
-        {
+      {
           //Validar usuario
 
           bool logok = DaoLib.loguser(Request.Form["username"], Request.Form["password"]);
@@ -69,6 +69,12 @@ namespace mbpc.Controllers
           Session["logged"] = 1;
           Session["usuario"] = Request.Form["username"];
 
+          if (Session["toreports"] != null)
+          {
+            Session["toreports"] = null;
+            return RedirectToAction("Index", "Reporte");
+          }
+
           return Redirect(Url.Content("~/"));
         }
 
@@ -77,6 +83,7 @@ namespace mbpc.Controllers
         {
           //Marcar sesion deslogeado
           Session["logged"] = 0;
+          Session.Abandon();
           return Redirect(Url.Content("~/"));
         }
     }

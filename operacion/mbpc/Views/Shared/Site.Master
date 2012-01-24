@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="mbpc.Controllers" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <% Dictionary<string, string> datos_del_usuario = (ViewData["datos_del_usuario"] as List<object>)[0] as Dictionary<string, string>; %>
@@ -14,7 +15,7 @@
       <script src="<%= Url.Content("~/Scripts/jquery-ui-1.8.5.custom.min.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery-ui-timepicker-addon-0.6.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery.hoverbox.min.js") %>" type="text/javascript" ></script>
-      <script src="<%= Url.Content("~/Scripts/ajaxs.js") %>?v=1.18" type="text/javascript" ></script>
+      <script src="<%= Url.Content("~/Scripts/ajaxs.js") %>?v=<%=HomeController.VERSION%>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery.hotkeys.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery.scrollTo-1.4.2-min.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/shortcuts.js") %>" type="text/javascript" ></script>
@@ -42,6 +43,38 @@
           });
 
         }
+
+        var current_version = '<%=HomeController.VERSION%>';
+
+        function check_restart() {
+
+          $("#chkver").show();
+
+          $.ajax({
+            type: "GET",
+            cache: false,
+            url: '<%=Url.Content("~/Home/Version")%>',
+            success: (function (data) {
+              $("#chkver").css("display", "none");
+
+              if (data != null && data != '' && data != current_version) {
+                alert('Sistema actualizado, haga click para continuar');
+                document.location = '<%= Url.Action("Logout","Auth") %>';
+                return;
+              }
+
+              setTimeout(check_restart, 30000);
+            }),
+            error: (function (data) {
+              $("#chkver").css("display", "none");
+              setTimeout(check_restart, 30000);
+            })
+          });
+
+
+        }
+
+        setTimeout(check_restart, 3000);
       </script>
       <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
       <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
@@ -63,12 +96,13 @@
         <% if (Session["grupos"] != null) { %>
         
         <div class="user">
+          <img style="dispay:none" id="chkver" src="../../img/ajax-loader2.gif"/>
           <label><strong> <%= datos_del_usuario["APELLIDO"] + ", " + datos_del_usuario["NOMBRES"] %></strong></label>
           <a href="<%= Url.Action("Logout","Auth") %>">Salir</a>
         </div>
 
         <% var grps = (Session["grupos"] as List<object>); %>
-
+        
         <div style="float:right; width:100px; margin-right:128px; margin-top:4px;">
           <select style="width:200px" id="grupoactual" onchange="cambiar_grupo();">
             <% foreach (Dictionary<string, string> grp in grps)

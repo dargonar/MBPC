@@ -25,15 +25,11 @@
                              onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="<%= ship["DESTINO_ID"] %>"   class="pasarbarcolink" >                              Pasar Barco</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/terminarviaje" %>"                                 onclick="return preguntarfecha(this,2);">                            Terminar Viaje</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/editarEtapa/") +  ship["ID"] + "/" + ship["ETAPA_ID"] %>"    onclick="return editaretapa(this);" class="editaretapalink">Editar Etapa/Viaje</a></li>
-                      <% if ( ship["ACOMPANANTE"] == "")
+                      <li><a href="<%= Url.Content("~/Viaje/Acompanantes/") + ship["ETAPA_ID"] %>" onclick="return elegiracompanante(this);return false;">Acompañantes</a></li>
+                      <% if (ship["ACOMPANANTE"] != "" || ship["ACOMPANANTE2"] != "" || ship["ACOMPANANTE3"] != "" || ship["ACOMPANANTE4"] != "")
                          {  %>
-                             <li><a href="<%= Url.Content("~/Viaje/elegirAcompanante/") + ship["ETAPA_ID"] %>" onclick="return elegiracompanante(this);return false;">                           Elegir Acompanante</a></li>
-                      <% }
-                         else
-                         { %>
-                             <li><a href="<%= Url.Content("~/Viaje/quitarAcompanante/") + ship["ETAPA_ID"] %>"                    onclick="return quitaracompanante(this);return false;">      Quitar Acompanante</a></li>
-                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this,1);return false;">          Separar Convoy</a></li>
-                      <% }%>
+                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this,1);return false;">Separar Convoy</a></li>
+                      <% } %>
                       <li><a href="<%= Url.Content("~/Carga/ver/") +  ship["ETAPA_ID"] %>"              onclick="return editarcargas(this);">                              Editar Cargas </a></li>
                       <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>"          onclick="return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
                       <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>&carga=1"          onclick="return transferirbarcazas(this);">                  Transferir Carga </a></li>
@@ -42,6 +38,7 @@
                       <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>?etapa_id=<%=ship["ETAPA_ID"]%>" onclick="return histrvp(this);">                                                                   Historial R/V/P</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/cambiarEstado/") + ship["ETAPA_ID"] %>" onclick="return agregarevento(this);" class="agregareventolink">Cambiar Estado</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/practicos/") + ship["ETAPA_ID"] %>" onclick="return practico(this);" class="agregareventolink">Practico/Baqueano</a></li>
                      </ul>
                 </div><!-- items -->
             </div><!-- menu -->
@@ -121,7 +118,10 @@
       <img src="<%= Url.Content("~/img/i_icon.png") %>" style="width: 20px;height: 20px;"/></span>
     </td>
   <td>
-    <label class="nombreacomp"><%=  ship["ACOMPANANTE"] != "" ? "&nbsp;-&nbsp;" + ship["ACOMPANANTE"] : ""%></label>
+    <%if( ship["ACOMPANANTE"] != "") {%> <label class="nombreacomp"><%=ship["ACOMPANANTE"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE2"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE2"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE3"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE3"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE4"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE4"]%></label> <% } %>
   </td>
 
   </tr>

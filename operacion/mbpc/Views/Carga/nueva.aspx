@@ -14,10 +14,14 @@
     <label>Código</label><br />
     <input type="text" id="codigo" name="codigo" autocomplete="off" style="width: 40px" readonly="readonly"/><br />
 
-    <label style="float: left;width: 93px;">Cantidad</label><label style="float: left; width: 80px">Unidad</label><br />
-    <input style="float: left;width: 80px;height: 20px;" autocomplete="off" type="text" id="cantidad" name="cantidad" />
-    <input style="float: left;margin-left:10px;width: 80px;height: 20px;" autocomplete="off" type="text" id="unidad_txt" name="unidad_txt" disabled="disabled"/>
-    <br/><br/>
+    <label style="float: left;width: 93px;">Cantidad</label><br />
+   
+    <input style="width: 80px;height: 20px;" autocomplete="off" type="text" id="cantidad" name="cantidad" />&nbsp;<span id="un1">--</span>&nbsp;&nbsp;&nbsp;
+    
+    <input style="width: 80px;height: 20px;display:none" autocomplete="off" type="text" id="cantidad2" name="cantidad2" />&nbsp;<span id="un2" style="display:none">KG</span>
+
+    <input type="hidden" style="float: left;margin-left:10px;width: 80px;height: 20px;" autocomplete="off" type="text" id="unidad_txt" name="unidad_txt"/>
+    <br/>
 
     <p>
     <input type="checkbox" name="en_transito" value="" id="en_transito" />Está en tránsito
@@ -60,6 +64,31 @@
       return false;
     }
 
+  //TN to KG
+  $("#cantidad").change( function() {
+    var v = $(this).val();
+    var vv = '';
+    if( v != '')
+    {
+      var vv = (parseFloat(v)*1000.0).toFixed(2);
+    }
+    
+    $('#cantidad2').val(vv);
+  });
+
+  //KG to TN
+  $("#cantidad2").change( function() {
+    var v = $(this).val();
+    var vv = '';
+    if( v != '' )
+    {
+      var vv = (parseFloat(v)/1000.0).toFixed(4);
+    }
+
+    $("#cantidad").val(vv);
+  });
+
+
   url = '<%= Url.Content("~/Autocomplete/cargas") %>';
   $("#carga").autocomplete({
     source: function (request, response) {
@@ -90,6 +119,20 @@
       $('#codigo').val(ui.item.cod);
       $('#unidad_txt').val(ui.item.unom);
       $('#unidad_id').val(ui.item.uid);
+      
+      //hack
+      $('#un1').html(ui.item.unom);
+      if( ui.item.unom == 'TN' )
+      {
+        $("#cantidad2").show();
+        $("#un2").show();
+      }
+      else
+      {
+        $("#cantidad2").hide();
+        $("#un2").hide();
+      }
+
     },
     open: function () {
       $(this).removeClass("ui-corner-all").addClass("ui-corner-top");

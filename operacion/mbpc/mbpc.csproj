@@ -15,6 +15,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -140,9 +141,11 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Auth\ShowForm.aspx" />
     <Content Include="Views\Viaje\cambiarEstado.aspx" />
+    <Content Include="Views\Viaje\nuevo_practico.aspx" />
+    <Content Include="Views\Viaje\practicos.aspx" />
     <Content Include="Views\Viaje\preguntarFecha.aspx" />
     <Content Include="Views\Viaje\histRVP.aspx" />
-    <Content Include="Views\Viaje\elegirAcompanante.aspx" />
+    <Content Include="Views\Viaje\acompanantes.aspx" />
     <Content Include="Views\Viaje\editarNotas.aspx" />
     <Content Include="Views\Viaje\modificarPBIP.aspx" />
     <Content Include="Views\Viaje\reactivar.aspx" />
@@ -165,7 +168,9 @@
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config">

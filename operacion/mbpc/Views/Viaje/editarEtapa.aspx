@@ -102,12 +102,10 @@
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
     
-    <label>Practico/Baqueano</label><br />
-    <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
-  
+    <br />
+    <label>Prácticos/baqueanos en viaje</label><br />
+    <!--<input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />-->
     <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
-      <br />
-
       <%
         for (var i = 0; i < practicolist.Count ; i++) {
            Dictionary<string, string> PR = practicolist[i] as Dictionary<string,string>;
@@ -136,8 +134,8 @@
       %>
       </select>
       <div style="clear:both"></div>
-      <label class="desc">Listado de prácticos/baqueanos</label> 
-      <button type="button" id="quitar" style="float:right;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
+      <button type="button" id="agregar" style="float:left;" title="Quitar Práctico seleccionado">Agregar</button>
+      <button type="button" id="quitar"  style="float:left;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
   </div>
 
   <div class="columna">
@@ -243,6 +241,11 @@
     //isDate($(this).val());
   });
 
+  $('#agregar').click(function () {
+    selected = $("#practicoselect").val();
+    $(".practicosh[value='" + selected + "']").val("");
+    $("#practicoselect option[value='"+ selected +"']").remove();
+  });
 
   $('#quitar').click(function () {
     selected = $("#practicoselect").val();
@@ -478,40 +481,6 @@
     });
 
   }
-
-
-  $("#practicotext").autocomplete({
-    source: function (request, response) {
-      $.ajax({
-        type: "POST",
-        url: url3,
-        dataType: "json",
-        data: {
-          query: request.term
-        },
-        success: function (data) {
-          response($.map(data, function (item) {
-            return {
-              label: item.NOMBRE,
-              value: item.NOMBRE,
-              id: item.ID
-            }
-          }));
-        }
-      });
-    },
-    minLength: 2,
-    select: function (event, ui) {
-      pegarPractico(ui.item.value, ui.item.id);
-    },
-    open: function () {
-      $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-    },
-    close: function () {
-      $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-    }
-  });
-
 
   $("#desdetext, #hastatext").autocomplete({
     source: function (request, response) {

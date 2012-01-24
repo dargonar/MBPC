@@ -158,8 +158,11 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public ActionResult modificar(int carga_id, int cantidad_entrada, int cantidad_salida, int etapa_id)
+      public ActionResult modificar(int carga_id, string cantidad_entrada, string cantidad_salida, int etapa_id)
       {
+        cantidad_entrada = cantidad_entrada.Replace(',','.');
+        cantidad_salida = cantidad_salida.Replace(',', '.');
+
         DaoLib.modificar_carga(carga_id, cantidad_entrada, cantidad_salida);
         //return Content("ok");
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
@@ -171,13 +174,12 @@ namespace mbpc.Controllers
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
 
-      public ActionResult agregar(int etapa_id, int carga_id, int cantidad, int unidad_id, string buque_id, string en_transito)
+      public ActionResult agregar(int etapa_id, int carga_id, string cantidad, int unidad_id, string buque_id, string en_transito)
       {
         int m_en_transito = String.IsNullOrEmpty(en_transito) ? 0 : 1;
         ViewData["results"] = DaoLib.insertar_carga(etapa_id, carga_id, cantidad, unidad_id, buque_id, m_en_transito);
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
-
 
       public ActionResult barcoenzona(int etapa_id, int viaje_id, string carga)
       {

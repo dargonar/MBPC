@@ -16,10 +16,15 @@ namespace mbpc.Controllers
 
         public ActionResult Index()
         {
-          //if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
-          //  return this.RedirectToAction("ShowForm", "Auth");
+          if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
+          {
+            if(Request.UrlReferrer == null)
+              Session["toreports"] = "true";
+
+            return this.RedirectToAction("ShowForm", "Auth");
+          }
           
-          //ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+          ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
 
           var du = new Dictionary<string, string>();
           du["NOMBRES"] = "";
