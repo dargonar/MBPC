@@ -117,7 +117,10 @@
       <img src="<%= Url.Content("~/img/i_icon.png") %>" style="width: 20px;height: 20px;"/></span>
     </td>
   <td>
-    <label class="nombreacomp"><%=  ship["ACOMPANANTE"] != "" ? "&nbsp;-&nbsp;" + ship["ACOMPANANTE"] : ""%></label>
+    <%if( ship["ACOMPANANTE"] != "") {%> <label class="nombreacomp"><%=ship["ACOMPANANTE"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE2"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE2"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE3"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE3"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE4"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE4"]%></label> <% } %>
   </td>
 
   </tr>
