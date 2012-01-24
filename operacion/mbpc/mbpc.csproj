@@ -141,6 +141,7 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Auth\ShowForm.aspx" />
     <Content Include="Views\Viaje\cambiarEstado.aspx" />
+    <Content Include="Views\Viaje\practico_fecha.aspx" />
     <Content Include="Views\Viaje\nuevo_practico.aspx" />
     <Content Include="Views\Viaje\practicos.aspx" />
     <Content Include="Views\Viaje\preguntarFecha.aspx" />

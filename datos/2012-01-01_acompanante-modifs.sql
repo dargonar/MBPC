@@ -104,3 +104,10 @@ ALTER TABLE tbl_practicoviaje
     id
   )
 /
+
+alter table tbl_practicoviaje add activo        integer;
+alter table tbl_practicoviaje add fecha_activo  integer;
+alter table tbl_practicoviaje add total         integer;
+
+--tipo eventos
+UPDATE tbl_tipoevento SET descripcion='Bajar practico' WHERE id=17;

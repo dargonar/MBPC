@@ -949,6 +949,43 @@ public static class DaoLib
     return doCall("mbpc.agregar_practico", parameters);
   }
 
+  public static List<object> bajar_practico(string practico_id, string etapa_id, string fecha)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPractico", OracleDbType.Varchar2, practico_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.bajar_practico", parameters);
+  }
+
+  public static List<object> activar_practico(string practico_id, string etapa_id, string fecha)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPractico", OracleDbType.Varchar2, practico_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.activar_practico", parameters);
+  }
+
+
+  public static List<object> activar_practico(string id)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vPractico", OracleDbType.Varchar2, id, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.activar_practico", parameters);
+  }
+
+  
+
   public static List<object> columnas_de(string tabla)
   {
 
@@ -1027,6 +1064,17 @@ public static class DaoLib
     };
 
     return doCall("mbpc.autocomplete_cargas", parameters);
+  }
+
+  public static List<object> autocomplete_practicos(string query, string etapa_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input),
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.autocomplete_practicos", parameters);
   }
 
   public static List<object> autocompleterioscanales(string query)

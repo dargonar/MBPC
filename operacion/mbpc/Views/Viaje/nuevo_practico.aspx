@@ -23,7 +23,7 @@
     source: function (request, response) {
       $.ajax({
         type: "POST",
-        url: '<%= Url.Content("~/Autocomplete/practicos/") %>',
+        url: '<%= Url.Content("~/Autocomplete/practicos/")+"?etapa_id="+ViewData["etapa_id"] %>',
         dataType: "json",
         data: {
           query: request.term
@@ -57,7 +57,7 @@
       alert('Debe seleccionar la fecha de subida');
       return false;
     }
-    
+
     $.ajax({
       type: "POST",
       cache: false,
@@ -65,6 +65,7 @@
       data: $(frm).serialize(),
       success: (function (data) {
         $('#dialogdiv3').dialog('close');
+        $('#dialogdiv').html(data);
       }),
       error: function (data) {
         var titletag = /<title\b[^>]*>.*?<\/title>/

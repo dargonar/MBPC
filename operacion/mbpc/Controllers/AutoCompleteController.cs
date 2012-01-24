@@ -103,12 +103,12 @@ namespace mbpc.Controllers
       return Json(cargas, JsonRequestBehavior.AllowGet);
     }
 
-    public JsonResult practicos(string query)
+    public JsonResult practicos(string query, string etapa_id)
     {
       var practicos = new List<object>();
       if (query != "")
       {
-        practicos = DaoLib.autocomplete("tbl_practico", '%' + query + '%');
+        practicos = DaoLib.autocomplete_practicos(query, etapa_id);
       }
       return Json(practicos, JsonRequestBehavior.AllowGet);
     }

@@ -3,7 +3,6 @@
 
 <% List<object> etapalist = ViewData["etapa"] as List<object>; %>
 <% Dictionary<string, string> etapa = etapalist[0] as Dictionary<string, string>; %>
-<% List<object> practicolist = ViewData["practicos"] as List<object>; %>
 <% List<object> viajelist = ViewData["viajedata"] as List<object>; %>
 <% Dictionary<string, string> viaje = viajelist[0] as Dictionary<string, string>; %>
 
@@ -33,7 +32,6 @@
   <input id="hasta_id" name="hasta_id" type="hidden" value="<%= viaje["DESTINO_ID"] %>"/>
   <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);"/> <br />
 
-
   <label>Fecha de partida</label><br />
   <input autocomplete="off" type="text" id="partidav" name="partida" class="editaretapatext" value="<%= viaje["FECHA_SALIDA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
@@ -41,8 +39,6 @@
   <label>ETA</label><br />
   <input autocomplete="off" type="text" id="etav" name="eta" class="editaretapatext" value="<%= viaje["ETA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
-
-
 
   </div>
 
@@ -101,41 +97,7 @@
 
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
-    
     <br />
-    <label>Prácticos/baqueanos en viaje</label><br />
-    <!--<input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />-->
-    <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
-      <%
-        for (var i = 0; i < practicolist.Count ; i++) {
-           Dictionary<string, string> PR = practicolist[i] as Dictionary<string,string>;
-           Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + i + "\" name=\"practico" + i + "\" value=\"" + PR["ID"] + "\" />");
-           if (PR["ACTIVO"] == "1")
-             Response.Write("<input type=\"hidden\" id=\"practicoh\" name=\"activoh\" value=\"" + PR["ID"] + "\" />");
-         }
-
-        for (var j = practicolist.Count; j < 3; j++)
-        {
-          Response.Write("<input class=\"practicosh\" type=\"hidden\" id=\"practico" + j + "\" name=\"practico" + j + "\" value=\"\" />");
-        }    
-   
-      %>
-
-      <select id="practicoselect" name="activo" size="3" style="width:213px;float: left;">
-      <% for (var i = 0; i < practicolist.Count; i++)
-         {
-           Dictionary<string, string> PR = practicolist[i] as Dictionary<string, string>;
-           string sel = "";
-           if (PR["ACTIVO"] == "1")
-               sel = "selected=\"selected\"";
-           var optstring = "<option class=\"practicopt\"" + sel + "\" onclick=\"seleccionarPractico(this)\" value=\"" + PR["ID"] + "\">" + PR["NOMBRE"] + "</option>";
-           Response.Write(optstring);
-         }     
-      %>
-      </select>
-      <div style="clear:both"></div>
-      <button type="button" id="agregar" style="float:left;" title="Quitar Práctico seleccionado">Agregar</button>
-      <button type="button" id="quitar"  style="float:left;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
   </div>
 
   <div class="columna">
@@ -241,24 +203,6 @@
     //isDate($(this).val());
   });
 
-  $('#agregar').click(function () {
-    selected = $("#practicoselect").val();
-    $(".practicosh[value='" + selected + "']").val("");
-    $("#practicoselect option[value='"+ selected +"']").remove();
-  });
-
-  $('#quitar').click(function () {
-    selected = $("#practicoselect").val();
-    $(".practicosh[value='" + selected + "']").val("");
-    $("#practicoselect option[value='"+ selected +"']").remove();
-  });
-
-
-  function seleccionarPractico(opt) {
-    $('#practicoh').val($(opt).val());
-    $('#practicotext').val('');
-    alert('Practico/Baqueano '+ $(opt).html()+' quedara como activo de la etapa');
-  }
 
   $("#editarEtapaForm").submit(function () {
 
@@ -294,13 +238,6 @@
     }
 
 
-
-    if ($("#practicoselect").val() == null && $("#practicoselect").children().length != 0) {
-      alert("debe indicar el practico/baqueano activo de la etapa");
-      $('.botonsubmit').removeAttr('disabled');
-      return false;
-    }
-
     $.ajax({
       type: "POST",
       cache: false,
@@ -334,7 +271,6 @@
 
   url1 = '<%= Url.Content("~/Autocomplete/view_buques_disponibles/") %>';
   url2 = '<%= Url.Content("~/Autocomplete/view_muelles/") %>';
-  url3 = '<%= Url.Content("~/Autocomplete/practicos/") %>';
   url4 = '<%= Url.Content("~/Autocomplete/capitanes/") %>';
   url5 = '<%= Url.Content("~/Autocomplete/rioscanales") %>';
 
@@ -440,47 +376,6 @@
       $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
     }
   });
-
-
-  function pegarPractico(nombre, id) {
-
-    //$('#practicoh').val(id);
-    //$('#practicotext').val(nombre);
-
-    var nono = false;
-    $('#practicoselect').children().each(function () {
-      if ($(this).html() == nombre) {
-        alert("Ya agregó a este practico/baqueano")
-        var nono = True;
-      }
-    });
-
-    if (nono) {
-      return false;
-    }
-
-    /*
-    if ($('#practicoselect').children().length > 2) {
-      alert("solo puede agregar 3 practicos por etapa")
-      $('.latabla').html('');
-      return false;
-    }
-    */
-    
-    var issel = '';
-    if( $(".practicopt").length == 0 )
-     issel = 'selected="selected"';
-
-    $('#practicoselect').append('<option class="practicopt" onclick="seleccionarPractico(this)" value="' + id + '" ' +issel+' >' + nombre + '</option>');
-
-    $('.practicosh').each(function () {
-      if ($(this).val() == "") {
-        $(this).val(id);
-        return false;
-      }
-    });
-
-  }
 
   $("#desdetext, #hastatext").autocomplete({
     source: function (request, response) {

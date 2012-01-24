@@ -13,7 +13,7 @@ namespace mbpc.Controllers
       {
         ViewData["etapa_id"] = id;
         ViewData["results"] = DaoLib.traer_practicos(id);
-        return View();
+        return View("practicos");
       }
 
       public ActionResult nuevo_practico(string etapa_id)
@@ -22,10 +22,38 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public ActionResult agregar_practico(string viaje_id, string practico_id, string fecha_subida)
+      public ActionResult agregar_practico(string etapa_id, string practico_id, string fecha_subida)
       {
-        DaoLib.agregar_practico(viaje_id, practico_id, fecha_subida); 
-        return practicos(viaje_id);
+        DaoLib.agregar_practico(etapa_id, practico_id, fecha_subida);
+        return practicos(etapa_id);
+      }
+
+      public ActionResult bajar_practico(string practico_id, string etapa_id, string fecha)
+      {
+        DaoLib.bajar_practico(etapa_id, practico_id, fecha);
+        return practicos(etapa_id);
+      }
+
+      public ActionResult activar_practico(string practico_id, string etapa_id, string fecha)
+      {
+        DaoLib.activar_practico(etapa_id, practico_id, fecha);
+        return practicos(etapa_id);
+      }
+
+      public ActionResult bajar_practico_fecha(string etapa_id, string practico_id)
+      {
+        ViewData["action"] = "bajar_practico_fecha";
+        ViewData["etapa_id"] = etapa_id;
+        ViewData["practico_id"] = practico_id;
+        return View("practico_fecha");
+      }
+
+      public ActionResult activar_practico_fecha(string etapa_id, string practico_id)
+      {
+        ViewData["action"] = "activar_practico_fecha";
+        ViewData["etapa_id"] = etapa_id;
+        ViewData["practico_id"] = practico_id;
+        return View("practico_fecha");
       }
 
       public ActionResult borrar_evento(string etapa_id, string id)
@@ -254,12 +282,10 @@ namespace mbpc.Controllers
 
         public ActionResult editarEtapa(string viaje_id, string id2)
         {
-            ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
-            ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
+          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+          ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
 
-          //ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
           ViewData["etapa"] = DaoLib.traer_etapa(viaje_id);
-          ViewData["practicos"] = DaoLib.traer_practicos(id2);
           ViewData["viaje_id"] = viaje_id;
 
           return View();

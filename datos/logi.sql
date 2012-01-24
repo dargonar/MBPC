@@ -10,7 +10,7 @@ create or replace package mbpc as
   usuario2 vw_int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
   cetapa tbl_cargaetapa%ROWTYPE;
-  practicoetapa tbl_practicoetapa%ROWTYPE;
+  practicoviaje tbl_practicoviaje%ROWTYPE;
   viaje tbl_viaje%ROWTYPE;
   pbipp tbl_pbip%ROWTYPE;
   evento tbl_evento%ROWTYPE;
@@ -66,9 +66,10 @@ create or replace package mbpc as
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
-  procedure traer_practicos(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
-  procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure activar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
+  procedure bajar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   --Cargas  
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
   procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
@@ -89,6 +90,7 @@ create or replace package mbpc as
   ---autocompletes
   procedure autocomplete_muelles(vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocomplete_practicos(vQuery in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_barcazas(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
@@ -884,8 +886,6 @@ create or replace package body mbpc as
     ( select carga_seq.nextval, tipocarga_id, 0, 0, cantidad, cantidad, unidad_id, replace(etapa_id, etapa_id, etapa.id), buque_id 
     from tbl_cargaetapa where etapa_id = temp );
     
-    insert into tbl_practicoetapa ( practico_id, etapa_id, activo) ( select practico_id, replace(etapa_id, etapa_id, etapa.id), activo from tbl_practicoetapa where etapa_id = temp );
-    
     if posicion.uso = 0 THEN
       insert into tbl_evento (usuario_id, viaje_id, etapa_id, tipo_id, latitud, longitud, fecha) 
       values (usrid, etapa.viaje_id, etapa.id, 19, posicion.lat, posicion.lon, tempdate);
@@ -963,7 +963,10 @@ create or replace package body mbpc as
       select * into etapa from tbl_etapa where id=vEtapa;
       insert into tbl_evento ( viaje_id, usuario_id , etapa_id, tipo_id, fecha, rumbo, velocidad ) VALUES ( etapa.viaje_id, usrid, vEtapa , 8, SYSDATE, vRumbo, vVelocidad);
   end editar_etapa;    
-  
+
+  ---------------------------------------------------------------------------------------------------------------
+  --
+
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
@@ -973,30 +976,79 @@ create or replace package body mbpc as
       where e.id = vEtapa;
   end traer_buque_de_etapa;
 
-  procedure traer_practicos(vViaje in varchar2, usrid in number, vCursor out cur) is
+  ---------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
   begin
+    
+    select * into etapa from tbl_etapa where id = vEtapa;
+    
     open vCursor for
-      SELECT pv.id, pr.nombre, pv.fecha_subida, pv.fecha_bajada FROM tbl_practicoviaje pv 
+      SELECT pr.id, pr.nombre, pv.fecha_subida, pv.activo FROM tbl_practicoviaje pv 
       LEFT JOIN tbl_practico pr ON pv.practico_id=pr.id
-      WHERE pv.viaje_id=vViaje;
+      WHERE pv.viaje_id=etapa.viaje_id and pv.fecha_bajada is null;
+      
   end traer_practicos;
-  
-  procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
-  begin
-    delete from tbl_practicoetapa where etapa_id = vEtapa;
-  end eliminar_practicos;
-  
+
+  ---------------------------------------------------------------------------------------------------------------
+  --
+ 
   procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = vEtapa;
     
-    insert into tbl_practicoviaje (viaje_id, etapa_subida, practico_id, fecha_subida) 
-    values( etapa.viaje_id, etapa.id, vPractico, vFecha);
+    --select count(*) into temp from tbl_practicoviaje where viaje_id=etapa.viaje_id and fecha_bajada is null;
+    
+    --temp2    := 1;
+    --tempdate := NULL;
+    
+    --IF temp <> 0 THEN
+    --temp2 := 0;
+    --END IF;
+    
+    insert into tbl_practicoviaje (viaje_id, etapa_subida, practico_id, fecha_subida, activo) 
+    values( etapa.viaje_id, etapa.id, vPractico, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), 0);
 
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, fecha) 
-    VALUES (etapa.viaje_id, etapa.id, usrid, 16, vFecha);
+    VALUES (etapa.viaje_id, etapa.id, usrid, 16, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'));
   
   end agregar_practico;
+
+  ---------------------------------------------------------------------------------------------------------------
+  --
+  procedure activar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
+  begin
+    select * into etapa from tbl_etapa where id = vEtapa;
+    
+    --TODO: HACER SUMAS DE HORAS EN EL QUE ESTABA ACTIVO
+    update tbl_practicoviaje set activo=0 where viaje_id=etapa.viaje_id;
+    update tbl_practicoviaje set activo=1 where viaje_id=etapa.viaje_id and practico_id=vPractico;
+    
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, fecha, practico_id) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, 18, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vPractico);
+  
+  end activar_practico;
+
+  ---------------------------------------------------------------------------------------------------------------
+  --
+  
+  procedure bajar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
+  begin
+    select * into etapa from tbl_etapa where id = vEtapa;
+ 
+    --TODO: HACER SUMAS DE HORAS SI ESTABA ACTIVO
+ 
+    update tbl_practicoviaje set 
+      activo=0, 
+      fecha_bajada=TO_DATE(vFecha, 'DD-MM-yy HH24:mi') 
+    where viaje_id=etapa.viaje_id and practico_id=vPractico and fecha_bajada is null;
+    
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, fecha, practico_id) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, 17, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vPractico);
+    
+  end bajar_practico;
+  
   ---------------------------------------------------------------------------------------------------------------
   ---------------------------------------------Cargas------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------
@@ -1405,6 +1457,24 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
+  procedure autocomplete_practicos(vQuery in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur) is
+  begin
+    
+    select * into etapa from tbl_etapa where id=vEtapa;
+    
+    open vCursor for 
+      select p.ID, p.NOMBRE
+      from tbl_practico p
+      where  
+        upper(p.NOMBRE) like '%'||UPPER(vQuery)||'%' 
+      and
+        p.id not in (SELECT practico_id FROM tbl_practicoviaje WHERE viaje_id=etapa.viaje_id and fecha_bajada is null)
+      and rownum < 6;
+  end autocomplete_practicos;
+
+  -------------------------------------------------------------------------------------------------------------
+  --
+  
   procedure autocompletebactivos(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     sql_stmt := 'select v.id, v.buque_id, viaje_id, e.id etapa_id, b.nombre, b.sdist, b.nro_omi from buques b 
