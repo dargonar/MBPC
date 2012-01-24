@@ -13,6 +13,8 @@
       <label id='listadezonas_title'>Elija Punto de control</label><br />
       <select id="listadezonas" style="width: 270px;">
 
+      <% string eta_destino = ""; %>
+      <% bool eta_destino_setted = false; %>
       <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>))
           {
             string nombre = string.Empty;
@@ -21,8 +23,11 @@
                 nombre = zona["CANAL"] + " - " + zona["UNIDAD"];
             else
                 nombre = zona["CANAL"] + " - " + zona["UNIDAD"] + " " + zona["KM"];
-             
-             
+            if (!eta_destino_setted && ViewData["DESTINO_ID"].ToString() == zona["ID"].ToString())
+            {
+                eta_destino_setted = true;
+                eta_destino = nombre.Split('-')[1].Trim();
+            }
              %>
              <option value="<%= zona["ID"] %>"  <%= ViewData["DESTINO_ID"].ToString() == zona["ID"].ToString() ? "selected=\"selected\"" : "" %> ><%=nombre%></option>
        <% } 
@@ -35,7 +40,7 @@
           <input autocomplete="off" type="text" id="llegada" name="fecha" style="width:270px" value="<%= ViewData["fecha"] %>"/><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
           <br/>
-          <label id="eta_next_port">ETA</label><br />
+          <label id="eta_next_port">ETA - <%= eta_destino%></label><br />
           <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px" /><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
 
@@ -119,7 +124,7 @@
         
         $('#listadezonas').bind('keydown', 'return', function () {
             $('#zonas').submit();
-            alert('changed2');
+            //alert('changed2');
             return false;
         });
 

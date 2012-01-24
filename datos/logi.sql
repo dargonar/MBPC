@@ -58,12 +58,14 @@ create or replace package mbpc as
   procedure posicion_de_puntodecontrol(vPdc in varchar2, usrid in number, vCursor out cur);
   procedure eventos_usuario(usrid in number, vCursor out cur);
   procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in varchar2, vEstado in varchar2, vRiocanal in varchar2, vPuerto in varchar2, usrid in number, vCursor out cur);
+  /*procedure actualizar_listado_de_barcazas(vViaje in varchar2);  */
   --Etapas
   procedure id_ultima_etapa(vViaje in number, usrid in number, vCursor out cur);
   procedure indicar_proximo(vViajeId in number, vZonaId in number, usrid in number, vCursor out cur);  
   procedure pasar_barco(vViajeId in varchar2, vZonaId in varchar2, vEta in varchar2, vLlegada in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure zonas_adyacentes(vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure descripcion_punto_control( vPuntoControlId in varchar2, usrid in number, vCursor out cur);
   procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
@@ -272,7 +274,8 @@ create or replace package body mbpc as
     select gu.ID, gu.GRUPO, gu.USUARIO, g.NOMBRE 
     from tbl_usuariogrupo gu
     left join tbl_grupo g on g.ID=gu.GRUPO
-    WHERE gu.USUARIO=vID;
+    WHERE gu.USUARIO=vID
+    ORDER BY g.NOMBRE asc;
   end grupos_del_usuario;
   
   -------------------------------------------------------------------------------------------------------------
@@ -563,6 +566,11 @@ create or replace package body mbpc as
       
   end insertar_cambioestado;
   
+  /*procedure actualizar_listado_de_barcazas(vViaje in varchar2) is
+  begin
+      
+  end actualizar_listado_de_barcazas;  
+  */
   -------------------------------------------------------------------------------------------------------------  
   --Crea un viaje, se verifica si el buque seleccionado es internacional, 
   --se crea la etapa inicial, 
@@ -934,13 +942,24 @@ create or replace package body mbpc as
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id, e.calado_proa, e.calado_popa, e.calado_maximo, e.calado_informado, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad
+    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id destino_id, e.calado_proa, e.calado_popa, e.calado_maximo, e.calado_informado, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad
     from tbl_viaje v 
     left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual) 
     left join tbl_capitan c on (e.capitan_id = c.id)
     WHERE v.id = vViaje;  
   end traer_etapa;
 
+  ---------------------------------------------------------------------------------------------------------------
+  procedure descripcion_punto_control( vPuntoControlId in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+       SELECT CASE WHEN rck.km <> 0 then rc.nombre||' '||rck.unidad||' '||rck.km ELSE rc.nombre||' '||rck.unidad END descripcion 
+         FROM tbl_puntodecontrol pdc 
+         join rios_canales_km rck on rck.id = pdc.rios_canales_km_id
+         join rios_canales rc on rck.id_rio_canal = rc.id
+         WHERE pdc.id = vPuntoControlId;
+  end descripcion_punto_control;
+  
   ---------------------------------------------------------------------------------------------------------------
   --Edita la informacion etapa
   --Registra el evento
@@ -1428,7 +1447,7 @@ create or replace package body mbpc as
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, fecha, rios_canales_km_id, latitud, longitud) 
     VALUES (viaje.id, vEtapaId, usrid, 22, vBarcazaId, tempdate, vRioCanalKM, vLat, vLon);
    
-  end fondear_barcaza;
+  end fondear_barcaza_batch;
 
   -------------------------------------------------------------------------------------------------------------
   --  

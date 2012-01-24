@@ -36,7 +36,7 @@
   <input autocomplete="off" type="text" id="partidav" name="partida" class="editaretapatext" value="<%= viaje["FECHA_SALIDA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-  <label>ETA a puerto destino</label><br />
+  <label>ETA a <font id="eta_puerto_destino"><%= viaje["DESTINO"] %></font></label><br />
   <input autocomplete="off" type="text" id="etav" name="eta" class="editaretapatext" value="<%= viaje["ETA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
 
@@ -106,7 +106,7 @@
     <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa_ft" name="calado_popa_ft"/>&nbsp;ft
     <br />
 
-    <label>ETA a próximo punto de control</label><br />
+    <label>ETA a <%= ViewData["punto_control_desc"] %></label><br />
     <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
@@ -140,6 +140,18 @@
 </div>
 
 <script type="text/javascript">
+
+//  $('#hastatext').bind( "autocompleteselect", function(event, data) {
+//        if(data!=null)
+//        {
+//            var text_arr = data.split('-');
+//            var text = jQuery.trim(text_arr.length>1?text_arr[1]:text_arr[0]);
+//            $('#eta_puerto_destino').html('ETA - '+ text);    
+//            return false;
+//        }
+//        $('#eta_puerto_destino').html('ETA');
+//        return false;
+//    });
 
   $("#velocidad").mask("99.9");
   $("#rumbo").mask("999");
@@ -388,6 +400,7 @@
         },
         success: function (data) {
           response($.map(data, function (item) {
+            
             return {
               label: '(' + item.COD + ') ' + item.PUERTO,
               value: '(' + item.COD + ') ' + item.PUERTO,
@@ -400,6 +413,10 @@
     minLength: 2,
     select: function (event, ui) {
       $(this).nextAll('input[type=hidden]').first().val(ui.item.id);
+      $('#eta_puerto_destino').html(ui.item.value);    
+      //self._trigger( "autocompleteselect", [ui.item.value]);
+      //select.trigger( "autocompleteselect", [ui.item.value]);
+      //self._trigger( "autocompleteselect", event, {item: ui.item.value});
     },
     open: function () {
       $(this).removeClass("ui-corner-all").addClass("ui-corner-top");

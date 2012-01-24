@@ -598,6 +598,17 @@ public static class DaoLib
     return doCall("mbpc.traer_etapa", parameters);
   }
 
+
+  public static List<object> descripcion_punto_control(string pto_control_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vViaje", OracleDbType.Varchar2, pto_control_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.descripcion_punto_control", parameters);
+  }
+
   public static List<object> traer_buque_de_etapa(string etapa)
   {
     var parameters = new OracleParameter[] 
