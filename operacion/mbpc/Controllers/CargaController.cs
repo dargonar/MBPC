@@ -45,16 +45,83 @@ namespace mbpc.Controllers
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
 
+      /// <summary>
+      /// Fondea múltiples barcazas de una sola vez.
+      /// </summary>
+      /// <param name="etapa_id"></param>
+      /// <param name="barcaza_id"></param>
+      /// <param name="riocanal"></param>
+      /// <param name="pos"></param>
+      /// <param name="fecha"></param>
+      /// <returns></returns>
+      public ActionResult fondear_barcazas_multiple(int etapa_id, string barcaza_id, string riocanal, string pos, string fecha)
+      {
+        var latlon = DaoLib.parsePos(pos);
+
+        List<int> etapas = new List<int>();
+        List<int> barcazas = new List<int>();
+        List<string> riocanales= new List<string>(); 
+        List<decimal?> lats = new List<decimal?>();
+        List<decimal?> lons = new List<decimal?>();
+        List<string> fechas = new List<string>();
+
+        foreach (string barcaza in barcaza_id.Split(','))
+          if (!String.IsNullOrEmpty(barcaza))
+          {
+            etapas.Add(Convert.ToInt32(etapa_id));
+            barcazas.Add(Convert.ToInt32(barcaza));
+
+            riocanales.Add(riocanal);
+            lats.Add(latlon[0]);
+            lons.Add(latlon[1]);
+            fechas.Add(fecha);
+
+          }
+
+        DaoLib.fondear_barcazas_multiple(etapas.ToArray(), barcazas.ToArray(), riocanales.ToArray(), lats.ToArray(), lons.ToArray(), fechas.ToArray());
+        return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
+      }
+
       public ActionResult zona_fondeo(int etapa_id, int barcaza_id)
       {
         ViewData["etapa_id"] = etapa_id;
         ViewData["barcaza_id"] = barcaza_id;
+        ViewData["post_url"] = "fondear_barcaza";
         return View();
+      }
+
+      public ActionResult zona_fondeo_multiple(int etapa_id, string barcaza_id)
+      {
+        ViewData["etapa_id"] = etapa_id;
+        ViewData["barcaza_id"] = barcaza_id;
+        ViewData["post_url"] = "fondear_barcazas_multiple";
+        return View("zona_fondeo");
       }
 
       public ActionResult descargar_barcaza(int etapa_id, int barcaza_id)
       {
         DaoLib.descargar_barcaza(etapa_id, barcaza_id);
+        return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
+      }
+
+      /// <summary>
+      /// Descarga múltiples barcazas de una sola vez.
+      /// </summary>
+      /// <param name="etapa_id"></param>
+      /// <param name="barcaza_id"></param>
+      /// <returns></returns>
+      public ActionResult descargar_multiples_barcazas(string etapa_id, string barcazas_id)
+      {
+        List<int> etapas = new List<int>();
+        List<int> barcazas = new List<int>();
+        foreach (string barcaza_id in barcazas_id.Split(','))
+          if(!String.IsNullOrEmpty(barcaza_id))
+          {
+            etapas.Add(Convert.ToInt32(etapa_id));
+            barcazas.Add(Convert.ToInt32(barcaza_id));
+          }
+
+        DaoLib.descargar_multiples_barcazas(barcazas.ToArray(), etapas.ToArray());
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
 

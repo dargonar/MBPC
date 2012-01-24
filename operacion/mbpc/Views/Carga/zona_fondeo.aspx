@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
-<form id="fondear_form" action="<%= Url.Content("~/Carga/fondear_barcaza/") %>" method="post">
+<form id="fondear_form" action="<%= Url.Content("~/Carga/"+ViewData["post_url"]+"/") %>" method="post">
 
       <label>Rio/Canal Km/Par</label><br />
       <input autocomplete="off" type="text" id="riocanal" style="width:270px" /><br />
@@ -16,7 +16,7 @@
       <input type="hidden" id="etapa_id" name="etapa_id" value="<%= ViewData["etapa_id"] %>"/>
       <input type="hidden" id="barcaza_id" name="barcaza_id" value="<%= ViewData["barcaza_id"] %>"/>
 
-      <input type="submit" class="botonsubmit" style="margin-left: 160px" value="Fondear Barcaza" />
+      <input type="submit" class="botonsubmit" style="margin-left: 160px" value="Fondear Barcaza/s" />
 </form>
 
 <script type="text/javascript">

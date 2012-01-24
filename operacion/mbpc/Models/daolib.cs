@@ -693,6 +693,7 @@ public static class DaoLib
     return doCall("mbpc.terminar_viaje", parameters);
   }
 
+  /// HACK tuti -> descargar array va a ser como esto, pero llama a doCall2
   public static List<object> descargar_barcaza(int etapa_id, int barcaza_id)
   {
     var parameters = new OracleParameter[] 
@@ -704,6 +705,20 @@ public static class DaoLib
     return doCall("mbpc.descargar_barcaza", parameters);
   }
 
+  public static List<object> descargar_multiples_barcazas(int[] barcazas, int[] etapas)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapaId", OracleDbType.Varchar2, etapas, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBarcazaId", OracleDbType.Varchar2, barcazas, System.Data.ParameterDirection.Input),
+    };
+
+    var arraybindcount = barcazas.Length;
+
+    return doCall2("mbpc.descargar_barcaza_batch", parameters, arraybindcount);
+  }
+
+  
   public static List<object> fondear_barcaza(int etapa_id, int barcaza_id, string riocanal, decimal? lat, decimal? lon, string fecha)
   {
     var parameters = new OracleParameter[] 
@@ -717,6 +732,23 @@ public static class DaoLib
     };
 
     return doCall("mbpc.fondear_barcaza", parameters);
+  }
+
+  public static List<object> fondear_barcazas_multiple(int[] etapas_id, int[] barcazas_id, string[] riocanal, decimal?[] lat, decimal?[] lon, string[] fecha)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapaId", OracleDbType.Varchar2, etapas_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBarcazaId", OracleDbType.Varchar2, barcazas_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRioCanalKM", OracleDbType.Varchar2, riocanal, System.Data.ParameterDirection.Input),
+        new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
+        new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input)
+    };
+
+    var arraybindcount = barcazas_id.Length;
+
+    return doCall2("mbpc.fondear_barcaza_batch", parameters, arraybindcount);
   }
 
   public static List<object> traer_cargas_nobarcazas(int etapa_id)
@@ -1152,7 +1184,6 @@ public static class DaoLib
     return doCall("mbpc.reporte_obtener_str", parameters)[0];
   }
 
-  
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {

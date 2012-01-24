@@ -50,6 +50,7 @@
     padding: 5px 10px;
     background: #cad7e0;
     border: 1px solid #b2bdc3;
+    z-index:2;
 }
 
 #tooltip td
@@ -747,16 +748,26 @@ min-height:80px;
 	z-index:0;
 }
 
-#columnas #rightcol.container
+#columnas #rightcol.container, #columnas #rightcol.container .box-large .empty
 {
 		background-image:url('/img/bg/arrow_top_alpha.png');
 		background-position: center center;
 		background-repeat:no-repeat;
 }
 
-#columnas #leftcol.container
+#columnas #rightcol.container .box-large .empty{
+  background-image:url('/img/bg/arrow_top_alpha_white.png');
+}
+
+#columnas #leftcol.container, #columnas #leftcol.container .box-large .empty
 {
 		background-image:url('/img/bg/arrow_bottom_alpha.png');
 		background-position: center center;
 		background-repeat:no-repeat;
+}
+
+#columnas #leftcol.container .box-large .empty
+{
+		background-image:url('/img/bg/arrow_bottom_alpha_white.png');
+	
 }
