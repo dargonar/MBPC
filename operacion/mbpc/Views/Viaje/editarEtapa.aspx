@@ -95,20 +95,17 @@
     <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-    
-    <label>Fecha de salida</label><br />
-    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="<%= etapa["FECHA_SALIDA_fmt"] %>" /><br />
-    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+    <!--<label>Fecha de salida</label><br />
+    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="" /><br />
+    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />-->
 
     <label>Cantidad de tripulantes</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
     
-    <label>Practico/Baqueano</label><br />
-    <input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />
-  
+    <br />
+    <label>Prácticos/baqueanos en viaje</label><br />
+    <!--<input type="text" class="editaretapatext" id="practicotext" name="practico" value="" autocomplete="off" /><br />-->
     <div class="latabla" style="position:absolute;z-index:5;width: 250px;" ></div>
-      <br />
-
       <%
         for (var i = 0; i < practicolist.Count ; i++) {
            Dictionary<string, string> PR = practicolist[i] as Dictionary<string,string>;
@@ -137,8 +134,8 @@
       %>
       </select>
       <div style="clear:both"></div>
-      <label class="desc">Listado de prácticos/baqueanos</label> 
-      <button type="button" id="quitar" style="float:right;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
+      <button type="button" id="agregar" style="float:left;" title="Quitar Práctico seleccionado">Agregar</button>
+      <button type="button" id="quitar"  style="float:left;" title="Quitar Práctico seleccionado">Quitar</button><br /><br />
   </div>
 
   <div class="columna">
@@ -244,6 +241,11 @@
     //isDate($(this).val());
   });
 
+  $('#agregar').click(function () {
+    selected = $("#practicoselect").val();
+    $(".practicosh[value='" + selected + "']").val("");
+    $("#practicoselect option[value='"+ selected +"']").remove();
+  });
 
   $('#quitar').click(function () {
     selected = $("#practicoselect").val();
@@ -273,14 +275,14 @@
     }
 
 
-    if ($("#fecha_salidae").val() != "") {
+    /*if ($("#fecha_salidae").val() != "") {
       if (isDate($("#fecha_salidae").val())) {
         alert("La fecha de salida es invalida");
         $("#fecha_salidae").focus();
         $('.botonsubmit').removeAttr('disabled');
         return false;
       }
-    }
+    }*/
 
     if ($("#hrpe").val() != "") {
       if (isDate($("#hrpe").val())) {
@@ -480,7 +482,7 @@
 
   }
 
-
+  /*
   $("#practicotext").autocomplete({
     source: function (request, response) {
       $.ajax({
@@ -512,7 +514,7 @@
       $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
     }
   });
-
+  */
 
   $("#desdetext, #hastatext").autocomplete({
     source: function (request, response) {

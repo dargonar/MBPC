@@ -8,6 +8,8 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
+      public static string VERSION = "1.24";
+      
         //
         // GET: /Home/
         public ActionResult Index()
@@ -22,12 +24,22 @@ namespace mbpc.Controllers
             return RedirectToAction("Login", "Auth");
           }
 
+          
+          var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+          ViewData["datos_del_usuario"] = datos;
+
+          //HACK: Hasta que haya sistema de usuarios
+          if((datos[0] as Dictionary<string,string>)["APELLIDO"].Contains("*"))
+          {
+            return RedirectToAction("Index", "Reporte");
+          }
+
           Session["zonas"] = DaoLib.zonas_del_grupo(int.Parse(((Session["grupos"] as List<object>)[0] as Dictionary<string,string>)["GRUPO"]));
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
 
-          ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+          
           recalcular_barcos_para_punto(id);
 
           return View();
@@ -158,6 +170,12 @@ namespace mbpc.Controllers
             return -1;
      
           return 0;       
+        }
+
+        public JsonResult Version()
+        {
+          System.Threading.Thread.Sleep(1500);
+          return Json(HomeController.VERSION, JsonRequestBehavior.AllowGet);
         }
 
     }

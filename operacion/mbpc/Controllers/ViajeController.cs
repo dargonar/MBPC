@@ -50,16 +50,28 @@ namespace mbpc.Controllers
             return View("columnas");
         }
 
-        public ActionResult elegirAcompanante(string id)
+        public ActionResult Acompanantes(string id)
         {
+          var acomps = ((Dictionary<string, string>)DaoLib.traer_acompanantes(id)[0]);
+
+          ViewData["ACOMPANANTE_ID"] = acomps["ACOMPANANTE_ID"];
+          ViewData["ACOMPANANTE2_ID"] = acomps["ACOMPANANTE2_ID"];
+          ViewData["ACOMPANANTE3_ID"] = acomps["ACOMPANANTE3_ID"];
+          ViewData["ACOMPANANTE4_ID"] = acomps["ACOMPANANTE4_ID"];
+
+          ViewData["NOMBRE"] = acomps["NOMBRE"];
+          ViewData["NOMBRE2"] = acomps["NOMBRE2"];
+          ViewData["NOMBRE3"] = acomps["NOMBRE3"];
+          ViewData["NOMBRE4"] = acomps["NOMBRE4"];
+
           ViewData["etapa_id"] = id;
           return View();
         }
 
-        public ActionResult editarAcompanante(string etapa_id, string buque_id)
+        public ActionResult editarAcompanantes(string etapa_id, string buque_id, string buque2_id, string buque3_id, string buque4_id)
         {
 
-          DaoLib.editar_acompanante(etapa_id, buque_id);
+          DaoLib.editar_acompanante(etapa_id, buque_id, buque2_id, buque3_id, buque4_id);
 
           ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
           ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
