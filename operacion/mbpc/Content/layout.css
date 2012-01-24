@@ -50,6 +50,7 @@
     padding: 5px 10px;
     background: #cad7e0;
     border: 1px solid #b2bdc3;
+    z-index:2;
 }
 
 #tooltip td
@@ -492,7 +493,8 @@ h1 {
 	margin:0px;
 	padding:5px 10px 5px 10px;
     position:relative;
-    z-index:1;
+    /*z-index:1; HACKED By tuti*/
+    z-index:0;
 
 }
 
@@ -728,4 +730,44 @@ min-height:80px;
   float:left;width:auto;height:auto;
   padding:10px;
   min-height:60px;
+}
+
+#columnas .container div.channel_direction_arrow_container
+{
+	/*position:absolute;*/
+	position:fixed;
+	left:10px;
+	right:10px;
+	top:10px;
+	bottom:10px;
+	 
+	display: none/*table-cell*/; 
+	vertical-align: middle; 
+	text-align:center;
+	width:100%;
+	z-index:0;
+}
+
+#columnas #rightcol.container, #columnas #rightcol.container .box-large .empty
+{
+		background-image:url('/img/bg/arrow_top_alpha.png');
+		background-position: center center;
+		background-repeat:no-repeat;
+}
+
+#columnas #rightcol.container .box-large .empty{
+  background-image:url('/img/bg/arrow_top_alpha_white.png');
+}
+
+#columnas #leftcol.container, #columnas #leftcol.container .box-large .empty
+{
+		background-image:url('/img/bg/arrow_bottom_alpha.png');
+		background-position: center center;
+		background-repeat:no-repeat;
+}
+
+#columnas #leftcol.container .box-large .empty
+{
+		background-image:url('/img/bg/arrow_bottom_alpha_white.png');
+	
 }

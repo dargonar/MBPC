@@ -36,7 +36,7 @@
   <input autocomplete="off" type="text" id="partidav" name="partida" class="editaretapatext" value="<%= viaje["FECHA_SALIDA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-  <label>ETA</label><br />
+  <label>ETA a puerto destino</label><br />
   <input autocomplete="off" type="text" id="etav" name="eta" class="editaretapatext" value="<%= viaje["ETA_fmt"] %>" /><br />
   <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
 
@@ -106,7 +106,7 @@
     <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa_ft" name="calado_popa_ft"/>&nbsp;ft
     <br />
 
-    <label>ETA</label><br />
+    <label>ETA a próximo punto de control</label><br />
     <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 

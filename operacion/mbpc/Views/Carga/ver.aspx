@@ -29,11 +29,12 @@
           <td><%=carga["BARCAZA"]%></td>
           <% } else if (IsFirst) { %>
           <td rowspan="<%=item.Value.Count %>"><%=carga["BARCAZA"]%><br />
+          <input type="checkbox" etapa_id="<%= ViewData["ETAPA_ID"] %>" barcaza_id="<%=carga["ID_BUQUE"] %>" title="Seleccionar para operar múltiples barcazas." class="barcaza_selector <%= (carga["TIPOCARGA_ID"] != "412") ? "no_en_lastre" : "" %>" >
           <% if (carga["TIPOCARGA_ID"] != "412") { //LASTRE?%>
-          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)">Desc.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)" title="Descargar">Desc.</a>&nbsp;-&nbsp;
           <% } %>
-          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)">Fond.</a>&nbsp;-&nbsp;
-          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)">Correg.</a>
+          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)" title="Fondear">Fond.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)" title="Corregir">Correg.</a>
           </td>
           <% }%>
           <td colspan="<%= (carga["TIPOCARGA_ID"] != "412") ? "1" : "4" %>" ><%=carga["NOMBRE"]%></br>
@@ -85,6 +86,17 @@
     }
   }
   %>
+  <tr>
+    <td colspan="5" style="border: 1px solid #E6E6E6;padding: 4px;">
+        <div class="btn-new-class" style="float:left;">
+          <a onclick="return descargar_barcazas_seleccionadas(this);" href="<%= Url.Content("~/Carga/descargar_multiples_barcazas/") + ViewData["etapa_id"] + "?barcazas_id=" %>" default_href="<%= Url.Content("~/Carga/descargar_multiples_barcazas/") + ViewData["etapa_id"] + "?barcazas_id=" %>" title="Descargar barcazas seleccionadas">Descargar barcazas...</a>
+        </div>
+        <div class="btn-new-class" style="float:left; margin-left:5px;">
+        
+          <a onclick="return fondear_barcazas_seleccionadas(this);" href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" default_href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" title="Fondear barcazas seleccionadas">Fondear barcazas...</a>
+        </div>
+    </td>
+  </tr>
 </table>
 <br />
 
@@ -100,6 +112,74 @@
 </div>
 
 <script type="text/javascript">
+
+   // Descarga de múltiples Barcazas.
+   function descargar_barcazas_seleccionadas(sender) {
+    
+    var barcazas_ui = jQuery('input[class~="no_en_lastre"].barcaza_selector:checked');
+    if (barcazas_ui.length<1)
+    {
+        alert('Seleccione al menos una barcaza para descargar.');
+        return false;
+    }
+
+    if (confirm("¿Esta seguro que desea descargar la/s barcaza/s seleccionada/s?") == false)
+      return false;
+
+    var ids = '';
+    jQuery.each(barcazas_ui, function(index, value){
+        //ids=ids+'('+jQuery(value).attr('etapa_id')+','+jQuery(value).attr('barcaza_id')+');';
+        ids=ids+jQuery(value).attr('barcaza_id')+',';
+    });
+
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: $(sender).attr('href')+ids,
+      success: function (data) {
+        $('#dialogdiv').html(data);
+      },
+      error: showTitle
+    });
+
+    return false;
+  } 
+
+  function fondear_barcazas_seleccionadas(sender){
+    var barcazas_ui = jQuery('.barcaza_selector:checked');
+    if (barcazas_ui.length<1)
+    {
+        alert('Seleccione al menos una barcaza para descargar.');
+        return false;
+    }
+
+    if (confirm("¿Esta seguro que desea descargar la/s barcaza/s seleccionada/s?") == false)
+      return false;
+
+    var ids = '';
+    jQuery.each(barcazas_ui, function(index, value){
+        //ids=ids+'('+jQuery(value).attr('etapa_id')+','+jQuery(value).attr('barcaza_id')+');';
+        ids=ids+jQuery(value).attr('barcaza_id')+',';
+    });
+
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: $(sender).attr('href')+ids,
+      success: (function (data) {
+        $('#dialogdiv3').html(data);
+        $('#dialogdiv3').dialog({
+          height: 340,
+          width: 300,
+          modal: true,
+          title: 'Fondeo de Barcaza/s'
+        });
+      }),
+      error: showTitle
+    });
+
+    return false;
+  }
 
   function showTitle(data) {
     var titletag = /<title\b[^>]*>.*?<\/title>/

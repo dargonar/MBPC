@@ -7,24 +7,13 @@
 <table class="hist etapa">
 <tr>
     <th>
-    Etapa Nro: <%= etp["NRO_ETAPA"] %>
+    Etapa Nro. <%= etp["NRO_ETAPA"] %> - <%= etp["CANAL"] +" - KM " + etp["KM"] %>
     </th>
 </tr>
 <tr>
     <td>
     <table class="hist datos">
-      <tr><th colspan="3">Datos del buque</th></tr>
-      <tr>
-        <td>P. de control</td>
-      </tr>
-      <tr>
-        <td><small><%= etp["CANAL"] +" - KM " + etp["KM"] %></small></td>
-
-      </tr>
-    </table>
-
-    <table class="hist datos">
-      <tr><th colspan="5">Reportes</th></tr>
+      <tr style="text-align:left;"><th colspan="5">Reportes</th></tr>
       <tr>
         <td>Latitud</td>
         <td>Longitud</td>
@@ -32,27 +21,30 @@
         <td>Velocidad</td>
         <td>Codigo</td>
       </tr>
+    <% bool hayReportes = false; %>
     <% foreach (Dictionary<string, string> evt in eventos) {
          if (evt["ETAPA_ID"] == etp["ID"] && evt["TIPO_ID"] == "19")
          {
            %>
+           <% hayReportes = true; %>
             <tr>
                 <td><%= decimal.Parse(evt["LATITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= decimal.Parse(evt["LONGITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= evt["RUMBO"]%></td>
                 <td><%= evt["VELOCIDAD"]%></td>
                 <td><%= evt["ESTADO"]%></td>
-                <td><%= evt["ESTADO"]%></td>
             </tr>
             <% } 
         } %>
-
-
+        <% if (hayReportes == false)
+           { %>
+        <tr style="text-align:center;"><td colspan="5"><small>Esta etapa no registra reportes.</small></td></tr>
+        <% } //End if %>
      </table>
 
 
     <table class="hist datos">
-      <tr><th colspan="6">Eventos</th></tr>
+      <tr style="text-align:left;"><th colspan="7">Eventos</th></tr>
       <tr>
         <td>Latitud</td>
         <td>Longitud</td>
@@ -62,11 +54,13 @@
         <td>Rio Canal</td>
         <td>Acci&oacute;n</td>
       </tr>
+    <% bool hayEventos = false; %>
     <% decimal temp; 
      foreach (Dictionary<string, string> evt in eventos) {
        if (evt["ETAPA_ID"] == etp["ID"] && evt["TIPO_ID"] == "20")
        {
            %>
+           <% hayEventos = true; %>
             <tr id="evt<%=evt["ID"]%>" >
                 <td><% if (!decimal.TryParse(evt["LATITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00")); %>&nbsp;</td>
                 <td><% if (!decimal.TryParse(evt["LONGITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00"));%>&nbsp;</td>
@@ -78,7 +72,10 @@
             </tr>
             <% } 
         } %>
-
+        <% if (hayEventos == false)
+           { %>
+        <tr style="text-align:center;"><td colspan="7"><small>Esta etapa no registra eventos.</small></td></tr>
+        <% } //End if %>
 
      </table>
 

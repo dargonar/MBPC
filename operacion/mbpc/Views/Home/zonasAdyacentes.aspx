@@ -10,7 +10,7 @@
  %>
 
   <form id="zonas" action="<%= url %>" method="post">
-      <label>Elija Punto de control</label><br />
+      <label id='listadezonas_title'>Elija Punto de control</label><br />
       <select id="listadezonas" style="width: 270px;">
 
       <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>))
@@ -35,7 +35,7 @@
           <input autocomplete="off" type="text" id="llegada" name="fecha" style="width:270px" value="<%= ViewData["fecha"] %>"/><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
           <br/>
-          <label>ETA</label><br />
+          <label id="eta_next_port">ETA</label><br />
           <input autocomplete="off" type="text" id="eta" name="eta" style="width:270px" /><br />
           <label class="desc">Formato: dd-mm-aa hh:mm</label><br />
 
@@ -103,10 +103,23 @@
 
     
   <% } %> 
-
-
+        
+        //alert('binding change event');
+        $('#listadezonas').bind( "autocompleteselect", function(event, data) {
+            if(data!=null)
+            {
+                var text_arr = data.split('-');
+                var text = jQuery.trim(text_arr.length>1?text_arr[1]:text_arr[0]);
+                $('#eta_next_port').html('ETA - '+ text);    
+                return false;
+            }
+            $('#eta_next_port').html('ETA');
+            return false;
+        });
+        
         $('#listadezonas').bind('keydown', 'return', function () {
             $('#zonas').submit();
+            alert('changed2');
             return false;
         });
 

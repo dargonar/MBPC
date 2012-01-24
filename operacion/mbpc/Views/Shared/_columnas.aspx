@@ -78,7 +78,7 @@
 	  
     <!-- center -->
     <div id="leftcol" class="container" style="height: 351px;">
-
+        
     <% var listEnZona = (ViewData["barcos_en_zona"] as List<object>); %>
     <% var barcazas = (ViewData["barcazas_en_zona"] as List<object>); %>
     <% if (listEnZona.Find(c => ((Dictionary<string, string>)c)["SENTIDO"] != "1") == null && barcazas.Count == 0)
@@ -112,8 +112,7 @@
 	<h1>Viajes liberados de mi zona de responsabilidad</h1>
     <!-- bottom -->
     <div class="container">
-
-
+        
     <% var listSalientes = (ViewData["barcos_salientes"] as List<object>); %>
     <% if (listSalientes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
        { %>
@@ -174,8 +173,7 @@
 	<h1>Viaje en mi zona de responsabilidad</h1>
   	<!-- center -->
     <div  id="rightcol" class="container" style="height: 351px;" >
-
-    <% //if ((ViewData["barcos_en_zona"] as List<object>).Count == 0)
+        <% //if ((ViewData["barcos_en_zona"] as List<object>).Count == 0)
        if (listEnZona.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "0" ) == null )
        { %>
        <div class="box-large">
