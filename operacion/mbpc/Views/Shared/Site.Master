@@ -63,11 +63,11 @@
                 return;
               }
 
-              setTimeout(check_restart, 3000);
+              setTimeout(check_restart, 30000);
             }),
             error: (function (data) {
               $("#chkver").css("display", "none");
-              setTimeout(check_restart, 3000);
+              setTimeout(check_restart, 30000);
             })
           });
 

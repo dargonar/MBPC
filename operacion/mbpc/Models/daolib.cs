@@ -123,7 +123,7 @@ public static class DaoLib
     return retVal;
 
   }
-
+  
   public static List<object> eliminar_evento(string id, string etapa_id)
   {
     var parameters = new OracleParameter[] 
@@ -937,18 +937,16 @@ public static class DaoLib
     return doCall2("mbpc.transferir_cargas", parameters, arraybindcount);
   }
 
-  public static List<object> agregar_practicos(string[] practicos, string[] etapas, string[] activos)
+  public static List<object> agregar_practico(string etapa_id, string practico_id, string fecha_subida)
   {
     OracleParameter[] parameters = new OracleParameter[] 
     { 
-        new OracleParameter("vPractico", OracleDbType.Varchar2, practicos, System.Data.ParameterDirection.Input),
-        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapas, System.Data.ParameterDirection.Input),
-        new OracleParameter("vActivo", OracleDbType.Varchar2, activos, System.Data.ParameterDirection.Input)
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPractico", OracleDbType.Varchar2, practico_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha_subida, System.Data.ParameterDirection.Input)
     };
 
-    var arraybindcount = practicos.Length;
-
-    return doCall2("mbpc.agregar_practicos", parameters, arraybindcount);
+    return doCall("mbpc.agregar_practico", parameters);
   }
 
   public static List<object> columnas_de(string tabla)
@@ -976,11 +974,11 @@ public static class DaoLib
   }
 
 
-  public static List<object> traer_practicos(string etapa)
+  public static List<object> traer_practicos(string id)
   {
     var parameters = new OracleParameter[] 
     { 
-        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa, System.Data.ParameterDirection.Input)
+        new OracleParameter("vViaje", OracleDbType.Varchar2, id, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.traer_practicos", parameters);

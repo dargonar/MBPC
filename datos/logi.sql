@@ -66,8 +66,8 @@ create or replace package mbpc as
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
-  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
-  procedure agregar_practicos(vPractico in varchar2, vEtapa in varchar2, vActivo in varchar2, usrid in number);
+  procedure traer_practicos(vViaje in varchar2, usrid in number, vCursor out cur);
+  procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   --Cargas  
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
@@ -973,12 +973,12 @@ create or replace package body mbpc as
       where e.id = vEtapa;
   end traer_buque_de_etapa;
 
-  procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
+  procedure traer_practicos(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      select * from tbl_practicoetapa pe 
-        left join tbl_practico p on p.id = pe.practico_id
-        where pe.etapa_id = vEtapa;
+      SELECT pv.id, pr.nombre, pv.fecha_subida, pv.fecha_bajada FROM tbl_practicoviaje pv 
+      LEFT JOIN tbl_practico pr ON pv.practico_id=pr.id
+      WHERE pv.viaje_id=vViaje;
   end traer_practicos;
   
   procedure eliminar_practicos(vEtapa in varchar2, usrid in number, vCursor out cur) is
@@ -986,16 +986,17 @@ create or replace package body mbpc as
     delete from tbl_practicoetapa where etapa_id = vEtapa;
   end eliminar_practicos;
   
-  procedure agregar_practicos(vPractico in varchar2, vEtapa in varchar2, vActivo in varchar2, usrid in number) is
+  procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
   begin
-    --select id into temp from tbl_evento, where practico_id = vPractico and etapa_id = vEtapa and tipo_id = 16;
-    ---IF SQL%NOTFOUND THEN
-    --  insert into tbl_evento 
-    --END IF;
-      insert into tbl_practicoetapa (practico_id, etapa_id, activo) VALUES (vPractico, vEtapa, vActivo);
+    select * into etapa from tbl_etapa where id = vEtapa;
+    
+    insert into tbl_practicoviaje (viaje_id, etapa_subida, practico_id, fecha_subida) 
+    values( etapa.viaje_id, etapa.id, vPractico, vFecha);
 
-  end agregar_practicos;
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, fecha) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, 16, vFecha);
   
+  end agregar_practico;
   ---------------------------------------------------------------------------------------------------------------
   ---------------------------------------------Cargas------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------
@@ -1495,23 +1496,21 @@ create or replace package body mbpc as
   --
   procedure autocompleterbdisponibles(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
-    sql_stmt := 'select NVL(z.cuatrigrama,'''') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
-                    from buques b
-                    left join tbl_viaje v on b.id_buque           = v.buque_id and v.estado = 0
-                    left join tbl_etapa e on v.id                 = e.viaje_id and v.etapa_actual = e.nro_etapa
-                    left join tbl_puntodecontrol p on e.actual_id = p.id 
-                    left join tbl_zonas z on p.zona_id            = z.id
-                    
-                    where
-                    
-                  
-                    (upper(b.nombre) like upper(:vQuery) or 
-                    upper(b.bandera) like upper(:vQuery) or 
-                    upper(b.sdist) like upper(:vQuery) or 
-                    upper(b.matricula) like upper(:vQuery) or 
-                    upper(b.nro_omi) like upper(:vQuery) or 
-                    upper(b.nro_ismm) like upper(:vQuery)) and rownum <= 6';
-    open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery,vQuery,vQuery;
+    open vCursor for
+    select NVL(z.cuatrigrama,'') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
+    from buques b
+      left join tbl_viaje v on b.id_buque           = v.buque_id and v.estado = 0
+      left join tbl_etapa e on v.id                 = e.viaje_id and v.etapa_actual = e.nro_etapa
+      left join tbl_puntodecontrol p on e.actual_id = p.id 
+      left join tbl_zonas z on p.zona_id            = z.id
+    where
+      (upper(b.nombre) like upper(vQuery) or 
+      upper(b.bandera) like upper(vQuery) or 
+      upper(b.sdist) like upper(vQuery) or 
+      upper(b.matricula) like upper(vQuery) or 
+      upper(b.nro_omi) like upper(vQuery) or 
+      upper(b.nro_ismm) like upper(vQuery)) and rownum <= 6;
+
   end autocompleterbdisponibles;
   -------------------------------------------------------------------------------------------------------------
   --

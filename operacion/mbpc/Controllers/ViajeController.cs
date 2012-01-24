@@ -9,6 +9,24 @@ namespace mbpc.Controllers
 {
     public class ViajeController : MyController
     {
+      public ActionResult practicos(string id)
+      {
+        ViewData["etapa_id"] = id;
+        ViewData["results"] = DaoLib.traer_practicos(id);
+        return View();
+      }
+
+      public ActionResult nuevo_practico(string etapa_id)
+      {
+        ViewData["etapa_id"] = etapa_id;
+        return View();
+      }
+
+      public ActionResult agregar_practico(string viaje_id, string practico_id, string fecha_subida)
+      {
+        DaoLib.agregar_practico(viaje_id, practico_id, fecha_subida); 
+        return practicos(viaje_id);
+      }
 
       public ActionResult borrar_evento(string etapa_id, string id)
       {
@@ -249,26 +267,6 @@ namespace mbpc.Controllers
 
         public ActionResult modificarEtapa(string etapa_id, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string activo, string practico0, string practico1, string practico2, string capitan_id, string velocidad, string rumbo, string latitud, string longitud)
         {
-
-          DaoLib.eliminar_practicos(etapa_id);
-          if (activo != null) 
-          {
-            List<string> practicos = new List<string>();
-            List<string> etapas = new List<string>();
-            List<string> activos = new List<string>();
-            if (practico0 != "") { practicos.Add(practico0); }
-            if (practico1 != "") { practicos.Add(practico1); }
-            if (practico2 != "") { practicos.Add(practico2); }
-
-            foreach (var pr in practicos)
-            {
-              etapas.Add(etapa_id);
-              activos.Add(activo == pr ? "1" : "0");
-            }
-
-            DaoLib.agregar_practicos(practicos.ToArray(), etapas.ToArray(), activos.ToArray());
-          }
-
           if (calado_proa != null && (calado_proa == "" || calado_proa.LastIndexOf("_") != -1) ) calado_proa = null;
           if (calado_popa != null && (calado_popa == "" || calado_popa.LastIndexOf("_") != -1)) calado_popa = null;
           if (calado_informado != null && (calado_informado == "" || calado_informado.LastIndexOf("_") != -1)) calado_informado = null;

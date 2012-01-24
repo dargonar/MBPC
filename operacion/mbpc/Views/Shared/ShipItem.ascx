@@ -38,6 +38,7 @@
                       <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>?etapa_id=<%=ship["ETAPA_ID"]%>" onclick="return histrvp(this);">                                                                   Historial R/V/P</a></li>
                       <li><a href="<%= Url.Content("~/Viaje/cambiarEstado/") + ship["ETAPA_ID"] %>" onclick="return agregarevento(this);" class="agregareventolink">Cambiar Estado</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/practicos/") + ship["ETAPA_ID"] %>" onclick="return practico(this);" class="agregareventolink">Practico/Baqueano</a></li>
                      </ul>
                 </div><!-- items -->
             </div><!-- menu -->

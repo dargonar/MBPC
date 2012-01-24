@@ -444,7 +444,35 @@
     
     }
 
+    
+    function practico(aelement) {
 
+      $("#fullscreen").css("display", "block");
+
+      $.ajax({
+        type: "GET",
+        cache: false,
+        url: $(aelement).attr("href"),
+        dataType: "text/html",
+        success: (function (data) {
+          $('#dialogdiv').html(data);
+          $('#dialogdiv').dialog({
+            height: 250,
+            width: 529,
+            modal: true,
+            title: 'Listado de Practicos/Baqueanos',
+          });
+          $("#fullscreen").css("display", "none");
+        }),
+        error: (function (data) {
+          $("#fullscreen").css("display", "none");
+          var titletag = /<title\b[^>]*>.*?<\/title>/
+          alert(titletag.exec(data.responseText));
+        })
+      });
+      return false;
+    
+    }
 
     function pbip (aelement) {
 
@@ -910,6 +938,7 @@
     function dialogozonas(aelement, title) {
       dialogozonas(aelement, title, false);
     }
+
     function dialogozonas(aelement, title, setcombo) {
 
       $("#fullscreen").css("display", "block");

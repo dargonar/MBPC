@@ -482,40 +482,6 @@
 
   }
 
-  /*
-  $("#practicotext").autocomplete({
-    source: function (request, response) {
-      $.ajax({
-        type: "POST",
-        url: url3,
-        dataType: "json",
-        data: {
-          query: request.term
-        },
-        success: function (data) {
-          response($.map(data, function (item) {
-            return {
-              label: item.NOMBRE,
-              value: item.NOMBRE,
-              id: item.ID
-            }
-          }));
-        }
-      });
-    },
-    minLength: 2,
-    select: function (event, ui) {
-      pegarPractico(ui.item.value, ui.item.id);
-    },
-    open: function () {
-      $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-    },
-    close: function () {
-      $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-    }
-  });
-  */
-
   $("#desdetext, #hastatext").autocomplete({
     source: function (request, response) {
       $.ajax({

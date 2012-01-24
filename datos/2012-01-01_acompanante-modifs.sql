@@ -95,3 +95,12 @@ ALTER TABLE tbl_practicoviaje
   )
 /
 
+alter table tbl_practicoviaje add practico_id integer;
+
+ALTER TABLE tbl_practicoviaje
+  ADD FOREIGN KEY (
+    practico_id
+  ) REFERENCES tbl_practico (
+    id
+  )
+/
