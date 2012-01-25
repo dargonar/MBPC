@@ -69,6 +69,10 @@ namespace mbpc.Controllers
           Session["logged"] = 1;
           Session["usuario"] = Request.Form["username"];
 
+          //Agregar evento
+          DaoLib.userid = int.Parse(Session["usuario"].ToString());
+          DaoLib.login_usuario("dummy");
+
           if (Session["toreports"] != null)
           {
             Session["toreports"] = null;
@@ -81,6 +85,9 @@ namespace mbpc.Controllers
 
         public ActionResult Logout()
         {
+          
+          DaoLib.logout_usuario("dummy");
+
           //Marcar sesion deslogeado
           Session["logged"] = 0;
           Session.Abandon();

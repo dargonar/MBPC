@@ -26,7 +26,7 @@
       <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
       <input type="hidden" id="etapa_id" name="etapa_id" value="<%= ViewData["etapa_id"] %>"/>
-      <input type="submit" class="botonsubmit" style="margin-left: 160px" value="Agregar Evento" />
+      <input type="submit" class="botonsubmit" style="margin-left: 160px" value="Cambiar Estado" />
 </form>
 
     <script type="text/javascript">

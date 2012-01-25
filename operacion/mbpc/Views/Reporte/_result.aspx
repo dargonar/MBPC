@@ -27,4 +27,5 @@
 </div>
   <div class="btn-new-class">
   <a href="#" onclick="return print_toggle(this)">Imprimir</a>
+  <a href="#" onclick="return to_excel(this)">Exportar a Excel</a>
   </div>

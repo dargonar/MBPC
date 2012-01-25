@@ -26,7 +26,9 @@ create or replace package mbpc as
   --Login/Home
   procedure login( vid in varchar2, vpassword in varchar2, logged out number);
   procedure login2( vid in varchar2, vpassword in varchar2, logged out number);
-  
+  procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
+  procedure logout_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
+
   procedure grupos_del_usuario( vId in varchar2, usrid in number, vCursor out cur);
   procedure zonas_del_grupo( vId in varchar2, usrid in number, vCursor out cur);
   procedure barcazas_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
@@ -254,7 +256,20 @@ create or replace package body mbpc as
   exception when NO_DATA_FOUND THEN
     logged := 0;
   end login;
-
+  -------------------------------------------------------------------------------------------------------------
+  -- 
+  procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur ) is
+  begin
+      insert into tbl_evento ( usuario_id, tipo_id ) 
+      VALUES ( usrid , 28);
+  end login_usuario;
+  -------------------------------------------------------------------------------------------------------------
+  -- 
+  procedure logout_usuario(vDummy in varchar2, usrid in number, vCursor out cur ) is
+  begin
+      insert into tbl_evento ( usuario_id, tipo_id ) 
+      VALUES ( usrid , 29);
+  end logout_usuario;
   -------------------------------------------------------------------------------------------------------------
   --
   procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur ) is
@@ -600,7 +615,7 @@ create or replace package body mbpc as
                                latitud, longitud, created_at, rios_canales_km_id, riokm_actual, created_by, updated_at, updated_by ) 
        
       VALUES ( id_cargas.nextval, vBuque, vOrigen, vDestino, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vEta, 'DD-MM-yy HH24:mi'), TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), 
-                lat, lon, tempdate, riokm, riokm, usrid, tempdate, usrid ) returning id into temp;
+                lat, lon, tempdate, riokm, posicion.riokm, usrid, tempdate, usrid ) returning id into temp;
     END;
    
     insert into tbl_etapa ( viaje_id, actual_id, destino_id, hrp, fecha_salida, created_at, sentido, created_by ) 
@@ -1428,7 +1443,7 @@ create or replace package body mbpc as
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, fecha, rios_canales_km_id, latitud, longitud) 
     VALUES (viaje.id, vEtapaId, usrid, 22, vBarcazaId, tempdate, vRioCanalKM, vLat, vLon);
    
-  end fondear_barcaza;
+  end fondear_barcaza_batch;
 
   -------------------------------------------------------------------------------------------------------------
   --  
@@ -1635,7 +1650,8 @@ create or replace package body mbpc as
                     --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante4_id is not null
                     --)
                     --and 
-                    (upper(b.nombre) like upper(:vQuery) or 
+                    (
+                    upper(b.nombre) like upper(:vQuery) or 
                     upper(b.matricula) like upper(:vQuery) or 
                     upper(b.nro_omi) like upper(:vQuery) or 
                     upper(b.nro_ismm) like upper(:vQuery)) 
@@ -1650,13 +1666,16 @@ create or replace package body mbpc as
   begin
     open vCursor for
     select NVL(z.cuatrigrama,'') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
-    from buques b
+    from buques b left JOIN tbl_paises_ciala pc ON b.bandera=pc.DESCRIPCION
+      
       left join tbl_viaje v on b.id_buque           = v.buque_id and v.estado = 0
       left join tbl_etapa e on v.id                 = e.viaje_id and v.etapa_actual = e.nro_etapa
       left join tbl_puntodecontrol p on e.actual_id = p.id 
       left join tbl_zonas z on p.zona_id            = z.id
     where
-      (upper(b.nombre) like upper(vQuery) or 
+      (
+      upper(pc.codalfabetico) like upper(vQuery) or
+      upper(b.nombre) like upper(vQuery) or 
       upper(b.bandera) like upper(vQuery) or 
       upper(b.sdist) like upper(vQuery) or 
       upper(b.matricula) like upper(vQuery) or 

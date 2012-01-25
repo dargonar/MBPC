@@ -111,3 +111,33 @@ alter table tbl_practicoviaje add total         integer;
 
 --tipo eventos
 UPDATE tbl_tipoevento SET descripcion='Bajar practico' WHERE id=17;
+
+--chau tabla vieja de practicoetapa
+DROP TABLE tbl_practicoetapa
+
+--eventos login logout
+INSERT INTO tbl_tipoevento (id,descripcion,tipo) VALUES (28,'Login usuario',0);
+INSERT INTO tbl_tipoevento (id,descripcion,tipo) VALUES (29,'Logout usuario',0);
+
+
+--
+CREATE TABLE tbl_registrousuario (
+  id                 INTEGER        NOT NULL,
+  usuario_id         INTEGER        NOT NULL,
+  login              INTEGER,
+  created_at         DATE          DEFAULT sysdate NULL
+)
+  STORAGE (
+    NEXT       1024 K
+  )
+/
+
+ALTER TABLE tbl_registrousuario
+  ADD CONSTRAINT pk_tbl_registrousuario PRIMARY KEY (
+    id
+  )
+  USING INDEX
+    STORAGE (
+      NEXT       1024 K
+    )
+/

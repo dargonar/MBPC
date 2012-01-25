@@ -23,33 +23,46 @@
     
   }
 
+  var print_me = 0;
+  function to_excel(obj) {
+    print_me = 1;
+    $("form#reporte").submit();
+  }
+
+  function submit_me(frm) {
+
+    if (print_me != 0) {
+      $(frm).attr('action', '<%= Url.Content("~/Reporte/Ver/")%>?print_me=true');
+      print_me = 0;
+      return true;
+    }
+
+    $("#fullscreen").show();
+
+    $.ajax({
+      cache: false,
+      type: 'POST',
+      url: '<%= Url.Content("~/Reporte/Ver/")%>',
+      data: $(frm).serialize(),
+      success: function (data) {
+
+        $("#rresult").html(data);
+        $("#rresult").show();
+
+        $("#fullscreen").hide();
+      },
+      error: function (data) {
+        $("#fullscreen").hide();
+      }
+    });
+
+    return false;
+  }
+
+
   $(document).ready(function () {
 
     buildButtons();
-
-    $("form#reporte").submit(function () {
-
-      $("#fullscreen").show();
-
-      $.ajax({
-        cache: false,
-        type: 'POST',
-        url: '<%= Url.Content("~/Reporte/Ver/")%>',
-        data: $(this).serialize(),
-        success: function (data) {
-          
-          $("#rresult").html(data);
-          $("#rresult").show();
-
-          $("#fullscreen").hide();
-        },
-        error: function (data) {
-          $("#fullscreen").hide();
-        }
-      });
-
-      return false;
-    });
 
     $("#reporte_id").change(function () {
 
@@ -106,7 +119,7 @@
   <!-- top -->
 
   <div class="fprint" style="padding:20px;">
-    <form id="reporte" action="<%= Url.Content("~/Reporte/VerReporte") %>" method="post">
+    <form id="reporte" onsubmit="return submit_me(this)" action="<%= Url.Content("~/Reporte/VerReporte") %>" method="post">
 
       <label>Seleccione un reporte: </label>
       <select name="reporte_id" id="reporte_id" style="margin:0; width:274px;" class="nexttab">
@@ -129,7 +142,6 @@
       <div style="clear:both;"></div>
       <br/>
       <input type="submit" class="botonsubmit" style="margin-left: 190px;display: block;padding: 7px 15px 7px 15px;margin: 0;text-decoration: none;text-align: center;font-size: 12px;color: black;background-color: #E6E6E6;border: #B4B4B4 solid 1px;display:none" value="Ver Reporte" />
-      
     </form>
   </div>
 

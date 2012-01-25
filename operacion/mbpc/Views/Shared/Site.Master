@@ -85,14 +85,6 @@
     <div style="height:100%;width:100%;">
       <div id="header">
 
-        <% if (ViewData["cuatrigrama"] != null) { %>
-
-        <div class="user" style="float:left;margin-left: 211px;margin-top: -3px;">
-          <label><strong id="ecuatrigrama" style="font-size: 19px;" >&nbsp;</strong></label>
-        </div>
-
-        <% } %>
-
         <% if (Session["grupos"] != null) { %>
         
         <div class="user">
@@ -102,14 +94,16 @@
         </div>
 
         <% var grps = (Session["grupos"] as List<object>); %>
-        
         <div style="float:right; width:100px; margin-right:128px; margin-top:4px;">
-          <select style="width:200px" id="grupoactual" onchange="cambiar_grupo();">
+          <select style="font-size: 9px;width:200px" id="grupoactual" onchange="cambiar_grupo();">
             <% foreach (Dictionary<string, string> grp in grps)
                { %>
             <option value="<%=grp["GRUPO"]%>"><%=grp["NOMBRE"]%></option>
             <% } %>
           </select>
+        </div>
+        <div class="user" style="float:right;margin-top: -3px;">
+          <label><strong id="Strong1" style="font-size: 13px;float:left" >COSTERA:</strong></label>
         </div>
         
         <%} %>

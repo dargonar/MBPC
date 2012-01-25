@@ -43,6 +43,28 @@
     alert(titletag.exec(data.responseText));
   }
 
+  function activar_practico(pid, etapa_id) {
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: '<%=Url.Content("~/Viaje/activar_practico_fecha")%>?practico_id=' + pid + '&etapa_id=' + etapa_id,
+      success: (function (data) {
+        $('#dialogdiv3').html(data);
+        $('#dialogdiv3').dialog({
+          height: 148,
+          width: 342,
+          modal: true,
+          title: 'Activar practico'
+        });
+      }),
+      error: (function () {
+        showTitlexx();
+      })
+    });
+
+    return false;
+  }
+
   function bajar_practico(pid, etapa_id) {
     $.ajax({
       type: "GET",

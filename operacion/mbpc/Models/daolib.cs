@@ -158,7 +158,27 @@ public static class DaoLib
     return doCall("mbpc.id_ultima_etapa", parameters);
   }
 
+  public static List<object> login_usuario(string dummy)
+  {
 
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vDummy", OracleDbType.Varchar2, dummy, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.login_usuario", parameters);
+  }
+
+  public static List<object> logout_usuario(string dummy)
+  {
+
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vDummy", OracleDbType.Varchar2, dummy, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.logout_usuario", parameters);
+  }
 
 
   public static List<object> hist_pos(string viaje)

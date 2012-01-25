@@ -64,7 +64,7 @@ namespace mbpc.Controllers
           ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
           ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
 
-          ViewData["cuatrigrama"] = costera_de_zona(id);
+          //ViewData["cuatrigrama"] = costera_de_zona(id);
 
         }
 
