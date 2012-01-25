@@ -14,14 +14,14 @@ namespace mbpc.Controllers
       return Json(barcazas, JsonRequestBehavior.AllowGet);
     }
 
-    public JsonResult view_buques_disponibles(string query)
+    public JsonResult buques_disponibles(string query)
     {
       //TODO: Borrar
       //System.Threading.Thread.Sleep(1000);
       var buques = new List<object>();
       if (query != "")
       {
-            buques = DaoLib.autocompleterb('%' + query + '%');
+        buques = DaoLib.autocomplete_buques_disponibles(query);
       }
       return Json(buques, JsonRequestBehavior.AllowGet);
     }
@@ -37,12 +37,12 @@ namespace mbpc.Controllers
     }
 
 
-    public JsonResult view_buquesnac(string query)
+    public JsonResult remolcadores(string query)
     {
       var buques = new List<object>();
       if (query != "")
       {
-        buques = DaoLib.autocompletebnacionales('%' + query + '%');
+        buques = DaoLib.autocomplete_remolcadores(query);
       }
       return Json(buques, JsonRequestBehavior.AllowGet);
     }

@@ -91,7 +91,7 @@
 
       $("#pos").mask("9999S99999W");
 
-       url1 = '<%= Url.Content("~/Autocomplete/view_buques_disponibles/") %>';
+       url1 = '<%= Url.Content("~/Autocomplete/buques_disponibles/") %>';
        url2 = '<%= Url.Content("~/Autocomplete/view_muelles/") %>' ;
        url3 = '<%= Url.Content("~/Autocomplete/rioscanales") %>';
 

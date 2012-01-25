@@ -103,8 +103,8 @@ create or replace package mbpc as
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterb( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterball( vQuery in varchar2, vEstado in varchar2, usrid in number, vCursor out cur);
-  procedure autocompleterbdisponibles( vQuery in varchar2, usrid in number, vCursor out cur);
-  procedure autocompleterbnacionales( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocomplete_buques_disp( vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocomplete_remolcadores( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterioscanales( vQuery in varchar2, usrid in number, vCursor out cur); 
   procedure autocompleterestados( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterbenzona( vQuery in varchar2, vZonaId in varchar2, usrid in number, vCursor out cur);
@@ -1641,67 +1641,66 @@ create or replace package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure autocompleterbnacionales(vQuery in varchar2, usrid in number, vCursor out cur) is
+  procedure autocomplete_remolcadores(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     --VERIFICAR TIPO_BUQUE     'nacional'
     --VERIFICAR TIPO_SERVICIO  'REMOLCADOR' 'EMPUJADOR' otros...
     
-    sql_stmt := 'select NVL(z.cuatrigrama,'''') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
-                    from buques b 
-                    where
-                    --Que no sea un barco en viaje
-                    --b.id_buque not in (
-                    --  select buque_id from tbl_viaje where estado=0 and buque_id is not null
-                    --)
-                    --and
-                    --Que no sea un barco acompanando
-                    --b.id_buque not in (
-                    --  select acompanante_id from tbl_etapa e join tbl_viaje v 
-                    --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante_id is not null
-                    --  union
-                    --  select acompanante2_id from tbl_etapa e join tbl_viaje v 
-                    --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante2_id is not null
-                    --  union
-                    --  select acompanante3_id from tbl_etapa e join tbl_viaje v 
-                    --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante3_id is not null
-                    --  union
-                    --  select acompanante4_id from tbl_etapa e join tbl_viaje v 
-                    --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante4_id is not null
-                    --)
-                    --and 
-                    (
-                    upper(b.nombre) like upper(:vQuery) or 
-                    upper(b.matricula) like upper(:vQuery) or 
-                    upper(b.nro_omi) like upper(:vQuery) or 
-                    upper(b.nro_ismm) like upper(:vQuery)) 
-                    and b.bandera = ''ARGENTINA'' and rownum <= 6';
+    open vCursor for
+    select b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
+    from buques b 
+   
+    where
+      --b.id_buque not in (
+      --  select acompanante_id from tbl_etapa e join tbl_viaje v 
+      --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante_id is not null
+      --  union
+      --  select acompanante2_id from tbl_etapa e join tbl_viaje v 
+      --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante2_id is not null
+      --  union
+      --  select acompanante3_id from tbl_etapa e join tbl_viaje v 
+      --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante3_id is not null
+      --  union
+      --  select acompanante4_id from tbl_etapa e join tbl_viaje v 
+      --  on e.viaje_id=v.id and v.estado=0 and v.etapa_actual=e.nro_etapa and e.acompanante4_id is not null
+      --)
+      --and
+      (
+      upper(b.nombre) like upper('%'||vQuery||'%') or 
+      upper(b.sdist) like upper('%'||vQuery||'%') or 
+      upper(b.matricula) like upper('%'||vQuery||'%') or 
+      upper(b.nro_omi) like upper('%'||vQuery||'%') or 
+      upper(b.nro_ismm) like upper('%'||vQuery||'%')
+      ) 
+    and b.bandera = 'ARGENTINA' and rownum <= 6;
     
-    open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery; 
-  end autocompleterbnacionales;
+  end autocomplete_remolcadores;
 
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure autocompleterbdisponibles(vQuery in varchar2, usrid in number, vCursor out cur) is
+  procedure autocomplete_buques_disp(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
     select NVL(z.cuatrigrama,'') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
-    from buques b left JOIN tbl_paises_ciala pc ON b.bandera=pc.DESCRIPCION
-      
+    from buques b 
+    
+      left JOIN tbl_paises_ciala pc ON b.bandera    = pc.DESCRIPCION
       left join tbl_viaje v on b.id_buque           = v.buque_id and v.estado = 0
       left join tbl_etapa e on v.id                 = e.viaje_id and v.etapa_actual = e.nro_etapa
       left join tbl_puntodecontrol p on e.actual_id = p.id 
       left join tbl_zonas z on p.zona_id            = z.id
     where
       (
-      upper(pc.codalfabetico) like upper(vQuery) or
-      upper(b.nombre) like upper(vQuery) or 
-      upper(b.bandera) like upper(vQuery) or 
-      upper(b.sdist) like upper(vQuery) or 
-      upper(b.matricula) like upper(vQuery) or 
-      upper(b.nro_omi) like upper(vQuery) or 
-      upper(b.nro_ismm) like upper(vQuery)) and rownum <= 6;
+      upper(pc.codalfabetico) like upper('%'||vQuery||'%') or
+      upper(b.nombre) like upper('%'||vQuery||'%') or 
+      upper(b.bandera) like upper('%'||vQuery||'%') or 
+      upper(b.sdist) like upper('%'||vQuery||'%') or 
+      upper(b.matricula) like upper('%'||vQuery||'%') or 
+      upper(b.nro_omi) like upper('%'||vQuery||'%') or 
+      upper(b.nro_ismm) like upper('%'||vQuery||'%')
+      ) and rownum <= 6;
 
-  end autocompleterbdisponibles;
+  end autocomplete_buques_disp;
   -------------------------------------------------------------------------------------------------------------
   --
   

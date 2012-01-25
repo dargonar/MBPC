@@ -73,8 +73,9 @@
 
 
         }
-
+        <%if(Session["grupos"] != null){ %>
         setTimeout(check_restart, 3000);
+        <%}%>
       </script>
       <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
       <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
@@ -85,13 +86,13 @@
     <div style="height:100%;width:100%;">
       <div id="header">
 
-        <% if (Session["grupos"] != null) { %>
-        
         <div class="user">
-          <img style="dispay:none" id="chkver" src="../../img/ajax-loader2.gif"/>
-          <label><strong> <%= datos_del_usuario["APELLIDO"] + ", " + datos_del_usuario["NOMBRES"] %></strong></label>
+          <img style="display:none" id="chkver" src="../../img/ajax-loader2.gif"/>
+          <label><strong> <%= datos_del_usuario["APELLIDO"].Replace('*',' ') + ", " + datos_del_usuario["NOMBRES"] %></strong></label>
           <a href="<%= Url.Action("Logout","Auth") %>">Salir</a>
         </div>
+
+        <% if (Session["grupos"] != null) { %>
 
         <% var grps = (Session["grupos"] as List<object>); %>
         <div style="float:right; width:100px; margin-right:128px; margin-top:4px;">

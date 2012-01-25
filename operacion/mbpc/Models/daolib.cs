@@ -1109,14 +1109,14 @@ public static class DaoLib
     return doCall("mbpc.autocompleter", parameters);
   }
 
-  public static List<object> autocompletebnacionales(string query)
+  public static List<object> autocomplete_remolcadores(string query)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.autocompleterbnacionales", parameters);
+    return doCall("mbpc.autocomplete_remolcadores", parameters);
   }
 
   public static List<object> autocomplete_cargas(string query)
@@ -1197,16 +1197,14 @@ public static class DaoLib
     return doCall("mbpc.autocomplete_barcazas", parameters);
   }
 
-  
-
-  public static List<object> autocompleterb(string query)
+  public static List<object> autocomplete_buques_disponibles(string query)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.autocompleterbdisponibles", parameters);
+    return doCall("mbpc.autocomplete_buques_disp", parameters);
   }
 
 

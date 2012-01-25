@@ -109,11 +109,11 @@
     <label>ETA a <%= ViewData["punto_control_desc"] %></label><br />
     <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
     <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
-
+    <!--
     <label>&nbsp;</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" value="" style="opacity:0;" /><br />
     <label class="desc">&nbsp;</label><br /><br />
-
+    -->
     <!--
     <label>Cantidad de pasajeros</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
@@ -281,7 +281,7 @@
     return false;
   });
 
-  url1 = '<%= Url.Content("~/Autocomplete/view_buques_disponibles/") %>';
+  url1 = '<%= Url.Content("~/Autocomplete/buques_disponibles/") %>';
   url2 = '<%= Url.Content("~/Autocomplete/view_muelles/") %>';
   url4 = '<%= Url.Content("~/Autocomplete/capitanes/") %>';
   url5 = '<%= Url.Content("~/Autocomplete/rioscanales") %>';

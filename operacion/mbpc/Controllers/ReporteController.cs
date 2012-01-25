@@ -17,6 +17,8 @@ namespace mbpc.Controllers
 
         public ActionResult Index()
         {
+          Session["grupos"] = null;
+
           if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
           {
             if(Request.UrlReferrer == null)
@@ -26,18 +28,8 @@ namespace mbpc.Controllers
           }
           
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
-
-          var du = new Dictionary<string, string>();
-          du["NOMBRES"] = "";
-          du["APELLIDO"] = "";
-
-          var lo = new List<object>();
-          lo.Add(du);
-
-          ViewData["datos_del_usuario"] = lo;
-
-
           ViewData["reportes"] = DaoLib.reporte_lista();
+
           return View();
         }
 

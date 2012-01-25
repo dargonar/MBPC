@@ -8,7 +8,7 @@
 
   <!-- status icons -->
   <div class="status-icons" style="background:#aaaaaa;margin-right:10px" >
-    <a onclick="return false" href="#" title="Descripcion del evento"><%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%></a>
+    <a style="position:relative; z-index:100;" title="<%=ship["ESTADO_TEXT"]%>"><%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%></a>
   </div>
   
     <% if (ViewData["showlinks"].ToString() != "0")

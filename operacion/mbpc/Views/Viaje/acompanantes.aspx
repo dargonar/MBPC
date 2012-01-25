@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
 
-  url1 = '<%= Url.Content("~/Autocomplete/view_buquesnac/") %>';
+  url1 = '<%= Url.Content("~/Autocomplete/remolcadores/") %>';
 
   $("#quitar1, #quitar2, #quitar3, #quitar4").click(function () {
 
