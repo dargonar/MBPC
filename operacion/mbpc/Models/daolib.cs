@@ -967,6 +967,15 @@ public static class DaoLib
     return doCall2("mbpc.asignar_pdc", parameters, arraybindcount);
   }
 
+  public static List<object> actualizar_listado_de_barcazas(string etapa)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapaId", OracleDbType.Varchar2, etapa, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.actualizar_listado_de_barcazas", parameters);
+  }
 
   public static List<object> transferir_barcazas(string[] barcazas, string[] etapas)
   {

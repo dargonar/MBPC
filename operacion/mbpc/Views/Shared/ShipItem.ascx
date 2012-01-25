@@ -116,10 +116,22 @@
       </table>">     
 
       <img src="<%= Url.Content("~/img/i_icon.png") %>" style="width: 20px;height: 20px;"/></span>
+
+      <% if (!String.IsNullOrEmpty(ship["BARCAZAS_LISTADO"])) { %> 
+      <span class="info" title="<table>
+        <tr>
+          <td>Barcazas</td>
+          <td><%= ship["BARCAZAS_LISTADO"] %></td>
+        </tr>
+        <label><span></span></label>
+        </table>">     
+      <img src="<%= Url.Content("~/img/icons/ship_icon.png") %>" style="width: 20px;height: 20px;"/></span>
+      <% } %> 
     </td>
   <td>
     <%if( ship["ACOMPANANTE"] != "") {%> <label class="nombreacomp"><%=ship["ACOMPANANTE"]%></label> <% } %>
-    <%if( ship["ACOMPANANTE2"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE2"]%></label> <% } %>
+    <%if( ship["ACOMPANANTE2"] != "") {%><label class="no
+    mbreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE2"]%></label> <% } %>
     <%if( ship["ACOMPANANTE3"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE3"]%></label> <% } %>
     <%if( ship["ACOMPANANTE4"] != "") {%><label class="nombreacomp">&nbsp-&nbsp<%=ship["ACOMPANANTE4"]%></label> <% } %>
   </td>

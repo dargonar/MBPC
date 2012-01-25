@@ -14,6 +14,8 @@ namespace mbpc.Controllers
         for(int i=0; i<etapas_ids.Length; i++) etapas_ids[i] = etapa_id;
 
         DaoLib.adjuntar_barcazas(etapas_ids, barcazas);
+        // Para actualizar listado de barcazas de viaje. HACK
+        DaoLib.actualizar_listado_de_barcazas(etapa_id.ToString());
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
 
@@ -42,6 +44,10 @@ namespace mbpc.Controllers
         var latlon = DaoLib.parsePos(pos);
 
         DaoLib.fondear_barcaza(etapa_id, barcaza_id, riocanal, latlon[0], latlon[1], fecha);
+
+        // Para actualizar listado de barcazas de viaje. HACK
+        DaoLib.actualizar_listado_de_barcazas(etapa_id.ToString());
+        
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
 
@@ -79,6 +85,10 @@ namespace mbpc.Controllers
           }
 
         DaoLib.fondear_barcazas_multiple(etapas.ToArray(), barcazas.ToArray(), riocanales.ToArray(), lats.ToArray(), lons.ToArray(), fechas.ToArray());
+
+        // Para actualizar listado de barcazas de viaje. HACK
+        DaoLib.actualizar_listado_de_barcazas(etapa_id.ToString());
+
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
 
@@ -178,6 +188,10 @@ namespace mbpc.Controllers
       {
         int m_en_transito = String.IsNullOrEmpty(en_transito) ? 0 : 1;
         ViewData["results"] = DaoLib.insertar_carga(etapa_id, carga_id, cantidad, unidad_id, buque_id, m_en_transito);
+
+        // Para actualizar listado de barcazas de viaje. HACK
+        DaoLib.actualizar_listado_de_barcazas(etapa_id.ToString());
+
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
 
@@ -366,6 +380,10 @@ namespace mbpc.Controllers
         string[] barcazas = barcazas_origen.Concat(barcazas_destino).ToArray();
 
         DaoLib.transferir_barcazas(barcazas, etapas);
+
+        // Para actualizar listado de barcazas de viaje. HACK
+        DaoLib.actualizar_listado_de_barcazas(etapa_origen);
+        DaoLib.actualizar_listado_de_barcazas(etapa_destino);
 
         barcazas_origen.Concat(barcazas_destino);
 
