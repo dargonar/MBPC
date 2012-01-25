@@ -658,23 +658,23 @@ label span {
         */
 }
 
-#planilla h1 {
+#planilla h1, .planilla h1 {
 	text-align:center;
 	margin:20px 0 5px 0;
 }
 
-#planilla table {
+#planilla table, .planilla table {
 	border:#b4b4b4 solid 1px;
 	background-color:#fff;
 	width:100%;
 }
 
-#planilla th {
+#planilla th , .planilla th {
 	border:#dcdcdc solid 1px;
 	background-color:#dcdcdc;
 }
 
-#planilla td {
+#planilla td, .planilla td {
 	border:#dcdcdc solid 1px;
 	background-color:#fff;
 }

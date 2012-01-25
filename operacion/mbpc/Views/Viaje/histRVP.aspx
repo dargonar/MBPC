@@ -4,10 +4,13 @@
 
 
 <% foreach (Dictionary<string, string> etp in historial) { %>
-<table class="hist etapa">
+
+<table class="hist etapa planilla">
 <tr>
     <th>
-    Etapa Nro. <%= etp["NRO_ETAPA"] %> - <%= etp["CANAL"] +" - KM " + etp["KM"] %>
+        <h1>
+            Etapa Nro. <%= etp["NRO_ETAPA"] %> - <%= etp["CANAL"] +" - KM " + etp["KM"] %>
+        </h1>
     </th>
 </tr>
 <tr>
@@ -15,11 +18,11 @@
     <table class="hist datos">
       <tr style="text-align:left;"><th colspan="5">Reportes</th></tr>
       <tr>
-        <td>Latitud</td>
-        <td>Longitud</td>
-        <td>Rumbo</td>
-        <td>Velocidad</td>
-        <td>Codigo</td>
+        <th>Latitud</th>
+        <th>Longitud</th>
+        <th>Rumbo</th>
+        <th>Velocidad</th>
+        <th>Codigo</th>
       </tr>
     <% bool hayReportes = false; %>
     <% foreach (Dictionary<string, string> evt in eventos) {
@@ -46,13 +49,13 @@
     <table class="hist datos">
       <tr style="text-align:left;"><th colspan="7">Eventos</th></tr>
       <tr>
-        <td>Latitud</td>
-        <td>Longitud</td>
-        <td>Comentario</td>
-        <td>Descripcion</td>
-        <td>Estado</td>
-        <td>Rio Canal</td>
-        <td>Acci&oacute;n</td>
+        <th>Latitud</th>
+        <th>Longitud</th>
+        <th>Comentario</th>
+        <th>Descripcion</th>
+        <th>Estado</th>
+        <th>Rio Canal</th>
+        <th>Acci&oacute;n</th>
       </tr>
     <% bool hayEventos = false; %>
     <% decimal temp; 
