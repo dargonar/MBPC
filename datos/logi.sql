@@ -58,7 +58,7 @@ create or replace package mbpc as
   procedure posicion_de_puntodecontrol(vPdc in varchar2, usrid in number, vCursor out cur);
   procedure eventos_usuario(usrid in number, vCursor out cur);
   procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in varchar2, vEstado in varchar2, vRiocanal in varchar2, vPuerto in varchar2, usrid in number, vCursor out cur);
-  /*procedure actualizar_listado_de_barcazas(vViaje in varchar2);  */
+  procedure actualizar_listado_de_barcazas(  vEtapa in varchar2, usrid in number, vCursor out cur);  
   --Etapas
   procedure id_ultima_etapa(vViaje in number, usrid in number, vCursor out cur);
   procedure indicar_proximo(vViajeId in number, vZonaId in number, usrid in number, vCursor out cur);  
@@ -298,7 +298,7 @@ create or replace package body mbpc as
   procedure barcazas_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin 
     open vCursor for 
-      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, b.nombre
+      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, v.barcazas_listado, b.nombre
       from tbl_viaje v
        left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
        left join buques b on v.buque_id = b.ID_BUQUE
@@ -316,7 +316,7 @@ create or replace package body mbpc as
   begin 
     open vCursor for 
       --COLUMNA 'INSCRIPCION PROVISIORIA' reemplazada por constante 'INS.PROV.'
-      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, capitan.nombre capitan, acomp.nombre acompanante, 
+      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, v.barcazas_listado,  capitan.nombre capitan, acomp.nombre acompanante, 
              acomp2.nombre acompanante2, acomp3.nombre acompanante3, acomp4.nombre acompanante4, 
              e.calado_maximo, e.calado_informado, e.origen_id, e.destino_id, e.sentido, e.eta, e.id etapa_id, 
              'INS.PROV.', b.matricula, b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm, b.arqueo_neto, 
@@ -346,7 +346,7 @@ create or replace package body mbpc as
   procedure barcos_entrantes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, capitan.nombre capitan, acomp.nombre acompanante, 
+      select v.id, v.buque_id, v.notas, v.latitud, v.longitud, v.barcazas_listado, capitan.nombre capitan, acomp.nombre acompanante, 
       acomp2.nombre acompanante2, acomp3.nombre acompanante3, acomp4.nombre acompanante4, 
       e.calado_maximo, e.calado_informado,  e.origen_id, e.destino_id, e.sentido, e.eta, 'INSC.PROV.', b.matricula, 
       b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total, b.tipo, z.cuatrigrama, rck.km, 
@@ -377,7 +377,7 @@ create or replace package body mbpc as
   procedure barcos_salientes( vZonaId in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      select v.id, v.buque_id, v.latitud, v.longitud, v.notas,capitan.nombre capitan, acomp.nombre acompanante, 
+      select v.id, v.buque_id, v.latitud, v.longitud, v.notas, v.barcazas_listado ,capitan.nombre capitan, acomp.nombre acompanante, 
       acomp2.nombre acompanante2, acomp3.nombre acompanante3, acomp4.nombre acompanante4,
       e.calado_maximo, e.calado_informado, e.origen_id, e.destino_id, e.sentido, e.eta, 'INSCR.PROV.', b.matricula, 
       b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total,b.tipo, z.cuatrigrama, rck.km, 
@@ -566,11 +566,39 @@ create or replace package body mbpc as
       
   end insertar_cambioestado;
   
-  /*procedure actualizar_listado_de_barcazas(vViaje in varchar2) is
-  begin
+  procedure actualizar_listado_de_barcazas(  vEtapa in varchar2, usrid in number, vCursor out cur) is
+      barcazas varchar2(2000);
+      total_barcazas number(6);
+    begin
+          /*barcazas varchar2(2000);
+          total_barcazas number(6);
+      cursor c1 ;
+      call traer_barcazas_de_buque(vEtapa, usrid, c1);
+      BEGIN*/
       
+      barcazas := '';
+      total_barcazas := 0;
+ 
+      FOR barcaza in ( select distinct( c.buque_id ), b.nombre from tbl_cargaetapa c
+                      join tbl_tipo_carga tc on c.tipocarga_id = tc.id
+                      join tbl_unidad u on c.unidad_id = u.id
+                      left join buques b on b.id_buque = c.buque_id
+                      where c.etapa_id = vEtapa and c.buque_id IS NOT NULL)
+      LOOP
+          barcazas := barcazas || ' <br/> ' || barcaza.nombre;
+          total_barcazas := total_barcazas + 1 ;
+      END LOOP;
+
+      barcazas := barcazas || ' <br/> ( total ' || CAST(total_barcazas AS VARCHAR2) || ' barcazas ).';
+      
+      UPDATE tbl_viaje set barcazas_listado = barcazas
+        WHERE id in (SELECT viaje_id from tbl_etapa where tbl_etapa.id = vEtapa);
+      
+      /*open vCursor for select barcazas;*/
+
   end actualizar_listado_de_barcazas;  
-  */
+  
+  
   -------------------------------------------------------------------------------------------------------------  
   --Crea un viaje, se verifica si el buque seleccionado es internacional, 
   --se crea la etapa inicial, 
