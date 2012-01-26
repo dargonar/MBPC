@@ -113,12 +113,7 @@ alter table tbl_practicoviaje add total         integer;
 UPDATE tbl_tipoevento SET descripcion='Bajar practico' WHERE id=17;
 
 --chau tabla vieja de practicoetapa
-DROP TABLE tbl_practicoetapa
-
---eventos login logout
-INSERT INTO tbl_tipoevento (id,descripcion,tipo) VALUES (28,'Login usuario',0);
-INSERT INTO tbl_tipoevento (id,descripcion,tipo) VALUES (29,'Logout usuario',0);
-
+DROP TABLE tbl_practicoetapa;
 
 --
 CREATE TABLE tbl_registrousuario (
@@ -140,4 +135,21 @@ ALTER TABLE tbl_registrousuario
     STORAGE (
       NEXT       1024 K
     )
+/
+
+CREATE SEQUENCE registrousuario_seq
+  MINVALUE 1
+  MAXVALUE 999999999999999999999999999
+  INCREMENT BY 1
+  NOCYCLE
+  NOORDER
+  CACHE 20
+/
+
+CREATE OR REPLACE TRIGGER registrousuario_trigger
+before insert on tbl_registrousuario
+for each row
+begin
+select registrousuario_seq.nextval into :new.id from dual;
+end;
 /

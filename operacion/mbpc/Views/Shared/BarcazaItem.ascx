@@ -7,6 +7,8 @@
       <tr>
         <td>
           <label class="nombrebarco">BARCAZA FONDEADA => <%= ship["NOMBRE"] %></label>
+          &nbsp;&nbsp;&nbsp;
+          <a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>" onclick="return editarnotas(this);return false;">(Notas)</a>
         </td>
       </tr>
     </table>

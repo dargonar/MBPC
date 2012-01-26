@@ -290,8 +290,16 @@ namespace mbpc.Controllers
 
           string pto_control_id = ((ViewData["etapa"] as List<object>)[0] as Dictionary<string, string>)["DESTINO_ID"];
           //ViewData["DESTINO_ID"] = pto_control_id; 
-          var data = DaoLib.descripcion_punto_control(pto_control_id);
-          ViewData["punto_control_desc"] = (data[0]as Dictionary<string, string>)["DESCRIPCION"];
+
+          if (!String.IsNullOrEmpty(pto_control_id))
+          {
+            var data = DaoLib.descripcion_punto_control(pto_control_id);
+            ViewData["punto_control_desc"] = (data[0] as Dictionary<string, string>)["DESCRIPCION"];
+          }
+          else
+          {
+            ViewData["punto_control_desc"] = "N/D";
+          }
 
           return View();
         }

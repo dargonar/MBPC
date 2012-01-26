@@ -96,8 +96,8 @@
       success: (function (data) {
         $('#dialogdiv3').html(data);
         $('#dialogdiv3').dialog({
-          height: 380,
-          width: 260,
+          height: 181,
+          width: 264,
           modal: true,
           title: 'Agregar nuevo practico/baqueano'
         });

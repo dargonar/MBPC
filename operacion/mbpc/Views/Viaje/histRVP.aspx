@@ -16,8 +16,9 @@
 <tr>
     <td>
     <table class="hist datos">
-      <tr style="text-align:left;"><th colspan="5">Reportes</th></tr>
+      <tr style="text-align:left;"><th colspan="6">Reportes</th></tr>
       <tr>
+        <th>Fecha</th>
         <th>Latitud</th>
         <th>Longitud</th>
         <th>Rumbo</th>
@@ -31,6 +32,7 @@
            %>
            <% hayReportes = true; %>
             <tr>
+                <td><%= evt["CREATED_AT"]%>&nbsp;</td>
                 <td><%= decimal.Parse(evt["LATITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= decimal.Parse(evt["LONGITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= evt["RUMBO"]%></td>
@@ -47,8 +49,9 @@
 
 
     <table class="hist datos">
-      <tr style="text-align:left;"><th colspan="7">Eventos</th></tr>
+      <tr style="text-align:left;"><th colspan="8">Eventos</th></tr>
       <tr>
+        <th>Fecha</th>
         <th>Latitud</th>
         <th>Longitud</th>
         <th>Comentario</th>
@@ -65,6 +68,7 @@
            %>
            <% hayEventos = true; %>
             <tr id="evt<%=evt["ID"]%>" >
+                <td><%= evt["CREATED_AT"] %></td>
                 <td><% if (!decimal.TryParse(evt["LATITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00")); %>&nbsp;</td>
                 <td><% if (!decimal.TryParse(evt["LONGITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00"));%>&nbsp;</td>
                 <td><%= evt["COMENTARIO"] %></td>

@@ -262,15 +262,13 @@ create or replace package body mbpc as
   -- 
   procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur ) is
   begin
-      insert into tbl_evento ( usuario_id, tipo_id ) 
-      VALUES ( usrid , 28);
+      insert into tbl_registrousuario (usuario_id, login) values (usrid, 1);
   end login_usuario;
   -------------------------------------------------------------------------------------------------------------
   -- 
   procedure logout_usuario(vDummy in varchar2, usrid in number, vCursor out cur ) is
   begin
-      insert into tbl_evento ( usuario_id, tipo_id ) 
-      VALUES ( usrid , 29);
+      insert into tbl_registrousuario (usuario_id, login) values (usrid, 0);
   end logout_usuario;
   -------------------------------------------------------------------------------------------------------------
   --
@@ -514,7 +512,7 @@ create or replace package body mbpc as
   begin
     select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
-      select p.id, p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
+      select p.id, p.created_at, p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
       from tbl_evento p
       left join tbl_tipoevento e on p.tipo_id = e.id
       left join rios_canales_km rck on p.rios_canales_km_id = rck.id
@@ -604,7 +602,11 @@ create or replace package body mbpc as
           total_barcazas := total_barcazas + 1 ;
       END LOOP;
 
-      barcazas := barcazas || ' <br/> ( total ' || CAST(total_barcazas AS VARCHAR2) || ' barcazas ).';
+      IF total_barcazas <> 0 THEN
+        barcazas := barcazas || ' <br/> ( total ' || CAST(total_barcazas AS VARCHAR2) || ' barcazas ).';
+      ELSE
+        barcazas := NULL;
+      END IF;
       
       UPDATE tbl_viaje set barcazas_listado = barcazas
         WHERE id in (SELECT viaje_id from tbl_etapa where tbl_etapa.id = vEtapa);

@@ -192,7 +192,7 @@ namespace mbpc.Controllers
         // Para actualizar listado de barcazas de viaje. HACK
         DaoLib.actualizar_listado_de_barcazas(etapa_id.ToString());
 
-        return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
+        return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes="1" });
       }
 
       public ActionResult barcoenzona(int etapa_id, int viaje_id, string carga)
