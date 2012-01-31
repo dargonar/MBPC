@@ -29,7 +29,7 @@ namespace mbpc_admin.Controllers
 
         return Json(JQGrid.Helper.PaginateS2<TBL_GRUPO>(
           items.ToArray(),
-          columns, context.VW_INT_USUARIOS.Count(), page, rows
+          columns, context.TBL_GRUPO.Count(), page, rows
           ), JsonRequestBehavior.AllowGet);
       }
 
@@ -60,7 +60,7 @@ namespace mbpc_admin.Controllers
       private void CreateCombo(TBL_GRUPO item)
       {
         var xxx = (from c in context.TBL_GRUPOPUNTO
-                     .Where(gp => gp.GRUPO == item.ID).ToList()
+                     .Where(gp => gp.GRUPO == item.ID).OrderBy(gp => gp.ORDEN).ToList()
 
                    select new
                    {
@@ -99,7 +99,7 @@ namespace mbpc_admin.Controllers
       public JsonResult Buscar(string query)
       {
         var buques = (from c in context.TBL_GRUPO
-                        .Where(g => g.NOMBRE.ToUpper().Contains(query.ToUpper())).ToList()
+                        .Where(g => g.NOMBRE.ToUpper().Contains(query.ToUpper())).OrderBy(g => g.NOMBRE).ToList()
 
                       select new
                       {
@@ -159,15 +159,21 @@ namespace mbpc_admin.Controllers
             foreach (var tmp in context.TBL_GRUPOPUNTO.Where(gp => !puntos_de_control.Contains((int)gp.PUNTO) && gp.GRUPO == eid))
               context.DeleteObject(tmp);
 
+            int orden = 0;
             foreach (var i in puntos_de_control)
             {
+              orden++;
               if (todos.Contains(i))
+              {
+                context.ExecuteStoreCommand(string.Format("update tbl_grupopunto set orden={0} where punto={1} and grupo={2}", orden, i, eid));
                 continue;
+              }
 
               var tmp = new TBL_GRUPOPUNTO();
               tmp.ID = 1000 + i;
               tmp.GRUPO = eid;
               tmp.PUNTO = i;
+              tmp.ORDEN = orden;
               context.TBL_GRUPOPUNTO.AddObject(tmp);
             }
             

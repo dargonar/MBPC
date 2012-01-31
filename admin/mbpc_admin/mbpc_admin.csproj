@@ -85,16 +85,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MBPCModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MBPCModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\daolib2.cs" />
     <Compile Include="Models\daolib.cs" />
     <Compile Include="Models\helpers.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\EntityHelper.cs" />
+    <Compile Include="NewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +202,9 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Views\Shared\Site.Master" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -221,9 +223,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="MBPCModel.edmx">
+    <EntityDeploy Include="NewModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MBPCModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>NewModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

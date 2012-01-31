@@ -35,6 +35,7 @@
             <p>
               <%: Html.Label("PUNTOS ASOCIADOS")%>
               <%: Html.DropDownList("puntos_de_control", (SelectList)ViewData["puntos_de_control"], new { @size = "10", @class = "inputbox", @multiple = "multiple" })%>
+              <a href="#" onclick="return moveup()">Subir</a> / <a href="#" onclick="return movedown()">Bajar</a>
               <br />
               Nuevo punto: <input id="pto" type="text" style="width:216px;"/><br /><br />
               <a href="#" id="rsel">Quitar seleccionados</a>
@@ -61,6 +62,42 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
 <script type="text/javascript">
+  
+  $.fn.moveSelectedUp = function() {
+    var selectedOptions = $(this).find('option:selected');
+    var prev = $(selectedOptions).first().prev();
+    $(selectedOptions).insertBefore(prev);
+  }
+  
+  /*
+  $.fn.moveSelectedTop = function() {
+    var selectedOptions = $(this).find('option:selected');
+    var first = $(this).children("option").not(":selected").first();
+    $(selectedOptions).insertBefore(first);
+  }
+
+  $.fn.moveSelectedBottom = function() {
+    var selectedOptions = $(this).find('option:selected');
+    var last = $(this).children("option").not(":selected").last();
+    $(selectedOptions).insertAfter(last);
+  }
+  */
+
+  $.fn.moveSelectedDown = function() {
+    var selectedOptions = $(this).find('option:selected');
+    var next = $(selectedOptions).last().next();
+    $(selectedOptions).insertAfter(next);
+  }
+  
+  function moveup() {
+    $("#puntos_de_control").moveSelectedUp();
+  }
+
+  function movedown() {
+    $("#puntos_de_control").moveSelectedDown();
+  }
+  
+  
   function selectall()
   {
     $('#puntos_de_control>option').attr("selected", "selected");
