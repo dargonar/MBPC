@@ -20,7 +20,6 @@
 
 <div id="sueltos" style="display: none;">
   <!-- elements que necesitan estar en el html porque el js necesita la url -->
-  <a id="printver" target="_blank" href="<%= Url.Content("~/Home/reporteDiarioPrint/") %>" style="float:right;margin-right: 17px" > Version para imprimir</a></li>
   <img id="loaderimg" alt="loader" style="position:absolute;top:50%;left:50%;" src="<%= Url.Content("~/img/ajax-loader2.gif") %>" />
 </div>
 

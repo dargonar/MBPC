@@ -34,7 +34,9 @@ namespace mbpc.Controllers
             return RedirectToAction("Index", "Reporte");
           }
 
-          Session["zonas"] = DaoLib.zonas_del_grupo(int.Parse(((Session["grupos"] as List<object>)[0] as Dictionary<string,string>)["GRUPO"]));
+          int grp = int.Parse(((Session["grupos"] as List<object>)[0] as Dictionary<string, string>)["GRUPO"]);
+          Session["grupo"] = grp;
+          Session["zonas"] = DaoLib.zonas_del_grupo(grp);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
@@ -88,6 +90,7 @@ namespace mbpc.Controllers
 
         public ActionResult CambiarGrupo(int grupo)
         {
+          Session["grupo"] = grupo;
           Session["zonas"] = DaoLib.zonas_del_grupo(grupo);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
@@ -137,21 +140,34 @@ namespace mbpc.Controllers
 
         private void obtenerZonas()
         {
-          ViewData["reporte"] = DaoLib.reporte_diario(Session["usuario"] as string);
+          var tmp = DaoLib.reporte_diario(Session["grupo"] as string);
 
+          var reporte_arriba = new Dictionary<string, Dictionary<string,string>>();
+          var reporte_abajo  = new Dictionary<string, Dictionary<string, string>>();
 
-          List<object> zonas = Session["zonas"] as List<object>;
-          zonas.Sort(dictsort);
+          Dictionary<string, Dictionary<string, string>> handler = null;
 
-          for (var i = 0; i < zonas.Count; i++)
+          foreach (Dictionary<string, string> d in tmp)
           {
-            if ((zonas[i] as Dictionary<string, string>)["ID"] == Session["zona"].ToString())
-            {
-              ViewData["entrada"] = ((Dictionary<string, string>)zonas[i])["ENTRADA"];
-            }
+            //Elijo el repote en fincion del sentido del row (aguas arriba/aguas abajo)
+            handler = reporte_arriba;
+            if (d["SENTIDO"] == "0")
+              handler = reporte_abajo;
+
+            //Si no esta este barco para este sentido, lo creo y le asigno el row completo de la data
+            if (!handler.ContainsKey(d["NOMBRE"]))
+              handler[d["NOMBRE"]] = d;
+
+            //Luego le creo una key con el ETA y HRP de esa etapa
+            handler[d["NOMBRE"]]["ETA" + d["PDC"]] = d["ETA"];
+            handler[d["NOMBRE"]]["HRP" + d["PDC"]] = d["HRP"];
           }
+
           
-          ViewData["zonas"] = zonas;
+          ViewData["reporte_arriba"] = reporte_arriba;
+          ViewData["reporte_abajo"] = reporte_abajo;
+
+          ViewData["zonas"] = Session["zonas"];
         }
 
         private static int dictsort(Object aa, Object bb) 

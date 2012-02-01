@@ -1,23 +1,20 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 
     <% 
-      List<object> reporte = ViewData["reporte"] as List<object>;
+      Dictionary<string, Dictionary<string,string>> reporte = null;
       List<object> zonas = ViewData["zonas"] as List<object>;
-      Dictionary<string, string> current, last;
+
       string tabletitle;
-      if (int.Parse(ViewData["entrada"].ToString()) == int.Parse("0"))
+
+      if (ViewData["sentido"] == "1")
       {
-        if (ViewData["sentido"] == "1")
-          tabletitle = "BUQUES DE SUBIDA";
-        else
-          tabletitle = "BUQUES DE BAJADA";
+        tabletitle = "BUQUES DE SUBIDA";
+        reporte = ViewData["reporte_arriba"] as Dictionary<string, Dictionary<string,string>>;
       }
       else
       {
-        if (ViewData["sentido"] == "0")
-          tabletitle = "BUQUES DE ENTRADA";
-        else
-          tabletitle = "BUQUES DE SALIDA";
+        tabletitle = "BUQUES DE BAJADA";
+        reporte = ViewData["reporte_abajo"] as Dictionary<string, Dictionary<string, string>>;
       }
       
     %>
@@ -32,7 +29,7 @@
         <th rowspan="2" scope="col">T.O</th>
         <th rowspan="2" scope="col">CAL.</th>
         <th rowspan="2" scope="col">VEL.</th>
-        <th rowspan="2" scope="col">INICIO<BxR />de ZOE</th>
+        <th rowspan="2" scope="col">INICIO<BR/>de ZOE</th>
         <% foreach (Dictionary<string, string> zona in zonas)
            {
                string nombre = string.Empty;
@@ -46,7 +43,8 @@
         <th rowspan="2" scope="col">OBSEV.</th>
       </tr>
       <tr>
-        <% foreach (Dictionary<string, string> ZONA in zonas)
+        <% 
+           foreach (Dictionary<string, string> ZONA in zonas)
            { %>
             <th>ETA</th>
             <th>HRP</th>
@@ -56,37 +54,10 @@
       <%
         
         //Por todos los resultados de SQL
-        int i = 0;
-        while( i < reporte.Count )
+        foreach(KeyValuePair<string,Dictionary<string,string>> kp in reporte)
         {
-
           //Una fila
-          var row = reporte[i] as Dictionary<string,string>;
-
-          if (row["SENTIDO"].ToString() != ViewData["sentido"].ToString())
-          {
-            i++;
-            continue;
-          }
-          
-          row["ETA"+row["PDC"]] = row["ETA"];
-          row["HRP"+row["PDC"]] = row["HRP"];
-          
-          i++;
-          
-          //Joineo los rows de reportes
-          while( i < reporte.Count )
-          {
-            if ((reporte[i] as Dictionary<string, string>)["NOMBRE"] != row["NOMBRE"])
-              break;
-            
-            var nextrow = reporte[i] as Dictionary<string, string>;
-            row["ETA" + nextrow["PDC"]] = nextrow["ETA"];
-            row["HRP" + nextrow["PDC"]] = nextrow["HRP"];
-            i++;
-          }
-
-          ViewData["row"] = row;
+          ViewData["row"] = kp.Value;
           Html.RenderPartial("_filareporte");
         }
         

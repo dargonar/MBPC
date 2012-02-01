@@ -344,11 +344,11 @@ public static class DaoLib
     return doCall("mbpc.datos_del_usuario", parameters);
   }
 
-  public static List<object> reporte_diario(string usuario)
+  public static List<object> reporte_diario(string grupo)
   {
     var parameters = new OracleParameter[] 
     { 
-        new OracleParameter("vUsuario", OracleDbType.Varchar2, usuario.ToString(), System.Data.ParameterDirection.Input),
+        new OracleParameter("vGrupo", OracleDbType.Varchar2, grupo, System.Data.ParameterDirection.Input),
     };
 
     return doCall("mbpc.reporte_diario", parameters);
