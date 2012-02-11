@@ -18,27 +18,6 @@
 <script type="text/javascript">
   $(document).ready(function () {
 
-  formatter: function muelles(cellvalue, options, rowObject) 
-  {
-      switch(cellvalue)
-          {
-          <%  var dplist = ":Todos;";
-              var dic = new Dictionary<decimal, string>();
-              dic = (Dictionary<decimal, string>)ViewData["muelles"];
-              foreach (var cg in dic)
-              { 
-                  Response.Write(string.Format("case {0} : return \"{1}\";\n", cg.Key, cg.Value ));
-                  dplist += cg.Key + ":" + cg.Value + ";";
-              }
-          %>
-          }
-      return "Desconocido";
-  }
-
-  <% Response.Write("selectvalues = \"" + dplist + "\";"); %>
-
-
-
     $(function () {
       var mygrid = $("#list").jqGrid({
         url: '/viaje/ListJSON',
@@ -47,8 +26,8 @@
         colNames: ['ID', 'Origen', 'Destino', 'Buque', 'Fecha de salida', 'Fecha de llegada', 'ETA', 'ZOE', 'Etapa Actual', 'Estado', 'Notas', 'Viaje Padre', 'Latitud', 'Longitud', 'creado'],  
         colModel: [
       { name: 'ID', index: 'ID', width: 90, hidden: true },
-      { name: 'ORIGEN_ID', index: 'ORIGEN_ID', width: 80, formatter: muelles, stype: 'select', editoptions: { value: selectvalues}},
-      { name: 'DESTINO_ID', index: 'DESTINO_ID', width: 80, formatter: muelles, stype: 'select', editoptions: { value: selectvalues} },
+      { name: 'ORIGEN_ID', index: 'ORIGEN_ID', width: 80},
+      { name: 'DESTINO_ID', index: 'DESTINO_ID', width: 80},
       { name: 'BUQUE_ID', index: 'BUQUE_ID', width: 80 },
 	    { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 80,
 	      searchoptions: {

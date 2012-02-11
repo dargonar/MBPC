@@ -33,7 +33,7 @@ namespace mbpc_admin.Controllers
 
         public ActionResult ListJSON(string sidx, string sord, int page, int rows)
         {
-            var columns = new string[] { "ID", "NRO_ETAPA", "ORIGEN_ID", "ACTUAL_ID", "DESTINO_ID", "HRP", "ETA", "FECHA_SALIDA", "FECHA_LLEGADA", "CREATED_AT" };
+            var columns = new string[] { "ID", "VIAJE_ID", "NRO_ETAPA", "ORIGEN_ID", "ACTUAL_ID", "DESTINO_ID", "HRP", "ETA", "FECHA_SALIDA", "FECHA_LLEGADA", "CREATED_AT" };
 
             var tmp = JQGrid.Helper.PaginageS1<TBL_ETAPA>(Request.Params, columns, page, rows, sidx, sord);
 

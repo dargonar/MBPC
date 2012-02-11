@@ -4,7 +4,7 @@ ALTER TABLE tbl_reporte ADD categoria_id INTEGER;
 CREATE TABLE tbl_reportecategoria (
   id                 INTEGER        NOT NULL,
   nombre             VARCHAR2(64),
-  created_at         DATE           DEFAULT SYSDATE,
+  created_at         DATE           DEFAULT SYSDATE
 )
   STORAGE (
     NEXT       1024 K

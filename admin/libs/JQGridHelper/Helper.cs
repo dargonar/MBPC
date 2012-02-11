@@ -185,7 +185,7 @@ namespace JQGrid
             //marca 3
             var tmp = values.Count;
             //predicate.Append(string.Format("b.{0} >= p{1} and a.{0} <= @p{2} ", key, tmp, tmp+1));
-            predicate.Append(string.Format("to_date(b.{0}) >= to_date(\'{1}\', \'MM/DD/YYYY HH:MI:SS AM\') and to_date(a.{0}) <= to_date(\'{2}\', \'MM/DD/YYYY\')", key, dates[0].ToShortDateString(), dates[1].Date.ToShortDateString()));
+            predicate.Append(string.Format("to_date(b.{0}) >= to_date(\'{1} 00:00\', \'MM/DD/YYYY HH24:MI\') and to_date(b.{0}) <= to_date(\'{2} 23:59\', \'MM/DD/YYYY HH24:MI\')", key, dates[0].ToShortDateString(), dates[1].Date.ToShortDateString()));
             //values.Add( new ObjectParameter(string.Format("p{0}",tmp),dates[0]));
             //values.Add( new ObjectParameter(string.Format("p{0}",tmp),dates[1]));
           }

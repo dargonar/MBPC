@@ -113,6 +113,7 @@
             <ul class="navigation">
               <% if (ViewData["menu"] == "reporte.list") { %><li class="heading selected">Listar </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/List") %>" title="">Listar</a></li> <% } %>
               <% if (ViewData["menu"] == "reporte.new") { %><li class="heading selected">Nuevo </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/New") %>" title="">Nuevo</a></li> <% } %>
+              <% if (ViewData["menu"] == "reporte.categories") { %><li class="heading selected">Categorias </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/Categoria") %>" title="">Categorias</a></li> <% } %>
                 
             </ul>
         </li>

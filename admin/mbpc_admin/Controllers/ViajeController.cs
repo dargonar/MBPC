@@ -17,8 +17,8 @@ namespace mbpc_admin.Controllers
 
         public ActionResult List()
         {
-            ViewData["MUELLES"] = (from d in context.TBL_MUELLES select new { id = d.ID, nombre = d.DESCRIPCION}).ToDictionary(f => f.id, f => f.nombre);
-            ViewData["menu"] = "viaje";  
+          //ViewData["MUELLES"] = (from d in context.TBL_MUELLES select new { id = d.ID, nombre = d.DESCRIPCION}).ToDictionary(f => f.id, f => f.nombre);
+          ViewData["menu"] = "viaje";  
           return View();
         }
 

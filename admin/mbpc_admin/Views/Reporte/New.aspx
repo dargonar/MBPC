@@ -98,7 +98,16 @@
                 <br />
                 <span class="smltxt red"><%: Html.ValidationMessage("NOMBRE")%></span>
             </p>
+
+            <p>
+                <%: Html.Label("CATEGORIA")%>
+                <%= Html.DropDownList("CATEGORIA_ID", (SelectList)ViewData["combocat"])%>
+                <br />
+                <span class="smltxt red"><%: Html.ValidationMessage("CATEGORIA_ID")%></span>
+            </p>
             
+            
+
             <p>
                 <%: Html.Label("DESCRIPCION")%>
                 <%: Html.TextArea("DESCRIPCION", String.Format("{0:F}", Model.DESCRIPCION), 2, 5, new { @class = "inputbox wider" })%>

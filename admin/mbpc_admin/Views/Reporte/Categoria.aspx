@@ -1,9 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
-<%@ import Namespace="JQGridHelper" %>
-
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Cargas
+	Reportes
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -15,50 +13,41 @@
           </div>
     <%} %>
 
-    <h2>Cargas de la etapa <%= ViewData["titulo"] %></h2><br />
-    <table id="list"><tr><td/></tr></table> 
-    <div id="pager"></div> 
-    <div id="filter" style="display:none">Search Invoices</div>
+    <h2>Listado de reportes</h2><br />
+
+<table id="list"><tr><td/></tr></table> 
+<div id="pager"></div>
+<!--div id="filter" style="display:none">Search Invoices</div-->
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
 
 <script type="text/javascript">
-
-  var referenceId = <%= ViewData["referenceId"] == null ? "null" : "'" + ViewData["referenceId"] + "'"%>;
      
-  <%=Html.ComboFilter("tipodecargas") %>
-  <%=Html.ComboFilter("unidades") %>
-
   $(document).ready(function () {
-
 
     $(function () {
       var mygrid = $("#list").jqGrid({
-        url: '/carga/ListJson',
+        url: '/Reporte/ListCategoriaJson',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ["ID",	"TIPOCARGA_ID" , "CANTIDAD" ,	"UNIDAD_ID", "ETAPA_ID", "BUQUE_ID"],  
+        colNames: ["Id", "Nombre"],  
         colModel: [
-      { name: 'ID', index: 'ID', width: 90, hidden: true },
-      { name: 'TIPOCARGA_ID', index: 'TIPOCARGA_ID', width: 90, formatter: tipodecargas, stype: 'select', editoptions: { value: tipodecargas_edit}},
-      { name: 'CANTIDAD', index: 'CANTIDAD', width: 80 },
-      { name: 'UNIDAD_ID', index: 'UNIDAD_ID', width: 80, formatter: unidades, stype: 'select', editoptions: { value: unidades_edit} },
-      { name: 'ETAPA_ID', index: 'ETAPA_ID', width: 80 },
-	    { name: 'BUQUE_ID', index: 'BUQUE_ID', width: 80 }
+      { name: 'ID', index: 'ID', width: 10 },
+      { name: 'NOMBRE', index: 'NOMBRE', width: 90}
     ],
         pager: '#pager',
-
+        rowNum: 20,
         rowList: [10, 20, 30],
+        sortname: 'nombre',
+        sortorder: 'desc',
         viewrecords: true,
         gridview: true,
         autowidth: true,
-        width: 800,
         height: 400,
-        caption: 'Cargas',
-        <%= Html.RestoreJQState("cargas") %>
-        search: referenceId != null ? true : false,
-        postData: referenceId != null ? { ETAPA_ID: referenceId} : {}
+        caption: 'Categorias',
+        search: true,
       });
 
       mygrid.filterToolbar({
@@ -69,44 +58,42 @@
         del: false,
         search: false
       }).navButtonAdd('#pager', {
-        caption: "Nueva Carga",
+        caption: "Nuevo",
         buttonicon: "ui-icon-add",
         onClickButton: function () {
-            window.location = '/Carga/New?etapa_id='+referenceId;
+            window.location = '/Reporte/NewCategory';
         },
         position: "last"
       }).navButtonAdd('#pager', {
-        caption: "Editar Carga",
-        buttonicon: "ui-icon-add",
+        caption: "Editar",
+        buttonicon: "ui-icon-edit",
         onClickButton: function () {
             var gsr = mygrid.getGridParam('selrow');
             if (!gsr){
-            alert("Debe elegir una carga");
-            return;
+              alert("Debe elegir una categoria");
+              return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/Carga/Edit?ID='+id;
+            window.location = '/Reporte/EditCategory?id='+id;
         },
         position: "last"
       }).navButtonAdd('#pager', {
-        caption: "Borrar Carga",
-        buttonicon: "ui-icon-add",
+        caption: "Borrar",
+        buttonicon: "ui-icon-del",
         onClickButton: function () {
             var gsr = mygrid.getGridParam('selrow');
             if (!gsr){
-            alert("Debe elegir una carga");
+            alert("Debe elegir un reporte");
             return;
             }
-            if (!confirm("¿Esta seguro de eliminar esta carga?"))
+            if (!confirm("¿Esta seguro de eliminar esta categoria?"))
                 return;
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/Carga/Remove?ID='+id;
+            window.location = '/Reporte/RemoveCategory?ID='+id;
         },
         position: "last"
       });
     });
-
-    <%=Html.RestoreJQStateScript("carga", true)%>
 
   });
 </script>

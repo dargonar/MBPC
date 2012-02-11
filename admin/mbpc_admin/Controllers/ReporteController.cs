@@ -14,6 +14,14 @@ namespace mbpc_admin.Controllers
 {
     public class ReporteController : MyController
     {
+      public ActionResult Categoria()
+      {
+        ViewData["menu"] = "reporte.categories";
+        checkFlash();
+        
+        return View("Categoria");
+      }
+
       public ActionResult List()
       {
         //ViewData["reportes"] = (from c in context.TBL_REPORTE  select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
@@ -27,6 +35,16 @@ namespace mbpc_admin.Controllers
         ViewData["menu"] = "reporte.new";
         ViewData["titulo"] = "Nuevo Reporte";
         var item = this.getNewReporte(null);
+
+        ViewData["combocat"] = CreateCategoriesComboBox(item);
+        return View(item);
+      }
+
+      public ActionResult NewCategory()
+      {
+        ViewData["menu"] = "reporte.newcat";
+        ViewData["titulo"] = "Nueva categoria";
+        var item = new TBL_REPORTECATEGORIA();
         return View(item);
       }
 
@@ -72,10 +90,74 @@ namespace mbpc_admin.Controllers
 
         ViewData["menu"] = "reporte.edit";
         ViewData["titulo"] = "Editar Reporte '<b>"+item.NOMBRE+"</b>'";
+        
+        ViewData["combocat"] = CreateCategoriesComboBox(item);
 
         return View("New", item);
       }
 
+      public ActionResult EditCategory(decimal id)
+      {
+        
+        var item = context.TBL_REPORTECATEGORIA.Where(rc => rc.ID== id).First();
+
+        ViewData["menu"] = "reporte.editcategory";
+        ViewData["titulo"] = "Editar Categoria '<b>"+item.NOMBRE+"</b>'";
+        
+        return View("NewCategory", item);
+      }
+
+      
+
+      public SelectList CreateCategoriesComboBox(TBL_REPORTE rep)
+      {
+
+        List<object> newList = new List<object>();
+        foreach (var cat in context.TBL_REPORTECATEGORIA)
+          newList.Add(new
+          {
+            id = cat.ID,
+            nombre = cat.NOMBRE
+          });
+
+        return new SelectList(newList, "id", "nombre", Convert.ToInt32(rep.CATEGORIA_ID));
+      }
+
+
+      public ActionResult CreateCategory(TBL_REPORTECATEGORIA repcat)
+      {
+        try
+        {
+          decimal reporte_id = repcat.ID;
+          if (!ModelState.IsValid)
+          {
+            FlashError("Revise los campos");
+            return View("NewCategory", repcat);
+          }
+
+
+          if (repcat.ID > 0)
+          {
+            var updatedItem = context.TBL_REPORTECATEGORIA.Where(rc => rc.ID == repcat.ID).SingleOrDefault();
+            updatedItem.SimpleCopyFrom(repcat, new string[] { "ID", "NOMBRE", "CREATED_AT"});
+            repcat = updatedItem;
+          }
+          else
+          {
+            context.TBL_REPORTECATEGORIA.AddObject(repcat);
+          }
+
+          context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+          FlashErrorIntraSession("La acción no se ejecutó correctamente. Error:" + ex.Message);
+          return RedirectToAction("NewCategory", "Reporte", repcat);
+        }
+
+        FlashOKIntraSession("La categoria fue guardada correctamente.");
+        return RedirectToAction("Categoria", "Reporte");
+      }
 
       public ActionResult Create(TBL_REPORTE reporte)
       {
@@ -102,7 +184,7 @@ namespace mbpc_admin.Controllers
                 context.DeleteObject(param);
 
               var updatedItem = context.TBL_REPORTE.Where(c => c.ID == reporte.ID).SingleOrDefault();
-              updatedItem.SimpleCopyFrom(reporte, new string[] { "ID", "NOMBRE", "CONSULTA_SQL", "DESCRIPCION" });
+              updatedItem.SimpleCopyFrom(reporte, new string[] { "ID", "NOMBRE", "CONSULTA_SQL", "DESCRIPCION", "CATEGORIA_ID" });
               reporte = updatedItem;
             }
             else
@@ -162,15 +244,29 @@ namespace mbpc_admin.Controllers
         }
       }
       
-      public ActionResult ListJSON(string sidx, string sort, int page, int rows)
+      public ActionResult ListJSON(string sidx, string sord, int page, int rows)
       {
         var columns = new string[] { "NOMBRE", "DESCRIPCION", "FECHA_CREACION", "ID" };
 
-        var tmp = JQGrid.Helper.PaginageS1<TBL_REPORTE>(Request.Params, columns, page, rows, sidx, sort);
+        var tmp = JQGrid.Helper.PaginageS1<TBL_REPORTE>(Request.Params, columns, page, rows, sidx, sord);
 
         var items = context.ExecuteStoreQuery<TBL_REPORTE>((string)tmp[0], (ObjectParameter[])tmp[1]);
         
         return Json(JQGrid.Helper.PaginateS2<TBL_REPORTE>(
+          items.ToArray(),
+          columns, context.TBL_REPORTE.Count(), page, rows
+          ), JsonRequestBehavior.AllowGet);
+      }
+
+      public ActionResult ListCategoriaJson(string sidx, string sord, int page, int rows)
+      {
+        var columns = new string[] { "ID", "NOMBRE" };
+
+        var tmp = JQGrid.Helper.PaginageS1<TBL_REPORTECATEGORIA>(Request.Params, columns, page, rows, sidx, sord);
+
+        var items = context.ExecuteStoreQuery<TBL_REPORTECATEGORIA>((string)tmp[0], (ObjectParameter[])tmp[1]);
+
+        return Json(JQGrid.Helper.PaginateS2<TBL_REPORTECATEGORIA>(
           items.ToArray(),
           columns, context.TBL_REPORTE.Count(), page, rows
           ), JsonRequestBehavior.AllowGet);
@@ -206,5 +302,23 @@ namespace mbpc_admin.Controllers
         
         
       }
+
+      public ActionResult RemoveCategory(int id)
+      {
+        FlashOK("La categoria fue eliminada");
+
+        try
+        {
+          context.DeleteObject(context.TBL_REPORTECATEGORIA.Where(rc => rc.ID == id).FirstOrDefault());
+          context.SaveChanges();
+        }
+        catch
+        {
+          FlashError("Error borrando la categoria");
+        }
+        return Categoria();
+      }
+
+
     }
 }

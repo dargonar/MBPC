@@ -935,9 +935,10 @@ create or replace package body mbpc as
     --hack--
     --Si es la etapa 1 le pongo a la etapa 0 el sentido que tiene la 1
     --esto es para que en el reporte diario quede como que "venia andando"
-    IF etapa.nro_etapa = 1 THEN
-      update tbl_etapa set sentido=etapa.sentido where id=temp;
-    END IF;
+    --IF etapa.nro_etapa = 1 THEN
+    --  select * into etapa from tbl_etapa where id=etapa.id;
+    --  update tbl_etapa set sentido=etapa.sentido where id=temp;
+    --END IF;
     --end hack--
     
     insert into tbl_cargaetapa ( id, tipocarga_id, CANTIDAD_ENTRADA, CANTIDAD_SALIDA, CANTIDAD_INICIAL, CANTIDAD, unidad_id, etapa_id, buque_id ) 

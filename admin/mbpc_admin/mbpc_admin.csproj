@@ -184,6 +184,8 @@
     <Content Include="Views\Puntodecontrol\List.aspx" />
     <Content Include="Views\Puntodecontrol\New.aspx" />
     <Content Include="Views\Puntodecontrol\NewAsig.aspx" />
+    <Content Include="Views\Reporte\Categoria.aspx" />
+    <Content Include="Views\Reporte\NewCategory.aspx" />
     <Content Include="Views\Reporte\Create.aspx" />
     <Content Include="Views\Reporte\List.aspx" />
     <Content Include="Views\Reporte\New.aspx" />
