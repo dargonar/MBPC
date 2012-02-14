@@ -190,7 +190,6 @@ namespace mbpc.Controllers
 
         public JsonResult Version()
         {
-          System.Threading.Thread.Sleep(1500);
           return Json(HomeController.VERSION, JsonRequestBehavior.AllowGet);
         }
 
