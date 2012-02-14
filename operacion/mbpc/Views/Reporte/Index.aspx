@@ -75,6 +75,11 @@
 
       $("#fullscreen").show();
 
+
+      if ($(this).val() == "150001") {
+
+      }
+
       $.ajax({
         cache: false,
         url: '<%= Url.Content("~/Reporte/ParamsFor/")%>' + $(this).val(),
@@ -143,6 +148,10 @@
              <option value="<%= reporte["ID"] %>"><%= reporte["NOMBRE"] %></option>
        <%} 
       %>
+      <optgroup label="Custom">
+        <option value="150001">Historico de viaje</option>
+        <option value="150002">Listado de Viajes</option>
+      </optgroup>
       </select><br /><br />
       <div style="clear:both;"></div>
       

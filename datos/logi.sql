@@ -1370,7 +1370,8 @@ create or replace package body mbpc as
     insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL ) 
     VALUES ( carga_seq.nextval, vCarga, vCantidad, vUnidad, vEtapa, vBuque, vEnTransito, vCantidad) returning id into temp; 
     
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, 4, temp, SYSDATE);
     
   end insertar_carga;  
   

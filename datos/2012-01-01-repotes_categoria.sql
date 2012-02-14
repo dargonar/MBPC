@@ -48,3 +48,9 @@ ALTER TABLE tbl_reporte
 
 INSERT INTO tbl_reportecategoria (nombre) VALUES ('General');
 UPDATE tbl_reporte SET categoria_id=1;
+
+
+ALTER TABLE tbl_reporte ADD consulta_sql2 CLOB;
+UPDATE tbl_reporte SET consulta_sql2=consulta_sql;
+ALTER TABLE tbl_reporte DROP COLUMN consulta_sql;
+ALTER TABLE tbl_reporte rename COLUMN consulta_sql2 TO consulta_sql;
