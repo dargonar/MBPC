@@ -9,6 +9,7 @@ create or replace package mbpc as
   usuario int_usuarios%ROWTYPE;
   usuario2 vw_int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
+  etapa2 tbl_etapa%ROWTYPE;
   cetapa tbl_cargaetapa%ROWTYPE;
   practicoviaje tbl_practicoviaje%ROWTYPE;
   viaje tbl_viaje%ROWTYPE;
@@ -77,7 +78,7 @@ create or replace package mbpc as
   --Cargas  
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
   procedure descargar_barcaza_batch(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number);
-  procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur);
+  procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, vBarcaza in varchar2, usrid in number, vCursor out cur);
   procedure barcazas_utilizadas(usrid in number, vCursor out cur);
   procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_cargas_nobarcazas( vEtapaId in varchar2, usrid in number, vCursor out cur);
@@ -1080,8 +1081,8 @@ create or replace package body mbpc as
     insert into tbl_practicoviaje (viaje_id, etapa_subida, practico_id, fecha_subida, activo) 
     values( etapa.viaje_id, etapa.id, vPractico, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), 0);
 
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, fecha) 
-    VALUES (etapa.viaje_id, etapa.id, usrid, 16, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'));
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, practico_id, tipo_id, fecha) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, vPractico, 16, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'));
   
   end agregar_practico;
 
@@ -1136,14 +1137,14 @@ create or replace package body mbpc as
   
   -------------------------------------------------------------------------------------------------------------
   --
-  procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, usrid in number, vCursor out cur) is
+  procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, vBarcaza in varchar2, usrid in number, vCursor out cur) is
   begin
     select * into etapa from tbl_etapa where id = vEtapa;
     
-    update tbl_cargaetapa set buque_id=vBuque where etapa_id=vEtapa;
+    update tbl_cargaetapa set buque_id=vBuque where etapa_id=vEtapa and buque_id=vBarcaza;
     
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, buque_id, fecha) 
-                VALUES (etapa.viaje_id, etapa.id, usrid, 25, vBuque, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, buque_id, barcaza_id, fecha) 
+                VALUES (etapa.viaje_id, etapa.id, usrid, 25, vBuque, vBarcaza, SYSDATE);
   
   end corregir_barcaza;
   -------------------------------------------------------------------------------------------------------------
@@ -1260,6 +1261,8 @@ create or replace package body mbpc as
         --Etapa actual del viaje duen/o de la barcaza
         select max(etapa_id) into eorig from tbl_cargaetapa where buque_id=vBarcaza;
         
+        --Tomo el viaje destino
+        
         --Etapa destino
         edest := vEtapa;
 
@@ -1271,14 +1274,18 @@ create or replace package body mbpc as
           loop
             
             --Indico que a este viaje se le fueron estas barcazas
-            select * into etapa from tbl_etapa where id = eorig;
-            insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha)
-            VALUES (etapa.viaje_id, etapa.id, usrid, 11, vBarcaza, carga.id, SYSDATE);
+            select * into etapa  from tbl_etapa where id = eorig;
+            select * into etapa2 from tbl_etapa where id = edest;
+            
+            insert into tbl_evento (viaje_id, viaje2_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha)
+            VALUES (etapa.viaje_id, etapa2.viaje_id, etapa.id, usrid, 11, vBarcaza, carga.id, SYSDATE);
             
             --Indico que este viaje recibio estas barcazas
-            select * into etapa from tbl_etapa where id = edest;
-            insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha)
-            VALUES (etapa.viaje_id, etapa.id, usrid, 10, vBarcaza, carga.id, SYSDATE);
+            
+            insert into tbl_evento (viaje_id, viaje2_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha)
+            VALUES (etapa2.viaje_id, etapa.viaje_id, etapa2.id, usrid, 10, vBarcaza, carga.id, SYSDATE);
+          
+            EXIT;
           
           END LOOP;
           
@@ -1393,7 +1400,8 @@ create or replace package body mbpc as
       cantidad         = (cetapa.cantidad_inicial + temp - temp2) 
     where id = vCarga returning id into temp;
       
-    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) VALUES (etapa.viaje_id, etapa.id, usrid, 5, temp, SYSDATE);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha) 
+    VALUES (etapa.viaje_id, etapa.id, usrid, 5, temp, SYSDATE);
   end modificar_carga;
 
   -------------------------------------------------------------------------------------------------------------
@@ -1419,6 +1427,7 @@ create or replace package body mbpc as
       
       --Traigo la unica etapa del viaje falso que tenia a la barcaza como cargas
       select * into etapa from tbl_etapa where viaje_id=temp;
+      select * into viaje from tbl_viaje where id=temp;
       
       --Cambio las cargas al nuevo viaje (etapa actual = vEtapaId)
       update tbl_cargaetapa set etapa_id=vEtapaId where etapa_id=etapa.id;

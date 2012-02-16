@@ -54,3 +54,5 @@ ALTER TABLE tbl_reporte ADD consulta_sql2 CLOB;
 UPDATE tbl_reporte SET consulta_sql2=consulta_sql;
 ALTER TABLE tbl_reporte DROP COLUMN consulta_sql;
 ALTER TABLE tbl_reporte rename COLUMN consulta_sql2 TO consulta_sql;
+
+ALTER TABLE tbl_evento ADD viaje2_id integer

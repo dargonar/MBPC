@@ -5066,7 +5066,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NewModel" ZoomLevel="40">
+      <Diagram Name="NewModel" ZoomLevel="85">
         <EntityTypeShape EntityType="NewModel.DEMO_CUSTOMERS" Width="1.5" PointX="12.75" PointY="1" Height="3.071432291666667" IsExpanded="true" />
         <EntityTypeShape EntityType="NewModel.DEMO_ORDERS" Width="1.5" PointX="15" PointY="1.375" Height="2.2496956380208335" IsExpanded="true" />
         <EntityTypeShape EntityType="NewModel.DEMO_ORDER_ITEMS" Width="1.5" PointX="17.25" PointY="1.5" Height="2.0853483072916656" IsExpanded="true" />
