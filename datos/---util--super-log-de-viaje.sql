@@ -159,7 +159,7 @@ SELECT t.created_at fecha, t.id, t.tipo_id tipo, CASE
 
  FROM tbl_evento t
 
- WHERE viaje_id=85
+ WHERE viaje_id=:p1
  ORDER BY t.created_at
 
 

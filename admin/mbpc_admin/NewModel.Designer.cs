@@ -18,44 +18,38 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("NewModel", "DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.DEMO_CUSTOMERS), "DEMO_ORDERS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.DEMO_ORDERS), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "DEMO_ORDERS_USER_ID_FK", "DEMO_USERS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.DEMO_USERS), "DEMO_ORDERS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.DEMO_ORDERS), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.DEMO_ORDERS), "DEMO_ORDER_ITEMS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.DEMO_ORDER_ITEMS), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.DEMO_PRODUCT_INFO), "DEMO_ORDER_ITEMS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.DEMO_ORDER_ITEMS), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C006991", "DEPT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.DEPT), "EMP", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.EMP), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C006990", "EMP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.EMP), "EMP1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.EMP), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_TBL_USUARIO", "INT_USUARIOS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.INT_USUARIOS), "TBL_PUNTODECONTROLUSUARIO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROLUSUARIO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007236", "INT_USUARIOS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.INT_USUARIOS), "TBL_USUARIOGRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_USUARIOGRUPO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013764", "INT_USUARIOS", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.INT_USUARIOS), "TBL_USUARIOGRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_USUARIOGRUPO), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_RIO_CANAL", "RIOS_CANALES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.RIOS_CANALES), "RIOS_CANALES_KM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.RIOS_CANALES_KM), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_RIOS_CANALES", "RIOS_CANALES_KM", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.RIOS_CANALES_KM), "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROL), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007221", "RIOS_CANALES_KM", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.RIOS_CANALES_KM), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013779", "RIOS_CANALES_KM", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.RIOS_CANALES_KM), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_PROPBUQ_MATRI", "TBL_BQ_BUQUES", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_BQ_BUQUES), "TBL_BQ_PROPBUQ", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_BQ_PROPBUQ), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007216", "TBL_CAPITAN", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_CAPITAN), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007210", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_ETAPA), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007211", "TBL_TIPO_CARGA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_TIPO_CARGA), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007212", "TBL_UNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_UNIDAD), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013786", "TBL_CAPITAN", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_CAPITAN), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013776", "TBL_TIPO_CARGA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_TIPO_CARGA), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013777", "TBL_UNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_UNIDAD), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013778", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_ETAPA), "TBL_CARGAETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CARGAETAPA), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_PUNTODECONTROL1", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_CONEXIONPUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CONEXIONPUNTODECONTROL), true)]
 [assembly: EdmRelationshipAttribute("NewModel", "FK_PUNTODECONTROL2", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_CONEXIONPUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_CONEXIONPUNTODECONTROL), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007215", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007217", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007218", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007219", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_VIAJE), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007220", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007441", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007442", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007222", "TBL_TIPOEVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_TIPOEVENTO), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007223", "TBL_GRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_GRUPO), "TBL_GRUPOPUNTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_GRUPOPUNTO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007235", "TBL_GRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_GRUPO), "TBL_USUARIOGRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_USUARIOGRUPO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007224", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_GRUPOPUNTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_GRUPOPUNTO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007225", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_VIAJE), "TBL_PBIP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PBIP), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007444", "TBL_PRACTICO", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PRACTICO), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007443", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_VIAJE), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007228", "TBL_ZONAS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ZONAS), "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROL), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007230", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_PUNTODECONTROLUSUARIO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROLUSUARIO), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007232", "TBL_REPORTE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_REPORTE), "TBL_REPORTE_PARAM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_REPORTE_PARAM), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007488", "TBL_REPORTECATEGORIA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_REPORTECATEGORIA), "TBL_REPORTE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_REPORTE), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007233", "TBL_TIPO_CARGA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_TIPO_CARGA), "TBL_TIPOCARGAUNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_TIPOCARGAUNIDAD), true)]
-[assembly: EdmRelationshipAttribute("NewModel", "SYS_C007234", "TBL_UNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_UNIDAD), "TBL_TIPOCARGAUNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_TIPOCARGAUNIDAD), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013771", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013772", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013780", "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ETAPA), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013782", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_VIAJE), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013783", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013784", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013785", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_ETAPA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_ETAPA), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013781", "TBL_TIPOEVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_TIPOEVENTO), "TBL_EVENTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_EVENTO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013765", "TBL_GRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_GRUPO), "TBL_USUARIOGRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_USUARIOGRUPO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013794", "TBL_GRUPO", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_GRUPO), "TBL_GRUPOPUNTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_GRUPOPUNTO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013793", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_GRUPOPUNTO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_GRUPOPUNTO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013788", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_VIAJE), "TBL_PBIP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PBIP), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013769", "TBL_PRACTICO", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PRACTICO), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013770", "TBL_VIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_VIAJE), "TBL_PRACTICOVIAJE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PRACTICOVIAJE), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013768", "TBL_ZONAS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_ZONAS), "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROL), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013792", "TBL_PUNTODECONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_PUNTODECONTROL), "TBL_PUNTODECONTROLUSUARIO", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_PUNTODECONTROLUSUARIO), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013766", "TBL_REPORTE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(mbpc_admin.TBL_REPORTE), "TBL_REPORTE_PARAM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_REPORTE_PARAM), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013803", "TBL_REPORTECATEGORIA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_REPORTECATEGORIA), "TBL_REPORTE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_REPORTE), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013789", "TBL_TIPO_CARGA", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_TIPO_CARGA), "TBL_TIPOCARGAUNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_TIPOCARGAUNIDAD), true)]
+[assembly: EdmRelationshipAttribute("NewModel", "SYS_C0013790", "TBL_UNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(mbpc_admin.TBL_UNIDAD), "TBL_TIPOCARGAUNIDAD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(mbpc_admin.TBL_TIPOCARGAUNIDAD), true)]
 
 #endregion
 
@@ -106,118 +100,6 @@ namespace mbpc_admin
         #endregion
     
         #region ObjectSet Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEMO_CUSTOMERS> DEMO_CUSTOMERS
-        {
-            get
-            {
-                if ((_DEMO_CUSTOMERS == null))
-                {
-                    _DEMO_CUSTOMERS = base.CreateObjectSet<DEMO_CUSTOMERS>("DEMO_CUSTOMERS");
-                }
-                return _DEMO_CUSTOMERS;
-            }
-        }
-        private ObjectSet<DEMO_CUSTOMERS> _DEMO_CUSTOMERS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEMO_ORDERS> DEMO_ORDERS
-        {
-            get
-            {
-                if ((_DEMO_ORDERS == null))
-                {
-                    _DEMO_ORDERS = base.CreateObjectSet<DEMO_ORDERS>("DEMO_ORDERS");
-                }
-                return _DEMO_ORDERS;
-            }
-        }
-        private ObjectSet<DEMO_ORDERS> _DEMO_ORDERS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEMO_ORDER_ITEMS> DEMO_ORDER_ITEMS
-        {
-            get
-            {
-                if ((_DEMO_ORDER_ITEMS == null))
-                {
-                    _DEMO_ORDER_ITEMS = base.CreateObjectSet<DEMO_ORDER_ITEMS>("DEMO_ORDER_ITEMS");
-                }
-                return _DEMO_ORDER_ITEMS;
-            }
-        }
-        private ObjectSet<DEMO_ORDER_ITEMS> _DEMO_ORDER_ITEMS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEMO_PRODUCT_INFO> DEMO_PRODUCT_INFO
-        {
-            get
-            {
-                if ((_DEMO_PRODUCT_INFO == null))
-                {
-                    _DEMO_PRODUCT_INFO = base.CreateObjectSet<DEMO_PRODUCT_INFO>("DEMO_PRODUCT_INFO");
-                }
-                return _DEMO_PRODUCT_INFO;
-            }
-        }
-        private ObjectSet<DEMO_PRODUCT_INFO> _DEMO_PRODUCT_INFO;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEMO_USERS> DEMO_USERS
-        {
-            get
-            {
-                if ((_DEMO_USERS == null))
-                {
-                    _DEMO_USERS = base.CreateObjectSet<DEMO_USERS>("DEMO_USERS");
-                }
-                return _DEMO_USERS;
-            }
-        }
-        private ObjectSet<DEMO_USERS> _DEMO_USERS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DEPT> DEPTs
-        {
-            get
-            {
-                if ((_DEPTs == null))
-                {
-                    _DEPTs = base.CreateObjectSet<DEPT>("DEPTs");
-                }
-                return _DEPTs;
-            }
-        }
-        private ObjectSet<DEPT> _DEPTs;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<EMP> EMPs
-        {
-            get
-            {
-                if ((_EMPs == null))
-                {
-                    _EMPs = base.CreateObjectSet<EMP>("EMPs");
-                }
-                return _EMPs;
-            }
-        }
-        private ObjectSet<EMP> _EMPs;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -346,54 +228,6 @@ namespace mbpc_admin
             }
         }
         private ObjectSet<RIOS_CANALES_KM> _RIOS_CANALES_KM;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<SN_PERSONAL> SN_PERSONAL
-        {
-            get
-            {
-                if ((_SN_PERSONAL == null))
-                {
-                    _SN_PERSONAL = base.CreateObjectSet<SN_PERSONAL>("SN_PERSONAL");
-                }
-                return _SN_PERSONAL;
-            }
-        }
-        private ObjectSet<SN_PERSONAL> _SN_PERSONAL;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<SN_USUARIOS_EXT> SN_USUARIOS_EXT
-        {
-            get
-            {
-                if ((_SN_USUARIOS_EXT == null))
-                {
-                    _SN_USUARIOS_EXT = base.CreateObjectSet<SN_USUARIOS_EXT>("SN_USUARIOS_EXT");
-                }
-                return _SN_USUARIOS_EXT;
-            }
-        }
-        private ObjectSet<SN_USUARIOS_EXT> _SN_USUARIOS_EXT;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<SN_USUARIOS_PNA> SN_USUARIOS_PNA
-        {
-            get
-            {
-                if ((_SN_USUARIOS_PNA == null))
-                {
-                    _SN_USUARIOS_PNA = base.CreateObjectSet<SN_USUARIOS_PNA>("SN_USUARIOS_PNA");
-                }
-                return _SN_USUARIOS_PNA;
-            }
-        }
-        private ObjectSet<SN_USUARIOS_PNA> _SN_USUARIOS_PNA;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -698,6 +532,22 @@ namespace mbpc_admin
             }
         }
         private ObjectSet<TBL_MUELLES> _TBL_MUELLES;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TBL_PAISES_CIALA> TBL_PAISES_CIALA
+        {
+            get
+            {
+                if ((_TBL_PAISES_CIALA == null))
+                {
+                    _TBL_PAISES_CIALA = base.CreateObjectSet<TBL_PAISES_CIALA>("TBL_PAISES_CIALA");
+                }
+                return _TBL_PAISES_CIALA;
+            }
+        }
+        private ObjectSet<TBL_PAISES_CIALA> _TBL_PAISES_CIALA;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1022,18 +872,18 @@ namespace mbpc_admin
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<BUQUE> BUQUES
+        public ObjectSet<BUQUE> BUQUEs
         {
             get
             {
-                if ((_BUQUES == null))
+                if ((_BUQUEs == null))
                 {
-                    _BUQUES = base.CreateObjectSet<BUQUE>("BUQUES");
+                    _BUQUEs = base.CreateObjectSet<BUQUE>("BUQUEs");
                 }
-                return _BUQUES;
+                return _BUQUEs;
             }
         }
-        private ObjectSet<BUQUE> _BUQUES;
+        private ObjectSet<BUQUE> _BUQUEs;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1050,6 +900,22 @@ namespace mbpc_admin
             }
         }
         private ObjectSet<MBPC_SIGO> _MBPC_SIGO;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<VIEW_ETAPAS> VIEW_ETAPAS
+        {
+            get
+            {
+                if ((_VIEW_ETAPAS == null))
+                {
+                    _VIEW_ETAPAS = base.CreateObjectSet<VIEW_ETAPAS>("VIEW_ETAPAS");
+                }
+                return _VIEW_ETAPAS;
+            }
+        }
+        private ObjectSet<VIEW_ETAPAS> _VIEW_ETAPAS;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1151,62 +1017,6 @@ namespace mbpc_admin
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the DEMO_CUSTOMERS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEMO_CUSTOMERS(DEMO_CUSTOMERS dEMO_CUSTOMERS)
-        {
-            base.AddObject("DEMO_CUSTOMERS", dEMO_CUSTOMERS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DEMO_ORDERS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEMO_ORDERS(DEMO_ORDERS dEMO_ORDERS)
-        {
-            base.AddObject("DEMO_ORDERS", dEMO_ORDERS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DEMO_ORDER_ITEMS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEMO_ORDER_ITEMS(DEMO_ORDER_ITEMS dEMO_ORDER_ITEMS)
-        {
-            base.AddObject("DEMO_ORDER_ITEMS", dEMO_ORDER_ITEMS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DEMO_PRODUCT_INFO EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEMO_PRODUCT_INFO(DEMO_PRODUCT_INFO dEMO_PRODUCT_INFO)
-        {
-            base.AddObject("DEMO_PRODUCT_INFO", dEMO_PRODUCT_INFO);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DEMO_USERS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEMO_USERS(DEMO_USERS dEMO_USERS)
-        {
-            base.AddObject("DEMO_USERS", dEMO_USERS);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DEPTs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDEPTs(DEPT dEPT)
-        {
-            base.AddObject("DEPTs", dEPT);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the EMPs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToEMPs(EMP eMP)
-        {
-            base.AddObject("EMPs", eMP);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INT_SISTEMAS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINT_SISTEMAS(INT_SISTEMAS iNT_SISTEMAS)
@@ -1268,30 +1078,6 @@ namespace mbpc_admin
         public void AddToRIOS_CANALES_KM(RIOS_CANALES_KM rIOS_CANALES_KM)
         {
             base.AddObject("RIOS_CANALES_KM", rIOS_CANALES_KM);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the SN_PERSONAL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSN_PERSONAL(SN_PERSONAL sN_PERSONAL)
-        {
-            base.AddObject("SN_PERSONAL", sN_PERSONAL);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the SN_USUARIOS_EXT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSN_USUARIOS_EXT(SN_USUARIOS_EXT sN_USUARIOS_EXT)
-        {
-            base.AddObject("SN_USUARIOS_EXT", sN_USUARIOS_EXT);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the SN_USUARIOS_PNA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSN_USUARIOS_PNA(SN_USUARIOS_PNA sN_USUARIOS_PNA)
-        {
-            base.AddObject("SN_USUARIOS_PNA", sN_USUARIOS_PNA);
         }
     
         /// <summary>
@@ -1444,6 +1230,14 @@ namespace mbpc_admin
         public void AddToTBL_MUELLES(TBL_MUELLES tBL_MUELLES)
         {
             base.AddObject("TBL_MUELLES", tBL_MUELLES);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TBL_PAISES_CIALA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTBL_PAISES_CIALA(TBL_PAISES_CIALA tBL_PAISES_CIALA)
+        {
+            base.AddObject("TBL_PAISES_CIALA", tBL_PAISES_CIALA);
         }
     
         /// <summary>
@@ -1607,11 +1401,11 @@ namespace mbpc_admin
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the BUQUES EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the BUQUEs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToBUQUES(BUQUE bUQUE)
+        public void AddToBUQUEs(BUQUE bUQUE)
         {
-            base.AddObject("BUQUES", bUQUE);
+            base.AddObject("BUQUEs", bUQUE);
         }
     
         /// <summary>
@@ -1620,6 +1414,14 @@ namespace mbpc_admin
         public void AddToMBPC_SIGO(MBPC_SIGO mBPC_SIGO)
         {
             base.AddObject("MBPC_SIGO", mBPC_SIGO);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the VIEW_ETAPAS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToVIEW_ETAPAS(VIEW_ETAPAS vIEW_ETAPAS)
+        {
+            base.AddObject("VIEW_ETAPAS", vIEW_ETAPAS);
         }
     
         /// <summary>
@@ -2356,1842 +2158,6 @@ namespace mbpc_admin
 
         #endregion
     
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEMO_CUSTOMERS")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEMO_CUSTOMERS : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEMO_CUSTOMERS object.
-        /// </summary>
-        /// <param name="cUSTOMER_ID">Initial value of the CUSTOMER_ID property.</param>
-        /// <param name="cUST_FIRST_NAME">Initial value of the CUST_FIRST_NAME property.</param>
-        /// <param name="cUST_LAST_NAME">Initial value of the CUST_LAST_NAME property.</param>
-        public static DEMO_CUSTOMERS CreateDEMO_CUSTOMERS(global::System.Decimal cUSTOMER_ID, global::System.String cUST_FIRST_NAME, global::System.String cUST_LAST_NAME)
-        {
-            DEMO_CUSTOMERS dEMO_CUSTOMERS = new DEMO_CUSTOMERS();
-            dEMO_CUSTOMERS.CUSTOMER_ID = cUSTOMER_ID;
-            dEMO_CUSTOMERS.CUST_FIRST_NAME = cUST_FIRST_NAME;
-            dEMO_CUSTOMERS.CUST_LAST_NAME = cUST_LAST_NAME;
-            return dEMO_CUSTOMERS;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal CUSTOMER_ID
-        {
-            get
-            {
-                return _CUSTOMER_ID;
-            }
-            set
-            {
-                if (_CUSTOMER_ID != value)
-                {
-                    OnCUSTOMER_IDChanging(value);
-                    ReportPropertyChanging("CUSTOMER_ID");
-                    _CUSTOMER_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("CUSTOMER_ID");
-                    OnCUSTOMER_IDChanged();
-                }
-            }
-        }
-        private global::System.Decimal _CUSTOMER_ID;
-        partial void OnCUSTOMER_IDChanging(global::System.Decimal value);
-        partial void OnCUSTOMER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_FIRST_NAME
-        {
-            get
-            {
-                return _CUST_FIRST_NAME;
-            }
-            set
-            {
-                OnCUST_FIRST_NAMEChanging(value);
-                ReportPropertyChanging("CUST_FIRST_NAME");
-                _CUST_FIRST_NAME = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CUST_FIRST_NAME");
-                OnCUST_FIRST_NAMEChanged();
-            }
-        }
-        private global::System.String _CUST_FIRST_NAME;
-        partial void OnCUST_FIRST_NAMEChanging(global::System.String value);
-        partial void OnCUST_FIRST_NAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_LAST_NAME
-        {
-            get
-            {
-                return _CUST_LAST_NAME;
-            }
-            set
-            {
-                OnCUST_LAST_NAMEChanging(value);
-                ReportPropertyChanging("CUST_LAST_NAME");
-                _CUST_LAST_NAME = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CUST_LAST_NAME");
-                OnCUST_LAST_NAMEChanged();
-            }
-        }
-        private global::System.String _CUST_LAST_NAME;
-        partial void OnCUST_LAST_NAMEChanging(global::System.String value);
-        partial void OnCUST_LAST_NAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_STREET_ADDRESS1
-        {
-            get
-            {
-                return _CUST_STREET_ADDRESS1;
-            }
-            set
-            {
-                OnCUST_STREET_ADDRESS1Changing(value);
-                ReportPropertyChanging("CUST_STREET_ADDRESS1");
-                _CUST_STREET_ADDRESS1 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_STREET_ADDRESS1");
-                OnCUST_STREET_ADDRESS1Changed();
-            }
-        }
-        private global::System.String _CUST_STREET_ADDRESS1;
-        partial void OnCUST_STREET_ADDRESS1Changing(global::System.String value);
-        partial void OnCUST_STREET_ADDRESS1Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_STREET_ADDRESS2
-        {
-            get
-            {
-                return _CUST_STREET_ADDRESS2;
-            }
-            set
-            {
-                OnCUST_STREET_ADDRESS2Changing(value);
-                ReportPropertyChanging("CUST_STREET_ADDRESS2");
-                _CUST_STREET_ADDRESS2 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_STREET_ADDRESS2");
-                OnCUST_STREET_ADDRESS2Changed();
-            }
-        }
-        private global::System.String _CUST_STREET_ADDRESS2;
-        partial void OnCUST_STREET_ADDRESS2Changing(global::System.String value);
-        partial void OnCUST_STREET_ADDRESS2Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_CITY
-        {
-            get
-            {
-                return _CUST_CITY;
-            }
-            set
-            {
-                OnCUST_CITYChanging(value);
-                ReportPropertyChanging("CUST_CITY");
-                _CUST_CITY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_CITY");
-                OnCUST_CITYChanged();
-            }
-        }
-        private global::System.String _CUST_CITY;
-        partial void OnCUST_CITYChanging(global::System.String value);
-        partial void OnCUST_CITYChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_STATE
-        {
-            get
-            {
-                return _CUST_STATE;
-            }
-            set
-            {
-                OnCUST_STATEChanging(value);
-                ReportPropertyChanging("CUST_STATE");
-                _CUST_STATE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_STATE");
-                OnCUST_STATEChanged();
-            }
-        }
-        private global::System.String _CUST_STATE;
-        partial void OnCUST_STATEChanging(global::System.String value);
-        partial void OnCUST_STATEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_POSTAL_CODE
-        {
-            get
-            {
-                return _CUST_POSTAL_CODE;
-            }
-            set
-            {
-                OnCUST_POSTAL_CODEChanging(value);
-                ReportPropertyChanging("CUST_POSTAL_CODE");
-                _CUST_POSTAL_CODE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_POSTAL_CODE");
-                OnCUST_POSTAL_CODEChanged();
-            }
-        }
-        private global::System.String _CUST_POSTAL_CODE;
-        partial void OnCUST_POSTAL_CODEChanging(global::System.String value);
-        partial void OnCUST_POSTAL_CODEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PHONE_NUMBER1
-        {
-            get
-            {
-                return _PHONE_NUMBER1;
-            }
-            set
-            {
-                OnPHONE_NUMBER1Changing(value);
-                ReportPropertyChanging("PHONE_NUMBER1");
-                _PHONE_NUMBER1 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PHONE_NUMBER1");
-                OnPHONE_NUMBER1Changed();
-            }
-        }
-        private global::System.String _PHONE_NUMBER1;
-        partial void OnPHONE_NUMBER1Changing(global::System.String value);
-        partial void OnPHONE_NUMBER1Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PHONE_NUMBER2
-        {
-            get
-            {
-                return _PHONE_NUMBER2;
-            }
-            set
-            {
-                OnPHONE_NUMBER2Changing(value);
-                ReportPropertyChanging("PHONE_NUMBER2");
-                _PHONE_NUMBER2 = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PHONE_NUMBER2");
-                OnPHONE_NUMBER2Changed();
-            }
-        }
-        private global::System.String _PHONE_NUMBER2;
-        partial void OnPHONE_NUMBER2Changing(global::System.String value);
-        partial void OnPHONE_NUMBER2Changed();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> CREDIT_LIMIT
-        {
-            get
-            {
-                return _CREDIT_LIMIT;
-            }
-            set
-            {
-                OnCREDIT_LIMITChanging(value);
-                ReportPropertyChanging("CREDIT_LIMIT");
-                _CREDIT_LIMIT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREDIT_LIMIT");
-                OnCREDIT_LIMITChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _CREDIT_LIMIT;
-        partial void OnCREDIT_LIMITChanging(Nullable<global::System.Decimal> value);
-        partial void OnCREDIT_LIMITChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CUST_EMAIL
-        {
-            get
-            {
-                return _CUST_EMAIL;
-            }
-            set
-            {
-                OnCUST_EMAILChanging(value);
-                ReportPropertyChanging("CUST_EMAIL");
-                _CUST_EMAIL = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CUST_EMAIL");
-                OnCUST_EMAILChanged();
-            }
-        }
-        private global::System.String _CUST_EMAIL;
-        partial void OnCUST_EMAILChanging(global::System.String value);
-        partial void OnCUST_EMAILChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_ORDERS")]
-        public EntityCollection<DEMO_ORDERS> DEMO_ORDERS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DEMO_ORDERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_ORDERS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DEMO_ORDERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_ORDERS", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEMO_ORDER_ITEMS")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEMO_ORDER_ITEMS : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEMO_ORDER_ITEMS object.
-        /// </summary>
-        /// <param name="oRDER_ITEM_ID">Initial value of the ORDER_ITEM_ID property.</param>
-        /// <param name="oRDER_ID">Initial value of the ORDER_ID property.</param>
-        /// <param name="pRODUCT_ID">Initial value of the PRODUCT_ID property.</param>
-        /// <param name="uNIT_PRICE">Initial value of the UNIT_PRICE property.</param>
-        /// <param name="qUANTITY">Initial value of the QUANTITY property.</param>
-        public static DEMO_ORDER_ITEMS CreateDEMO_ORDER_ITEMS(global::System.Decimal oRDER_ITEM_ID, global::System.Decimal oRDER_ID, global::System.Decimal pRODUCT_ID, global::System.Decimal uNIT_PRICE, global::System.Decimal qUANTITY)
-        {
-            DEMO_ORDER_ITEMS dEMO_ORDER_ITEMS = new DEMO_ORDER_ITEMS();
-            dEMO_ORDER_ITEMS.ORDER_ITEM_ID = oRDER_ITEM_ID;
-            dEMO_ORDER_ITEMS.ORDER_ID = oRDER_ID;
-            dEMO_ORDER_ITEMS.PRODUCT_ID = pRODUCT_ID;
-            dEMO_ORDER_ITEMS.UNIT_PRICE = uNIT_PRICE;
-            dEMO_ORDER_ITEMS.QUANTITY = qUANTITY;
-            return dEMO_ORDER_ITEMS;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal ORDER_ITEM_ID
-        {
-            get
-            {
-                return _ORDER_ITEM_ID;
-            }
-            set
-            {
-                if (_ORDER_ITEM_ID != value)
-                {
-                    OnORDER_ITEM_IDChanging(value);
-                    ReportPropertyChanging("ORDER_ITEM_ID");
-                    _ORDER_ITEM_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ORDER_ITEM_ID");
-                    OnORDER_ITEM_IDChanged();
-                }
-            }
-        }
-        private global::System.Decimal _ORDER_ITEM_ID;
-        partial void OnORDER_ITEM_IDChanging(global::System.Decimal value);
-        partial void OnORDER_ITEM_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal ORDER_ID
-        {
-            get
-            {
-                return _ORDER_ID;
-            }
-            set
-            {
-                OnORDER_IDChanging(value);
-                ReportPropertyChanging("ORDER_ID");
-                _ORDER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ORDER_ID");
-                OnORDER_IDChanged();
-            }
-        }
-        private global::System.Decimal _ORDER_ID;
-        partial void OnORDER_IDChanging(global::System.Decimal value);
-        partial void OnORDER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal PRODUCT_ID
-        {
-            get
-            {
-                return _PRODUCT_ID;
-            }
-            set
-            {
-                OnPRODUCT_IDChanging(value);
-                ReportPropertyChanging("PRODUCT_ID");
-                _PRODUCT_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PRODUCT_ID");
-                OnPRODUCT_IDChanged();
-            }
-        }
-        private global::System.Decimal _PRODUCT_ID;
-        partial void OnPRODUCT_IDChanging(global::System.Decimal value);
-        partial void OnPRODUCT_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal UNIT_PRICE
-        {
-            get
-            {
-                return _UNIT_PRICE;
-            }
-            set
-            {
-                OnUNIT_PRICEChanging(value);
-                ReportPropertyChanging("UNIT_PRICE");
-                _UNIT_PRICE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("UNIT_PRICE");
-                OnUNIT_PRICEChanged();
-            }
-        }
-        private global::System.Decimal _UNIT_PRICE;
-        partial void OnUNIT_PRICEChanging(global::System.Decimal value);
-        partial void OnUNIT_PRICEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal QUANTITY
-        {
-            get
-            {
-                return _QUANTITY;
-            }
-            set
-            {
-                OnQUANTITYChanging(value);
-                ReportPropertyChanging("QUANTITY");
-                _QUANTITY = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("QUANTITY");
-                OnQUANTITYChanged();
-            }
-        }
-        private global::System.Decimal _QUANTITY;
-        partial void OnQUANTITYChanging(global::System.Decimal value);
-        partial void OnQUANTITYChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS")]
-        public DEMO_ORDERS DEMO_ORDERS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_ORDERS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_ORDERS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DEMO_ORDERS> DEMO_ORDERSReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_ORDERS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DEMO_ORDERS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDERS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO")]
-        public DEMO_PRODUCT_INFO DEMO_PRODUCT_INFO
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_PRODUCT_INFO>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_PRODUCT_INFO>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DEMO_PRODUCT_INFO> DEMO_PRODUCT_INFOReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_PRODUCT_INFO>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DEMO_PRODUCT_INFO>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_PRODUCT_INFO", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEMO_ORDERS")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEMO_ORDERS : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEMO_ORDERS object.
-        /// </summary>
-        /// <param name="oRDER_ID">Initial value of the ORDER_ID property.</param>
-        /// <param name="cUSTOMER_ID">Initial value of the CUSTOMER_ID property.</param>
-        public static DEMO_ORDERS CreateDEMO_ORDERS(global::System.Decimal oRDER_ID, global::System.Decimal cUSTOMER_ID)
-        {
-            DEMO_ORDERS dEMO_ORDERS = new DEMO_ORDERS();
-            dEMO_ORDERS.ORDER_ID = oRDER_ID;
-            dEMO_ORDERS.CUSTOMER_ID = cUSTOMER_ID;
-            return dEMO_ORDERS;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal ORDER_ID
-        {
-            get
-            {
-                return _ORDER_ID;
-            }
-            set
-            {
-                if (_ORDER_ID != value)
-                {
-                    OnORDER_IDChanging(value);
-                    ReportPropertyChanging("ORDER_ID");
-                    _ORDER_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ORDER_ID");
-                    OnORDER_IDChanged();
-                }
-            }
-        }
-        private global::System.Decimal _ORDER_ID;
-        partial void OnORDER_IDChanging(global::System.Decimal value);
-        partial void OnORDER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal CUSTOMER_ID
-        {
-            get
-            {
-                return _CUSTOMER_ID;
-            }
-            set
-            {
-                OnCUSTOMER_IDChanging(value);
-                ReportPropertyChanging("CUSTOMER_ID");
-                _CUSTOMER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CUSTOMER_ID");
-                OnCUSTOMER_IDChanged();
-            }
-        }
-        private global::System.Decimal _CUSTOMER_ID;
-        partial void OnCUSTOMER_IDChanging(global::System.Decimal value);
-        partial void OnCUSTOMER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> ORDER_TOTAL
-        {
-            get
-            {
-                return _ORDER_TOTAL;
-            }
-            set
-            {
-                OnORDER_TOTALChanging(value);
-                ReportPropertyChanging("ORDER_TOTAL");
-                _ORDER_TOTAL = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ORDER_TOTAL");
-                OnORDER_TOTALChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _ORDER_TOTAL;
-        partial void OnORDER_TOTALChanging(Nullable<global::System.Decimal> value);
-        partial void OnORDER_TOTALChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> ORDER_TIMESTAMP
-        {
-            get
-            {
-                return _ORDER_TIMESTAMP;
-            }
-            set
-            {
-                OnORDER_TIMESTAMPChanging(value);
-                ReportPropertyChanging("ORDER_TIMESTAMP");
-                _ORDER_TIMESTAMP = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ORDER_TIMESTAMP");
-                OnORDER_TIMESTAMPChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _ORDER_TIMESTAMP;
-        partial void OnORDER_TIMESTAMPChanging(Nullable<global::System.DateTime> value);
-        partial void OnORDER_TIMESTAMPChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> USER_ID
-        {
-            get
-            {
-                return _USER_ID;
-            }
-            set
-            {
-                OnUSER_IDChanging(value);
-                ReportPropertyChanging("USER_ID");
-                _USER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("USER_ID");
-                OnUSER_IDChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _USER_ID;
-        partial void OnUSER_IDChanging(Nullable<global::System.Decimal> value);
-        partial void OnUSER_IDChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS")]
-        public DEMO_CUSTOMERS DEMO_CUSTOMERS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_CUSTOMERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_CUSTOMERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DEMO_CUSTOMERS> DEMO_CUSTOMERSReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_CUSTOMERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DEMO_CUSTOMERS>("NewModel.DEMO_ORDERS_CUSTOMER_ID_FK", "DEMO_CUSTOMERS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDERS_USER_ID_FK", "DEMO_USERS")]
-        public DEMO_USERS DEMO_USERS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_USERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_USERS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_USERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_USERS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DEMO_USERS> DEMO_USERSReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEMO_USERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_USERS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DEMO_USERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_USERS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDER_ITEMS_FK", "DEMO_ORDER_ITEMS")]
-        public EntityCollection<DEMO_ORDER_ITEMS> DEMO_ORDER_ITEMS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DEMO_ORDER_ITEMS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDER_ITEMS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DEMO_ORDER_ITEMS>("NewModel.DEMO_ORDER_ITEMS_FK", "DEMO_ORDER_ITEMS", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEMO_PRODUCT_INFO")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEMO_PRODUCT_INFO : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEMO_PRODUCT_INFO object.
-        /// </summary>
-        /// <param name="pRODUCT_ID">Initial value of the PRODUCT_ID property.</param>
-        public static DEMO_PRODUCT_INFO CreateDEMO_PRODUCT_INFO(global::System.Decimal pRODUCT_ID)
-        {
-            DEMO_PRODUCT_INFO dEMO_PRODUCT_INFO = new DEMO_PRODUCT_INFO();
-            dEMO_PRODUCT_INFO.PRODUCT_ID = pRODUCT_ID;
-            return dEMO_PRODUCT_INFO;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal PRODUCT_ID
-        {
-            get
-            {
-                return _PRODUCT_ID;
-            }
-            set
-            {
-                if (_PRODUCT_ID != value)
-                {
-                    OnPRODUCT_IDChanging(value);
-                    ReportPropertyChanging("PRODUCT_ID");
-                    _PRODUCT_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PRODUCT_ID");
-                    OnPRODUCT_IDChanged();
-                }
-            }
-        }
-        private global::System.Decimal _PRODUCT_ID;
-        partial void OnPRODUCT_IDChanging(global::System.Decimal value);
-        partial void OnPRODUCT_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PRODUCT_NAME
-        {
-            get
-            {
-                return _PRODUCT_NAME;
-            }
-            set
-            {
-                OnPRODUCT_NAMEChanging(value);
-                ReportPropertyChanging("PRODUCT_NAME");
-                _PRODUCT_NAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PRODUCT_NAME");
-                OnPRODUCT_NAMEChanged();
-            }
-        }
-        private global::System.String _PRODUCT_NAME;
-        partial void OnPRODUCT_NAMEChanging(global::System.String value);
-        partial void OnPRODUCT_NAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PRODUCT_DESCRIPTION
-        {
-            get
-            {
-                return _PRODUCT_DESCRIPTION;
-            }
-            set
-            {
-                OnPRODUCT_DESCRIPTIONChanging(value);
-                ReportPropertyChanging("PRODUCT_DESCRIPTION");
-                _PRODUCT_DESCRIPTION = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PRODUCT_DESCRIPTION");
-                OnPRODUCT_DESCRIPTIONChanged();
-            }
-        }
-        private global::System.String _PRODUCT_DESCRIPTION;
-        partial void OnPRODUCT_DESCRIPTIONChanging(global::System.String value);
-        partial void OnPRODUCT_DESCRIPTIONChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CATEGORY
-        {
-            get
-            {
-                return _CATEGORY;
-            }
-            set
-            {
-                OnCATEGORYChanging(value);
-                ReportPropertyChanging("CATEGORY");
-                _CATEGORY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CATEGORY");
-                OnCATEGORYChanged();
-            }
-        }
-        private global::System.String _CATEGORY;
-        partial void OnCATEGORYChanging(global::System.String value);
-        partial void OnCATEGORYChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PRODUCT_AVAIL
-        {
-            get
-            {
-                return _PRODUCT_AVAIL;
-            }
-            set
-            {
-                OnPRODUCT_AVAILChanging(value);
-                ReportPropertyChanging("PRODUCT_AVAIL");
-                _PRODUCT_AVAIL = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PRODUCT_AVAIL");
-                OnPRODUCT_AVAILChanged();
-            }
-        }
-        private global::System.String _PRODUCT_AVAIL;
-        partial void OnPRODUCT_AVAILChanging(global::System.String value);
-        partial void OnPRODUCT_AVAILChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> LIST_PRICE
-        {
-            get
-            {
-                return _LIST_PRICE;
-            }
-            set
-            {
-                OnLIST_PRICEChanging(value);
-                ReportPropertyChanging("LIST_PRICE");
-                _LIST_PRICE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LIST_PRICE");
-                OnLIST_PRICEChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _LIST_PRICE;
-        partial void OnLIST_PRICEChanging(Nullable<global::System.Decimal> value);
-        partial void OnLIST_PRICEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] PRODUCT_IMAGE
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_PRODUCT_IMAGE);
-            }
-            set
-            {
-                OnPRODUCT_IMAGEChanging(value);
-                ReportPropertyChanging("PRODUCT_IMAGE");
-                _PRODUCT_IMAGE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PRODUCT_IMAGE");
-                OnPRODUCT_IMAGEChanged();
-            }
-        }
-        private global::System.Byte[] _PRODUCT_IMAGE;
-        partial void OnPRODUCT_IMAGEChanging(global::System.Byte[] value);
-        partial void OnPRODUCT_IMAGEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String MIMETYPE
-        {
-            get
-            {
-                return _MIMETYPE;
-            }
-            set
-            {
-                OnMIMETYPEChanging(value);
-                ReportPropertyChanging("MIMETYPE");
-                _MIMETYPE = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("MIMETYPE");
-                OnMIMETYPEChanged();
-            }
-        }
-        private global::System.String _MIMETYPE;
-        partial void OnMIMETYPEChanging(global::System.String value);
-        partial void OnMIMETYPEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String FILENAME
-        {
-            get
-            {
-                return _FILENAME;
-            }
-            set
-            {
-                OnFILENAMEChanging(value);
-                ReportPropertyChanging("FILENAME");
-                _FILENAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FILENAME");
-                OnFILENAMEChanged();
-            }
-        }
-        private global::System.String _FILENAME;
-        partial void OnFILENAMEChanging(global::System.String value);
-        partial void OnFILENAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> IMAGE_LAST_UPDATE
-        {
-            get
-            {
-                return _IMAGE_LAST_UPDATE;
-            }
-            set
-            {
-                OnIMAGE_LAST_UPDATEChanging(value);
-                ReportPropertyChanging("IMAGE_LAST_UPDATE");
-                _IMAGE_LAST_UPDATE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IMAGE_LAST_UPDATE");
-                OnIMAGE_LAST_UPDATEChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _IMAGE_LAST_UPDATE;
-        partial void OnIMAGE_LAST_UPDATEChanging(Nullable<global::System.DateTime> value);
-        partial void OnIMAGE_LAST_UPDATEChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_ORDER_ITEMS")]
-        public EntityCollection<DEMO_ORDER_ITEMS> DEMO_ORDER_ITEMS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DEMO_ORDER_ITEMS>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_ORDER_ITEMS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DEMO_ORDER_ITEMS>("NewModel.DEMO_ORDER_ITEMS_PRODUCT_ID_FK", "DEMO_ORDER_ITEMS", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEMO_USERS")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEMO_USERS : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEMO_USERS object.
-        /// </summary>
-        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
-        public static DEMO_USERS CreateDEMO_USERS(global::System.Decimal uSER_ID)
-        {
-            DEMO_USERS dEMO_USERS = new DEMO_USERS();
-            dEMO_USERS.USER_ID = uSER_ID;
-            return dEMO_USERS;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal USER_ID
-        {
-            get
-            {
-                return _USER_ID;
-            }
-            set
-            {
-                if (_USER_ID != value)
-                {
-                    OnUSER_IDChanging(value);
-                    ReportPropertyChanging("USER_ID");
-                    _USER_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("USER_ID");
-                    OnUSER_IDChanged();
-                }
-            }
-        }
-        private global::System.Decimal _USER_ID;
-        partial void OnUSER_IDChanging(global::System.Decimal value);
-        partial void OnUSER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String USER_NAME
-        {
-            get
-            {
-                return _USER_NAME;
-            }
-            set
-            {
-                OnUSER_NAMEChanging(value);
-                ReportPropertyChanging("USER_NAME");
-                _USER_NAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("USER_NAME");
-                OnUSER_NAMEChanged();
-            }
-        }
-        private global::System.String _USER_NAME;
-        partial void OnUSER_NAMEChanging(global::System.String value);
-        partial void OnUSER_NAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PASSWORD
-        {
-            get
-            {
-                return _PASSWORD;
-            }
-            set
-            {
-                OnPASSWORDChanging(value);
-                ReportPropertyChanging("PASSWORD");
-                _PASSWORD = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PASSWORD");
-                OnPASSWORDChanged();
-            }
-        }
-        private global::System.String _PASSWORD;
-        partial void OnPASSWORDChanging(global::System.String value);
-        partial void OnPASSWORDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CREATED_ON
-        {
-            get
-            {
-                return _CREATED_ON;
-            }
-            set
-            {
-                OnCREATED_ONChanging(value);
-                ReportPropertyChanging("CREATED_ON");
-                _CREATED_ON = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATED_ON");
-                OnCREATED_ONChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CREATED_ON;
-        partial void OnCREATED_ONChanging(Nullable<global::System.DateTime> value);
-        partial void OnCREATED_ONChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> QUOTA
-        {
-            get
-            {
-                return _QUOTA;
-            }
-            set
-            {
-                OnQUOTAChanging(value);
-                ReportPropertyChanging("QUOTA");
-                _QUOTA = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("QUOTA");
-                OnQUOTAChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _QUOTA;
-        partial void OnQUOTAChanging(Nullable<global::System.Decimal> value);
-        partial void OnQUOTAChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PRODUCTS
-        {
-            get
-            {
-                return _PRODUCTS;
-            }
-            set
-            {
-                OnPRODUCTSChanging(value);
-                ReportPropertyChanging("PRODUCTS");
-                _PRODUCTS = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PRODUCTS");
-                OnPRODUCTSChanged();
-            }
-        }
-        private global::System.String _PRODUCTS;
-        partial void OnPRODUCTSChanging(global::System.String value);
-        partial void OnPRODUCTSChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> EXPIRES_ON
-        {
-            get
-            {
-                return _EXPIRES_ON;
-            }
-            set
-            {
-                OnEXPIRES_ONChanging(value);
-                ReportPropertyChanging("EXPIRES_ON");
-                _EXPIRES_ON = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EXPIRES_ON");
-                OnEXPIRES_ONChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _EXPIRES_ON;
-        partial void OnEXPIRES_ONChanging(Nullable<global::System.DateTime> value);
-        partial void OnEXPIRES_ONChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ADMIN_USER
-        {
-            get
-            {
-                return _ADMIN_USER;
-            }
-            set
-            {
-                OnADMIN_USERChanging(value);
-                ReportPropertyChanging("ADMIN_USER");
-                _ADMIN_USER = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ADMIN_USER");
-                OnADMIN_USERChanged();
-            }
-        }
-        private global::System.String _ADMIN_USER;
-        partial void OnADMIN_USERChanging(global::System.String value);
-        partial void OnADMIN_USERChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "DEMO_ORDERS_USER_ID_FK", "DEMO_ORDERS")]
-        public EntityCollection<DEMO_ORDERS> DEMO_ORDERS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DEMO_ORDERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_ORDERS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DEMO_ORDERS>("NewModel.DEMO_ORDERS_USER_ID_FK", "DEMO_ORDERS", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="DEPT")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DEPT : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DEPT object.
-        /// </summary>
-        /// <param name="dEPTNO">Initial value of the DEPTNO property.</param>
-        public static DEPT CreateDEPT(global::System.Decimal dEPTNO)
-        {
-            DEPT dEPT = new DEPT();
-            dEPT.DEPTNO = dEPTNO;
-            return dEPT;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal DEPTNO
-        {
-            get
-            {
-                return _DEPTNO;
-            }
-            set
-            {
-                if (_DEPTNO != value)
-                {
-                    OnDEPTNOChanging(value);
-                    ReportPropertyChanging("DEPTNO");
-                    _DEPTNO = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("DEPTNO");
-                    OnDEPTNOChanged();
-                }
-            }
-        }
-        private global::System.Decimal _DEPTNO;
-        partial void OnDEPTNOChanging(global::System.Decimal value);
-        partial void OnDEPTNOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String DNAME
-        {
-            get
-            {
-                return _DNAME;
-            }
-            set
-            {
-                OnDNAMEChanging(value);
-                ReportPropertyChanging("DNAME");
-                _DNAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("DNAME");
-                OnDNAMEChanged();
-            }
-        }
-        private global::System.String _DNAME;
-        partial void OnDNAMEChanging(global::System.String value);
-        partial void OnDNAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String LOC
-        {
-            get
-            {
-                return _LOC;
-            }
-            set
-            {
-                OnLOCChanging(value);
-                ReportPropertyChanging("LOC");
-                _LOC = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("LOC");
-                OnLOCChanged();
-            }
-        }
-        private global::System.String _LOC;
-        partial void OnLOCChanging(global::System.String value);
-        partial void OnLOCChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C006991", "EMP")]
-        public EntityCollection<EMP> EMPs
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EMP>("NewModel.SYS_C006991", "EMP");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EMP>("NewModel.SYS_C006991", "EMP", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="EMP")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class EMP : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new EMP object.
-        /// </summary>
-        /// <param name="eMPNO">Initial value of the EMPNO property.</param>
-        public static EMP CreateEMP(global::System.Decimal eMPNO)
-        {
-            EMP eMP = new EMP();
-            eMP.EMPNO = eMPNO;
-            return eMP;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal EMPNO
-        {
-            get
-            {
-                return _EMPNO;
-            }
-            set
-            {
-                if (_EMPNO != value)
-                {
-                    OnEMPNOChanging(value);
-                    ReportPropertyChanging("EMPNO");
-                    _EMPNO = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("EMPNO");
-                    OnEMPNOChanged();
-                }
-            }
-        }
-        private global::System.Decimal _EMPNO;
-        partial void OnEMPNOChanging(global::System.Decimal value);
-        partial void OnEMPNOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ENAME
-        {
-            get
-            {
-                return _ENAME;
-            }
-            set
-            {
-                OnENAMEChanging(value);
-                ReportPropertyChanging("ENAME");
-                _ENAME = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ENAME");
-                OnENAMEChanged();
-            }
-        }
-        private global::System.String _ENAME;
-        partial void OnENAMEChanging(global::System.String value);
-        partial void OnENAMEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String JOB
-        {
-            get
-            {
-                return _JOB;
-            }
-            set
-            {
-                OnJOBChanging(value);
-                ReportPropertyChanging("JOB");
-                _JOB = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("JOB");
-                OnJOBChanged();
-            }
-        }
-        private global::System.String _JOB;
-        partial void OnJOBChanging(global::System.String value);
-        partial void OnJOBChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> MGR
-        {
-            get
-            {
-                return _MGR;
-            }
-            set
-            {
-                OnMGRChanging(value);
-                ReportPropertyChanging("MGR");
-                _MGR = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MGR");
-                OnMGRChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _MGR;
-        partial void OnMGRChanging(Nullable<global::System.Decimal> value);
-        partial void OnMGRChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> HIREDATE
-        {
-            get
-            {
-                return _HIREDATE;
-            }
-            set
-            {
-                OnHIREDATEChanging(value);
-                ReportPropertyChanging("HIREDATE");
-                _HIREDATE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HIREDATE");
-                OnHIREDATEChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _HIREDATE;
-        partial void OnHIREDATEChanging(Nullable<global::System.DateTime> value);
-        partial void OnHIREDATEChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> SAL
-        {
-            get
-            {
-                return _SAL;
-            }
-            set
-            {
-                OnSALChanging(value);
-                ReportPropertyChanging("SAL");
-                _SAL = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SAL");
-                OnSALChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _SAL;
-        partial void OnSALChanging(Nullable<global::System.Decimal> value);
-        partial void OnSALChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> COMM
-        {
-            get
-            {
-                return _COMM;
-            }
-            set
-            {
-                OnCOMMChanging(value);
-                ReportPropertyChanging("COMM");
-                _COMM = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("COMM");
-                OnCOMMChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _COMM;
-        partial void OnCOMMChanging(Nullable<global::System.Decimal> value);
-        partial void OnCOMMChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> DEPTNO
-        {
-            get
-            {
-                return _DEPTNO;
-            }
-            set
-            {
-                OnDEPTNOChanging(value);
-                ReportPropertyChanging("DEPTNO");
-                _DEPTNO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DEPTNO");
-                OnDEPTNOChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _DEPTNO;
-        partial void OnDEPTNOChanging(Nullable<global::System.Decimal> value);
-        partial void OnDEPTNOChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C006991", "DEPT")]
-        public DEPT DEPT
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEPT>("NewModel.SYS_C006991", "DEPT").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEPT>("NewModel.SYS_C006991", "DEPT").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DEPT> DEPTReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DEPT>("NewModel.SYS_C006991", "DEPT");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DEPT>("NewModel.SYS_C006991", "DEPT", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C006990", "EMP1")]
-        public EntityCollection<EMP> EMP1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EMP>("NewModel.SYS_C006990", "EMP1");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EMP>("NewModel.SYS_C006990", "EMP1", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C006990", "EMP")]
-        public EMP EMP2
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EMP>("NewModel.SYS_C006990", "EMP").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EMP>("NewModel.SYS_C006990", "EMP").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<EMP> EMP2Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EMP>("NewModel.SYS_C006990", "EMP");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EMP>("NewModel.SYS_C006990", "EMP", value);
-                }
-            }
-        }
-
-        #endregion
     }
     
     /// <summary>
@@ -5575,18 +3541,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007236", "TBL_USUARIOGRUPO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013764", "TBL_USUARIOGRUPO")]
         public EntityCollection<TBL_USUARIOGRUPO> TBL_USUARIOGRUPO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C007236", "TBL_USUARIOGRUPO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C0013764", "TBL_USUARIOGRUPO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C007236", "TBL_USUARIOGRUPO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C0013764", "TBL_USUARIOGRUPO", value);
                 }
             }
         }
@@ -7328,1141 +5294,23 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007221", "TBL_EVENTO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013779", "TBL_EVENTO")]
         public EntityCollection<TBL_EVENTO> TBL_EVENTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007221", "TBL_EVENTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013779", "TBL_EVENTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007221", "TBL_EVENTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013779", "TBL_EVENTO", value);
                 }
             }
         }
 
         #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="SN_PERSONAL")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class SN_PERSONAL : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new SN_PERSONAL object.
-        /// </summary>
-        /// <param name="dESTINO">Initial value of the DESTINO property.</param>
-        /// <param name="nDOC">Initial value of the NDOC property.</param>
-        public static SN_PERSONAL CreateSN_PERSONAL(global::System.String dESTINO, global::System.Decimal nDOC)
-        {
-            SN_PERSONAL sN_PERSONAL = new SN_PERSONAL();
-            sN_PERSONAL.DESTINO = dESTINO;
-            sN_PERSONAL.NDOC = nDOC;
-            return sN_PERSONAL;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DESTINO
-        {
-            get
-            {
-                return _DESTINO;
-            }
-            set
-            {
-                if (_DESTINO != value)
-                {
-                    OnDESTINOChanging(value);
-                    ReportPropertyChanging("DESTINO");
-                    _DESTINO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("DESTINO");
-                    OnDESTINOChanged();
-                }
-            }
-        }
-        private global::System.String _DESTINO;
-        partial void OnDESTINOChanging(global::System.String value);
-        partial void OnDESTINOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal NDOC
-        {
-            get
-            {
-                return _NDOC;
-            }
-            set
-            {
-                if (_NDOC != value)
-                {
-                    OnNDOCChanging(value);
-                    ReportPropertyChanging("NDOC");
-                    _NDOC = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("NDOC");
-                    OnNDOCChanged();
-                }
-            }
-        }
-        private global::System.Decimal _NDOC;
-        partial void OnNDOCChanging(global::System.Decimal value);
-        partial void OnNDOCChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="SN_USUARIOS_EXT")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class SN_USUARIOS_EXT : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new SN_USUARIOS_EXT object.
-        /// </summary>
-        /// <param name="pASSWORD">Initial value of the PASSWORD property.</param>
-        /// <param name="aPELLIDO">Initial value of the APELLIDO property.</param>
-        /// <param name="nOMBRES">Initial value of the NOMBRES property.</param>
-        /// <param name="dOMICILIO">Initial value of the DOMICILIO property.</param>
-        /// <param name="nOMBREDEUSUARIO">Initial value of the NOMBREDEUSUARIO property.</param>
-        /// <param name="nOMBRE">Initial value of the NOMBRE property.</param>
-        /// <param name="cODIGO">Initial value of the CODIGO property.</param>
-        public static SN_USUARIOS_EXT CreateSN_USUARIOS_EXT(global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dOMICILIO, global::System.String nOMBREDEUSUARIO, global::System.String nOMBRE, global::System.String cODIGO)
-        {
-            SN_USUARIOS_EXT sN_USUARIOS_EXT = new SN_USUARIOS_EXT();
-            sN_USUARIOS_EXT.PASSWORD = pASSWORD;
-            sN_USUARIOS_EXT.APELLIDO = aPELLIDO;
-            sN_USUARIOS_EXT.NOMBRES = nOMBRES;
-            sN_USUARIOS_EXT.DOMICILIO = dOMICILIO;
-            sN_USUARIOS_EXT.NOMBREDEUSUARIO = nOMBREDEUSUARIO;
-            sN_USUARIOS_EXT.NOMBRE = nOMBRE;
-            sN_USUARIOS_EXT.CODIGO = cODIGO;
-            return sN_USUARIOS_EXT;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> NDOC
-        {
-            get
-            {
-                return _NDOC;
-            }
-            set
-            {
-                OnNDOCChanging(value);
-                ReportPropertyChanging("NDOC");
-                _NDOC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NDOC");
-                OnNDOCChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _NDOC;
-        partial void OnNDOCChanging(Nullable<global::System.Decimal> value);
-        partial void OnNDOCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PASSWORD
-        {
-            get
-            {
-                return _PASSWORD;
-            }
-            set
-            {
-                if (_PASSWORD != value)
-                {
-                    OnPASSWORDChanging(value);
-                    ReportPropertyChanging("PASSWORD");
-                    _PASSWORD = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PASSWORD");
-                    OnPASSWORDChanged();
-                }
-            }
-        }
-        private global::System.String _PASSWORD;
-        partial void OnPASSWORDChanging(global::System.String value);
-        partial void OnPASSWORDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String APELLIDO
-        {
-            get
-            {
-                return _APELLIDO;
-            }
-            set
-            {
-                if (_APELLIDO != value)
-                {
-                    OnAPELLIDOChanging(value);
-                    ReportPropertyChanging("APELLIDO");
-                    _APELLIDO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("APELLIDO");
-                    OnAPELLIDOChanged();
-                }
-            }
-        }
-        private global::System.String _APELLIDO;
-        partial void OnAPELLIDOChanging(global::System.String value);
-        partial void OnAPELLIDOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBRES
-        {
-            get
-            {
-                return _NOMBRES;
-            }
-            set
-            {
-                if (_NOMBRES != value)
-                {
-                    OnNOMBRESChanging(value);
-                    ReportPropertyChanging("NOMBRES");
-                    _NOMBRES = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBRES");
-                    OnNOMBRESChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBRES;
-        partial void OnNOMBRESChanging(global::System.String value);
-        partial void OnNOMBRESChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DOMICILIO
-        {
-            get
-            {
-                return _DOMICILIO;
-            }
-            set
-            {
-                if (_DOMICILIO != value)
-                {
-                    OnDOMICILIOChanging(value);
-                    ReportPropertyChanging("DOMICILIO");
-                    _DOMICILIO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("DOMICILIO");
-                    OnDOMICILIOChanged();
-                }
-            }
-        }
-        private global::System.String _DOMICILIO;
-        partial void OnDOMICILIOChanging(global::System.String value);
-        partial void OnDOMICILIOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> FECHAVENC
-        {
-            get
-            {
-                return _FECHAVENC;
-            }
-            set
-            {
-                OnFECHAVENCChanging(value);
-                ReportPropertyChanging("FECHAVENC");
-                _FECHAVENC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FECHAVENC");
-                OnFECHAVENCChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _FECHAVENC;
-        partial void OnFECHAVENCChanging(Nullable<global::System.DateTime> value);
-        partial void OnFECHAVENCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TEDIRECTO
-        {
-            get
-            {
-                return _TEDIRECTO;
-            }
-            set
-            {
-                OnTEDIRECTOChanging(value);
-                ReportPropertyChanging("TEDIRECTO");
-                _TEDIRECTO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TEDIRECTO");
-                OnTEDIRECTOChanged();
-            }
-        }
-        private global::System.String _TEDIRECTO;
-        partial void OnTEDIRECTOChanging(global::System.String value);
-        partial void OnTEDIRECTOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TEINTERNO
-        {
-            get
-            {
-                return _TEINTERNO;
-            }
-            set
-            {
-                OnTEINTERNOChanging(value);
-                ReportPropertyChanging("TEINTERNO");
-                _TEINTERNO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TEINTERNO");
-                OnTEINTERNOChanged();
-            }
-        }
-        private global::System.String _TEINTERNO;
-        partial void OnTEINTERNOChanging(global::System.String value);
-        partial void OnTEINTERNOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CELULAR
-        {
-            get
-            {
-                return _CELULAR;
-            }
-            set
-            {
-                OnCELULARChanging(value);
-                ReportPropertyChanging("CELULAR");
-                _CELULAR = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CELULAR");
-                OnCELULARChanged();
-            }
-        }
-        private global::System.String _CELULAR;
-        partial void OnCELULARChanging(global::System.String value);
-        partial void OnCELULARChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> MACADDRESS
-        {
-            get
-            {
-                return _MACADDRESS;
-            }
-            set
-            {
-                OnMACADDRESSChanging(value);
-                ReportPropertyChanging("MACADDRESS");
-                _MACADDRESS = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MACADDRESS");
-                OnMACADDRESSChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _MACADDRESS;
-        partial void OnMACADDRESSChanging(Nullable<global::System.Decimal> value);
-        partial void OnMACADDRESSChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EMAIL_PARTICULAR
-        {
-            get
-            {
-                return _EMAIL_PARTICULAR;
-            }
-            set
-            {
-                OnEMAIL_PARTICULARChanging(value);
-                ReportPropertyChanging("EMAIL_PARTICULAR");
-                _EMAIL_PARTICULAR = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EMAIL_PARTICULAR");
-                OnEMAIL_PARTICULARChanged();
-            }
-        }
-        private global::System.String _EMAIL_PARTICULAR;
-        partial void OnEMAIL_PARTICULARChanging(global::System.String value);
-        partial void OnEMAIL_PARTICULARChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EMAIL_CORPORATIVO
-        {
-            get
-            {
-                return _EMAIL_CORPORATIVO;
-            }
-            set
-            {
-                OnEMAIL_CORPORATIVOChanging(value);
-                ReportPropertyChanging("EMAIL_CORPORATIVO");
-                _EMAIL_CORPORATIVO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EMAIL_CORPORATIVO");
-                OnEMAIL_CORPORATIVOChanged();
-            }
-        }
-        private global::System.String _EMAIL_CORPORATIVO;
-        partial void OnEMAIL_CORPORATIVOChanging(global::System.String value);
-        partial void OnEMAIL_CORPORATIVOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> ESTADO
-        {
-            get
-            {
-                return _ESTADO;
-            }
-            set
-            {
-                OnESTADOChanging(value);
-                ReportPropertyChanging("ESTADO");
-                _ESTADO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ESTADO");
-                OnESTADOChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _ESTADO;
-        partial void OnESTADOChanging(Nullable<global::System.Decimal> value);
-        partial void OnESTADOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> NDOC_ADMIN
-        {
-            get
-            {
-                return _NDOC_ADMIN;
-            }
-            set
-            {
-                OnNDOC_ADMINChanging(value);
-                ReportPropertyChanging("NDOC_ADMIN");
-                _NDOC_ADMIN = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NDOC_ADMIN");
-                OnNDOC_ADMINChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _NDOC_ADMIN;
-        partial void OnNDOC_ADMINChanging(Nullable<global::System.Decimal> value);
-        partial void OnNDOC_ADMINChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SITIOWEB
-        {
-            get
-            {
-                return _SITIOWEB;
-            }
-            set
-            {
-                OnSITIOWEBChanging(value);
-                ReportPropertyChanging("SITIOWEB");
-                _SITIOWEB = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SITIOWEB");
-                OnSITIOWEBChanged();
-            }
-        }
-        private global::System.String _SITIOWEB;
-        partial void OnSITIOWEBChanging(global::System.String value);
-        partial void OnSITIOWEBChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> FECHA_AUDIT
-        {
-            get
-            {
-                return _FECHA_AUDIT;
-            }
-            set
-            {
-                OnFECHA_AUDITChanging(value);
-                ReportPropertyChanging("FECHA_AUDIT");
-                _FECHA_AUDIT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FECHA_AUDIT");
-                OnFECHA_AUDITChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _FECHA_AUDIT;
-        partial void OnFECHA_AUDITChanging(Nullable<global::System.DateTime> value);
-        partial void OnFECHA_AUDITChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBREDEUSUARIO
-        {
-            get
-            {
-                return _NOMBREDEUSUARIO;
-            }
-            set
-            {
-                if (_NOMBREDEUSUARIO != value)
-                {
-                    OnNOMBREDEUSUARIOChanging(value);
-                    ReportPropertyChanging("NOMBREDEUSUARIO");
-                    _NOMBREDEUSUARIO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBREDEUSUARIO");
-                    OnNOMBREDEUSUARIOChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBREDEUSUARIO;
-        partial void OnNOMBREDEUSUARIOChanging(global::System.String value);
-        partial void OnNOMBREDEUSUARIOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> USUARIO_ID
-        {
-            get
-            {
-                return _USUARIO_ID;
-            }
-            set
-            {
-                OnUSUARIO_IDChanging(value);
-                ReportPropertyChanging("USUARIO_ID");
-                _USUARIO_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("USUARIO_ID");
-                OnUSUARIO_IDChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _USUARIO_ID;
-        partial void OnUSUARIO_IDChanging(Nullable<global::System.Decimal> value);
-        partial void OnUSUARIO_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EMPRESA
-        {
-            get
-            {
-                return _EMPRESA;
-            }
-            set
-            {
-                OnEMPRESAChanging(value);
-                ReportPropertyChanging("EMPRESA");
-                _EMPRESA = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EMPRESA");
-                OnEMPRESAChanged();
-            }
-        }
-        private global::System.String _EMPRESA;
-        partial void OnEMPRESAChanging(global::System.String value);
-        partial void OnEMPRESAChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBRE
-        {
-            get
-            {
-                return _NOMBRE;
-            }
-            set
-            {
-                if (_NOMBRE != value)
-                {
-                    OnNOMBREChanging(value);
-                    ReportPropertyChanging("NOMBRE");
-                    _NOMBRE = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBRE");
-                    OnNOMBREChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBRE;
-        partial void OnNOMBREChanging(global::System.String value);
-        partial void OnNOMBREChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CODIGO
-        {
-            get
-            {
-                return _CODIGO;
-            }
-            set
-            {
-                if (_CODIGO != value)
-                {
-                    OnCODIGOChanging(value);
-                    ReportPropertyChanging("CODIGO");
-                    _CODIGO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("CODIGO");
-                    OnCODIGOChanged();
-                }
-            }
-        }
-        private global::System.String _CODIGO;
-        partial void OnCODIGOChanging(global::System.String value);
-        partial void OnCODIGOChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="SN_USUARIOS_PNA")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class SN_USUARIOS_PNA : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new SN_USUARIOS_PNA object.
-        /// </summary>
-        /// <param name="nOMBREDEUSUARIO">Initial value of the NOMBREDEUSUARIO property.</param>
-        /// <param name="pASSWORD">Initial value of the PASSWORD property.</param>
-        /// <param name="aPELLIDO">Initial value of the APELLIDO property.</param>
-        /// <param name="nOMBRES">Initial value of the NOMBRES property.</param>
-        /// <param name="dESTINO">Initial value of the DESTINO property.</param>
-        /// <param name="nOMBRE">Initial value of the NOMBRE property.</param>
-        /// <param name="cODIGO">Initial value of the CODIGO property.</param>
-        public static SN_USUARIOS_PNA CreateSN_USUARIOS_PNA(global::System.String nOMBREDEUSUARIO, global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dESTINO, global::System.String nOMBRE, global::System.String cODIGO)
-        {
-            SN_USUARIOS_PNA sN_USUARIOS_PNA = new SN_USUARIOS_PNA();
-            sN_USUARIOS_PNA.NOMBREDEUSUARIO = nOMBREDEUSUARIO;
-            sN_USUARIOS_PNA.PASSWORD = pASSWORD;
-            sN_USUARIOS_PNA.APELLIDO = aPELLIDO;
-            sN_USUARIOS_PNA.NOMBRES = nOMBRES;
-            sN_USUARIOS_PNA.DESTINO = dESTINO;
-            sN_USUARIOS_PNA.NOMBRE = nOMBRE;
-            sN_USUARIOS_PNA.CODIGO = cODIGO;
-            return sN_USUARIOS_PNA;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBREDEUSUARIO
-        {
-            get
-            {
-                return _NOMBREDEUSUARIO;
-            }
-            set
-            {
-                if (_NOMBREDEUSUARIO != value)
-                {
-                    OnNOMBREDEUSUARIOChanging(value);
-                    ReportPropertyChanging("NOMBREDEUSUARIO");
-                    _NOMBREDEUSUARIO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBREDEUSUARIO");
-                    OnNOMBREDEUSUARIOChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBREDEUSUARIO;
-        partial void OnNOMBREDEUSUARIOChanging(global::System.String value);
-        partial void OnNOMBREDEUSUARIOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PASSWORD
-        {
-            get
-            {
-                return _PASSWORD;
-            }
-            set
-            {
-                if (_PASSWORD != value)
-                {
-                    OnPASSWORDChanging(value);
-                    ReportPropertyChanging("PASSWORD");
-                    _PASSWORD = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PASSWORD");
-                    OnPASSWORDChanged();
-                }
-            }
-        }
-        private global::System.String _PASSWORD;
-        partial void OnPASSWORDChanging(global::System.String value);
-        partial void OnPASSWORDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String APELLIDO
-        {
-            get
-            {
-                return _APELLIDO;
-            }
-            set
-            {
-                if (_APELLIDO != value)
-                {
-                    OnAPELLIDOChanging(value);
-                    ReportPropertyChanging("APELLIDO");
-                    _APELLIDO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("APELLIDO");
-                    OnAPELLIDOChanged();
-                }
-            }
-        }
-        private global::System.String _APELLIDO;
-        partial void OnAPELLIDOChanging(global::System.String value);
-        partial void OnAPELLIDOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBRES
-        {
-            get
-            {
-                return _NOMBRES;
-            }
-            set
-            {
-                if (_NOMBRES != value)
-                {
-                    OnNOMBRESChanging(value);
-                    ReportPropertyChanging("NOMBRES");
-                    _NOMBRES = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBRES");
-                    OnNOMBRESChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBRES;
-        partial void OnNOMBRESChanging(global::System.String value);
-        partial void OnNOMBRESChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DESTINO
-        {
-            get
-            {
-                return _DESTINO;
-            }
-            set
-            {
-                if (_DESTINO != value)
-                {
-                    OnDESTINOChanging(value);
-                    ReportPropertyChanging("DESTINO");
-                    _DESTINO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("DESTINO");
-                    OnDESTINOChanged();
-                }
-            }
-        }
-        private global::System.String _DESTINO;
-        partial void OnDESTINOChanging(global::System.String value);
-        partial void OnDESTINOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TEDIRECTO
-        {
-            get
-            {
-                return _TEDIRECTO;
-            }
-            set
-            {
-                OnTEDIRECTOChanging(value);
-                ReportPropertyChanging("TEDIRECTO");
-                _TEDIRECTO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TEDIRECTO");
-                OnTEDIRECTOChanged();
-            }
-        }
-        private global::System.String _TEDIRECTO;
-        partial void OnTEDIRECTOChanging(global::System.String value);
-        partial void OnTEDIRECTOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TEINTERNO
-        {
-            get
-            {
-                return _TEINTERNO;
-            }
-            set
-            {
-                OnTEINTERNOChanging(value);
-                ReportPropertyChanging("TEINTERNO");
-                _TEINTERNO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TEINTERNO");
-                OnTEINTERNOChanged();
-            }
-        }
-        private global::System.String _TEINTERNO;
-        partial void OnTEINTERNOChanging(global::System.String value);
-        partial void OnTEINTERNOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EMAIL
-        {
-            get
-            {
-                return _EMAIL;
-            }
-            set
-            {
-                OnEMAILChanging(value);
-                ReportPropertyChanging("EMAIL");
-                _EMAIL = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EMAIL");
-                OnEMAILChanged();
-            }
-        }
-        private global::System.String _EMAIL;
-        partial void OnEMAILChanging(global::System.String value);
-        partial void OnEMAILChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> FECHAVENC
-        {
-            get
-            {
-                return _FECHAVENC;
-            }
-            set
-            {
-                OnFECHAVENCChanging(value);
-                ReportPropertyChanging("FECHAVENC");
-                _FECHAVENC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FECHAVENC");
-                OnFECHAVENCChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _FECHAVENC;
-        partial void OnFECHAVENCChanging(Nullable<global::System.DateTime> value);
-        partial void OnFECHAVENCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String DIRECCION
-        {
-            get
-            {
-                return _DIRECCION;
-            }
-            set
-            {
-                OnDIRECCIONChanging(value);
-                ReportPropertyChanging("DIRECCION");
-                _DIRECCION = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("DIRECCION");
-                OnDIRECCIONChanged();
-            }
-        }
-        private global::System.String _DIRECCION;
-        partial void OnDIRECCIONChanging(global::System.String value);
-        partial void OnDIRECCIONChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String DTO
-        {
-            get
-            {
-                return _DTO;
-            }
-            set
-            {
-                OnDTOChanging(value);
-                ReportPropertyChanging("DTO");
-                _DTO = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("DTO");
-                OnDTOChanged();
-            }
-        }
-        private global::System.String _DTO;
-        partial void OnDTOChanging(global::System.String value);
-        partial void OnDTOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SEC
-        {
-            get
-            {
-                return _SEC;
-            }
-            set
-            {
-                OnSECChanging(value);
-                ReportPropertyChanging("SEC");
-                _SEC = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SEC");
-                OnSECChanged();
-            }
-        }
-        private global::System.String _SEC;
-        partial void OnSECChanging(global::System.String value);
-        partial void OnSECChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> NDOC
-        {
-            get
-            {
-                return _NDOC;
-            }
-            set
-            {
-                OnNDOCChanging(value);
-                ReportPropertyChanging("NDOC");
-                _NDOC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NDOC");
-                OnNDOCChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _NDOC;
-        partial void OnNDOCChanging(Nullable<global::System.Decimal> value);
-        partial void OnNDOCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> NIVACC
-        {
-            get
-            {
-                return _NIVACC;
-            }
-            set
-            {
-                OnNIVACCChanging(value);
-                ReportPropertyChanging("NIVACC");
-                _NIVACC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NIVACC");
-                OnNIVACCChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _NIVACC;
-        partial void OnNIVACCChanging(Nullable<global::System.Boolean> value);
-        partial void OnNIVACCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> ESTADO
-        {
-            get
-            {
-                return _ESTADO;
-            }
-            set
-            {
-                OnESTADOChanging(value);
-                ReportPropertyChanging("ESTADO");
-                _ESTADO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ESTADO");
-                OnESTADOChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _ESTADO;
-        partial void OnESTADOChanging(Nullable<global::System.Boolean> value);
-        partial void OnESTADOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NOMBRE
-        {
-            get
-            {
-                return _NOMBRE;
-            }
-            set
-            {
-                if (_NOMBRE != value)
-                {
-                    OnNOMBREChanging(value);
-                    ReportPropertyChanging("NOMBRE");
-                    _NOMBRE = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("NOMBRE");
-                    OnNOMBREChanged();
-                }
-            }
-        }
-        private global::System.String _NOMBRE;
-        partial void OnNOMBREChanging(global::System.String value);
-        partial void OnNOMBREChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CODIGO
-        {
-            get
-            {
-                return _CODIGO;
-            }
-            set
-            {
-                if (_CODIGO != value)
-                {
-                    OnCODIGOChanging(value);
-                    ReportPropertyChanging("CODIGO");
-                    _CODIGO = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("CODIGO");
-                    OnCODIGOChanged();
-                }
-            }
-        }
-        private global::System.String _CODIGO;
-        partial void OnCODIGOChanging(global::System.String value);
-        partial void OnCODIGOChanged();
-
-        #endregion
-    
     }
     
     /// <summary>
@@ -9297,6 +6145,30 @@ namespace mbpc_admin
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String RESUMEN
+        {
+            get
+            {
+                return _RESUMEN;
+            }
+            set
+            {
+                OnRESUMENChanging(value);
+                ReportPropertyChanging("RESUMEN");
+                _RESUMEN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RESUMEN");
+                OnRESUMENChanged();
+            }
+        }
+        private global::System.String _RESUMEN;
+        partial void OnRESUMENChanging(global::System.String value);
+        partial void OnRESUMENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String ESTADO
         {
             get
@@ -9339,30 +6211,6 @@ namespace mbpc_admin
         private global::System.String _AGRUPA;
         partial void OnAGRUPAChanging(global::System.String value);
         partial void OnAGRUPAChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String RESUMEN
-        {
-            get
-            {
-                return _RESUMEN;
-            }
-            set
-            {
-                OnRESUMENChanging(value);
-                ReportPropertyChanging("RESUMEN");
-                _RESUMEN = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("RESUMEN");
-                OnRESUMENChanged();
-            }
-        }
-        private global::System.String _RESUMEN;
-        partial void OnRESUMENChanging(global::System.String value);
-        partial void OnRESUMENChanged();
 
         #endregion
     
@@ -10984,18 +7832,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007216", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013786", "TBL_ETAPA")]
         public EntityCollection<TBL_ETAPA> TBL_ETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007216", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013786", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007216", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013786", "TBL_ETAPA", value);
                 }
             }
         }
@@ -11021,11 +7869,11 @@ namespace mbpc_admin
         /// <param name="uNIDAD_ID">Initial value of the UNIDAD_ID property.</param>
         /// <param name="eTAPA_ID">Initial value of the ETAPA_ID property.</param>
         /// <param name="eN_TRANSITO">Initial value of the EN_TRANSITO property.</param>
-        /// <param name="cANTIDAD_INICIAL">Initial value of the CANTIDAD_INICIAL property.</param>
         /// <param name="cANTIDAD">Initial value of the CANTIDAD property.</param>
+        /// <param name="cANTIDAD_INICIAL">Initial value of the CANTIDAD_INICIAL property.</param>
         /// <param name="cANTIDAD_ENTRADA">Initial value of the CANTIDAD_ENTRADA property.</param>
         /// <param name="cANTIDAD_SALIDA">Initial value of the CANTIDAD_SALIDA property.</param>
-        public static TBL_CARGAETAPA CreateTBL_CARGAETAPA(global::System.Decimal id, global::System.Decimal tIPOCARGA_ID, global::System.Decimal uNIDAD_ID, global::System.Decimal eTAPA_ID, global::System.Decimal eN_TRANSITO, global::System.Decimal cANTIDAD_INICIAL, global::System.Decimal cANTIDAD, global::System.Decimal cANTIDAD_ENTRADA, global::System.Decimal cANTIDAD_SALIDA)
+        public static TBL_CARGAETAPA CreateTBL_CARGAETAPA(global::System.Decimal id, global::System.Decimal tIPOCARGA_ID, global::System.Decimal uNIDAD_ID, global::System.Decimal eTAPA_ID, global::System.Decimal eN_TRANSITO, global::System.Decimal cANTIDAD, global::System.Decimal cANTIDAD_INICIAL, global::System.Decimal cANTIDAD_ENTRADA, global::System.Decimal cANTIDAD_SALIDA)
         {
             TBL_CARGAETAPA tBL_CARGAETAPA = new TBL_CARGAETAPA();
             tBL_CARGAETAPA.ID = id;
@@ -11033,8 +7881,8 @@ namespace mbpc_admin
             tBL_CARGAETAPA.UNIDAD_ID = uNIDAD_ID;
             tBL_CARGAETAPA.ETAPA_ID = eTAPA_ID;
             tBL_CARGAETAPA.EN_TRANSITO = eN_TRANSITO;
-            tBL_CARGAETAPA.CANTIDAD_INICIAL = cANTIDAD_INICIAL;
             tBL_CARGAETAPA.CANTIDAD = cANTIDAD;
+            tBL_CARGAETAPA.CANTIDAD_INICIAL = cANTIDAD_INICIAL;
             tBL_CARGAETAPA.CANTIDAD_ENTRADA = cANTIDAD_ENTRADA;
             tBL_CARGAETAPA.CANTIDAD_SALIDA = cANTIDAD_SALIDA;
             return tBL_CARGAETAPA;
@@ -11195,30 +8043,6 @@ namespace mbpc_admin
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal CANTIDAD_INICIAL
-        {
-            get
-            {
-                return _CANTIDAD_INICIAL;
-            }
-            set
-            {
-                OnCANTIDAD_INICIALChanging(value);
-                ReportPropertyChanging("CANTIDAD_INICIAL");
-                _CANTIDAD_INICIAL = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CANTIDAD_INICIAL");
-                OnCANTIDAD_INICIALChanged();
-            }
-        }
-        private global::System.Decimal _CANTIDAD_INICIAL;
-        partial void OnCANTIDAD_INICIALChanging(global::System.Decimal value);
-        partial void OnCANTIDAD_INICIALChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Decimal CANTIDAD
         {
             get
@@ -11237,6 +8061,30 @@ namespace mbpc_admin
         private global::System.Decimal _CANTIDAD;
         partial void OnCANTIDADChanging(global::System.Decimal value);
         partial void OnCANTIDADChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal CANTIDAD_INICIAL
+        {
+            get
+            {
+                return _CANTIDAD_INICIAL;
+            }
+            set
+            {
+                OnCANTIDAD_INICIALChanging(value);
+                ReportPropertyChanging("CANTIDAD_INICIAL");
+                _CANTIDAD_INICIAL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CANTIDAD_INICIAL");
+                OnCANTIDAD_INICIALChanged();
+            }
+        }
+        private global::System.Decimal _CANTIDAD_INICIAL;
+        partial void OnCANTIDAD_INICIALChanging(global::System.Decimal value);
+        partial void OnCANTIDAD_INICIALChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -11296,54 +8144,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007210", "TBL_ETAPA")]
-        public TBL_ETAPA TBL_ETAPA
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007210", "TBL_ETAPA").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007210", "TBL_ETAPA").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TBL_ETAPA> TBL_ETAPAReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007210", "TBL_ETAPA");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C007210", "TBL_ETAPA", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007211", "TBL_TIPO_CARGA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013776", "TBL_TIPO_CARGA")]
         public TBL_TIPO_CARGA TBL_TIPO_CARGA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007211", "TBL_TIPO_CARGA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013776", "TBL_TIPO_CARGA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007211", "TBL_TIPO_CARGA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013776", "TBL_TIPO_CARGA").Value = value;
             }
         }
         /// <summary>
@@ -11355,13 +8165,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007211", "TBL_TIPO_CARGA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013776", "TBL_TIPO_CARGA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007211", "TBL_TIPO_CARGA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013776", "TBL_TIPO_CARGA", value);
                 }
             }
         }
@@ -11372,16 +8182,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007212", "TBL_UNIDAD")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013777", "TBL_UNIDAD")]
         public TBL_UNIDAD TBL_UNIDAD
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007212", "TBL_UNIDAD").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013777", "TBL_UNIDAD").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007212", "TBL_UNIDAD").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013777", "TBL_UNIDAD").Value = value;
             }
         }
         /// <summary>
@@ -11393,13 +8203,51 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007212", "TBL_UNIDAD");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013777", "TBL_UNIDAD");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007212", "TBL_UNIDAD", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013777", "TBL_UNIDAD", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013778", "TBL_ETAPA")]
+        public TBL_ETAPA TBL_ETAPA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013778", "TBL_ETAPA").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013778", "TBL_ETAPA").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TBL_ETAPA> TBL_ETAPAReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013778", "TBL_ETAPA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013778", "TBL_ETAPA", value);
                 }
             }
         }
@@ -12641,16 +9489,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007216", "TBL_CAPITAN")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013786", "TBL_CAPITAN")]
         public TBL_CAPITAN TBL_CAPITAN
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C007216", "TBL_CAPITAN").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C0013786", "TBL_CAPITAN").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C007216", "TBL_CAPITAN").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C0013786", "TBL_CAPITAN").Value = value;
             }
         }
         /// <summary>
@@ -12662,13 +9510,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C007216", "TBL_CAPITAN");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_CAPITAN>("NewModel.SYS_C0013786", "TBL_CAPITAN");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_CAPITAN>("NewModel.SYS_C007216", "TBL_CAPITAN", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_CAPITAN>("NewModel.SYS_C0013786", "TBL_CAPITAN", value);
                 }
             }
         }
@@ -12679,18 +9527,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007210", "TBL_CARGAETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013778", "TBL_CARGAETAPA")]
         public EntityCollection<TBL_CARGAETAPA> TBL_CARGAETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007210", "TBL_CARGAETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013778", "TBL_CARGAETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007210", "TBL_CARGAETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013778", "TBL_CARGAETAPA", value);
                 }
             }
         }
@@ -12701,34 +9549,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007215", "TBL_PUNTODECONTROL")]
-        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013771", "TBL_PRACTICOVIAJE")]
+        public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007215", "TBL_PUNTODECONTROL").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007215", "TBL_PUNTODECONTROL").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROLReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007215", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013771", "TBL_PRACTICOVIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007215", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013771", "TBL_PRACTICOVIAJE", value);
                 }
             }
         }
@@ -12739,34 +9571,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007217", "TBL_PUNTODECONTROL")]
-        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL1
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013772", "TBL_PRACTICOVIAJE")]
+        public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE1
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007217", "TBL_PUNTODECONTROL").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007217", "TBL_PUNTODECONTROL").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROL1Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007217", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013772", "TBL_PRACTICOVIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007217", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013772", "TBL_PRACTICOVIAJE", value);
                 }
             }
         }
@@ -12777,34 +9593,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007218", "TBL_PUNTODECONTROL")]
-        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL2
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013780", "TBL_EVENTO")]
+        public EntityCollection<TBL_EVENTO> TBL_EVENTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007218", "TBL_PUNTODECONTROL").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007218", "TBL_PUNTODECONTROL").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROL2Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007218", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013780", "TBL_EVENTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007218", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013780", "TBL_EVENTO", value);
                 }
             }
         }
@@ -12815,16 +9615,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007219", "TBL_VIAJE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013782", "TBL_VIAJE")]
         public TBL_VIAJE TBL_VIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007219", "TBL_VIAJE").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013782", "TBL_VIAJE").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007219", "TBL_VIAJE").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013782", "TBL_VIAJE").Value = value;
             }
         }
         /// <summary>
@@ -12836,13 +9636,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007219", "TBL_VIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013782", "TBL_VIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C007219", "TBL_VIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013782", "TBL_VIAJE", value);
                 }
             }
         }
@@ -12853,18 +9653,34 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007220", "TBL_EVENTO")]
-        public EntityCollection<TBL_EVENTO> TBL_EVENTO
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013783", "TBL_PUNTODECONTROL")]
+        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007220", "TBL_EVENTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013783", "TBL_PUNTODECONTROL").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013783", "TBL_PUNTODECONTROL").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROLReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013783", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007220", "TBL_EVENTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013783", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -12875,18 +9691,34 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007441", "TBL_PRACTICOVIAJE")]
-        public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013784", "TBL_PUNTODECONTROL")]
+        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL1
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007441", "TBL_PRACTICOVIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013784", "TBL_PUNTODECONTROL").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013784", "TBL_PUNTODECONTROL").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROL1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013784", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007441", "TBL_PRACTICOVIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013784", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -12897,18 +9729,34 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007442", "TBL_PRACTICOVIAJE")]
-        public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE1
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013785", "TBL_PUNTODECONTROL")]
+        public TBL_PUNTODECONTROL TBL_PUNTODECONTROL2
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007442", "TBL_PRACTICOVIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013785", "TBL_PUNTODECONTROL").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013785", "TBL_PUNTODECONTROL").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TBL_PUNTODECONTROL> TBL_PUNTODECONTROL2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013785", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007442", "TBL_PRACTICOVIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013785", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -13638,6 +10486,30 @@ namespace mbpc_admin
         private Nullable<global::System.Decimal> _ACOMPANANTE4_ID;
         partial void OnACOMPANANTE4_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnACOMPANANTE4_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VIAJE2_ID
+        {
+            get
+            {
+                return _VIAJE2_ID;
+            }
+            set
+            {
+                OnVIAJE2_IDChanging(value);
+                ReportPropertyChanging("VIAJE2_ID");
+                _VIAJE2_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VIAJE2_ID");
+                OnVIAJE2_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VIAJE2_ID;
+        partial void OnVIAJE2_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnVIAJE2_IDChanged();
 
         #endregion
     
@@ -13649,16 +10521,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007221", "RIOS_CANALES_KM")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013779", "RIOS_CANALES_KM")]
         public RIOS_CANALES_KM RIOS_CANALES_KM
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C007221", "RIOS_CANALES_KM").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C0013779", "RIOS_CANALES_KM").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C007221", "RIOS_CANALES_KM").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C0013779", "RIOS_CANALES_KM").Value = value;
             }
         }
         /// <summary>
@@ -13670,13 +10542,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C007221", "RIOS_CANALES_KM");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C0013779", "RIOS_CANALES_KM");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C007221", "RIOS_CANALES_KM", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RIOS_CANALES_KM>("NewModel.SYS_C0013779", "RIOS_CANALES_KM", value);
                 }
             }
         }
@@ -13687,16 +10559,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007220", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013780", "TBL_ETAPA")]
         public TBL_ETAPA TBL_ETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007220", "TBL_ETAPA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013780", "TBL_ETAPA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007220", "TBL_ETAPA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013780", "TBL_ETAPA").Value = value;
             }
         }
         /// <summary>
@@ -13708,13 +10580,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007220", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013780", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C007220", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013780", "TBL_ETAPA", value);
                 }
             }
         }
@@ -13725,16 +10597,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007222", "TBL_TIPOEVENTO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013781", "TBL_TIPOEVENTO")]
         public TBL_TIPOEVENTO TBL_TIPOEVENTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C007222", "TBL_TIPOEVENTO").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C0013781", "TBL_TIPOEVENTO").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C007222", "TBL_TIPOEVENTO").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C0013781", "TBL_TIPOEVENTO").Value = value;
             }
         }
         /// <summary>
@@ -13746,13 +10618,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C007222", "TBL_TIPOEVENTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C0013781", "TBL_TIPOEVENTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C007222", "TBL_TIPOEVENTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPOEVENTO>("NewModel.SYS_C0013781", "TBL_TIPOEVENTO", value);
                 }
             }
         }
@@ -13845,18 +10717,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007223", "TBL_GRUPOPUNTO")]
-        public EntityCollection<TBL_GRUPOPUNTO> TBL_GRUPOPUNTO
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013765", "TBL_USUARIOGRUPO")]
+        public EntityCollection<TBL_USUARIOGRUPO> TBL_USUARIOGRUPO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C007223", "TBL_GRUPOPUNTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C0013765", "TBL_USUARIOGRUPO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C007223", "TBL_GRUPOPUNTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C0013765", "TBL_USUARIOGRUPO", value);
                 }
             }
         }
@@ -13867,18 +10739,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007235", "TBL_USUARIOGRUPO")]
-        public EntityCollection<TBL_USUARIOGRUPO> TBL_USUARIOGRUPO
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013794", "TBL_GRUPOPUNTO")]
+        public EntityCollection<TBL_GRUPOPUNTO> TBL_GRUPOPUNTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C007235", "TBL_USUARIOGRUPO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C0013794", "TBL_GRUPOPUNTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_USUARIOGRUPO>("NewModel.SYS_C007235", "TBL_USUARIOGRUPO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C0013794", "TBL_GRUPOPUNTO", value);
                 }
             }
         }
@@ -14023,16 +10895,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007223", "TBL_GRUPO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013794", "TBL_GRUPO")]
         public TBL_GRUPO TBL_GRUPO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007223", "TBL_GRUPO").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013794", "TBL_GRUPO").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007223", "TBL_GRUPO").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013794", "TBL_GRUPO").Value = value;
             }
         }
         /// <summary>
@@ -14044,13 +10916,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007223", "TBL_GRUPO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013794", "TBL_GRUPO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_GRUPO>("NewModel.SYS_C007223", "TBL_GRUPO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013794", "TBL_GRUPO", value);
                 }
             }
         }
@@ -14061,16 +10933,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007224", "TBL_PUNTODECONTROL")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013793", "TBL_PUNTODECONTROL")]
         public TBL_PUNTODECONTROL TBL_PUNTODECONTROL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007224", "TBL_PUNTODECONTROL").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013793", "TBL_PUNTODECONTROL").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007224", "TBL_PUNTODECONTROL").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013793", "TBL_PUNTODECONTROL").Value = value;
             }
         }
         /// <summary>
@@ -14082,13 +10954,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007224", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013793", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007224", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013793", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -15855,6 +12727,253 @@ namespace mbpc_admin
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="TBL_PAISES_CIALA")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TBL_PAISES_CIALA : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TBL_PAISES_CIALA object.
+        /// </summary>
+        /// <param name="pAISESID">Initial value of the PAISESID property.</param>
+        public static TBL_PAISES_CIALA CreateTBL_PAISES_CIALA(global::System.String pAISESID)
+        {
+            TBL_PAISES_CIALA tBL_PAISES_CIALA = new TBL_PAISES_CIALA();
+            tBL_PAISES_CIALA.PAISESID = pAISESID;
+            return tBL_PAISES_CIALA;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PAISESID
+        {
+            get
+            {
+                return _PAISESID;
+            }
+            set
+            {
+                if (_PAISESID != value)
+                {
+                    OnPAISESIDChanging(value);
+                    ReportPropertyChanging("PAISESID");
+                    _PAISESID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PAISESID");
+                    OnPAISESIDChanged();
+                }
+            }
+        }
+        private global::System.String _PAISESID;
+        partial void OnPAISESIDChanging(global::System.String value);
+        partial void OnPAISESIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DESCRIPCION
+        {
+            get
+            {
+                return _DESCRIPCION;
+            }
+            set
+            {
+                OnDESCRIPCIONChanging(value);
+                ReportPropertyChanging("DESCRIPCION");
+                _DESCRIPCION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DESCRIPCION");
+                OnDESCRIPCIONChanged();
+            }
+        }
+        private global::System.String _DESCRIPCION;
+        partial void OnDESCRIPCIONChanging(global::System.String value);
+        partial void OnDESCRIPCIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CONVENIOSRAT
+        {
+            get
+            {
+                return _CONVENIOSRAT;
+            }
+            set
+            {
+                OnCONVENIOSRATChanging(value);
+                ReportPropertyChanging("CONVENIOSRAT");
+                _CONVENIOSRAT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CONVENIOSRAT");
+                OnCONVENIOSRATChanged();
+            }
+        }
+        private global::System.String _CONVENIOSRAT;
+        partial void OnCONVENIOSRATChanging(global::System.String value);
+        partial void OnCONVENIOSRATChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CODALFABETICO
+        {
+            get
+            {
+                return _CODALFABETICO;
+            }
+            set
+            {
+                OnCODALFABETICOChanging(value);
+                ReportPropertyChanging("CODALFABETICO");
+                _CODALFABETICO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CODALFABETICO");
+                OnCODALFABETICOChanged();
+            }
+        }
+        private global::System.String _CODALFABETICO;
+        partial void OnCODALFABETICOChanging(global::System.String value);
+        partial void OnCODALFABETICOChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RECTOR
+        {
+            get
+            {
+                return _RECTOR;
+            }
+            set
+            {
+                OnRECTORChanging(value);
+                ReportPropertyChanging("RECTOR");
+                _RECTOR = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RECTOR");
+                OnRECTORChanged();
+            }
+        }
+        private global::System.String _RECTOR;
+        partial void OnRECTORChanging(global::System.String value);
+        partial void OnRECTORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OPERADOR
+        {
+            get
+            {
+                return _OPERADOR;
+            }
+            set
+            {
+                OnOPERADORChanging(value);
+                ReportPropertyChanging("OPERADOR");
+                _OPERADOR = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OPERADOR");
+                OnOPERADORChanged();
+            }
+        }
+        private global::System.String _OPERADOR;
+        partial void OnOPERADORChanging(global::System.String value);
+        partial void OnOPERADORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ESTADO
+        {
+            get
+            {
+                return _ESTADO;
+            }
+            set
+            {
+                OnESTADOChanging(value);
+                ReportPropertyChanging("ESTADO");
+                _ESTADO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ESTADO");
+                OnESTADOChanged();
+            }
+        }
+        private global::System.String _ESTADO;
+        partial void OnESTADOChanging(global::System.String value);
+        partial void OnESTADOChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FECHAAUDIT
+        {
+            get
+            {
+                return _FECHAAUDIT;
+            }
+            set
+            {
+                OnFECHAAUDITChanging(value);
+                ReportPropertyChanging("FECHAAUDIT");
+                _FECHAAUDIT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FECHAAUDIT");
+                OnFECHAAUDITChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FECHAAUDIT;
+        partial void OnFECHAAUDITChanging(Nullable<global::System.DateTime> value);
+        partial void OnFECHAAUDITChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DESCRIPCIONIN
+        {
+            get
+            {
+                return _DESCRIPCIONIN;
+            }
+            set
+            {
+                OnDESCRIPCIONINChanging(value);
+                ReportPropertyChanging("DESCRIPCIONIN");
+                _DESCRIPCIONIN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DESCRIPCIONIN");
+                OnDESCRIPCIONINChanged();
+            }
+        }
+        private global::System.String _DESCRIPCIONIN;
+        partial void OnDESCRIPCIONINChanging(global::System.String value);
+        partial void OnDESCRIPCIONINChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="TBL_PBIP")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -16057,16 +13176,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007225", "TBL_VIAJE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013788", "TBL_VIAJE")]
         public TBL_VIAJE TBL_VIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007225", "TBL_VIAJE").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013788", "TBL_VIAJE").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007225", "TBL_VIAJE").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013788", "TBL_VIAJE").Value = value;
             }
         }
         /// <summary>
@@ -16078,13 +13197,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007225", "TBL_VIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013788", "TBL_VIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C007225", "TBL_VIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013788", "TBL_VIAJE", value);
                 }
             }
         }
@@ -16177,18 +13296,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007444", "TBL_PRACTICOVIAJE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013769", "TBL_PRACTICOVIAJE")]
         public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007444", "TBL_PRACTICOVIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013769", "TBL_PRACTICOVIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007444", "TBL_PRACTICOVIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013769", "TBL_PRACTICOVIAJE", value);
                 }
             }
         }
@@ -16497,16 +13616,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007441", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013771", "TBL_ETAPA")]
         public TBL_ETAPA TBL_ETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007441", "TBL_ETAPA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013771", "TBL_ETAPA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007441", "TBL_ETAPA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013771", "TBL_ETAPA").Value = value;
             }
         }
         /// <summary>
@@ -16518,13 +13637,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007441", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013771", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C007441", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013771", "TBL_ETAPA", value);
                 }
             }
         }
@@ -16535,16 +13654,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007442", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013772", "TBL_ETAPA")]
         public TBL_ETAPA TBL_ETAPA1
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007442", "TBL_ETAPA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013772", "TBL_ETAPA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007442", "TBL_ETAPA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013772", "TBL_ETAPA").Value = value;
             }
         }
         /// <summary>
@@ -16556,13 +13675,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C007442", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013772", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C007442", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ETAPA>("NewModel.SYS_C0013772", "TBL_ETAPA", value);
                 }
             }
         }
@@ -16573,16 +13692,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007444", "TBL_PRACTICO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013769", "TBL_PRACTICO")]
         public TBL_PRACTICO TBL_PRACTICO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C007444", "TBL_PRACTICO").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C0013769", "TBL_PRACTICO").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C007444", "TBL_PRACTICO").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C0013769", "TBL_PRACTICO").Value = value;
             }
         }
         /// <summary>
@@ -16594,13 +13713,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C007444", "TBL_PRACTICO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PRACTICO>("NewModel.SYS_C0013769", "TBL_PRACTICO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PRACTICO>("NewModel.SYS_C007444", "TBL_PRACTICO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PRACTICO>("NewModel.SYS_C0013769", "TBL_PRACTICO", value);
                 }
             }
         }
@@ -16611,16 +13730,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007443", "TBL_VIAJE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013770", "TBL_VIAJE")]
         public TBL_VIAJE TBL_VIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007443", "TBL_VIAJE").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013770", "TBL_VIAJE").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007443", "TBL_VIAJE").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013770", "TBL_VIAJE").Value = value;
             }
         }
         /// <summary>
@@ -16632,13 +13751,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C007443", "TBL_VIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013770", "TBL_VIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C007443", "TBL_VIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_VIAJE>("NewModel.SYS_C0013770", "TBL_VIAJE", value);
                 }
             }
         }
@@ -17938,18 +15057,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007215", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013783", "TBL_ETAPA")]
         public EntityCollection<TBL_ETAPA> TBL_ETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007215", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013783", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007215", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013783", "TBL_ETAPA", value);
                 }
             }
         }
@@ -17960,18 +15079,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007217", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013784", "TBL_ETAPA")]
         public EntityCollection<TBL_ETAPA> TBL_ETAPA1
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007217", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013784", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007217", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013784", "TBL_ETAPA", value);
                 }
             }
         }
@@ -17982,18 +15101,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007218", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013785", "TBL_ETAPA")]
         public EntityCollection<TBL_ETAPA> TBL_ETAPA2
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007218", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013785", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007218", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013785", "TBL_ETAPA", value);
                 }
             }
         }
@@ -18004,18 +15123,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007224", "TBL_GRUPOPUNTO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013793", "TBL_GRUPOPUNTO")]
         public EntityCollection<TBL_GRUPOPUNTO> TBL_GRUPOPUNTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C007224", "TBL_GRUPOPUNTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C0013793", "TBL_GRUPOPUNTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C007224", "TBL_GRUPOPUNTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_GRUPOPUNTO>("NewModel.SYS_C0013793", "TBL_GRUPOPUNTO", value);
                 }
             }
         }
@@ -18026,16 +15145,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007228", "TBL_ZONAS")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013768", "TBL_ZONAS")]
         public TBL_ZONAS TBL_ZONAS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C007228", "TBL_ZONAS").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C0013768", "TBL_ZONAS").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C007228", "TBL_ZONAS").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C0013768", "TBL_ZONAS").Value = value;
             }
         }
         /// <summary>
@@ -18047,13 +15166,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C007228", "TBL_ZONAS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_ZONAS>("NewModel.SYS_C0013768", "TBL_ZONAS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ZONAS>("NewModel.SYS_C007228", "TBL_ZONAS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_ZONAS>("NewModel.SYS_C0013768", "TBL_ZONAS", value);
                 }
             }
         }
@@ -18064,18 +15183,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007230", "TBL_PUNTODECONTROLUSUARIO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013792", "TBL_PUNTODECONTROLUSUARIO")]
         public EntityCollection<TBL_PUNTODECONTROLUSUARIO> TBL_PUNTODECONTROLUSUARIO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PUNTODECONTROLUSUARIO>("NewModel.SYS_C007230", "TBL_PUNTODECONTROLUSUARIO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PUNTODECONTROLUSUARIO>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROLUSUARIO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PUNTODECONTROLUSUARIO>("NewModel.SYS_C007230", "TBL_PUNTODECONTROLUSUARIO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PUNTODECONTROLUSUARIO>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROLUSUARIO", value);
                 }
             }
         }
@@ -18230,16 +15349,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007230", "TBL_PUNTODECONTROL")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013792", "TBL_PUNTODECONTROL")]
         public TBL_PUNTODECONTROL TBL_PUNTODECONTROL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007230", "TBL_PUNTODECONTROL").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROL").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007230", "TBL_PUNTODECONTROL").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROL").Value = value;
             }
         }
         /// <summary>
@@ -18251,13 +15370,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007230", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C007230", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PUNTODECONTROL>("NewModel.SYS_C0013792", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -18409,13 +15528,11 @@ namespace mbpc_admin
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="nOMBRE">Initial value of the NOMBRE property.</param>
-        /// <param name="cONSULTA_SQL">Initial value of the CONSULTA_SQL property.</param>
-        public static TBL_REPORTE CreateTBL_REPORTE(global::System.Decimal id, global::System.String nOMBRE, global::System.String cONSULTA_SQL)
+        public static TBL_REPORTE CreateTBL_REPORTE(global::System.Decimal id, global::System.String nOMBRE)
         {
             TBL_REPORTE tBL_REPORTE = new TBL_REPORTE();
             tBL_REPORTE.ID = id;
             tBL_REPORTE.NOMBRE = nOMBRE;
-            tBL_REPORTE.CONSULTA_SQL = cONSULTA_SQL;
             return tBL_REPORTE;
         }
 
@@ -18524,30 +15641,6 @@ namespace mbpc_admin
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CONSULTA_SQL
-        {
-            get
-            {
-                return _CONSULTA_SQL;
-            }
-            set
-            {
-                OnCONSULTA_SQLChanging(value);
-                ReportPropertyChanging("CONSULTA_SQL");
-                _CONSULTA_SQL = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CONSULTA_SQL");
-                OnCONSULTA_SQLChanged();
-            }
-        }
-        private global::System.String _CONSULTA_SQL;
-        partial void OnCONSULTA_SQLChanging(global::System.String value);
-        partial void OnCONSULTA_SQLChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> CATEGORIA_ID
@@ -18568,6 +15661,30 @@ namespace mbpc_admin
         private Nullable<global::System.Decimal> _CATEGORIA_ID;
         partial void OnCATEGORIA_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnCATEGORIA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CONSULTA_SQL
+        {
+            get
+            {
+                return _CONSULTA_SQL;
+            }
+            set
+            {
+                OnCONSULTA_SQLChanging(value);
+                ReportPropertyChanging("CONSULTA_SQL");
+                _CONSULTA_SQL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CONSULTA_SQL");
+                OnCONSULTA_SQLChanged();
+            }
+        }
+        private global::System.String _CONSULTA_SQL;
+        partial void OnCONSULTA_SQLChanging(global::System.String value);
+        partial void OnCONSULTA_SQLChanged();
 
         #endregion
     
@@ -18579,18 +15696,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007232", "TBL_REPORTE_PARAM")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013766", "TBL_REPORTE_PARAM")]
         public EntityCollection<TBL_REPORTE_PARAM> TBL_REPORTE_PARAM
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_REPORTE_PARAM>("NewModel.SYS_C007232", "TBL_REPORTE_PARAM");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_REPORTE_PARAM>("NewModel.SYS_C0013766", "TBL_REPORTE_PARAM");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_REPORTE_PARAM>("NewModel.SYS_C007232", "TBL_REPORTE_PARAM", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_REPORTE_PARAM>("NewModel.SYS_C0013766", "TBL_REPORTE_PARAM", value);
                 }
             }
         }
@@ -18601,16 +15718,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007488", "TBL_REPORTECATEGORIA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013803", "TBL_REPORTECATEGORIA")]
         public TBL_REPORTECATEGORIA TBL_REPORTECATEGORIA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C007488", "TBL_REPORTECATEGORIA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C0013803", "TBL_REPORTECATEGORIA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C007488", "TBL_REPORTECATEGORIA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C0013803", "TBL_REPORTECATEGORIA").Value = value;
             }
         }
         /// <summary>
@@ -18622,13 +15739,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C007488", "TBL_REPORTECATEGORIA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C0013803", "TBL_REPORTECATEGORIA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C007488", "TBL_REPORTECATEGORIA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_REPORTECATEGORIA>("NewModel.SYS_C0013803", "TBL_REPORTECATEGORIA", value);
                 }
             }
         }
@@ -18801,16 +15918,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007232", "TBL_REPORTE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013766", "TBL_REPORTE")]
         public TBL_REPORTE TBL_REPORTE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C007232", "TBL_REPORTE").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C0013766", "TBL_REPORTE").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C007232", "TBL_REPORTE").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C0013766", "TBL_REPORTE").Value = value;
             }
         }
         /// <summary>
@@ -18822,13 +15939,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C007232", "TBL_REPORTE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_REPORTE>("NewModel.SYS_C0013766", "TBL_REPORTE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_REPORTE>("NewModel.SYS_C007232", "TBL_REPORTE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_REPORTE>("NewModel.SYS_C0013766", "TBL_REPORTE", value);
                 }
             }
         }
@@ -18945,18 +16062,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007488", "TBL_REPORTE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013803", "TBL_REPORTE")]
         public EntityCollection<TBL_REPORTE> TBL_REPORTE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_REPORTE>("NewModel.SYS_C007488", "TBL_REPORTE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_REPORTE>("NewModel.SYS_C0013803", "TBL_REPORTE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_REPORTE>("NewModel.SYS_C007488", "TBL_REPORTE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_REPORTE>("NewModel.SYS_C0013803", "TBL_REPORTE", value);
                 }
             }
         }
@@ -19193,18 +16310,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007211", "TBL_CARGAETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013776", "TBL_CARGAETAPA")]
         public EntityCollection<TBL_CARGAETAPA> TBL_CARGAETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007211", "TBL_CARGAETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013776", "TBL_CARGAETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007211", "TBL_CARGAETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013776", "TBL_CARGAETAPA", value);
                 }
             }
         }
@@ -19215,18 +16332,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007233", "TBL_TIPOCARGAUNIDAD")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013789", "TBL_TIPOCARGAUNIDAD")]
         public EntityCollection<TBL_TIPOCARGAUNIDAD> TBL_TIPOCARGAUNIDAD
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C007233", "TBL_TIPOCARGAUNIDAD");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C0013789", "TBL_TIPOCARGAUNIDAD");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C007233", "TBL_TIPOCARGAUNIDAD", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C0013789", "TBL_TIPOCARGAUNIDAD", value);
                 }
             }
         }
@@ -19343,16 +16460,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007233", "TBL_TIPO_CARGA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013789", "TBL_TIPO_CARGA")]
         public TBL_TIPO_CARGA TBL_TIPO_CARGA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007233", "TBL_TIPO_CARGA").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013789", "TBL_TIPO_CARGA").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007233", "TBL_TIPO_CARGA").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013789", "TBL_TIPO_CARGA").Value = value;
             }
         }
         /// <summary>
@@ -19364,13 +16481,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007233", "TBL_TIPO_CARGA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013789", "TBL_TIPO_CARGA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C007233", "TBL_TIPO_CARGA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_TIPO_CARGA>("NewModel.SYS_C0013789", "TBL_TIPO_CARGA", value);
                 }
             }
         }
@@ -19381,16 +16498,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007234", "TBL_UNIDAD")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013790", "TBL_UNIDAD")]
         public TBL_UNIDAD TBL_UNIDAD
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007234", "TBL_UNIDAD").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013790", "TBL_UNIDAD").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007234", "TBL_UNIDAD").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013790", "TBL_UNIDAD").Value = value;
             }
         }
         /// <summary>
@@ -19402,13 +16519,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007234", "TBL_UNIDAD");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013790", "TBL_UNIDAD");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_UNIDAD>("NewModel.SYS_C007234", "TBL_UNIDAD", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_UNIDAD>("NewModel.SYS_C0013790", "TBL_UNIDAD", value);
                 }
             }
         }
@@ -19525,18 +16642,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007222", "TBL_EVENTO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013781", "TBL_EVENTO")]
         public EntityCollection<TBL_EVENTO> TBL_EVENTO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007222", "TBL_EVENTO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013781", "TBL_EVENTO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C007222", "TBL_EVENTO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_EVENTO>("NewModel.SYS_C0013781", "TBL_EVENTO", value);
                 }
             }
         }
@@ -19629,18 +16746,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007212", "TBL_CARGAETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013777", "TBL_CARGAETAPA")]
         public EntityCollection<TBL_CARGAETAPA> TBL_CARGAETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007212", "TBL_CARGAETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013777", "TBL_CARGAETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C007212", "TBL_CARGAETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_CARGAETAPA>("NewModel.SYS_C0013777", "TBL_CARGAETAPA", value);
                 }
             }
         }
@@ -19651,18 +16768,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007234", "TBL_TIPOCARGAUNIDAD")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013790", "TBL_TIPOCARGAUNIDAD")]
         public EntityCollection<TBL_TIPOCARGAUNIDAD> TBL_TIPOCARGAUNIDAD
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C007234", "TBL_TIPOCARGAUNIDAD");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C0013790", "TBL_TIPOCARGAUNIDAD");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C007234", "TBL_TIPOCARGAUNIDAD", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_TIPOCARGAUNIDAD>("NewModel.SYS_C0013790", "TBL_TIPOCARGAUNIDAD", value);
                 }
             }
         }
@@ -19783,16 +16900,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007236", "INT_USUARIOS")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013764", "INT_USUARIOS")]
         public INT_USUARIOS INT_USUARIOS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C007236", "INT_USUARIOS").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C0013764", "INT_USUARIOS").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C007236", "INT_USUARIOS").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C0013764", "INT_USUARIOS").Value = value;
             }
         }
         /// <summary>
@@ -19804,13 +16921,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C007236", "INT_USUARIOS");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INT_USUARIOS>("NewModel.SYS_C0013764", "INT_USUARIOS");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INT_USUARIOS>("NewModel.SYS_C007236", "INT_USUARIOS", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INT_USUARIOS>("NewModel.SYS_C0013764", "INT_USUARIOS", value);
                 }
             }
         }
@@ -19821,16 +16938,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007235", "TBL_GRUPO")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013765", "TBL_GRUPO")]
         public TBL_GRUPO TBL_GRUPO
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007235", "TBL_GRUPO").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013765", "TBL_GRUPO").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007235", "TBL_GRUPO").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013765", "TBL_GRUPO").Value = value;
             }
         }
         /// <summary>
@@ -19842,13 +16959,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C007235", "TBL_GRUPO");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013765", "TBL_GRUPO");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_GRUPO>("NewModel.SYS_C007235", "TBL_GRUPO", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_GRUPO>("NewModel.SYS_C0013765", "TBL_GRUPO", value);
                 }
             }
         }
@@ -20445,18 +17562,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007219", "TBL_ETAPA")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013782", "TBL_ETAPA")]
         public EntityCollection<TBL_ETAPA> TBL_ETAPA
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007219", "TBL_ETAPA");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013782", "TBL_ETAPA");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C007219", "TBL_ETAPA", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_ETAPA>("NewModel.SYS_C0013782", "TBL_ETAPA", value);
                 }
             }
         }
@@ -20467,16 +17584,16 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007225", "TBL_PBIP")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013788", "TBL_PBIP")]
         public TBL_PBIP TBL_PBIP
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C007225", "TBL_PBIP").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C0013788", "TBL_PBIP").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C007225", "TBL_PBIP").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C0013788", "TBL_PBIP").Value = value;
             }
         }
         /// <summary>
@@ -20488,13 +17605,13 @@ namespace mbpc_admin
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C007225", "TBL_PBIP");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_PBIP>("NewModel.SYS_C0013788", "TBL_PBIP");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PBIP>("NewModel.SYS_C007225", "TBL_PBIP", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_PBIP>("NewModel.SYS_C0013788", "TBL_PBIP", value);
                 }
             }
         }
@@ -20505,18 +17622,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007443", "TBL_PRACTICOVIAJE")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013770", "TBL_PRACTICOVIAJE")]
         public EntityCollection<TBL_PRACTICOVIAJE> TBL_PRACTICOVIAJE
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007443", "TBL_PRACTICOVIAJE");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013770", "TBL_PRACTICOVIAJE");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C007443", "TBL_PRACTICOVIAJE", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PRACTICOVIAJE>("NewModel.SYS_C0013770", "TBL_PRACTICOVIAJE", value);
                 }
             }
         }
@@ -20619,6 +17736,30 @@ namespace mbpc_admin
         private global::System.String _NIVEL;
         partial void OnNIVELChanging(global::System.String value);
         partial void OnNIVELChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DIRECCION_POSTAL
+        {
+            get
+            {
+                return _DIRECCION_POSTAL;
+            }
+            set
+            {
+                OnDIRECCION_POSTALChanging(value);
+                ReportPropertyChanging("DIRECCION_POSTAL");
+                _DIRECCION_POSTAL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DIRECCION_POSTAL");
+                OnDIRECCION_POSTALChanged();
+            }
+        }
+        private global::System.String _DIRECCION_POSTAL;
+        partial void OnDIRECCION_POSTALChanging(global::System.String value);
+        partial void OnDIRECCION_POSTALChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -20958,30 +18099,6 @@ namespace mbpc_admin
         private global::System.String _DESCENTRALIZADO;
         partial void OnDESCENTRALIZADOChanging(global::System.String value);
         partial void OnDESCENTRALIZADOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String DIRECCION_POSTAL
-        {
-            get
-            {
-                return _DIRECCION_POSTAL;
-            }
-            set
-            {
-                OnDIRECCION_POSTALChanging(value);
-                ReportPropertyChanging("DIRECCION_POSTAL");
-                _DIRECCION_POSTAL = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("DIRECCION_POSTAL");
-                OnDIRECCION_POSTALChanged();
-            }
-        }
-        private global::System.String _DIRECCION_POSTAL;
-        partial void OnDIRECCION_POSTALChanging(global::System.String value);
-        partial void OnDIRECCION_POSTALChanged();
 
         #endregion
     
@@ -20993,18 +18110,18 @@ namespace mbpc_admin
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C007228", "TBL_PUNTODECONTROL")]
+        [EdmRelationshipNavigationPropertyAttribute("NewModel", "SYS_C0013768", "TBL_PUNTODECONTROL")]
         public EntityCollection<TBL_PUNTODECONTROL> TBL_PUNTODECONTROL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PUNTODECONTROL>("NewModel.SYS_C007228", "TBL_PUNTODECONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_PUNTODECONTROL>("NewModel.SYS_C0013768", "TBL_PUNTODECONTROL");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PUNTODECONTROL>("NewModel.SYS_C007228", "TBL_PUNTODECONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_PUNTODECONTROL>("NewModel.SYS_C0013768", "TBL_PUNTODECONTROL", value);
                 }
             }
         }
@@ -21672,6 +18789,445 @@ namespace mbpc_admin
         private global::System.String _TIPO;
         partial void OnTIPOChanging(global::System.String value);
         partial void OnTIPOChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="NewModel", Name="VIEW_ETAPAS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class VIEW_ETAPAS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new VIEW_ETAPAS object.
+        /// </summary>
+        /// <param name="nRO_ETAPA">Initial value of the NRO_ETAPA property.</param>
+        public static VIEW_ETAPAS CreateVIEW_ETAPAS(global::System.Decimal nRO_ETAPA)
+        {
+            VIEW_ETAPAS vIEW_ETAPAS = new VIEW_ETAPAS();
+            vIEW_ETAPAS.NRO_ETAPA = nRO_ETAPA;
+            return vIEW_ETAPAS;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VIAJE_ID
+        {
+            get
+            {
+                return _VIAJE_ID;
+            }
+            set
+            {
+                OnVIAJE_IDChanging(value);
+                ReportPropertyChanging("VIAJE_ID");
+                _VIAJE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VIAJE_ID");
+                OnVIAJE_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VIAJE_ID;
+        partial void OnVIAJE_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnVIAJE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal NRO_ETAPA
+        {
+            get
+            {
+                return _NRO_ETAPA;
+            }
+            set
+            {
+                if (_NRO_ETAPA != value)
+                {
+                    OnNRO_ETAPAChanging(value);
+                    ReportPropertyChanging("NRO_ETAPA");
+                    _NRO_ETAPA = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("NRO_ETAPA");
+                    OnNRO_ETAPAChanged();
+                }
+            }
+        }
+        private global::System.Decimal _NRO_ETAPA;
+        partial void OnNRO_ETAPAChanging(global::System.Decimal value);
+        partial void OnNRO_ETAPAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CANALORIGEN
+        {
+            get
+            {
+                return _CANALORIGEN;
+            }
+            set
+            {
+                OnCANALORIGENChanging(value);
+                ReportPropertyChanging("CANALORIGEN");
+                _CANALORIGEN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CANALORIGEN");
+                OnCANALORIGENChanged();
+            }
+        }
+        private global::System.String _CANALORIGEN;
+        partial void OnCANALORIGENChanging(global::System.String value);
+        partial void OnCANALORIGENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String KMORIGEN
+        {
+            get
+            {
+                return _KMORIGEN;
+            }
+            set
+            {
+                OnKMORIGENChanging(value);
+                ReportPropertyChanging("KMORIGEN");
+                _KMORIGEN = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("KMORIGEN");
+                OnKMORIGENChanged();
+            }
+        }
+        private global::System.String _KMORIGEN;
+        partial void OnKMORIGENChanging(global::System.String value);
+        partial void OnKMORIGENChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CANALDESTINO
+        {
+            get
+            {
+                return _CANALDESTINO;
+            }
+            set
+            {
+                OnCANALDESTINOChanging(value);
+                ReportPropertyChanging("CANALDESTINO");
+                _CANALDESTINO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CANALDESTINO");
+                OnCANALDESTINOChanged();
+            }
+        }
+        private global::System.String _CANALDESTINO;
+        partial void OnCANALDESTINOChanging(global::System.String value);
+        partial void OnCANALDESTINOChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String KMDESTINO
+        {
+            get
+            {
+                return _KMDESTINO;
+            }
+            set
+            {
+                OnKMDESTINOChanging(value);
+                ReportPropertyChanging("KMDESTINO");
+                _KMDESTINO = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("KMDESTINO");
+                OnKMDESTINOChanged();
+            }
+        }
+        private global::System.String _KMDESTINO;
+        partial void OnKMDESTINOChanging(global::System.String value);
+        partial void OnKMDESTINOChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VELOCIDAD
+        {
+            get
+            {
+                return _VELOCIDAD;
+            }
+            set
+            {
+                OnVELOCIDADChanging(value);
+                ReportPropertyChanging("VELOCIDAD");
+                _VELOCIDAD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VELOCIDAD");
+                OnVELOCIDADChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VELOCIDAD;
+        partial void OnVELOCIDADChanging(Nullable<global::System.Decimal> value);
+        partial void OnVELOCIDADChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> HRP
+        {
+            get
+            {
+                return _HRP;
+            }
+            set
+            {
+                OnHRPChanging(value);
+                ReportPropertyChanging("HRP");
+                _HRP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HRP");
+                OnHRPChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _HRP;
+        partial void OnHRPChanging(Nullable<global::System.DateTime> value);
+        partial void OnHRPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ETA
+        {
+            get
+            {
+                return _ETA;
+            }
+            set
+            {
+                OnETAChanging(value);
+                ReportPropertyChanging("ETA");
+                _ETA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ETA");
+                OnETAChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ETA;
+        partial void OnETAChanging(Nullable<global::System.DateTime> value);
+        partial void OnETAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FECHA_SALIDA
+        {
+            get
+            {
+                return _FECHA_SALIDA;
+            }
+            set
+            {
+                OnFECHA_SALIDAChanging(value);
+                ReportPropertyChanging("FECHA_SALIDA");
+                _FECHA_SALIDA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FECHA_SALIDA");
+                OnFECHA_SALIDAChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FECHA_SALIDA;
+        partial void OnFECHA_SALIDAChanging(Nullable<global::System.DateTime> value);
+        partial void OnFECHA_SALIDAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FECHA_LLEGADA
+        {
+            get
+            {
+                return _FECHA_LLEGADA;
+            }
+            set
+            {
+                OnFECHA_LLEGADAChanging(value);
+                ReportPropertyChanging("FECHA_LLEGADA");
+                _FECHA_LLEGADA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FECHA_LLEGADA");
+                OnFECHA_LLEGADAChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FECHA_LLEGADA;
+        partial void OnFECHA_LLEGADAChanging(Nullable<global::System.DateTime> value);
+        partial void OnFECHA_LLEGADAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CANTIDAD_TRIPULANTES
+        {
+            get
+            {
+                return _CANTIDAD_TRIPULANTES;
+            }
+            set
+            {
+                OnCANTIDAD_TRIPULANTESChanging(value);
+                ReportPropertyChanging("CANTIDAD_TRIPULANTES");
+                _CANTIDAD_TRIPULANTES = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CANTIDAD_TRIPULANTES");
+                OnCANTIDAD_TRIPULANTESChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CANTIDAD_TRIPULANTES;
+        partial void OnCANTIDAD_TRIPULANTESChanging(Nullable<global::System.Decimal> value);
+        partial void OnCANTIDAD_TRIPULANTESChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CANTIDAD_PASAJEROS
+        {
+            get
+            {
+                return _CANTIDAD_PASAJEROS;
+            }
+            set
+            {
+                OnCANTIDAD_PASAJEROSChanging(value);
+                ReportPropertyChanging("CANTIDAD_PASAJEROS");
+                _CANTIDAD_PASAJEROS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CANTIDAD_PASAJEROS");
+                OnCANTIDAD_PASAJEROSChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CANTIDAD_PASAJEROS;
+        partial void OnCANTIDAD_PASAJEROSChanging(Nullable<global::System.Decimal> value);
+        partial void OnCANTIDAD_PASAJEROSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LATITUD
+        {
+            get
+            {
+                return _LATITUD;
+            }
+            set
+            {
+                OnLATITUDChanging(value);
+                ReportPropertyChanging("LATITUD");
+                _LATITUD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LATITUD");
+                OnLATITUDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LATITUD;
+        partial void OnLATITUDChanging(Nullable<global::System.Decimal> value);
+        partial void OnLATITUDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LONGITUD
+        {
+            get
+            {
+                return _LONGITUD;
+            }
+            set
+            {
+                OnLONGITUDChanging(value);
+                ReportPropertyChanging("LONGITUD");
+                _LONGITUD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LONGITUD");
+                OnLONGITUDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LONGITUD;
+        partial void OnLONGITUDChanging(Nullable<global::System.Decimal> value);
+        partial void OnLONGITUDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> KM
+        {
+            get
+            {
+                return _KM;
+            }
+            set
+            {
+                OnKMChanging(value);
+                ReportPropertyChanging("KM");
+                _KM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("KM");
+                OnKMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _KM;
+        partial void OnKMChanging(Nullable<global::System.Decimal> value);
+        partial void OnKMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> RUMBO
+        {
+            get
+            {
+                return _RUMBO;
+            }
+            set
+            {
+                OnRUMBOChanging(value);
+                ReportPropertyChanging("RUMBO");
+                _RUMBO = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RUMBO");
+                OnRUMBOChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _RUMBO;
+        partial void OnRUMBOChanging(Nullable<global::System.Decimal> value);
+        partial void OnRUMBOChanged();
 
         #endregion
     

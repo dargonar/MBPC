@@ -118,10 +118,10 @@
             return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/carga/list?ID='+id;
+            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID='+id;
           },
         position: "last"
-      }).navButtonAdd('#pager', {
+      })<%if(ViewData["alone"]!=null){%>;<%}else{%>.navButtonAdd('#pager', {
         caption: "Agregar Carga",
         buttonicon: "ui-icon-add",
         onClickButton: function () {
@@ -134,7 +134,8 @@
             window.location = '/Carga/New?etapa_id='+id;
           },
         position: "last"
-      });
+      });<%}%>
+
     });
   });
 </script>

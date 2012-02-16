@@ -64,6 +64,7 @@
       mygrid.filterToolbar({
       height: 20
       });
+      <%if(ViewData["alone"]==null){%>
       mygrid.navGrid('#pager', { edit: false,
         add: false,
         del: false,
@@ -104,6 +105,7 @@
         },
         position: "last"
       });
+      <%}%>
     });
 
     <%=Html.RestoreJQStateScript("carga", true)%>

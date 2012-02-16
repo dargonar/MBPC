@@ -20,9 +20,8 @@ namespace mbpc_admin.Controllers
           var decid = decimal.Parse(id);
           var viaje = (from d in context.TBL_VIAJE where d.ID == decid select d).SingleOrDefault();
 
-          ViewData["pdcs"] = (from c in context.VPUNTO_DE_CONTROL select new { id = c.ID, value = c.CANAL }).ToArray(); 
-
-          
+          ViewData["pdcs"] = (from c in context.VPUNTO_DE_CONTROL select new { id = c.ID, value = c.CANAL }).ToArray();
+         
           //ViewData["titulo"] = String.Format("viaje {0} (Buque {1} de muelle {2} a {3})", id,viaje.BUQUE_ID != null ? 'ddd' : 'ddddi', viaje.DESTINO_ID .DESCRIPCION ,viaje.TBL_MUELLES1.DESCRIPCION);
             
           if (id != null)

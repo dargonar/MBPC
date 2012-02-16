@@ -76,9 +76,13 @@
       $("#fullscreen").show();
 
 
-      if ($(this).val() == "150001") {
-
+      if ($(this).val() == "150000") {
+        $("#rresult").html('<iframe id="yoframe" width="100%" height="100%" src="http://localhost:7238/Viaje/List?alone=1"></iframe>');
+        $("#rresult").show();
+        $("#fullscreen").hide();
+        return;
       }
+
 
       $.ajax({
         cache: false,
@@ -149,8 +153,7 @@
        <%} 
       %>
       <optgroup label="Custom">
-        <option value="150001">Historico de viaje</option>
-        <option value="150002">Listado de Viajes</option>
+        <option value="150000">Listado de Viajes</option>
       </optgroup>
       </select><br /><br />
       <div style="clear:both;"></div>
