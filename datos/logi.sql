@@ -1727,14 +1727,14 @@ create or replace package body mbpc as
     select NVL(z.cuatrigrama,'') costera, b.id_buque, b.matricula, b.nro_omi, b.nombre, b.bandera, b.nro_ismm, b.tipo, b.sdist
     from buques b 
     
-      left JOIN tbl_paises_ciala pc ON b.bandera    = pc.DESCRIPCION
+      --left JOIN tbl_paises_ciala pc ON b.bandera    = pc.DESCRIPCION
       left join tbl_viaje v on b.id_buque           = v.buque_id and v.estado = 0
       left join tbl_etapa e on v.id                 = e.viaje_id and v.etapa_actual = e.nro_etapa
       left join tbl_puntodecontrol p on e.actual_id = p.id 
       left join tbl_zonas z on p.zona_id            = z.id
     where
       (
-      upper(pc.codalfabetico) like upper('%'||vQuery||'%') or
+      --upper(pc.codalfabetico) like upper('%'||vQuery||'%') or
       upper(b.nombre) like upper('%'||vQuery||'%') or 
       upper(b.bandera) like upper('%'||vQuery||'%') or 
       upper(b.sdist) like upper('%'||vQuery||'%') or 

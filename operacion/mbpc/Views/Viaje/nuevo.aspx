@@ -113,6 +113,7 @@
                    nombre   : item.NOMBRE,
                    sdist    : item.SDIST,
                    tipo     : item.TIPO,
+                   bandera  : item.BANDERA,
                    costera  : item.COSTERA
                  }
                }));
@@ -152,7 +153,7 @@
 
             return $( "<li "+ bg + "></li>" )
 				      .data( "item.autocomplete", item )
-				      .append( "<a>" + item.nombre + " (SD:" + item.sdist + " - IMO:" + item.omi + ")" 
+				      .append( "<a>" + item.nombre + " (SD:" + item.sdist + " - IMO:" + item.omi + " - " + item.bandera + ")" 
                              + mr
                              + "</a>" )
 				      .appendTo( ul );
