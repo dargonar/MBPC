@@ -29,33 +29,27 @@
   <%//Html.ComboFilter("unidades") %>
 
   $(document).ready(function () {
-
+  
+    //"ID_BUQUE", "NOMBRE", "TIPO_SERVICIO", "TIPO_BUQUE", "REGISTRO", "NRO_ISMM", "ANIO_CONSTRUCCION", "BANDERA", "NRO_OMI", "MATRICULA", "SDIST"
 
     $(function () {
       var mygrid = $("#list").jqGrid({
         url: '/Buque/ListJson',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ["ID","Tipo de Servicio","Tipo de buque","Eliminacion","Registro","Actualizacion Fecha","Actualizacion Usuario","Valor","Inscripcion Provisoria","Fecha de inscripcion","ISMM","Año de construccion","Bandera","Nombre","Nro OMI","Matricula","Señal Distintiva"],  
+        colNames: ["ID","Nombre", "Tipo de Servicio", "Tipo de buque", "Registro", "Nro ISMM", "Año de Construccion", "Bandera", "Nro OMI", "Matricula", "Señal Distintiva"],  
         colModel: [
-      { name: 'BUQUE_ID', index: 'BUQUE_ID', width: 90 },
-      { name: 'TIPO_SERVICIO', index: 'TIPO_SERVICIO', width: 90 }, //, formatter: tipodecargas, stype: 'select', editoptions: { value: tipodecargas_edit}},
+      { name: 'ID_BUQUE', index: 'ID_BUQUE', width: 90 },
+      { name: 'NOMBRE', index: 'NOMBRE', width: 90 }, //, formatter: tipodecargas, stype: 'select', editoptions: { value: tipodecargas_edit}},
+      { name: 'TIPO_SERVICIO', index: 'TIPO_SERVICIO', width: 80 },
       { name: 'TIPO_BUQUE', index: 'TIPO_BUQUE', width: 80 },
-      { name: 'ELIMINACION', index: 'ELIMINACION', width: 80 },
       { name: 'REGISTRO', index: 'REGISTRO', width: 90 },
-      { name: 'ACTUALIZACION_FECHA', index: 'ACTUALIZACION_FECHA', width: 90 },
-      { name: 'ACTUALIZACION_USUARIO', index: 'ACTUALIZACION_USUARIO', width: 90 },
-      { name: 'VALOR', index: 'VALOR', width: 90 },
-      { name: 'INSCRIP_PROVISORIA', index: 'INSCRIP_PROVISORIA', width: 90 },
-      { name: 'FECHA_INSCRIP', index: 'FECHA_INSCRIP', width: 90 },
       { name: 'NRO_ISMM', index: 'NRO_ISMM', width: 90 },
       { name: 'ANIO_CONSTRUCCION', index: 'ANIO_CONSTRUCCION', width: 90 },
-      { name: 'BANDERA_ID', index: 'BANDERA_ID', width: 90 },
-      { name: 'NOMBRE', index: 'NOMBRE', width: 90 },
+      { name: 'BANDERA', index: 'BANDERA', width: 90 },
       { name: 'NRO_OMI', index: 'NRO_OMI', width: 90 },
       { name: 'MATRICULA', index: 'MATRICULA', width: 90 },
       { name: 'SDIST', index: 'SDIST', width: 90 },
-
     ],
         pager: '#pager',
 

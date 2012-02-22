@@ -7,6 +7,7 @@
 
       <input type="hidden" id="buque_id" name="buque_id" />
       <input type="hidden" id="etapa_id" name="etapa_id" value="<%= ViewData["etapa_id"] %>"/>
+      <input type="hidden" id="barcaza_id" name="barcaza_id" value="<%= ViewData["barcaza_id"]%>" />
 
       <input type="submit" class="botonsubmit" style="margin-left: 147px;float:right" value="Corregir Barcaza" />
 </form>

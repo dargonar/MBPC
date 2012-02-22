@@ -115,7 +115,7 @@
               alert("Debe elegir un usuario");
               return;
             }
-            var id = mygrid.getRowData(gsr)['USUARIO_ID'];
+            var id = mygrid.getRowData(gsr)['NDOC'];
             window.location = '/Usuario/Grupos?usuario='+id;
         },
         position: "last"

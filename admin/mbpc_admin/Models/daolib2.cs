@@ -21,7 +21,7 @@ public static class DaoLib2
   public static IQueryable traeruser(string id)
   {
     
-    using (MBPCEntities5 bla = new MBPCEntities5())
+    using (NewEntities bla = new NewEntities())
 
     {
         //bla.TBL_CAPITAN

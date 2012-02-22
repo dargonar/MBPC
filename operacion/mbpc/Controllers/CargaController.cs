@@ -19,15 +19,16 @@ namespace mbpc.Controllers
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id, refresh_viajes = "1" });
       }
 
-      public ActionResult seleccionar_nueva_barcaza(int etapa_id)
+      public ActionResult seleccionar_nueva_barcaza(int etapa_id, int barcaza_id)
       {
         ViewData["etapa_id"] = etapa_id;
+        ViewData["barcaza_id"] = barcaza_id;
         return View();
       }
 
-      public ActionResult corregir_barcaza(int buque_id, int etapa_id)
+      public ActionResult corregir_barcaza(int buque_id, int etapa_id, int barcaza_id)
       {
-        DaoLib.corregir_barcaza(etapa_id, buque_id);
+        DaoLib.corregir_barcaza(etapa_id, buque_id, barcaza_id);
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
 

@@ -11,15 +11,15 @@ namespace mbpc_admin.Controllers
   {
     public static int _HACKID_ = 9999999;
 
-    private MBPCEntities5 _context = null;
+    private NewEntities _context = null;
 
-    public MBPCEntities5 context
+    public NewEntities context
     {
       get
       {
         if (_context == null)
         {
-          _context = new MBPCEntities5();
+          _context = new NewEntities();
         }
 
         return _context;
@@ -33,6 +33,15 @@ namespace mbpc_admin.Controllers
         _context.Dispose();
       }
       //checkFlash();
+    }
+    protected override void OnActionExecuting(ActionExecutingContext filterContext)
+    {
+      if (Request.Params.HasKeys() && Request.Params.Get("alone") != null)
+      {
+        ViewData["alone"] = "1";
+      }
+
+      base.OnActionExecuting(filterContext);
     }
 
     protected void checkFlash() {

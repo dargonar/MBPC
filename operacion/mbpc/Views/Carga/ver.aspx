@@ -34,7 +34,7 @@
           <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)" title="Descargar">Desc.</a>&nbsp;-&nbsp;
           <% } %>
           <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)" title="Fondear">Fond.</a>&nbsp;-&nbsp;
-          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] %>" onclick="return seleccionar_nueva_barcaza(this)" title="Corregir">Correg.</a>
+          <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return seleccionar_nueva_barcaza(this)" title="Corregir">Correg.</a>
           </td>
           <% }%>
           <td colspan="<%= (carga["TIPOCARGA_ID"] != "412") ? "1" : "4" %>" ><%=carga["NOMBRE"]%></br>

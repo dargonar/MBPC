@@ -432,8 +432,6 @@
             modal: true,
             title: 'Reporte Diario'
           });
-          $('#dialogdiv').append($('#printver').clone());
-          $('#printver').css('display', 'block');
           $("#fullscreen").css("display", "none");
         }),
         error: (function (data) {

@@ -35,9 +35,10 @@
         url: '/etapa/ListJSON',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ["ID", "Etapa Nro:", "Origen", "Actual", "Destino", "HRP", "ETA", "Fecha de salida",	"Fecha de llegada", "Creado"],  
+        colNames: ["ID", "Viaje ID", "Etapa Nro:", "Origen", "Actual", "Destino", "HRP", "ETA", "Fecha de salida",	"Fecha de llegada", "Creado"],  
         colModel: [
       { name: 'ID', index: 'ID', width: 90, hidden: true },
+      { name: 'VIAJE_ID', index: 'VIAJE_ID', width: 90, hidden: true },
       { name: 'NRO_ETAPA', index: 'NRO_ETAPA', width: 90 },
       { name: 'ORIGEN_ID', index: 'ORIGEN_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit}},
       { name: 'ACTUAL_ID', index: 'ACTUAL_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit} },
@@ -117,10 +118,10 @@
             return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/carga/list?ID='+id;
+            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID='+id;
           },
         position: "last"
-      }).navButtonAdd('#pager', {
+      })<%if(ViewData["alone"]!=null){%>;<%}else{%>.navButtonAdd('#pager', {
         caption: "Agregar Carga",
         buttonicon: "ui-icon-add",
         onClickButton: function () {
@@ -133,7 +134,8 @@
             window.location = '/Carga/New?etapa_id='+id;
           },
         position: "last"
-      });
+      });<%}%>
+
     });
   });
 </script>

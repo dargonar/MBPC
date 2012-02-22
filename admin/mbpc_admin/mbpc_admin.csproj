@@ -25,6 +25,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -85,16 +87,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MBPCModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MBPCModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\daolib2.cs" />
     <Compile Include="Models\daolib.cs" />
     <Compile Include="Models\helpers.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\EntityHelper.cs" />
+    <Compile Include="NewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +186,8 @@
     <Content Include="Views\Puntodecontrol\List.aspx" />
     <Content Include="Views\Puntodecontrol\New.aspx" />
     <Content Include="Views\Puntodecontrol\NewAsig.aspx" />
+    <Content Include="Views\Reporte\Categoria.aspx" />
+    <Content Include="Views\Reporte\NewCategory.aspx" />
     <Content Include="Views\Reporte\Create.aspx" />
     <Content Include="Views\Reporte\List.aspx" />
     <Content Include="Views\Reporte\New.aspx" />
@@ -202,7 +206,9 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Views\Shared\Site.Master" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -221,9 +227,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="MBPCModel.edmx">
+    <EntityDeploy Include="NewModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MBPCModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>NewModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

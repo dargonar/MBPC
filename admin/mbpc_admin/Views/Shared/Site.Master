@@ -29,7 +29,8 @@
       <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
   </head>
 
-  <body id="homepage">
+  <body id="homepage" <% if(ViewData["alone"] != null) {%> style="background:none;"<%}%>>
+    <% if (ViewData["alone"] == null) { %>
 	  <div id="header">
       <a href="" title=""><img src="<%= Url.Content("~/img/cp_logo.png") %>" alt="Control Panel" class="logo" /></a>
     </div>
@@ -44,18 +45,21 @@
         <li class="current">Panel de Control MBPC</li>
       </ul>
       </div>
+      <%}%>
     <!-- Top Breadcrumb End -->
 
-    <div id="rightside">
+    <div id="rightside" <% if(ViewData["alone"] != null) {%> style="margin-left:5px"<%}%>>
       <asp:ContentPlaceHolder ID="MainContent" runat="server">
       </asp:ContentPlaceHolder>
-
+      <% if(ViewData["alone"] == null) { %>
       <div id="footer">
         MBPC - Panel de control
       </div> 
+      <%}%>
     </div>
 
     <!-- Left Dark Bar Start -->
+    <% if(ViewData["alone"] == null) { %>
     <div id="leftside">
       <div class="user">
         <img src="<%= Url.Content("~/img/avatar.png") %>" width="44" height="44" class="hoverimg" alt="Avatar" />
@@ -113,6 +117,7 @@
             <ul class="navigation">
               <% if (ViewData["menu"] == "reporte.list") { %><li class="heading selected">Listar </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/List") %>" title="">Listar</a></li> <% } %>
               <% if (ViewData["menu"] == "reporte.new") { %><li class="heading selected">Nuevo </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/New") %>" title="">Nuevo</a></li> <% } %>
+              <% if (ViewData["menu"] == "reporte.categories") { %><li class="heading selected">Categorias </li><% } else{ %> <li><a href="<%= Url.Content("~/Reporte/Categoria") %>" title="">Categorias</a></li> <% } %>
                 
             </ul>
         </li>
@@ -122,6 +127,7 @@
     </div>
 
     <script type="text/javascript" src="<%= Url.Content("~/Scripts/functions.js") %>"></script>
+    <%}%>
 
 
   </body>

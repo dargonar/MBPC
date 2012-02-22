@@ -75,6 +75,15 @@
 
       $("#fullscreen").show();
 
+
+      if ($(this).val() == "150000") {
+        $("#rresult").html('<iframe id="yoframe" width="100%" height="100%" src="http://localhost:7238/Viaje/List?alone=1"></iframe>');
+        $("#rresult").show();
+        $("#fullscreen").hide();
+        return;
+      }
+
+
       $.ajax({
         cache: false,
         url: '<%= Url.Content("~/Reporte/ParamsFor/")%>' + $(this).val(),
@@ -125,12 +134,27 @@
       <select name="reporte_id" id="reporte_id" style="margin:0; width:274px;" class="nexttab">
         <option value="-1"></option>
 
-      <% foreach (Dictionary<string, string> reporte in (ViewData["reportes"] as List<object>))
-          { 
+      <% 
+        string lastcat = string.Empty;
+        foreach (Dictionary<string, string> reporte in (ViewData["reportes"] as List<object>))
+        {
+          if (lastcat != reporte["CATEGORIA"])
+          {
+            if (lastcat != string.Empty)
+            {%> 
+            </optgroup> 
+            <%}
+                              
+            %><optgroup label="<%=reporte["CATEGORIA"]%>"><%
+            lastcat = reporte["CATEGORIA"];
+          }
 	    %>
              <option value="<%= reporte["ID"] %>"><%= reporte["NOMBRE"] %></option>
-       <% } 
+       <%} 
       %>
+      <optgroup label="Custom">
+        <option value="150000">Listado de Viajes</option>
+      </optgroup>
       </select><br /><br />
       <div style="clear:both;"></div>
       
@@ -157,7 +181,7 @@
 
 <div id="sueltos" style="display: none;">
   <!-- elements que necesitan estar en el html porque el js necesita la url -->
-  <a id="printver" target="_blank" href="" style="float:right;margin-right: 17px" > Esssta</a>
+  <!--<a id="printver" target="_blank" href="" style="float:right;margin-right: 17px" > Esssta</a></li>-->
   <img id="loaderimg" alt="loader" style="position:absolute;top:50%;left:50%;" src="<%= Url.Content("~/img/ajax-loader2.gif") %>" />
 </div>
 
