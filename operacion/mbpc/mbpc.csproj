@@ -128,6 +128,7 @@
     <Content Include="Views\Reporte\conditionItem.aspx" />
     <Content Include="Views\Reporte\entityItem.aspx" />
     <Content Include="Views\Reporte\nuevoReporte.aspx" />
+    <Content Include="Views\Reporte\operatorByType.aspx" />
     <Content Include="Views\Reporte\_result_empty.aspx" />
     <Content Include="Views\Reporte\Index.aspx" />
     <Content Include="Views\Reporte\_result.aspx" />
