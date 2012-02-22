@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sqlbuilder>
+  <entities>
+    <entity name="Viaje">
+      <sql>
+        tbl_viajes v left join tbl_buques b on v.buque_id = b.id
+      </sql>
+      <attributes>
+        <attribute id="v1" name="Fecha de Llegada" description="Arrivo" type="date" sql_column="v.FECHA_SALIDA" />
+        <attribute id="v2" name="Buque" description="Nombre de buque" type="string" sql_column="b.nombre" />
+      </attributes>
+      <relations>
+        <relation target="Practico"> 
+          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id
+               left join tbl_practico p on pv.practico_id=p.id</sql>
+        </relation>
+        <relation target="Carga"> 
+          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id
+               left join tbl_practico p on pv.practico_id=p.id</sql>
+        </relation>
+      </relations>
+    </entity>
+    
+    <entity name="Practico">
+      <sql>
+        tbl_practico p left join tbl_practicoviaje pv on p.id = pv.practico_id
+      </sql>
+      <attributes>
+        <attribute id="p1" name="Horas Trabajadas" description="Trabajó" type="numeric" sql_column="TOTAL" />
+        <attribute id="p2" name="Horas Descansadas" description="Descansó" type="date" sql_column="TOTAL" />
+        <attribute id="p3" name="Horas al pedo" description="Pedorreó" type="numeric" sql_column="TOTAL" />
+        <attribute id="p4" name="Horas re loco" description="Enloqueció" type="numeric" sql_column="TOTAL" />
+      </attributes>
+      <relations>
+        <relation target="Viaje"> 
+          <sql>left join tbl_practicoviaje pv on p.id=pv.practico_id
+               left join tbl_viaje v on pv.viaje_id=v.id</sql>
+        </relation>
+      </relations>
+    </entity>
+    
+    <entity name="Carga">
+      <sql>
+        tbl_carga 
+      </sql>
+      <attributes>
+        <attribute id="c1" name="Toneladas transportadas" description="Toneladas transportadas" type="numeric" sql_column="TOTAL" />
+        <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="TOTAL" />
+      </attributes>
+      <relations>
+        <relation target="Viaje"> 
+          <sql>left join tbl_practicoviaje pv on p.id=pv.practico_id
+               left join tbl_viaje v on pv.viaje_id=v.id</sql>
+        </relation>
+      </relations>
+    </entity>
+  </entities>
+  
+  <operators>
+    <operator type="string">
+      <oper id="string_op1" description="Comienza con" format="upper($c) like upper('$v%')" />
+      <oper id="string_op2" description="Parecido a" format="upper($c) like upper('%$v%')" />
+      <oper id="string_op3" description="Es igual a" format="upper($c) = upper('%$v%')" />
+    </operator>
+    <operator type="numeric">
+      <oper id="numeric_op1" description="Es igual a" format="$c = $v%" />
+      <oper id="numeric_op2" description="Es mayor que" format="$c &gt; %$v%" />
+      <oper id="numeric_op3" description="Es menor que" format="$c &lt; %$v%" />
+    </operator>
+    <operator type="date">
+      <oper id="numeric_op1" description="Es igual a" format="$c = $v%" />
+      <oper id="numeric_op2" description="Es mayor que" format="$c &gt; %$v%" />
+      <oper id="numeric_op3" description="Es menor que" format="$c &lt; %$v%" />
+    </operator>
+  </operators>
+</sqlbuilder>

@@ -16,9 +16,9 @@ namespace mbpc.Controllers
 {
     public class ReporteController : MyController
     {
-        //
         // GET: /Reporte/
-      private static string fileName = "C:\\dago\\wdir\\mbpc\\operacion\\mbpc\\bin\\mbpc_sqlbuilder_metadata.xml";
+        private static string fileName = "C:\\dago\\wdir\\mbpc\\operacion\\mbpc\\bin\\mbpc_sqlbuilder_metadata.xml";
+        
         public ActionResult Index()
         {
           Session["grupos"] = null;
@@ -157,6 +157,10 @@ namespace mbpc.Controllers
         public ActionResult entityItem(string entity)
         {
           ViewData["entity"] = entity;
+          return View();
+        }
+
+        public ActionResult resultColumnItem() {
           return View();
         }
 

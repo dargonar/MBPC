@@ -88,6 +88,11 @@
     /*background-color:#999999;*/
     min-height:100px;float:left;
   }
+  
+  #resultado #resultado_columnas div.container, #resultado #orden_columnas div.container
+  {
+    margin:0px 5px 0px 5px;
+  } 
   #resultado #orden_columnas{ border-left: #B4B4B4 solid 1px;}
     
   #entities {z-index:2;min-height:500px;}
@@ -354,6 +359,11 @@
           $("._loaderimg").remove();*/
           $("#fullscreen").hide();
       }
+
+      function addOrderField(){}
+      function clearOrderFields(){}
+      function addResultField(){}
+      function clearResultFields(){}
   </script>
 
 
@@ -395,9 +405,27 @@
           <div id="resultado">
             <div id="resultado_columnas">
               <h2>Campos en resultado:</h2>
+              <div class="container">
+                <div class="items">
+                </div>
+                <hr/>
+                <div class="toolbar">
+                  <a href="#" onclick="addResultField();return false;">Agregar campo</a>
+                  <a href="#" onclick="clearResultFields();return false;">Limpiar campos</a>
+                </div>
+              </div>
             </div>
             <div id="orden_columnas">
               <h2>Orden de resultado:</h2>
+              <div class="container">
+                <div class="items">
+                </div>
+                <hr/> 
+                <div class="toolbar">
+                  <a href="#" onclick="addOrderField();return false;">Agregar orden</a>
+                  <a href="#" onclick="clearOrderFields();return false;">Limpiar orden</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
