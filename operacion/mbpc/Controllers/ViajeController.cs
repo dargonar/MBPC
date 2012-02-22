@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
-
 namespace mbpc.Controllers
 {
     public class ViajeController : MyController
     {
       public ActionResult practicos(string id)
       {
+
         ViewData["etapa_id"] = id;
         ViewData["results"] = DaoLib.traer_practicos(id);
         return View("practicos");

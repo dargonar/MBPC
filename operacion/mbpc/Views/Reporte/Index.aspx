@@ -157,7 +157,7 @@
 
 <div id="sueltos" style="display: none;">
   <!-- elements que necesitan estar en el html porque el js necesita la url -->
-  <a id="printver" target="_blank" href="" style="float:right;margin-right: 17px" > Esssta</a></li>
+  <a id="printver" target="_blank" href="" style="float:right;margin-right: 17px" > Esssta</a>
   <img id="loaderimg" alt="loader" style="position:absolute;top:50%;left:50%;" src="<%= Url.Content("~/img/ajax-loader2.gif") %>" />
 </div>
 
