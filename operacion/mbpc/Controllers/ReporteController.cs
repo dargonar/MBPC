@@ -160,8 +160,61 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult resultColumnItem() {
+        public ActionResult resultColumnItem(string entities) {
+
+          string[] entities_array = entities.Split(',');
+
+          if (entities_array.Length == 0)
+          {
+            ViewData["entities"] = new SortedDictionary<string, List<string>>();
+            return View();
+          }
+
+          ViewData["attributes_by_entity"] = getAttributesByEntities(entities_array);
+
           return View();
+        }
+
+        public ActionResult orderColumnItem(string entities)
+        {
+          string[] entities_array = entities.Split(',');
+
+          if (entities_array.Length == 0)
+          {
+            ViewData["entities"] = new SortedDictionary<string, List<string>>();
+            return View();
+          }
+
+          ViewData["attributes_by_entity"] = getAttributesByEntities(entities_array);
+          
+          return View();
+        }
+
+        private SortedDictionary<string, SortedDictionary<string, string>> getAttributesByEntities(string[] entities_array)
+        {
+          SortedDictionary<string, SortedDictionary<string, string>> attributes_by_entity = new SortedDictionary<string, SortedDictionary<string, string>>();
+
+          XmlDocument xmlDoc = openSQLConfig();
+
+          foreach (string entity in entities_array)
+          {
+            string mpath = string.Format("/sqlbuilder/entities/entity[@name='{0}']/attributes/attribute", entity);
+            SortedDictionary<string, string> cur_attributes = new SortedDictionary<string, string>();
+            
+            foreach (XmlNode attr in xmlDoc.SelectNodes(mpath))
+            {
+              string attr_id = attr.Attributes.GetNamedItem("id").Value;
+              string attr_description = attr.Attributes.GetNamedItem("description").Value;
+              cur_attributes.Add(attr_description, attr_id);
+            }
+            attributes_by_entity.Add(entity, cur_attributes);
+          }
+          
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect();
+
+          return attributes_by_entity;
         }
 
         public ActionResult nuevoReporte()
@@ -208,6 +261,7 @@ namespace mbpc.Controllers
 
         }
 
+        /* */
         public ActionResult Ver(int reporte_id, int count, string print_me)
         {
           var rep     = DaoLib.reporte_obtener(reporte_id) as Dictionary<string, string>;

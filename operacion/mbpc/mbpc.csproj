@@ -97,6 +97,7 @@
     <Content Include="img\ajax-loader2.gif" />
     <Content Include="img\i_icon.gif" />
     <Content Include="img\i_icon.png" />
+    <Content Include="Res\mbpc_sqlbuilder_metadata.xml" />
     <Content Include="Scripts\ajaxs.js" />
     <Content Include="Scripts\jquery-ui-timepicker-addon-0.6.js" />
     <Content Include="Content\ui-lightness\jquery-ui-1.8.4.custom.css" />
@@ -129,6 +130,8 @@
     <Content Include="Views\Reporte\entityItem.aspx" />
     <Content Include="Views\Reporte\nuevoReporte.aspx" />
     <Content Include="Views\Reporte\operatorByType.aspx" />
+    <Content Include="Views\Reporte\orderColumnItem.aspx" />
+    <Content Include="Views\Reporte\resultColumnItem.aspx" />
     <Content Include="Views\Reporte\_result_empty.aspx" />
     <Content Include="Views\Reporte\Index.aspx" />
     <Content Include="Views\Reporte\_result.aspx" />

@@ -25,6 +25,7 @@
     margin-left: 200px; /*Set left margin to LeftColumnWidth*/
     height:100%;
   }
+  
   #contentcolumn.hover-droppable
   {
     border: 2px solid #FF9C08 ;    
@@ -95,6 +96,24 @@
   } 
   #resultado #orden_columnas{ border-left: #B4B4B4 solid 1px;}
     
+  #resultado #resultado_columnas div.container .items .field, 
+  #resultado #resultado_columnas div.container .items .as,
+  #resultado #resultado_columnas div.container .items .actions,
+  #resultado #orden_columnas div.container .items .field, 
+  #resultado #orden_columnas div.container .items .order,
+  #resultado #orden_columnas div.container .items .actions
+  { min-width:150px; max-width:30%; float:left; margin-left:5px;}
+  
+  #resultado #resultado_columnas div.container .items .as
+  { min-width:150px; max-width:40%;}
+  
+  #resultado #resultado_columnas div.container .items .actions,
+  #resultado #orden_columnas div.container .items .actions
+    { margin-left:10px;line-height:30px;}
+  
+  
+  #resultado #orden_columnas div.container .items select, #resultado #orden_columnas div.container .items input {padding:4px;}
+  
   #entities {z-index:2;min-height:500px;}
   #selected_entities{/*padding:5px;*/}
   
@@ -206,7 +225,8 @@
         }
       );
     });
-      function addConditionItem(entity) {
+
+    function addConditionItem(entity) {
         showLoading();
          $.ajax({
           type: "GET",
@@ -218,20 +238,73 @@
             hideLoading();
           }),
           error: (function (data) {
+            hideLoading();
             var titletag = /<title\b[^>]*>.*?<\/title>/
             alert(titletag.exec(data.responseText));
-            hideLoading();
           })
         });
       }
 
-      function removeEntityItem(entity){
+      
+      function removeEntityItem(entity, ask){
+        
+        if(ask)
+          if(!confirm("Usted está por eliminar la entidad '"+entity+"' y toda vinculación de ésta. Dicha acción no es reversible. ¿Desea continuar?"))
+            return false;
+        
         showLoading();
+        
+        // Me guardo las relations de la entidad a borrar.
+        var relations = $('#entities .entity[entity='+entity+']').attr('relations');
+
+        doRemoveEntityItem(entity);
+
+        // Verifico que las entidades restantes esten vinculadas sin necesidad de la borrada
+        //var allowed_entities = getSelectedEntities();
+        //HACK
+        //ToDo: recorrer las entidades seleccionadas que quedan y determinar relacino con las demas.
+        // utilizar isRelatedWithSelected(current_entity) 
+
+        // Habilito y/o deshabilito las entidades de la sidebar en funcion de las entidades elegidas para el query.
+        enableDisableSidebarUnrelatedEntities();
+        hideLoading();
+      }
+
+      function doRemoveEntityItem(entity){
+        //Elimino la entidad
         $('#selected_entities div.selected_entity[entity='+entity+']').remove();
+        
+        // Si no hay mas entidades, muestro el cartel de entidades vacias.
         if($('#selected_entities div.selected_entity').length<=0) 
           $('#selected_entities_empty_msg').show();
-        checkRelatedEntities();
-        hideLoading();
+        
+        // Elimino las columnas de resultado y de orden.
+        $.each($(".result_column_item_select[value^="+entity+".]"), function(){
+          $(this).parent().parent().remove();
+        });
+        $.each($(".order_column_item_select[value^="+entity+".]"), function(){
+          $(this).parent().parent().remove();
+        });
+      }
+
+      // Determinda si una entidad seleccionada está relacionada con al menos otra entidad seleccionada.
+      function isRelatedWithSelected(entity)
+      {
+        return true;
+      }
+
+      function removeResultColumn(obj)
+      {
+        if(!confirm("Usted está por eliminar este campo en resultado. Dicha acción no es reversible. ¿Desea continuar?"))
+          return false;
+        $(obj).parent().parent().remove();
+      }
+
+      function removeResultColumn(obj)
+      {
+        if(!confirm("Usted está por eliminar este orden de resultado. Dicha acción no es reversible. ¿Desea continuar?"))
+          return false;
+        $(obj).parent().parent().remove();
       }
       
       function addEntityItem(entity) {
@@ -247,22 +320,34 @@
           url: '<%= Url.Content("~/Reporte/entityItem/")%>?entity=' + entity,
           dataType: "text/html",
           success: (function (data) {
-            $('#selected_entities').append(data);
+            
+            var obj = $('#selected_entities').append(data);
             hideLoading();
-            checkRelatedEntities();
+            enableDisableSidebarUnrelatedEntities();
+
           }),
           error: (function (data) {
+            hideLoading();
             var titletag = /<title\b[^>]*>.*?<\/title>/
             alert(titletag.exec(data.responseText));
-            hideLoading();
           })
         });
       }
 
-      function checkRelatedEntities(){
+      function getSelectedEntities(){
         var allowed_entities = [];
+        $('#selected_entities div.selected_entity').each(function (){
+          var cur_entity = $(this).attr("entity");
+          allowed_entities.push(cur_entity); 
+        });
+        return allowed_entities;
+      }
+
+
+      function enableDisableSidebarUnrelatedEntities(){ 
+        var allowed_entities = getSelectedEntities();
         
-        if($('#selected_entities div.selected_entity').length<=0)
+        if(allowed_entities.length<=0)
         {
           $.each($('#entities div.entity'), function (index, value){
             if(!$(this).hasClass("related"))
@@ -272,11 +357,7 @@
           });
           return;
         }
-        $('#selected_entities div.selected_entity').each(function (){
-          var cur_entity = $(this).attr("entity");
-          allowed_entities.push(cur_entity); 
-        });
-
+        
         //console.log('selected entities:'+allowed_entities.join(','));
         
         $.each($('#entities div.entity'), function (index, value){
@@ -360,10 +441,70 @@
           $("#fullscreen").hide();
       }
 
-      function addOrderField(){}
-      function clearOrderFields(){}
-      function addResultField(){}
-      function clearResultFields(){}
+      function addOrderField(){
+        var selected_entities = getSelectedEntities();
+        if(selected_entities.length<=0)
+        {
+          alert('Para agregar orden de resultado debe seleccionar al menos una entidad!');
+          return;
+        }
+
+        showLoading();
+        $.ajax({
+          type: "GET",
+          cache: true,
+          url: '<%= Url.Content("~/Reporte/orderColumnItem/")%>?entities='+selected_entities.join(','),
+          dataType: "text/html",
+          success: (function (data) {
+            $('#orden_columnas .items').append(data);
+            hideLoading();
+          }),
+          error: (function (data) {
+            hideLoading();
+            var titletag = /<title\b[^>]*>.*?<\/title>/
+            alert(titletag.exec(data.responseText));
+            
+          })
+        });
+      }
+      function clearOrderFields(){
+        if(!confirm("Usted está por eliminar el orden de resultado. Dicha acción no es reversible. ¿Desea continuar?"))
+          return false;
+        $('#orden_columnas .items').html('');
+      }
+      
+      function addResultField()
+      {
+        var selected_entities = getSelectedEntities();
+        if(selected_entities.length<=0)
+        {
+          alert('Para agregar campos de resultado debe seleccionar al menos una entidad!');
+          return;
+        }
+
+        showLoading();
+        $.ajax({
+          type: "GET",
+          cache: true,
+          url: '<%= Url.Content("~/Reporte/resultColumnItem/")%>?entities='+selected_entities.join(','),
+          dataType: "text/html",
+          success: (function (data) {
+            $('#resultado_columnas .items').append(data);
+            hideLoading();
+          }),
+          error: (function (data) {
+            hideLoading();
+            var titletag = /<title\b[^>]*>.*?<\/title>/
+            alert(titletag.exec(data.responseText));
+            
+          })
+        });
+      }
+      function clearResultFields(){
+        if(!confirm("Usted está por eliminar los campos de resultado. Dicha acción no es reversible. ¿Desea continuar?"))
+          return false;
+        $('#resultado_columnas .items').html('');
+      }
   </script>
 
 
