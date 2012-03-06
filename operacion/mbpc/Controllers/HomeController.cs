@@ -41,7 +41,7 @@ namespace mbpc.Controllers
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
 
-          
+          ViewData["tipo_punto"] = tipo_zona(id);
           recalcular_barcos_para_punto(id);
 
           return View();
@@ -59,14 +59,35 @@ namespace mbpc.Controllers
           return "";
         }
 
+        public string tipo_zona(string id)
+        {
+          string tipo = string.Empty;
+
+          foreach (var x in Session["zonas"] as List<object>)
+          {
+            var t = x as Dictionary<string, string>;
+            if (t["ID"] == id)
+            {
+              tipo = t["USO"];
+              break;
+            }
+          }
+
+          return tipo;
+        }
+
         public void recalcular_barcos_para_punto(string id)
         {
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
+          //0 - fluvial
+          //1 - maritimo
 
-          //ViewData["cuatrigrama"] = costera_de_zona(id);
+          if (tipo_zona(id) == "0")
+          {
+            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
+            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
+            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
+            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
+          }
 
         }
 
@@ -82,6 +103,8 @@ namespace mbpc.Controllers
         public ActionResult cambiarZona(string id)
         {
           Session["zona"] = id;
+          ViewData["tipo_punto"] = tipo_zona(id);
+
           recalcular_barcos_para_punto(id);
 
           return View("columnas");

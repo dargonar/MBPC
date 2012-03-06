@@ -134,6 +134,7 @@
     <Content Include="Views\Reporte\_result.aspx" />
     <Content Include="Views\Reporte\_params.aspx" />
     <Content Include="Views\Shared\BarcazaItem.ascx" />
+    <Content Include="Views\Shared\_columnas_maritimo.aspx" />
     <Content Include="Views\Shared\_buques.aspx" />
     <Content Include="Views\Shared\_capitanes.aspx" />
     <Content Include="Views\Shared\_cargas.aspx" />
