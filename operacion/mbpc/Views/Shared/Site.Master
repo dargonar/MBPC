@@ -11,8 +11,8 @@
       <link rel="stylesheet" href="<%= Url.Content("~/Content/layout.css") %>"  type="text/css" />
       <link rel="Stylesheet" href="<%= Url.Content("~/Content/ui-lightness/jquery-ui-1.8.5.custom.css")%>" type="text/css" />	
       <link rel="stylesheet" href="<%= Url.Content("~/Content/ui.jqgrid.css") %>" type="text/css" media="screen"  />
-
-      <script src="<%= Url.Content("~/Scripts/jquery-1.4.2.min.js") %>" type="text/javascript" > </script>
+      
+      <script src="<%= Url.Content("~/Scripts/jquery-1.7.1.min.js") %>" type="text/javascript" > </script>
       <script src="<%= Url.Content("~/Scripts/jquery-ui-1.8.5.custom.min.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery-ui-timepicker-addon-0.6.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery.hoverbox.min.js") %>" type="text/javascript" ></script>
@@ -25,6 +25,7 @@
       
       <script src="<%= Url.Content("~/Scripts/grid.locale-es.js") %>" type="text/javascript"></script>
       <script src="<%= Url.Content("~/Scripts/jquery.jqGrid.min.js") %>" type="text/javascript"></script>
+      <script src="<%= Url.Content("~/Scripts/jquery.contextmenu.js")%>" type="text/javascript"></script>
 
       <script type="text/javascript">
         function cambiar_grupo() {
@@ -35,7 +36,6 @@
             type: "GET",
             cache: false,
             url: '<%=Url.Content("~/Home/CambiarGrupo") %>?grupo='+grp,
-            dataType: "text/html",
             success: (function (data) {
               $("#columnas").html(data);
               $("#fullscreen").css("display", "none");

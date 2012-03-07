@@ -19920,9 +19920,10 @@ namespace mbpc_admin
         /// <param name="aPELLIDO">Initial value of the APELLIDO property.</param>
         /// <param name="nOMBRES">Initial value of the NOMBRES property.</param>
         /// <param name="dESTINO">Initial value of the DESTINO property.</param>
+        /// <param name="eSTADO">Initial value of the ESTADO property.</param>
         /// <param name="nOMBRE">Initial value of the NOMBRE property.</param>
         /// <param name="cODIGO">Initial value of the CODIGO property.</param>
-        public static VW_INT_USUARIOS CreateVW_INT_USUARIOS(global::System.String nOMBREDEUSUARIO, global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dESTINO, global::System.String nOMBRE, global::System.String cODIGO)
+        public static VW_INT_USUARIOS CreateVW_INT_USUARIOS(global::System.String nOMBREDEUSUARIO, global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dESTINO, global::System.Boolean eSTADO, global::System.String nOMBRE, global::System.String cODIGO)
         {
             VW_INT_USUARIOS vW_INT_USUARIOS = new VW_INT_USUARIOS();
             vW_INT_USUARIOS.NOMBREDEUSUARIO = nOMBREDEUSUARIO;
@@ -19930,6 +19931,7 @@ namespace mbpc_admin
             vW_INT_USUARIOS.APELLIDO = aPELLIDO;
             vW_INT_USUARIOS.NOMBRES = nOMBRES;
             vW_INT_USUARIOS.DESTINO = dESTINO;
+            vW_INT_USUARIOS.ESTADO = eSTADO;
             vW_INT_USUARIOS.NOMBRE = nOMBRE;
             vW_INT_USUARIOS.CODIGO = cODIGO;
             return vW_INT_USUARIOS;
@@ -20292,9 +20294,9 @@ namespace mbpc_admin
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> ESTADO
+        public global::System.Boolean ESTADO
         {
             get
             {
@@ -20309,8 +20311,8 @@ namespace mbpc_admin
                 OnESTADOChanged();
             }
         }
-        private Nullable<global::System.Boolean> _ESTADO;
-        partial void OnESTADOChanging(Nullable<global::System.Boolean> value);
+        private global::System.Boolean _ESTADO;
+        partial void OnESTADOChanging(global::System.Boolean value);
         partial void OnESTADOChanged();
     
         /// <summary>

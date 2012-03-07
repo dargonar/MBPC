@@ -8,7 +8,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.26";
+      public static string VERSION = "1.27";
       
         //
         // GET: /Home/
@@ -41,7 +41,6 @@ namespace mbpc.Controllers
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
 
-          ViewData["tipo_punto"] = tipo_zona(id);
           recalcular_barcos_para_punto(id);
 
           return View();
@@ -62,13 +61,16 @@ namespace mbpc.Controllers
         public string tipo_zona(string id)
         {
           string tipo = string.Empty;
-
+          //return "0";
           foreach (var x in Session["zonas"] as List<object>)
           {
             var t = x as Dictionary<string, string>;
             if (t["ID"] == id)
             {
-              tipo = t["USO"];
+              
+              if( t.Keys.Contains("USO") )
+                tipo = t["USO"];
+
               break;
             }
           }
@@ -80,8 +82,10 @@ namespace mbpc.Controllers
         {
           //0 - fluvial
           //1 - maritimo
-
-          if (tipo_zona(id) == "0")
+          
+          var tipo = tipo_zona(id);
+          Session["tipo_punto"] = tipo;
+          if (tipo == "0")
           {
             ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
             ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
@@ -93,18 +97,13 @@ namespace mbpc.Controllers
 
         public ActionResult RefrescarColumnas()
         {
-          string id = Session["zona"].ToString();
-          recalcular_barcos_para_punto(id);
-
-          return View("_columnas");
+          return cambiarZona(Session["zona"].ToString());
         }
 
         
         public ActionResult cambiarZona(string id)
         {
           Session["zona"] = id;
-          ViewData["tipo_punto"] = tipo_zona(id);
-
           recalcular_barcos_para_punto(id);
 
           return View("columnas");
@@ -117,11 +116,7 @@ namespace mbpc.Controllers
           Session["zonas"] = DaoLib.zonas_del_grupo(grupo);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
-          
-          Session["zona"] = id;
-          recalcular_barcos_para_punto(id);
-
-          return View("columnas");
+          return cambiarZona(id);
         }
 
         public ActionResult zonasAdyacentes(string zona, string viaje, string pasar)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Web.Mvc;
 using System.Globalization;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
-
 
 namespace mbpc.Controllers
 {
@@ -149,13 +149,17 @@ namespace mbpc.Controllers
         public ActionResult indicarProximo(string viaje_id, string id2)
         {
           DaoLib.indicar_proximo(viaje_id, id2);
-          
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
 
-          return View("columnas");
+          if (Session["tipo_punto"].ToString() == "0")
+          {
+            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
+            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
+            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
+            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
+            return View("columnas");
+          }
+
+          return Content("nop");
         }
 
         public ActionResult pasarBarco(string viaje_id, string id2, string eta, string fecha, string velocidad, string rumbo)
@@ -358,169 +362,41 @@ namespace mbpc.Controllers
           return View();
         }
 
-        /*
         public ActionResult ListJSON(string sidx, string sord, int page, int rows)
         {
-          //i:integer
-          //s:string
-          //f:float
-          //d:date
-          /*
-          var columns = new string[] { "i|v.ID", 
-                                       "s|b.NOMBRE", 
-                                       "s|b.NRO_OMI", 
-                                       "s|b.MATRICULA", 
-                                       "s|b.SDIST",
-                                       "s|b.BANDERA",
-                                       "f|v.LATITUD", 
-                                       "f|v.LONGITUD", 
-                                       "s|e.ORIGEN_ID", 
-                                       "s|e.DESTINO_ID", 
-                                       "s|ST.ESTADO", 
-                                       "i|TRUNC(SYSDATE-v.updated_at,2)|ULTIMO" };
-          var sqlfrom = @" tbl_viaje v
-                            left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
-                            left join buques b on v.buque_id = b.ID_BUQUE
-                            left join tbl_puntodecontrol p on p.id = e.destino_id
-                            left join tbl_bq_estados st on v.estado_buque = st.cod";
+          var columns = new Dictionary<string,string> { 
+            {"PID","i"},
+            {"ID","i"},
+            {"ETAPA","i"},
+            {"PROXDEST","i"},
+            {"NOMBRE","s"},
+            {"NRO_OMI","s"},
+            {"MATRICULA","s"},
+            {"SDIST","s"},
+            {"BANDERA","s"},
+            {"LATITUD","f"},
+            {"LONGITUD","f"},
+            {"ORIGEN","s"},
+            {"DESTINO","s"},
+            {"ESTADO","s"},
+            {"ULTIMO","i"}
+          };
 
-          var tmp = PaginageS1(Request.Params, columns, page, rows, sidx, sord);
+          //Agregamos a mano el filtro
+          var tmp = JQGrid.JQGridUtils.PaginageS1("VW_VIAJES_MARITIMOS", Request.Params, columns, 
+                        page, rows, sidx, sord);
 
-          var items = context.ExecuteStoreQuery<INT_USUARIOS>((string)tmp[0], (ObjectParameter[])tmp[1]);
+          var cmdcount = new OracleCommand((string)tmp[2]);
+          int cnt = int.Parse(((Dictionary<string, string>)DaoLib.doSQL(cmdcount)[0])["TOTAL"]);
 
-          var coso = PaginateS2(
-            items.ToArray(),
-            columns, context.INT_USUARIOS.Count(), page, rows
-            )
+          var cmd = new OracleCommand((string)tmp[0]);
+          cmd.Parameters.AddRange((OracleParameter[])tmp[1]);
+          var items = DaoLib.doSQL(cmd);
 
-          return Json(coso, JsonRequestBehavior.AllowGet);
-        }
-        
-      public static object[] PaginageS1(NameValueCollection req, string[] columns, string precond, int page, int rows, string sidx, string sord)
-      {
-        int pageIndex = Convert.ToInt32(page) - 1;
-        int pageSize = rows;
+          var coso = JQGrid.JQGridUtils.PaginateS2(items, columns, cnt, page, rows);
 
-        int offset = (pageIndex * pageSize) + 1;
-
-        var tmp = buildWhere2(req, columns, precond);
-
-        string where = (string)tmp[0];
-        OracleParameter[] vals = (OracleParameter[])tmp[1];
-
-
-        string sql_stmt = String.Format(
-
-          @"SELECT *
-            FROM (SELECT a.*, ROWNUM rnum
-                  FROM (SELECT {2}
-                          FROM {3} 
-                          WHERE {4}
-                         ORDER BY {5} {6}) a  
-                       WHERE ROWNUM < {7})
-            WHERE rnum >= {8}"
-         , columns_c.ToString(), columns_a.ToString(), columns_b.ToString(), typeof(T).Name, where, sidx, sord, offset + rows, offset);
-
-
-        //System.Diagnostics.Debug.WriteLine("==========================\r\n" + sql_stmt +"\r\noffset:"+ offset +"\r\nrows:"+ rows);
-
-        return new object[] { sql_stmt, vals };
+        return Json(coso, JsonRequestBehavior.AllowGet);
       }
 
-    private static DateTime[] getDatesFromString(string str)
-    {
-      var dates = new List<DateTime>();
-      foreach(var s in str.Split(';'))
-      {
-        DateTime d;
-        if (DateTime.TryParse(s, out d) == true)
-          dates.Add(d);
-      }
-
-      return dates.ToArray();
-    }
-
-
-    public static object[] buildWhere2(NameValueCollection req, string[] columnsraw, string precond)
-    {
-      var values = new List<OracleParameter>();
-      var predicate = new StringBuilder();
-
-      if (!String.IsNullOrEmpty(precond))
-        predicate.Append(precond);
-
-      List<string> columns = new List<string>();
-      foreach (var s in columnsraw)
-      {
-        var parts = s.Split('|');
-        if (parts.Length == 2)
-          columns.Add(parts[1].Substring(parts[1].LastIndexOf('.') + 1));
-        else
-          columns.Add(parts[2]);
-      }
-          
-      foreach (string key in req.AllKeys)
-      {
-        if (!columns.Contains(key))
-          continue;
-
-        if (predicate.Length != 0) predicate.Append(" and ");
-
-        //string
-        if (typeof(T).GetProperty(key).PropertyType == typeof(string))
-        {
-          //marca 1
-          predicate.Append(string.Format("upper(b.{0}) like upper(\'%{1}%\')", key, req[key]));
-        }
-        //datetime
-        else if (typeof(T).GetProperty(key).PropertyType == typeof(Nullable<DateTime>)
-              || typeof(T).GetProperty(key).PropertyType == typeof(DateTime))
-        {
-          DateTime[] dates = getDatesFromString(req[key]);
-          if (dates.Length == 0)
-          {
-            //remove "and"
-            predicate.Remove(predicate.Length - 5, 5);
-            continue;
-          }
-
-          //TODO: hace GETDATE(datetime) para que compare solo fecha y no fecha+hora
-          if (dates.Length == 1)
-          {
-            //marca 2
-            predicate.Append(string.Format("to_date(b.{0}) = to_date(\'{1}\', \'MM/DD/YYYY\')", key,  dates[0].ToShortDateString()));
-          }
-
-          if (dates.Length == 2)
-          {
-            //marca 3
-            var tmp = values.Count;
-            predicate.Append(string.Format("to_date(b.{0}) >= to_date(\'{1} 00:00\', \'MM/DD/YYYY HH24:MI\') and to_date(b.{0}) <= to_date(\'{2} 23:59\', \'MM/DD/YYYY HH24:MI\')", key, dates[0].ToShortDateString(), dates[1].Date.ToShortDateString()));
-          }
-        }
-        //cualquier otro
-        else
-        {
-          //marca 4
-          //(1,2,3,4)
-          if (req[key].StartsWith("("))
-          {
-            predicate.Append(string.Format("b.{0} in {1}", key, req[key]));
-          }
-          else
-            predicate.Append(string.Format("b.{0} = {1}", key, req[key]));
-        }
-      }
-
-      //Hack-o-matic
-      //if (values.Count == 0)
-      if (predicate.Length == 0)
-        predicate.Append("1 = 1");
-
-      return new object[] { predicate.ToString(), values.ToArray() };
-    }
-          
-
-      */
     }
 }

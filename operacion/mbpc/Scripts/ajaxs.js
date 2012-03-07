@@ -128,7 +128,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -159,7 +158,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -189,7 +187,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -220,7 +217,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -253,7 +249,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
               $("#fullscreen").css("display", "none");
 		          $('#selector').html(data);
@@ -281,7 +276,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -309,7 +303,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -342,7 +335,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $("#columnas").html(data);
           $("#fullscreen").css("display", "none");
@@ -364,7 +356,6 @@
           type: "GET",
           cache: false,
           url: aurl,
-          dataType: "text/html",
           success: (function (data) {
             $("#columnas").html(data);
             $("#fullscreen").css("display", "none");
@@ -392,7 +383,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -423,7 +413,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -453,7 +442,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -482,7 +470,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -512,7 +499,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -614,7 +600,6 @@
         type: "POST",
         cache: false,
         url: url,
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv3').dialog('close');
         }),
@@ -641,7 +626,6 @@
         type: "GET",
         cache: false,
         url: url,
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv' + defa).html(data);
           $('#dialogdiv' + defa).dialog({
@@ -668,7 +652,6 @@
         type: "GET",
         cache: false,
         url: url,
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv3').html(data);
           $('#dialogdiv3').dialog({
@@ -742,7 +725,6 @@
         type: "GET",
         cache: false,
         url: url,
-        dataType: "text/html",
         success: (function (data) {
           $('#selector').html(data);
           $('#selector').dialog({
@@ -787,7 +769,6 @@
         type: "POST",
         cache: false,
         url: url,
-        dataType: "text/html",
         success: (function (data) {
           $(latabla).html(data);
           if( $(latabla).find('#noresults').length > 0 )
@@ -817,7 +798,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -847,7 +827,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
@@ -879,7 +858,6 @@
         cache: false,
         //url: url,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
@@ -912,7 +890,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $("#fullscreen").css("display", "none");
@@ -947,7 +924,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
@@ -983,7 +959,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -1011,7 +986,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: $(aelement).attr("href"),
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
@@ -1039,7 +1013,6 @@
 		        type: "GET",
 		        cache: false,
 		        url: url,
-		        dataType: "text/html",
 		        success: (function (data) {
 		          $('#selector').html(data);
               $('#selector').dialog({
@@ -1071,7 +1044,6 @@
         type: "GET",
         cache: false,
         url: $(aelement).attr("href"),
-        dataType: "text/html",
         success: (function (data) {
           $("#columnas").html(data);
           $("#fullscreen").css("display", "none");
@@ -1094,7 +1066,6 @@
           type: "POST",
           cache: false,
           url: aurl,
-          dataType: "text/html",
           success: (function (data) {
             $("#columnas").html(data);
             $("#fullscreen").css("display", "none");
@@ -1117,16 +1088,15 @@
           type: "GET",
           cache: false,
           url: $(aelement).attr("href"),
-          dataType: "text/html",
           success: (function (data) {
             $("#columnas").html(data);
             $("#fullscreen").css("display", "none");
           }),
-          error: (function (data) {
+          error: function (data, textStatus, errorThrown) {
             $("#fullscreen").css("display", "none");
             var titletag = /<title\b[^>]*>.*?<\/title>/
-            alert(titletag.exec(data.responseText));
-          })
+            alert('cambiarZona:'+titletag.exec(data.responseText));
+          }
         });
         return false;
       }

@@ -228,20 +228,24 @@ create or replace package body mbpc as
         if temp != 0 THEN
           if usuario2.fechavenc > SYSDATE THEN
             --usuario ok / destino ok / fecha ok
-            logged := 1;
+            IF usuario2.ndoc = usuario2.password THEN
+              logged := 4;
+            ELSE
+              logged := 0;
+            END IF;
           ELSE
             --usuario ok / destino ok / fecha no
-            logged := 4;
+            logged := 2;
           END IF;
           
         ELSE
           --usuario ok / destino no
-          logged := 2;
+          logged := 1;
         END IF;
       END IF;
   exception when NO_DATA_FOUND THEN
     --usuario/pass invalido
-    logged := 3;
+    logged := 100;
     
   end login2;
 
@@ -299,7 +303,7 @@ create or replace package body mbpc as
   begin 
     --open vCursor for SELECT * FROM tbl_zonausuario;
     open vCursor for 
-    SELECT pdc.ID, CUATRIGRAMA, ENTRADA, DESCRIPCION, NIVEL, DIRECCION_POSTAL, UBIC_GEOG, DEPENDENCIA, ESTADO, CODNUM, ZONA, NIVELNUM, RPV, INT, MAIL, TE, FAX, COD_CARGO, DESCENTRALIZADO, rc.nombre CANAL, rck.km KM, rck.unidad, entrada
+    SELECT pdc.ID, pdc.USO, CUATRIGRAMA, ENTRADA, DESCRIPCION, NIVEL, DIRECCION_POSTAL, UBIC_GEOG, DEPENDENCIA, ESTADO, CODNUM, ZONA, NIVELNUM, RPV, INT, MAIL, TE, FAX, COD_CARGO, DESCENTRALIZADO, rc.nombre CANAL, rck.km KM, rck.unidad, entrada
     FROM tbl_puntodecontrol pdc 
     join tbl_zonas z on pdc.zona_id = z.id 
     join rios_canales_km rck on rck.id = pdc.rios_canales_km_id

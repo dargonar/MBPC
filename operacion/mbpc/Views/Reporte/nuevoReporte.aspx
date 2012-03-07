@@ -212,7 +212,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/conditionItem/")%>?entity='+entity,
-          dataType: "text/html",
           success: (function (data) {
             $('.selected_entity[entity='+entity+'] .condition_list .items').append(data);
             hideLoading();
@@ -245,7 +244,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/entityItem/")%>?entity=' + entity,
-          dataType: "text/html",
           success: (function (data) {
             $('#selected_entities').append(data);
             hideLoading();
@@ -334,7 +332,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/operatorByType/")%>?data_type=' + data_type,
-          dataType: "text/html",
           success: (function (data) {
             $(obj).parent().parent().find('select.operators').html(data);
             hideLoading();

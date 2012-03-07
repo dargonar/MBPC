@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<mbpc_admin.INT_USUARIOS>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<mbpc_admin.VW_INT_USUARIOS>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	<%= ViewData["titulo"]%>
@@ -23,7 +23,7 @@
        {%>
         <%: Html.ValidationSummary(true)%>
 
-            <%: Html.Hidden("usuario", Model.USUARIO_ID)%>
+            <%: Html.Hidden("usuario", Model.NDOC)%>
 
             <p>
               <%: Html.Label("GRUPOS ASOCIADOS")%>

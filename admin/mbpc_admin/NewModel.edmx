@@ -3256,7 +3256,7 @@
           <Property Type="String" Name="SEC" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="NDOC" Precision="8" Scale="0" />
           <Property Type="Boolean" Name="NIVACC" />
-          <Property Type="Boolean" Name="ESTADO" />
+          <Property Type="Boolean" Name="ESTADO" Nullable="false" />
           <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
         </EntityType>

@@ -45,7 +45,6 @@
         type: "GET",
         cache: false,
         url: $(obj).attr('href'),
-        dataType: "text/html",
         success: (function (data) {
           $('#dialogdiv4').html(data);
           $('#dialogdiv4').dialog({

@@ -103,19 +103,19 @@ namespace mbpc_admin.Controllers
       {
         var columns = new string[] { "NDOC", "DESTINO", "PASSWORD", "APELLIDO", "NOMBRES", "FECHAVENC", "TEDIRECTO", "EMAIL", "NOMBREDEUSUARIO" };
 
-        var tmp = JQGrid.Helper.PaginageS1<INT_USUARIOS>(Request.Params, columns, page, rows, sidx, sord);
+        var tmp = JQGrid.Helper.PaginageS1<VW_INT_USUARIOS>(Request.Params, columns, page, rows, sidx, sord);
 
-        var items = context.ExecuteStoreQuery<INT_USUARIOS>((string)tmp[0], (ObjectParameter[])tmp[1]);
+        var items = context.ExecuteStoreQuery<VW_INT_USUARIOS>((string)tmp[0], (ObjectParameter[])tmp[1]);
 
-        return Json(JQGrid.Helper.PaginateS2<INT_USUARIOS>(
+        return Json(JQGrid.Helper.PaginateS2<VW_INT_USUARIOS>(
           items.ToArray(),
-          columns, context.INT_USUARIOS.Count(), page, rows
+          columns, context.VW_INT_USUARIOS.Count(), page, rows
           ), JsonRequestBehavior.AllowGet);
       }
 
       public ActionResult Grupos(int usuario)
       {
-        var item = context.INT_USUARIOS.Where(c => c.NDOC == usuario).First();
+        var item = context.VW_INT_USUARIOS.Where(c => c.NDOC == usuario).First();
         ViewData["titulo"] = "Editando grupos del usuario " + item.NOMBRES + " " + item.APELLIDO;
         CreateCombo(usuario);
         return View(item);

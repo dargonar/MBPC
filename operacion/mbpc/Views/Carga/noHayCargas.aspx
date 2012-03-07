@@ -8,7 +8,6 @@
     type: "GET",
     cache: false,
     url: $('#dummy').attr('href'),
-    dataType: "text/html",
     success: (function (data) {
       $("#columnas").html(data);
       $("#fullscreen").css("display", "none");
