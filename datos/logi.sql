@@ -133,7 +133,10 @@ create or replace package mbpc as
   procedure reporte_obtener_parametros_str(vNombre in varchar2, usrid in number, vCursor out cur);
   procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur);
   procedure reporte_obtener_str(vNombre in varchar2, usrid in number, vCursor out cur);
-  
+  procedure reporte_obtener_html_builded(usrid in number, vCursor out cur);
+  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
+  procedure reporte_insertar_params(vReporteId in number, vIndice in number, vNombre in varchar2, vTipoDato in number, usrid in number);
+  procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur);
 end;
 
 
@@ -2038,7 +2041,7 @@ create or replace package body mbpc as
   procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL 
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL , FORM, POST_PARAMS, JSON_PARAMS
       FROM TBL_REPORTE WHERE ID=vReporte;
   
   end reporte_obtener;
@@ -2053,6 +2056,35 @@ create or replace package body mbpc as
   
   end reporte_obtener_str;
   
+  procedure reporte_obtener_html_builded(usrid in number, vCursor out cur)is
+  begin
+    open vCursor for 
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL , FORM, POST_PARAMS, JSON_PARAMS
+      FROM TBL_REPORTE WHERE FORM is not null;
+  
+  end reporte_obtener_html_builded;
+  
+  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number , vCursor out cur) is
+  begin
+    insert into tbl_reporte (nombre , descripcion , categoria_id , consulta_sql , post_params , form , json_params) 
+      values (vNombre , vDescripcion , vCategoriaId , vConsultaSql , vPostParams , vForm , vJsonParams ) returning id into temp;
+    
+    open vCursor for select temp from dual;
+
+  end reporte_insertar;
+  
+  procedure reporte_insertar_params(vReporteId in number, vIndice in number, vNombre in varchar2, vTipoDato in number, usrid in number) is
+  begin
+      insert into tbl_reporte_param(reporte_id , indice , nombre , tipo_dato )
+      values(vReporteId , vIndice , vNombre , vTipoDato );
+  
+  end reporte_insertar_params;
+  
+  procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur) is
+  begin
+    delete from tbl_reporte where id = vReporteId;
+    delete from tbl_reporte_param where reporte_id = vReporteId;
+  end reporte_eliminar;
   
   
   

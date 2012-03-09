@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
- 
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %> 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Reportes
 </asp:Content>
@@ -72,6 +72,12 @@
     border-right: #B4B4B4 solid 1px;
     padding-top:5px;
     overflow:hidden;
+  }
+  
+  #entities, #selected_entities, #resultado_columnas .container, #orden_columnas .container
+  {
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   
   #resultado 
@@ -227,11 +233,18 @@
     });
 
     function addConditionItem(entity) {
+
+        var last = '';
+        if($('.selected_entity[entity='+entity+'] .condition_list .items .item').length>0)
+        {
+          last = $('.selected_entity[entity='+entity+'] .condition_list .items .item:last input[type=hidden]').val();
+        }
+        
         showLoading();
          $.ajax({
           type: "GET",
           cache: true,
-          url: '<%= Url.Content("~/Reporte/conditionItem/")%>?entity='+entity,
+          url: '<%= Url.Content("~/Reporte/conditionItem/")%>?entity='+entity+'&last='+last,
           dataType: "text/html",
           success: (function (data) {
             $('.selected_entity[entity='+entity+'] .condition_list .items').append(data);
@@ -260,16 +273,54 @@
         doRemoveEntityItem(entity);
 
         // Verifico que las entidades restantes esten vinculadas sin necesidad de la borrada
-        //var allowed_entities = getSelectedEntities();
         //HACK
         //ToDo: recorrer las entidades seleccionadas que quedan y determinar relacino con las demas.
-        // utilizar isRelatedWithSelected(current_entity) 
+        removeSelectedEntitiesIfNotRelated();
 
         // Habilito y/o deshabilito las entidades de la sidebar en funcion de las entidades elegidas para el query.
         enableDisableSidebarUnrelatedEntities();
         hideLoading();
       }
 
+      function removeSelectedEntitiesIfNotRelated(){ 
+        var selected_entities = getSelectedEntities();
+        
+        if(selected_entities.length<=0)
+        {
+          return;
+        }
+        
+        //console.log('selected entities:'+allowed_entities.join(','));
+        var relations = getSelectedEntitiesRelations();
+        
+        $.each($('#selected_entities div.selected_entity'), function (index, value){
+          var cur_entity = $(this).attr("entity");
+          
+          if(index==0)
+          {
+            return true;
+          }
+          
+          if(jQuery.inArray(cur_entity, relations)==-1)
+          {
+            doRemoveEntityItem(cur_entity);
+            //$(this).remove();
+            relations = getSelectedEntitiesRelations();
+            return true;
+          }
+        });
+      }
+
+      function getSelectedEntitiesRelations()
+      {
+        var relations = [];
+        $.each($('#selected_entities div.selected_entity'), function (index, value){
+          var cur_entity = $(this).attr("entity");
+          var cur_relations = $('#entities div.entity[entity='+cur_entity+']').attr("relations").split(',');
+          relations = relations.concat(cur_relations);
+        });
+        return relations;
+      }
       function doRemoveEntityItem(entity){
         //Elimino la entidad
         $('#selected_entities div.selected_entity[entity='+entity+']').remove();
@@ -287,12 +338,6 @@
         });
       }
 
-      // Determinda si una entidad seleccionada está relacionada con al menos otra entidad seleccionada.
-      function isRelatedWithSelected(entity)
-      {
-        return true;
-      }
-
       function removeResultColumn(obj)
       {
         if(!confirm("Usted está por eliminar este campo en resultado. Dicha acción no es reversible. ¿Desea continuar?"))
@@ -300,7 +345,7 @@
         $(obj).parent().parent().remove();
       }
 
-      function removeResultColumn(obj)
+      function removeOrderColumn(obj)
       {
         if(!confirm("Usted está por eliminar este orden de resultado. Dicha acción no es reversible. ¿Desea continuar?"))
           return false;
@@ -313,11 +358,18 @@
           return false;
         }
         $('#selected_entities_empty_msg').hide();
+        
+        var last = '';
+        if($('.selected_entity').length>0)
+        {
+          last = $('.selected_entity:last input[type=hidden]').val();
+        }
+        
         showLoading();
         $.ajax({
           type: "GET",
           cache: true,
-          url: '<%= Url.Content("~/Reporte/entityItem/")%>?entity=' + entity,
+          url: '<%= Url.Content("~/Reporte/entityItem/")%>?entity=' + entity+'&last='+last,
           dataType: "text/html",
           success: (function (data) {
             
@@ -355,6 +407,9 @@
               $(this).addClass("related");
             } 
           });
+
+          $('#resultado_columnas .container .items').html('');
+          $('#orden_columnas .container .items').html('');
           return;
         }
         
@@ -404,12 +459,33 @@
         $('.selected_entity[entity='+entity+'] .condition_list .items').html('');
       }
 
-      var operators = <%=ViewData["operators_json"] %>;
+      //var operators = ViewData["operators_json"];
 
       function onFieldChanged(obj)
       {
+          
           var str = "";
           var data_type = $(obj).find("option:selected").attr('data_type');
+          
+          var select_obj    = $(obj).parent().parent().find('select.operators');
+          var input_obj     = $(obj).parent().parent().find('input.input_value');
+          var checkbox_obj  = $(obj).parent().parent().find('div.is_param input');
+                    
+
+          if('hardcoded'==data_type)
+          {
+            $(select_obj).html('');
+            $(select_obj).attr('disabled','disabled');
+            $(input_obj).attr('disabled','disabled');
+            $(checkbox_obj).attr('checked', false). attr('disabled','disabled');
+
+            return false;
+          }
+
+          $(select_obj).attr('disabled','');
+          $(input_obj).attr('disabled','');
+          $(checkbox_obj).attr('disabled','');
+
           showLoading();
           $.ajax({
           type: "GET",
@@ -417,7 +493,7 @@
           url: '<%= Url.Content("~/Reporte/operatorByType/")%>?data_type=' + data_type,
           dataType: "text/html",
           success: (function (data) {
-            $(obj).parent().parent().find('select.operators').html(data);
+            $(obj).parent().parent().find('select.operators').html(data).attr('disabled','');
             hideLoading();
           }),
           error: (function (data) {
@@ -449,11 +525,17 @@
           return;
         }
 
+        var last = '';
+        if($('#orden_columnas .items .item').length>0)
+        {
+          last = $('#orden_columnas .items .item:last input[type=hidden]').val();
+        }
+
         showLoading();
         $.ajax({
           type: "GET",
           cache: true,
-          url: '<%= Url.Content("~/Reporte/orderColumnItem/")%>?entities='+selected_entities.join(','),
+          url: '<%= Url.Content("~/Reporte/orderColumnItem/")%>?entities='+selected_entities.join(',')+'&last='+last,
           dataType: "text/html",
           success: (function (data) {
             $('#orden_columnas .items').append(data);
@@ -482,11 +564,17 @@
           return;
         }
 
+        var last = '';
+        if($('#resultado_columnas .items .item').length>0)
+        {
+          last = $('#resultado_columnas .items .item:last input[type=hidden]').val();
+        }
+
         showLoading();
         $.ajax({
           type: "GET",
           cache: true,
-          url: '<%= Url.Content("~/Reporte/resultColumnItem/")%>?entities='+selected_entities.join(','),
+          url: '<%= Url.Content("~/Reporte/resultColumnItem/")%>?entities='+selected_entities.join(',')+'&last='+last,
           dataType: "text/html",
           success: (function (data) {
             $('#resultado_columnas .items').append(data);
@@ -505,6 +593,120 @@
           return false;
         $('#resultado_columnas .items').html('');
       }
+
+      function result_column_item_selectChanged(obj)
+      {
+        $(obj).parent().parent().find("div.as input").attr('value', $(obj).find("option:selected").html());
+      }
+
+      function getFormJSON(obj){
+        var elems = $(obj), nodes = $(obj), eventName;
+
+          options  = {
+                      grouped: true,
+                      dataType: "json"
+                  };
+
+          options.grouped = true;
+          elems = nodes = $(obj).find(":input,button");
+
+          var vals = {}, form;
+
+          if (options.grouped) {
+              nodes.each(function (i) {
+                  /**
+                   * Do not include button and input:submit as nodes to 
+                   * send, EXCEPT if the button/submit was the explicit
+                   * target, aka it was clicked
+                   */
+                  if (!$(this).is('button,:submit')) {
+                      if ($(this).is(':radio') && $(this).attr('checked')==false)
+                          return;
+                      vals[this.name] = $(this).is(':checkbox') ? 
+                          $(this).attr('checked') : 
+                          $(this).val();
+                  }
+              });
+          }
+          else {
+              vals[actsOn.name] = $(actsOn).is(':checkbox') ? 
+                  $(actsOn).attr('checked') : 
+                  $(actsOn).val();
+          }
+
+          return vals;
+      }
+
+      function onSubmit(){
+         
+        
+        /*$("#report-form").autosave({
+            // Defaults to parent form url or window.location.href
+            url: '<%= Url.Content("~/Reporte/dummy")%>',
+            // Defaults to parent form url or get
+            method: "post", 
+            // Defaults to false. Whether all "input" should be sent in the request or only the one it was triggered upon
+            grouped: true,
+            success: function(data) {
+                console.log(data);
+            },
+            // Defaults to JSON, but can be XML, HTML and so on
+            dataType: "json",
+            send: function(data) {
+                // Do stuff while we wait for the ajax response, defaults to doing nothing
+                console.log("-----Saving");
+                console.log(data);
+            },
+            error: function(xmlReq, text, errorThrown) {
+                // Handler if the ajax request fails, defaults to console.log-ing the ajax request scope
+                console.log(text);
+            }
+        });*/
+
+        //console.log(getFormJSON($("#report-form")));
+        //return false;
+
+        if(!$.trim($('#nombre_reporte').val()).length)
+        {
+          alert("Debe ingresar un nombre para identificar al reporte.");
+          return false;
+        }
+
+        if($('#selected_entities div.selected_entity').length==0)
+        {
+          alert("Debe seleccionar al menos una entidad.");
+          return false;
+        }
+
+        if($('#resultado_columnas .items .item').length==0)
+        {
+          alert("Debe seleccionar al menos un campo para mostrar en el resultado.");
+          return false;
+        }
+
+        $('#resultfields_count').val($('#resultado_columnas .items .item').length);
+        $('#orderfields_count').val($('#orden_columnas .items .item').length);
+
+        var conditions_by_entity_count = [];
+        var entities_list = [];
+        $.each($('#selected_entities div.selected_entity'), function (index, value){
+          var dati = $(this).find('input[type=hidden]').val() + '=' + $(this).find('.condition_list .item').length;
+          conditions_by_entity_count.push(dati);
+          var datu = $(this).attr('entity')+ '=' + $(this).attr('entity_id');
+          entities_list.push(datu);
+        });
+        $('#conditions_by_entity_count').val(conditions_by_entity_count.join(','));
+        $('#entities_list').val(entities_list.join(','));
+
+        var serialized_form = $('#report-form').serialize();
+        var html_form = $('#report-form').html();
+        
+        $('#json_form').val($.toJSON(getFormJSON($("#report-form")))); 
+        $('#serialized_form').val(serialized_form);
+        $('#html_form').val(html_form);
+        
+        return true;
+      }
   </script>
 
 
@@ -517,91 +719,128 @@
 
 <div id="columnas" style="height:100%;overflow:hidden;">
 
-  <div style="width:100%;height:100%;">
+  <div id="tutto" style="width:100%;height:100%;">
 
 	  <div class="split-bar"></div>
 	  <h1 class="fprint" >Reportes</h1>
-    <!-- top -->
-    <h2 style="padding-left:10px;font-weight:normal;">Nuevo Reporte "<b>reporte-1</b>"</h2>
+    <div style="width:100%;padding:5px;border-bottom:1px solid #f5f5f5;">
+      <a href="<%= Url.Content("~/Reporte/nuevo") %>" >Nuevo Reporte</a> | <a href="<%= Url.Content("~/Reporte/listar") %>" >Listar Reportes</a>
+    </div><!-- top -->
+    <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
+    <% if (ViewData["form"] == null) {%>
+      <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
+      <!-- a href="#" onclick="console.log($.toJSON(getFormJSON($('#report-form'))));alert('consola nene, consola');return false;" >DUMP</a -->
     
-    <div id="reporte_button_bar" style="width:100%;padding: 0px 0px 10px 10px;">
-      <input type="submit" class="botonsubmit megaboton"  value="Modificar nombre de reporte" />
-    </div>
+      <!--div id="reporte_button_bar" style="width:100%;padding: 0px 0px 10px 10px;">
+        <input type="submit" class="botonsubmit megaboton"  value="Modificar nombre de reporte" />
+      </div-->
     
-    <div class="split-bar"></div>
+      <div class="split-bar"></div>
     
     
-    <div id="contentwrapper" >
-      <div id="contentcolumn">
-        <div class="innertube">
-          <h1 class="fprint" >Condiciones</h1>
-          <div id="selected_entities">
-            
-            <div id="selected_entities_empty_msg" class="box">
-			        <p class="box-S">No hay condiciones.<br/> Arrastre las entidades de su preferencia aquí.</p>
-            </div> 
-          </div>
-          <div style="clear:both;"></div>
-          <h1 class="fprint" >Resultado</h1>
-          <div id="resultado">
-            <div id="resultado_columnas">
-              <h2>Campos en resultado:</h2>
-              <div class="container">
-                <div class="items">
-                </div>
-                <hr/>
-                <div class="toolbar">
-                  <a href="#" onclick="addResultField();return false;">Agregar campo</a>
-                  <a href="#" onclick="clearResultFields();return false;">Limpiar campos</a>
-                </div>
-              </div>
-            </div>
-            <div id="orden_columnas">
-              <h2>Orden de resultado:</h2>
-              <div class="container">
-                <div class="items">
-                </div>
-                <hr/> 
-                <div class="toolbar">
-                  <a href="#" onclick="addOrderField();return false;">Agregar orden</a>
-                  <a href="#" onclick="clearOrderFields();return false;">Limpiar orden</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="leftcolumn">
-      <div class="innertube">
-        <h1 class="fprint" >Entidades</h1>
-        <div id="entities">
-          <% SortedDictionary<string, string> entities = ViewData["entities"] as SortedDictionary<string, string>; %>
-          <% var index = 0;
-             foreach (string key in entities.Keys )  
-            {
-              string entity_key = key;
-              string entity_relations = entities[key];   
-            %>
-            <div class="entity related <%=(index<1?"first":"") %>" entity="<%= entity_key %>" relations="<%= entity_relations %>">
-              <a href="#" class="megaboton entity"><%= entity_key %></a>
-            </div>     
-         <% index++; 
-           } %>
+      <div id="contentwrapper" >
+        <div id="contentcolumn">
+          <div class="innertube">
+            <h1 class="fprint" >Condiciones</h1>
           
-        </div>
-      </div>
-    </div>
-    
-      
+            <input type="hidden" id="entities_list" name="entities_list" value="" />
+            <input type="hidden" id="resultfields_count" name="resultfields_count" value="0" />
+            <input type="hidden" id="orderfields_count" name="orderfields_count" value="0" />
+            <input type="hidden" id="conditions_by_entity_count" name="conditions_by_entity_count" value="" />
 
-      <!--form id="reporte" onsubmit="return submit_me(this)" action="<%= Url.Content("~/Reporte/VerReporte") %>" method="post">
-        <div style="clear:both;"></div>
-        <div style="clear:both;"></div>
+            <input type="hidden" id="serialized_form" name="serialized_form" value="" />
+            <input type="hidden" id="html_form" name="html_form" value="" />
+            <input type="hidden" id="json_form" name="json_form" value="" />
+
+            <div id="selected_entities">
+              <div id="selected_entities_empty_msg" class="box">
+			          <p class="box-S">No hay condiciones.<br/> Arrastre las entidades de su preferencia aquí.</p>
+              </div> 
+            </div>
+            <div style="clear:both;"></div>
+            <h1 class="fprint" >Resultado</h1>
+            <div id="resultado">
+              <div id="resultado_columnas">
+                <h2>Campos en resultado:</h2>
+                <div class="container">
+                  <div class="items">
+                  </div>
+                  <hr/>
+                  <div class="toolbar">
+                    <a href="#" onclick="addResultField();return false;">Agregar campo</a>
+                    <a href="#" onclick="clearResultFields();return false;">Limpiar campos</a>
+                  </div>
+                </div>
+              </div>
+              <div id="orden_columnas">
+                <h2>Orden de resultado:</h2>
+                <div class="container">
+                  <div class="items">
+                  </div>
+                  <hr/> 
+                  <div class="toolbar">
+                    <a href="#" onclick="addOrderField();return false;">Agregar orden</a>
+                    <a href="#" onclick="clearOrderFields();return false;">Limpiar orden</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reporte_button_bar" style="width:100%;padding: 10px 0px 10px 10px;">
+              <input type="submit" class="botonsubmit megaboton"  value="Guardar" />
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div id="leftcolumn">
+        <div class="innertube">
+          <h1 class="fprint" >Entidades</h1>
+          <div id="entities">
+            <% SortedDictionary<string, string> entities = ViewData["entities"] as SortedDictionary<string, string>; %>
+            <% var index = 0;
+               foreach (string key in entities.Keys )  
+              {
+                string entity_key = key;
+                string entity_relations = entities[key];   
+              %>
+              <div class="entity related <%=(index<1?"first":"") %>" entity="<%= entity_key %>" relations="<%= entity_relations %>">
+                <a href="#" class="megaboton entity"><%= entity_key %></a>
+              </div>     
+           <% index++; 
+             } %>
           
-      </form -->
-        
+          </div>
+        </div>
+      </div>
+    
+    <% }else{%>
+      <%= ViewData["form"] %>
+      <script language="javascript">
+        $(document).ready(function () {
+          var json_params = jQuery.parseJSON('<%= ViewData["json_params"]%>');
+          $.each(json_params, function (key, value) {
+            var obj = $('input[name=' + key + ']');
+            console.log($(obj).attr("type") + " :: " + key + " :: " + value);
+            if (obj.length > 0) {
+              if ($(obj).attr("type") == "text" || $(obj).attr("type") == "hidden")
+              { $(obj).val(value); }
+              else {
+                if ($(obj).attr("type") == "checkbox")
+                  $("input[name='" + key + "']").attr("checked", value);
+              }
+            }
+            else {
+              obj = $('select[name=' + key + ']');
+              if (obj.length > 0)
+                obj.val(value);
+            }
+
+          });
+        });
+      </script>
+    <% }%>
+    </form> 
   </div>
   
 </div>

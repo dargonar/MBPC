@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sqlbuilder>
   <entities>
-    <entity name="Viaje">
-      <sql>
-        tbl_viajes v left join tbl_buques b on v.buque_id = b.id
+    <entity name="Viaje" id="v">
+      <sql description="La entidad viajes relaciona implicitamente a las tabls viajes y buques.">
+        tbl_viaje v left join tmp_buques b on v.buque_id = b.id_buque
       </sql>
       <attributes>
-        <attribute id="v1" name="Fecha de Llegada" description="Arrivo" type="date" sql_column="v.FECHA_SALIDA" />
-        <attribute id="v2" name="Buque" description="Nombre de buque" type="string" sql_column="b.nombre" />
+        <attribute id="v1" name="Fecha de Llegada" description="Arrivó" type="date" sql_column="v.FECHA_LLEGADA" is_filter="1"/>
+        <attribute id="v2" name="Fecha de Salida" description="Partió" type="date" sql_column="v.FECHA_SALIDA" is_filter="1"/>
+        <attribute id="v3" name="ETA" description="ETA" type="date" sql_column="v.ETA" is_filter="1"/>
+        <attribute id="v4" name="ZOE" description="ZOE" type="date" sql_column="v.ZOE" is_filter="1"/>
+        <attribute id="v5" name="Viajando" description="Está viajando" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="0" is_filter="1"/>
+        <attribute id="v6" name="Terminado" description="Está terminado" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="1" is_filter="1"/>
+        <attribute id="v7" name="Fondeado" description="Está fondeado" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="100" is_filter="1"/>
+        
+        <attribute id="v8" name="Origen ID" description="Puerto de partida" type="string" sql_column="v.ORIGEN_ID" is_filter="1"/>
+        <attribute id="v9" name="Destino ID" description="Puerto de destino" type="string" sql_column="v.DESTINO_ID" is_filter="1"/>
+        
+        <attribute id="v10" name="Escalas" description="Escalas realizadas" type="integer" sql_column="v.ESCALAS" is_filter="1"/>
+        
+        <attribute id="v51" name="Número OMI de buque" description="Número OMI" type="string" sql_column="b.NRO_OMI" is_filter="1"/>
+        <attribute id="v52" name="Matrícula de buque" description="Matrícula" type="string" sql_column="b.MATRICULA" is_filter="1"/>
+        <attribute id="v53" name="Nombre de buque" description="Nombre" type="string" sql_column="b.NOMBRE" is_filter="1"/>
+        <attribute id="v54" name="Bandera de buque" description="Bandera" type="string" sql_column="b.BANDERA" is_filter="1"/>
+        
       </attributes>
       <relations>
         <relation target="Practico"> 
-          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id
-               left join tbl_practico p on pv.practico_id=p.id</sql>
+          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id</sql>
         </relation>
         <relation target="Carga"> 
-          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id
-               left join tbl_practico p on pv.practico_id=p.id</sql>
+          <sql></sql>
         </relation>
       </relations>
     </entity>
     
-    <entity name="Practico">
+    <entity name="Practico" id="p">
       <sql>
         tbl_practico p left join tbl_practicoviaje pv on p.id = pv.practico_id
       </sql>
       <attributes>
-        <attribute id="p1" name="Horas Trabajadas" description="Trabajó" type="numeric" sql_column="TOTAL" />
-        <attribute id="p2" name="Horas Descansadas" description="Descansó" type="date" sql_column="TOTAL" />
-        <attribute id="p3" name="Horas al pedo" description="Pedorreó" type="numeric" sql_column="TOTAL" />
-        <attribute id="p4" name="Horas re loco" description="Enloqueció" type="numeric" sql_column="TOTAL" />
+        <attribute id="p1" name="Nombre" description="Nombre" type="string" sql_column="p.NOMBRE" is_filter="1"/>
+        
+        <attribute id="p51" name="Horas Trabajadas" description="Trabajó" type="integer" sql_column="p.TOTAL" is_filter="1"/>
+        
+        <attribute id="p52" name="Fecha que subió" description="Fecha que subió" type="date" sql_column="pv.FECHA_SUBIDA" is_filter="0"/>
+        <attribute id="p53" name="Fecha que bajó" description="Fecha que bajó" type="date" sql_column="pv.FECHA_BAJADA" is_filter="0"/>
+        <attribute id="p54" name="Etapa en que subió" description="Etapa en que subió" type="integer" sql_column="pv.ETAPA_SUBIDA" is_filter="0"/>
+        <attribute id="p55" name="Etapa en que bajó" description="Etapa en que bajó" type="integer" sql_column="pv.ETAPA_BAJADA" is_filter="0"/>
+        <attribute id="p56" name="Activo" description="Activo" type="integer" sql_column="pv.ACTIVO" is_filter="0"/>
+        <attribute id="p57" name="Fecha de Activo" description="Fecha de Activo" type="integer" sql_column="pv.FECHA_ACTIVO" is_filter="0"/>
+        
       </attributes>
       <relations>
         <relation target="Viaje"> 
@@ -39,13 +60,13 @@
       </relations>
     </entity>
     
-    <entity name="Carga">
+    <entity name="Carga" id="c">
       <sql>
-        tbl_carga 
+        tbl_carga left join 
       </sql>
       <attributes>
-        <attribute id="c1" name="Toneladas transportadas" description="Toneladas transportadas" type="numeric" sql_column="TOTAL" />
-        <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="TOTAL" />
+        <attribute id="c1" name="Toneladas transportadas" description="Toneladas transportadas" type="integer" sql_column="c.TOTAL" is_filter="1"/>
+        <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="c.TOTAL" is_filter="1"/>
       </attributes>
       <relations>
         <relation target="Viaje"> 
@@ -57,20 +78,21 @@
   </entities>
   
   <operators>
-    <operator type="string">
+    <operator type="string" format="">
       <oper id="string_op1" description="Comienza con" format="upper($c) like upper('$v%')" />
       <oper id="string_op2" description="Parecido a" format="upper($c) like upper('%$v%')" />
       <oper id="string_op3" description="Es igual a" format="upper($c) = upper('%$v%')" />
+      <oper id="string_op4" description="Termina en" format="upper($c) like upper('%$v')" />
     </operator>
-    <operator type="numeric">
+    <operator type="integer" format="0.#">
       <oper id="numeric_op1" description="Es igual a" format="$c = $v%" />
-      <oper id="numeric_op2" description="Es mayor que" format="$c &gt; %$v%" />
-      <oper id="numeric_op3" description="Es menor que" format="$c &lt; %$v%" />
+      <oper id="numeric_op2" description="Es mayor que" format="$c &lt; '$v'" />
+      <oper id="numeric_op3" description="Es menor que" format="$c &gt; '$v'" />
     </operator>
-    <operator type="date">
-      <oper id="numeric_op1" description="Es igual a" format="$c = $v%" />
-      <oper id="numeric_op2" description="Es mayor que" format="$c &gt; %$v%" />
-      <oper id="numeric_op3" description="Es menor que" format="$c &lt; %$v%" />
+    <operator type="date" format="{0:dd-MM-yy}">
+      <oper id="date_op1" description="Es igual a" format="$c = '$v'" />
+      <oper id="date_op2" description="Es mayor que" format="$c &lt; '$v'" />
+      <oper id="date_op3" description="Es menor que" format="$c &gt; '$v'" />
     </operator>
   </operators>
 </sqlbuilder>

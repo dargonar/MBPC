@@ -1,8 +1,9 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 
 <div class="item <%= ViewData["odd_or_even"] %>">
+  <input type="hidden" value="ordercolumn_<%= ViewData["ordercolumn_index"] %>" name="ordercolumn_<%= ViewData["ordercolumn_index"] %>"/>
   <div class="field">
-    <select class="full_width order_column_item_select">
+    <select class="full_width order_column_item_select" name="ordercolumn-field_<%= ViewData["ordercolumn_index"] %>">
       <% SortedDictionary<string, SortedDictionary<string, string>> attributes_by_entity = ViewData["attributes_by_entity"] as SortedDictionary<string, SortedDictionary<string, string>>; %>
       <% if(attributes_by_entity!= null)
           foreach (string entity_key in attributes_by_entity.Keys)  
@@ -20,7 +21,7 @@
     </select>
   </div>
   <div class="order">
-    <select class="full_width">
+    <select class="full_width" name="ordercolumn-value_<%= ViewData["ordercolumn_index"] %>">
       <option value="asc">Menor a mayor</option>
       <option value="desc">Mayor a menor</option>
     </select>

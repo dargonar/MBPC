@@ -127,8 +127,11 @@
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
     <Content Include="Views\Reporte\conditionItem.aspx" />
+    <Content Include="Views\Reporte\dummy.aspx" />
     <Content Include="Views\Reporte\entityItem.aspx" />
-    <Content Include="Views\Reporte\nuevoReporte.aspx" />
+    <Content Include="Views\Reporte\guardar.aspx" />
+    <Content Include="Views\Reporte\listar.aspx" />
+    <Content Include="Views\Reporte\nuevo.aspx" />
     <Content Include="Views\Reporte\operatorByType.aspx" />
     <Content Include="Views\Reporte\orderColumnItem.aspx" />
     <Content Include="Views\Reporte\resultColumnItem.aspx" />

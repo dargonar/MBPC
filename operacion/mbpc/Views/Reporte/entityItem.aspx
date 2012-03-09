@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 
-<div class="selected_entity closed" entity="<%=ViewData["entity"]%>">
+<div class="selected_entity closed" entity="<%=ViewData["entity"]%>" entity_id="<%=ViewData["entity_id"]%>">
+  <input type="hidden" value="entity_<%= ViewData["entity_index"] %>" name="entity_<%= ViewData["entity_index"] %>"/>
   <a class="header" href="#" onclick="$('.selected_entity[entity=<%=ViewData["entity"]%>]').toggleClass('closed');return false;">
     <span class="tag"></span>
     <h3 class="name"><%=ViewData["entity"]%></h3>
