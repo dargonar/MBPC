@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Text;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
+using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
+
 namespace mbpc.Controllers
 {
     public class ViajeController : MyController
@@ -143,13 +149,17 @@ namespace mbpc.Controllers
         public ActionResult indicarProximo(string viaje_id, string id2)
         {
           DaoLib.indicar_proximo(viaje_id, id2);
-          
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
 
-          return View("columnas");
+          if (Session["tipo_punto"].ToString() == "0")
+          {
+            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
+            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
+            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
+            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
+            return View("columnas");
+          }
+
+          return Content("nop");
         }
 
         public ActionResult pasarBarco(string viaje_id, string id2, string eta, string fecha, string velocidad, string rumbo)
@@ -351,5 +361,42 @@ namespace mbpc.Controllers
           ViewData["pbip"] = DaoLib.modificar_pbip(puertodematricula, numeroinmarsat, arqueobruto, compania, contactoOCPM, objetivo, viaje);
           return View();
         }
+
+        public ActionResult ListJSON(string sidx, string sord, int page, int rows)
+        {
+          var columns = new Dictionary<string,string> { 
+            {"PID","i"},
+            {"ID","i"},
+            {"ETAPA","i"},
+            {"PROXDEST","i"},
+            {"NOMBRE","s"},
+            {"NRO_OMI","s"},
+            {"MATRICULA","s"},
+            {"SDIST","s"},
+            {"BANDERA","s"},
+            {"LATITUD","f"},
+            {"LONGITUD","f"},
+            {"ORIGEN","s"},
+            {"DESTINO","s"},
+            {"ESTADO","s"},
+            {"ULTIMO","i"}
+          };
+
+          //Agregamos a mano el filtro
+          var tmp = JQGrid.JQGridUtils.PaginageS1("VW_VIAJES_MARITIMOS", Request.Params, columns, 
+                        page, rows, sidx, sord);
+
+          var cmdcount = new OracleCommand((string)tmp[2]);
+          int cnt = int.Parse(((Dictionary<string, string>)DaoLib.doSQL(cmdcount)[0])["TOTAL"]);
+
+          var cmd = new OracleCommand((string)tmp[0]);
+          cmd.Parameters.AddRange((OracleParameter[])tmp[1]);
+          var items = DaoLib.doSQL(cmd);
+
+          var coso = JQGrid.JQGridUtils.PaginateS2(items, columns, cnt, page, rows);
+
+        return Json(coso, JsonRequestBehavior.AllowGet);
+      }
+
     }
 }

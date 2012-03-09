@@ -25,8 +25,8 @@ public static class DaoLib2
 
     {
         //bla.TBL_CAPITAN
-        var oralinq1 = from e in bla.INT_USUARIOS
-                       where e.USUARIO_ID == int.Parse(id)
+      var oralinq1 = from e in bla.VW_INT_USUARIOS
+                       where e.NDOC == int.Parse(id)
                        select e;
 
         return oralinq1;

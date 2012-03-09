@@ -8,9 +8,10 @@ namespace mbpc.Controllers
 {
     public class AuthController : MyController
     {
-        public ActionResult ShowForm()
+        public ActionResult ShowForm(string msg)
         {
-            return View();
+          ViewData["msg"] = msg;
+          return View();
         }
 
         public ActionResult Login2()
@@ -29,13 +30,22 @@ namespace mbpc.Controllers
               return View("ShowForm");
           }
 
-          //Validar usuario
-          //  1:  usuario ok / destino ok / fecha ok
-          //  2:  usuario ok / destino no
-          //  3:  usuario o pass invalido
-          //  4:  usuario ok / destino ok / fecha no
-          int result = DaoLib.loguser2(Request.Form["username"], Request.Form["password"]);
-          if (result == 1)
+          //  Validar usuario
+          //  100:  usuario o pass invalido             [INVALID USERNAME]
+
+          //  0:  usuario ok / destino ok / fecha ok    [TODO OK]
+          //  1:  usuario ok / destino no               [DESTINO]
+          //  2:  usuario ok / destino ok / fecha no    [VENCIDO]
+          //  3:  no dni                                [NO DNI]
+          //  4:  usuario ok / destino ok / fecha ok    [SAME USR/PASS]
+
+          var usr = Request.Form["username"];
+          var pass = Request.Form["password"];
+
+          int result = DaoLib.loguser2(usr, pass);
+          
+          //[TODO OK]
+          if (result == 0)
           {
             //Marcar sesion logeado
             Session["logged"] = 1;
@@ -43,12 +53,24 @@ namespace mbpc.Controllers
             return Redirect(Url.Content("~/"));
           }
 
-          ViewData["error"] = "Error desconocido";
-          if (result == 2) ViewData["error"] = "Usuario no autorizado, cambio de destino.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
-          if (result == 3) ViewData["error"] = "Combinacion de usuario / contraseña invalida"; 
-          if (result == 4) ViewData["error"] = "Usuario con cuenta vencida.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
+          //[INVALID USR/PASS]
+          if (result == 100)
+          {
+            ViewData["error"] = "Combinacion de usuario / contraseña invalida";
+            return View("ShowForm");
+          }
 
-          return View("ShowForm");
+          string urlOK  = string.Format("http://{0}/auth/ShowForm?msg=Vuelva a ingresar sus datos", Request.ServerVariables["SERVER_NAME"]);
+          string urlERR = string.Format("http://{0}/auth/ShowForm?msg=La operacion no pudo realizarse", Request.ServerVariables["SERVER_NAME"]);
+
+          string url = string.Format("http://192.168.10.231/intermedio.asp?errcod={0}&usr={1}&pass={2}&syscod=DICO_026&urlok={3}&urlerr={4}",result,usr,pass,urlOK,urlERR);
+          return Redirect(url);
+
+          //ViewData["error"] = "Error desconocido";
+          //if (result == 2) ViewData["error"] = "Usuario no autorizado, cambio de destino.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
+          //if (result == 3) ViewData["error"] = "Combinacion de usuario / contraseña invalida"; 
+          //if (result == 4) ViewData["error"] = "Usuario con cuenta vencida.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
+          //return View("ShowForm");
         }
         
       public ActionResult Login()

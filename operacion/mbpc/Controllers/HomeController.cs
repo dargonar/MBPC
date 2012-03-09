@@ -8,7 +8,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.26";
+      public static string VERSION = "1.27";
       
         //
         // GET: /Home/
@@ -41,7 +41,6 @@ namespace mbpc.Controllers
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
           Session["zona"] = id;
 
-          
           recalcular_barcos_para_punto(id);
 
           return View();
@@ -59,23 +58,46 @@ namespace mbpc.Controllers
           return "";
         }
 
+        public string tipo_zona(string id)
+        {
+          string tipo = string.Empty;
+          //return "0";
+          foreach (var x in Session["zonas"] as List<object>)
+          {
+            var t = x as Dictionary<string, string>;
+            if (t["ID"] == id)
+            {
+              
+              if( t.Keys.Contains("USO") )
+                tipo = t["USO"];
+
+              break;
+            }
+          }
+
+          return tipo;
+        }
+
         public void recalcular_barcos_para_punto(string id)
         {
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
-
-          //ViewData["cuatrigrama"] = costera_de_zona(id);
+          //0 - fluvial
+          //1 - maritimo
+          
+          var tipo = tipo_zona(id);
+          Session["tipo_punto"] = tipo;
+          if (tipo == "0")
+          {
+            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
+            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
+            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
+            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
+          }
 
         }
 
         public ActionResult RefrescarColumnas()
         {
-          string id = Session["zona"].ToString();
-          recalcular_barcos_para_punto(id);
-
-          return View("_columnas");
+          return cambiarZona(Session["zona"].ToString());
         }
 
         
@@ -94,11 +116,7 @@ namespace mbpc.Controllers
           Session["zonas"] = DaoLib.zonas_del_grupo(grupo);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
-          
-          Session["zona"] = id;
-          recalcular_barcos_para_punto(id);
-
-          return View("columnas");
+          return cambiarZona(id);
         }
 
         public ActionResult zonasAdyacentes(string zona, string viaje, string pasar)

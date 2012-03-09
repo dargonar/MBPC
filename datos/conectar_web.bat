@@ -1,5 +1,5 @@
 @echo off
-rasdial Prefe fcalabrese tesam123
+rasdial Prefe fcalabrese tesacom1234
 if "%errorlevel%" NEQ "0"; goto error
 
 FOR /F "tokens=2 delims=:" %%a in ('IPCONFIG ^|FIND "IP" ^|FIND "192.168.41."') do set _IP=%%a

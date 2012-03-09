@@ -9,10 +9,15 @@
 </head>
 <body>
   <div id="header"></div>
-  <div id="login">
+  <p><strong>"Se informa que a partir del 05/03/12 el Sistema MBPC se ha integrado al Sistema de usuarios de la Intranet. Para poder acceder al mismo deberá usarse el usuario asignado en la Intranet. En caso de no poseer usuario, solicitarlo via MOI a DICOPNA.
+Para consultas comunicarse al interno 2979 de 7 a 19 hs., a la cuenta de correo: dico-mbpc@prefecturanaval.gov.ar o por skype al usuario DICO-MBPC"</strong></p>
+  <div style="height:auto" id="login">
       <h1>Login</h1>
       <div class="content">
-          <form action="<%= Url.Action("login","Auth") %>" method="post" >
+          <form action="<%= Url.Action("login2","Auth") %>" method="post" >
+            <%if(ViewData["msg"] != null) { %>
+            <label style="float:left;margin-left:15px;"><span style="color:#000;"><strong><%=ViewData["msg"]%></strong></span></label><br /><br />
+            <%}%>
             <label>Usuario: <input type="text" name="username" id="usuario" autocomplete="off" /></label>
             <label>Password: <input type="password" name="password" id="password" /></label>
             <div></div>

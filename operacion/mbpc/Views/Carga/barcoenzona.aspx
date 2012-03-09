@@ -23,7 +23,6 @@
 		  type: "GET",
 		  cache: false,
 		  url: url,
-		  dataType: "text/html",
 		  success: (function (data) {
 		    $('#selector').html(data);
         $('#selector').dialog({
