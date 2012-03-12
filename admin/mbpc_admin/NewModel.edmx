@@ -3255,8 +3255,6 @@
           <Property Type="String" Name="DTO" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SEC" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="NDOC" Precision="8" Scale="0" />
-          <Property Type="Boolean" Name="NIVACC" />
-          <Property Type="Boolean" Name="ESTADO" Nullable="false" />
           <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -3282,13 +3280,11 @@
           <Property Type="Decimal" Name="MACADDRESS" Precision="38" Scale="0" />
           <Property Type="String" Name="EMAIL_PARTICULAR" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="EMAIL_CORPORATIVO" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ESTADO" Precision="2" Scale="0" />
           <Property Type="Decimal" Name="NDOC_ADMIN" Precision="8" Scale="0" />
           <Property Type="String" Name="SITIOWEB" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="FECHA_AUDIT" />
           <Property Type="String" Name="NOMBREDEUSUARIO" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="USUARIO_ID" Precision="38" Scale="0" />
-          <Property Type="String" Name="EMPRESA" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CODIGO" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -4626,8 +4622,6 @@
               <MappingFragment StoreEntitySet="VW_INT_USUARIOS">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
-                <ScalarProperty Name="NIVACC" ColumnName="NIVACC" />
                 <ScalarProperty Name="NDOC" ColumnName="NDOC" />
                 <ScalarProperty Name="SEC" ColumnName="SEC" />
                 <ScalarProperty Name="DTO" ColumnName="DTO" />
@@ -4649,13 +4643,11 @@
               <MappingFragment StoreEntitySet="VW_INT_USUARIOS_EXT">
                 <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
-                <ScalarProperty Name="EMPRESA" ColumnName="EMPRESA" />
                 <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
                 <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
                 <ScalarProperty Name="FECHA_AUDIT" ColumnName="FECHA_AUDIT" />
                 <ScalarProperty Name="SITIOWEB" ColumnName="SITIOWEB" />
                 <ScalarProperty Name="NDOC_ADMIN" ColumnName="NDOC_ADMIN" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
                 <ScalarProperty Name="EMAIL_CORPORATIVO" ColumnName="EMAIL_CORPORATIVO" />
                 <ScalarProperty Name="EMAIL_PARTICULAR" ColumnName="EMAIL_PARTICULAR" />
                 <ScalarProperty Name="MACADDRESS" ColumnName="MACADDRESS" />
@@ -4699,7 +4691,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NewModel" ZoomLevel="85">
+      <Diagram Name="NewModel" ZoomLevel="54">
         <EntityTypeShape EntityType="NewModel.INT_SISTEMAS" Width="1.5" PointX="12.75" PointY="0.75" Height="5.700989583333353" />
         <EntityTypeShape EntityType="NewModel.INT_USER_SIST" Width="1.5" PointX="7.75" PointY="0.75" Height="2.249695638020853" />
         <EntityTypeShape EntityType="NewModel.INT_USUARIOS" Width="1.5" PointX="5.25" PointY="16.25" Height="3.728821614583353" />
@@ -4754,8 +4746,8 @@
         <EntityTypeShape EntityType="NewModel.VIEW_MUELLES" Width="1.5" PointX="14.75" PointY="22.75" Height="1.5923063151042243" />
         <EntityTypeShape EntityType="NewModel.VIEW_PBIP" Width="1.5" PointX="21.75" PointY="22.75" Height="3.5644742838542243" />
         <EntityTypeShape EntityType="NewModel.VPUNTO_DE_CONTROL" Width="1.5" PointX="4.75" PointY="23.75" Height="1.5923063151042243" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="1.5" PointX="23.75" PointY="5.75" Height="3.728821614583353" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="1.5" PointX="23.75" PointY="10.75" Height="4.3862109374999818" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="4.25" PointX="23.75" PointY="5.75" Height="3.4001269531249996" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="4.125" PointX="23.75" PointY="10.75" Height="4.0575162760416656" />
         <EntityTypeShape EntityType="NewModel.VW_PERS_DESTI" Width="1.5" PointX="4.75" PointY="4.75" Height="1.263611653645853" />
         <AssociationConnector Association="NewModel.FK_TBL_USUARIO" >
           <ConnectorPoint PointX="6.75" PointY="16.628326822916677" />

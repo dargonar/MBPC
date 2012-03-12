@@ -19920,10 +19920,9 @@ namespace mbpc_admin
         /// <param name="aPELLIDO">Initial value of the APELLIDO property.</param>
         /// <param name="nOMBRES">Initial value of the NOMBRES property.</param>
         /// <param name="dESTINO">Initial value of the DESTINO property.</param>
-        /// <param name="eSTADO">Initial value of the ESTADO property.</param>
         /// <param name="nOMBRE">Initial value of the NOMBRE property.</param>
         /// <param name="cODIGO">Initial value of the CODIGO property.</param>
-        public static VW_INT_USUARIOS CreateVW_INT_USUARIOS(global::System.String nOMBREDEUSUARIO, global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dESTINO, global::System.Boolean eSTADO, global::System.String nOMBRE, global::System.String cODIGO)
+        public static VW_INT_USUARIOS CreateVW_INT_USUARIOS(global::System.String nOMBREDEUSUARIO, global::System.String pASSWORD, global::System.String aPELLIDO, global::System.String nOMBRES, global::System.String dESTINO, global::System.String nOMBRE, global::System.String cODIGO)
         {
             VW_INT_USUARIOS vW_INT_USUARIOS = new VW_INT_USUARIOS();
             vW_INT_USUARIOS.NOMBREDEUSUARIO = nOMBREDEUSUARIO;
@@ -19931,7 +19930,6 @@ namespace mbpc_admin
             vW_INT_USUARIOS.APELLIDO = aPELLIDO;
             vW_INT_USUARIOS.NOMBRES = nOMBRES;
             vW_INT_USUARIOS.DESTINO = dESTINO;
-            vW_INT_USUARIOS.ESTADO = eSTADO;
             vW_INT_USUARIOS.NOMBRE = nOMBRE;
             vW_INT_USUARIOS.CODIGO = cODIGO;
             return vW_INT_USUARIOS;
@@ -20266,54 +20264,6 @@ namespace mbpc_admin
         private Nullable<global::System.Decimal> _NDOC;
         partial void OnNDOCChanging(Nullable<global::System.Decimal> value);
         partial void OnNDOCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> NIVACC
-        {
-            get
-            {
-                return _NIVACC;
-            }
-            set
-            {
-                OnNIVACCChanging(value);
-                ReportPropertyChanging("NIVACC");
-                _NIVACC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NIVACC");
-                OnNIVACCChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _NIVACC;
-        partial void OnNIVACCChanging(Nullable<global::System.Boolean> value);
-        partial void OnNIVACCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ESTADO
-        {
-            get
-            {
-                return _ESTADO;
-            }
-            set
-            {
-                OnESTADOChanging(value);
-                ReportPropertyChanging("ESTADO");
-                _ESTADO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ESTADO");
-                OnESTADOChanged();
-            }
-        }
-        private global::System.Boolean _ESTADO;
-        partial void OnESTADOChanging(global::System.Boolean value);
-        partial void OnESTADOChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -20714,30 +20664,6 @@ namespace mbpc_admin
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> ESTADO
-        {
-            get
-            {
-                return _ESTADO;
-            }
-            set
-            {
-                OnESTADOChanging(value);
-                ReportPropertyChanging("ESTADO");
-                _ESTADO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ESTADO");
-                OnESTADOChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _ESTADO;
-        partial void OnESTADOChanging(Nullable<global::System.Decimal> value);
-        partial void OnESTADOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Decimal> NDOC_ADMIN
         {
             get
@@ -20855,30 +20781,6 @@ namespace mbpc_admin
         private Nullable<global::System.Decimal> _USUARIO_ID;
         partial void OnUSUARIO_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnUSUARIO_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EMPRESA
-        {
-            get
-            {
-                return _EMPRESA;
-            }
-            set
-            {
-                OnEMPRESAChanging(value);
-                ReportPropertyChanging("EMPRESA");
-                _EMPRESA = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EMPRESA");
-                OnEMPRESAChanged();
-            }
-        }
-        private global::System.String _EMPRESA;
-        partial void OnEMPRESAChanging(global::System.String value);
-        partial void OnEMPRESAChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

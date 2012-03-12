@@ -53,7 +53,13 @@ namespace mbpc.Controllers
                 
         private XmlDocument openSQLConfig()
         {
-          ReporteController.xmlReader = XmlReader.Create(System.IO.File.Open(fileName, FileMode.Open));
+
+
+          var xx = System.Reflection.Assembly.GetExecutingAssembly();
+          var fileName2 = xx.CodeBase.Substring(0, xx.CodeBase.LastIndexOf("bin")) + "Res/mbpc_sqlbuilder_metadata.xml";
+          fileName2 = fileName2.Replace("file:///","").Replace('/','\\');
+
+          ReporteController.xmlReader = XmlReader.Create(System.IO.File.Open(fileName2, FileMode.Open));
           
           XmlDocument xml = new XmlDocument();
           xml.Load(ReporteController.xmlReader);
