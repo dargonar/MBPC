@@ -137,6 +137,8 @@ create or replace package mbpc as
   procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
   procedure reporte_insertar_params(vReporteId in number, vIndice in number, vNombre in varchar2, vTipoDato in number, usrid in number);
   procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur);
+  procedure reporte_eliminar_params(vReporteId in number, usrid in number, vCursor out cur);
+  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
 end;
 
 
@@ -2089,9 +2091,23 @@ create or replace package body mbpc as
   
   procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur) is
   begin
-    delete from tbl_reporte where id = vReporteId;
     delete from tbl_reporte_param where reporte_id = vReporteId;
+    delete from tbl_reporte where id = vReporteId;
   end reporte_eliminar;
+  
+  procedure reporte_eliminar_params(vReporteId in number, usrid in number, vCursor out cur) is
+  begin
+    delete from tbl_reporte_param where reporte_id = vReporteId;
+  end reporte_eliminar_params;
+  
+  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur) is
+  begin
+    update tbl_reporte set 
+      nombre = vNombre, descripcion = vDescripcion, categoria_id = vCategoriaId , consulta_sql = vConsultaSql
+      , post_params = vPostParams, form = vForm, json_params = vJsonParams 
+    where id = vReporteId;
+    
+  end reporte_actualizar;
   
   
   

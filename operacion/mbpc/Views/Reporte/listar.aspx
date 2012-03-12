@@ -71,7 +71,7 @@
       <td><%=kv.Value%></td>
       <% } %>
       <td>
-        <a href="<%= Url.Content("~/Reporte/eliminar")%>?id=<%=id %>">Borrar</a><br/>
+        <a href="<%= Url.Content("~/Reporte/eliminar")%>?id=<%=id %>" onclick="return confirm('Usted está a punto de eliminar un reporte. Esta acción es irreversible.¿Desea eliminar el reporte?');">Borrar</a><br/>
         <div class="btn-new-class">
           <a href="<%= Url.Content("~/Reporte/editar")%>?id=<%=id %>">Editar/modificar</a>
         </div>

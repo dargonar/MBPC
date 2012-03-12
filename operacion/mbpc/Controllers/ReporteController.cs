@@ -19,7 +19,7 @@ namespace mbpc.Controllers
     public class ReporteController : MyController
     {
         // GET: /Reporte/
-        private static string fileName = "C:\\wdir\\mbpc\\operacion\\mbpc\\Res\\mbpc_sqlbuilder_metadata.xml";
+      private static string fileName = "C:\\dago\\wdir\\mbpc\\operacion\\mbpc\\Res\\mbpc_sqlbuilder_metadata.xml";
         
         public ActionResult Index()
         {
@@ -352,16 +352,17 @@ namespace mbpc.Controllers
 
           // WHERE clause.
           StringBuilder strConditions = new StringBuilder();
-          strConditions.AppendFormat(" WHERE ");
           XmlDocument xmlDoc = openSQLConfig();
           
           Dictionary<string, int> reporteParams = new Dictionary<string,int>();
           int index = 0;
           int paramCount = 1;
+          int total_condition_count = 0;
           foreach (KeyValuePair<string, int> pair in conditions_by_entity_count)
           {
             int current_snorbol = 1;
             int condition_count = 0;
+            
             while (condition_count < pair.Value)
             {
               if (Request.Form["conditionitem-attribute_" + entities_id[index] + "_" + current_snorbol.ToString()] != null)
@@ -404,10 +405,14 @@ namespace mbpc.Controllers
                   value = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("value").Value.Trim();
                   sql = string.Format(" {0} = {1} ", sql_column, value);
                 }
-                
-                if(!String.IsNullOrEmpty(sql))
-                  strConditions.AppendFormat(" {0} {1} ", (condition_count > 0 ? "AND" : ""), sql);
 
+                if (!String.IsNullOrEmpty(sql))
+                {
+                  if (String.IsNullOrEmpty(strConditions.ToString()))
+                      strConditions.AppendFormat(" WHERE ");
+                  strConditions.AppendFormat(" {0} {1} ", (total_condition_count > 0 ? "AND" : ""), sql);
+                  total_condition_count++; // -> *Cuando pones condiciones de dos entidades distintas, falta un AND entre medio
+                }
                 condition_count++;
                                
               }
@@ -509,9 +514,17 @@ namespace mbpc.Controllers
           string json_form = Request.Form["json_form"]; 
           string nombre_reporte = Request.Form["nombre_reporte"];
 
-          List<object> res = DaoLib.reporte_insertar(nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
-          Dictionary<string, string> resDict = ((res[0]) as Dictionary<string, string>);
-          int lastReportId = Convert.ToInt32(resDict[resDict.Keys.ElementAt(0)]);
+          List<object> res = null;
+          int lastReportId = editing_reporte_id;
+          if (editing_reporte_id > 0)
+            res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
+          else
+          {
+            res = DaoLib.reporte_insertar(nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
+            Dictionary<string, string> resDict = ((res[0]) as Dictionary<string, string>);
+            lastReportId = Convert.ToInt32(resDict[resDict.Keys.ElementAt(0)]);
+          }
+          
 
           List<int> reporte_id = new List<int>();
           List<int> indice = new List<int>();
@@ -528,14 +541,14 @@ namespace mbpc.Controllers
             index++;
           }
 
+          if (editing_reporte_id > 0)
+          {
+            DaoLib.reporte_eliminar_params(editing_reporte_id);
+          } 
+          
           if (nombre.Count > 0)
           {
             List<object> res2 = DaoLib.reporte_insertar_params(reporte_id.ToArray(), indice.ToArray(), nombre.ToArray(), tipo_dato.ToArray());
-          }
-
-          if (editing_reporte_id > 0)
-          {
-            DaoLib.reporte_eliminar(editing_reporte_id);
           }
 
           return this.RedirectToAction("editar", "Reporte", new { id = lastReportId.ToString() });

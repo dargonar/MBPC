@@ -204,7 +204,7 @@
 
   <script language="javascript">
     $(document).ready(function () {
-
+    
       buildButtons();
       if ($('#entities').height() > $('#selected_entities').height())
         $('#selected_entities').css('height', $('#entities').height() - 125);
@@ -634,33 +634,6 @@
 
       function onSubmit(){
          
-        
-        /*$("#report-form").autosave({
-            // Defaults to parent form url or window.location.href
-            url: '<%= Url.Content("~/Reporte/dummy")%>',
-            // Defaults to parent form url or get
-            method: "post", 
-            // Defaults to false. Whether all "input" should be sent in the request or only the one it was triggered upon
-            grouped: true,
-            success: function(data) {
-                console.log(data);
-            },
-            // Defaults to JSON, but can be XML, HTML and so on
-            dataType: "json",
-            send: function(data) {
-                // Do stuff while we wait for the ajax response, defaults to doing nothing
-                console.log("-----Saving");
-                console.log(data);
-            },
-            error: function(xmlReq, text, errorThrown) {
-                // Handler if the ajax request fails, defaults to console.log-ing the ajax request scope
-                console.log(text);
-            }
-        });*/
-
-        //console.log(getFormJSON($("#report-form")));
-        //return false;
-
         if(!$.trim($('#nombre_reporte').val()).length)
         {
           alert("Debe ingresar un nombre para identificar al reporte.");
@@ -702,6 +675,44 @@
         
         return true;
       }
+
+      $(document).ready(function () {
+        $('select.result_column_item_select').live("click", function () {
+          result_column_item_selectChanged(this);
+          return false;
+        });
+
+        $('a.result_column_item_remove').live("click", function () {
+          removeResultColumn(this);
+          return false;
+        });
+
+        $('a.order_column_item_remove').live("click", function () {
+          removeOrderColumn(this);
+          return false;
+        });
+
+        $('div.selected_entity a.header').live("click", function () {
+          $(this).parent().toggleClass('closed');
+          return false;
+        });
+
+        $('div.selected_entity a.quitar_entidad').live("click", function () {
+          removeEntityItem($(this).parent().attr('entity'), true);
+          return false;
+        });
+
+        $('div.selected_entity .toolbar a.add_condition_item').live("click", function () {
+          addConditionItem($(this).parent().parent().parent().attr('entity'));
+          return false;
+        });
+
+        $('div.selected_entity .toolbar a.clear_condition_items').live("click", function () {
+          clearConditionItems($(this).parent().parent().parent().attr('entity'));
+          return false;
+        });
+
+      });
   </script>
 
 

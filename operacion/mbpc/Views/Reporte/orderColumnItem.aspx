@@ -27,7 +27,7 @@
     </select>
   </div>
   <div class="actions">
-    <a href="#" onclick="removeOrderColumn(this);return false;" style="font-size:10px;">Quitar campo</a>
+    <a href="#" class="order_column_item_remove" style="font-size:10px;">Quitar campo</a>
   </div>
   <div style="clear:both;"></div>
 </div>

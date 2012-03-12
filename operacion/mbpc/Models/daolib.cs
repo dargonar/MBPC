@@ -1329,6 +1329,32 @@ public static class DaoLib
     return doCall("mbpc.reporte_eliminar", parameters);
   }
 
+  public static List<object> reporte_eliminar_params(int reporte_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporteId", OracleDbType.Varchar2, reporte_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.reporte_eliminar_params", parameters);
+  }
+
+  public static List<object> reporte_actualizar(int reporte_id, string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params, string form, string json_form) //FECHA_CREACION
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporteId", OracleDbType.Varchar2, reporte_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
+        new OracleParameter("vDescripcion", OracleDbType.Varchar2, descripcion, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCategoriaId", OracleDbType.Varchar2, categoria_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vConsultaSql", OracleDbType.Varchar2, consulta_sql, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPostParams", OracleDbType.Varchar2, post_params, System.Data.ParameterDirection.Input),
+        new OracleParameter("vForm", OracleDbType.Varchar2, form, System.Data.ParameterDirection.Input),
+        new OracleParameter("vJsonForm", OracleDbType.Varchar2, json_form, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_actualizar", parameters);
+  }
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
