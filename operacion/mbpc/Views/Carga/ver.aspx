@@ -347,6 +347,9 @@
       cache: false,
       url: '<%= Url.Content("~/Home/RefrescarColumnas") %>',
       success: function (data) {
+      if (data == "nop")
+        $('#list').trigger('reloadGrid');
+      else
         $("#columnas").html(data);
       },
       error: showTitle

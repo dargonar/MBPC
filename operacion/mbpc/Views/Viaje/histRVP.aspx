@@ -126,7 +126,10 @@
       cache: false,
       url: '<%= Url.Content("~/Home/RefrescarColumnas") %>',
       success: function (data) {
-        $("#columnas").html(data);
+        if (data == "nop")
+          $('#list').trigger('reloadGrid');
+        else
+          $("#columnas").html(data);
       },
     });
   <% } %>

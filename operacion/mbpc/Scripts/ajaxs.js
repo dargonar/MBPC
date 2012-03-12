@@ -357,7 +357,11 @@
           cache: false,
           url: aurl,
           success: (function (data) {
-            $("#columnas").html(data);
+            if(data=="nop")
+              $('#list').trigger( 'reloadGrid' );
+            else
+              $("#columnas").html(data);
+
             $("#fullscreen").css("display", "none");
           }),
           error: (function (data) {
@@ -962,7 +966,7 @@
 		        success: (function (data) {
 		          $('#dialogdiv').html(data);
               $('#dialogdiv').dialog({
-                title: 'Detalles Tecnicos - ' + $(".nombrebarco").html(),
+                title: 'Detalles Tecnicos',
                 height: 240,
                 modal: true,
               });
@@ -1045,7 +1049,11 @@
         cache: false,
         url: $(aelement).attr("href"),
         success: (function (data) {
-          $("#columnas").html(data);
+          if(data=="nop")
+            $('#list').trigger( 'reloadGrid' );
+          else
+            $("#columnas").html(data);
+
           $("#fullscreen").css("display", "none");
         }),
         error: (function (data) {

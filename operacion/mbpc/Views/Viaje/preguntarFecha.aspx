@@ -48,7 +48,12 @@
       data: $(this).serialize(),
       success: (function (data) {
         if (action2 == "terminarviaje") {
-          $("#columnas").html(data);
+
+          if (data == "nop")
+            $('#list').trigger('reloadGrid');
+          else
+            $("#columnas").html(data);
+
           $('#dialogdiv').dialog('close');
         }
         else {

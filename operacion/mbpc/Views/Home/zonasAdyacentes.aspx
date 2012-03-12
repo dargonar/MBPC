@@ -143,12 +143,12 @@
                   url: $(this).attr('action'),
                   data: $(this).serialize(),
                   success: (function (data) {
-                      if(data=="nop"){
+                      
+                      if(data=="nop")
                         $('#list').trigger( 'reloadGrid' );
-                        //alert('refresh grid');
-                      }else{
+                      else
                         $("#columnas").html(data);
-                      }
+
                       $('#dialogdiv').dialog('close');
                   }),
                   error: (function (data) {

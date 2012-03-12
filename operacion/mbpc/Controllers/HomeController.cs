@@ -8,7 +8,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.27";
+      public static string VERSION = "1.29";
       
         //
         // GET: /Home/
@@ -60,8 +60,8 @@ namespace mbpc.Controllers
 
         public string tipo_zona(string id)
         {
-          string tipo = string.Empty;
-          //return "0";
+          string tipo = "0";
+          
           foreach (var x in Session["zonas"] as List<object>)
           {
             var t = x as Dictionary<string, string>;
@@ -97,7 +97,10 @@ namespace mbpc.Controllers
 
         public ActionResult RefrescarColumnas()
         {
-          return cambiarZona(Session["zona"].ToString());
+          if (Session["tipo_punto"].ToString() == "0")
+            return cambiarZona(Session["zona"].ToString());
+
+          return Content("nop");
         }
 
         

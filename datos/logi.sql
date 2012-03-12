@@ -197,16 +197,6 @@ end;
 
 
 
-
-
-
-
-
-
-
-
-
-
 /
 create or replace package body mbpc as
 
@@ -222,30 +212,43 @@ create or replace package body mbpc as
   procedure login2(vid in varchar2, vpassword in varchar2, logged out number ) is
 
   begin
-    SELECT * INTO usuario2 FROM vw_int_usuarios WHERE ndoc = vid AND password = vpassword;
-      IF sql%ROWCOUNT != 0 THEN
-        SELECT count(*) into temp FROM vw_pers_desti WHERE ndoc=vid AND destino=usuario2.destino;
-        if temp != 0 THEN
-          if usuario2.fechavenc > SYSDATE THEN
-            --usuario ok / destino ok / fecha ok
-            IF usuario2.ndoc = usuario2.password THEN
-              logged := 4;
-            ELSE
-              logged := 0;
-            END IF;
-          ELSE
-            --usuario ok / destino ok / fecha no
-            logged := 2;
-          END IF;
-          
-        ELSE
-          --usuario ok / destino no
-          logged := 1;
-        END IF;
+    
+    SELECT * INTO usuario2 FROM vw_int_usuarios WHERE ndoc = vid;
+
+    -- Vemos si coincide usuario y pass
+      IF usuario2.password <> vpassword THEN
+          -- usuario existe, password incorrecto
+          logged := 100;
+          RETURN;
       END IF;
+
+      -- Vemos si el usuario = password
+      IF usuario2.password = cast(usuario2.ndoc as varchar2) THEN
+        logged := '4';
+        RETURN;
+      END IF;
+      
+      -- Vemos si el destino coincide
+      SELECT COUNT(*) into temp FROM vw_pers_desti WHERE ndoc=vid AND destino=usuario2.destino;
+      IF temp = 0 THEN
+        --usuario ok / destino no
+        logged := 1;
+        RETURN;
+      END IF;
+      
+      -- Vemos si esta vencido
+      if SYSDATE > usuario2.fechavenc THEN
+        --usuario ok / destino ok / fecha no
+        logged := 2;
+        RETURN;
+      END IF;
+
+      --usuario ok / destino ok / fecha ok
+      logged := 0;
+    
   exception when NO_DATA_FOUND THEN
-    --usuario/pass invalido
-    logged := 100;
+    -- usuario no existe
+    logged := 200;
     
   end login2;
 

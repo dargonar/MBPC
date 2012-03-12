@@ -279,6 +279,10 @@ namespace mbpc.Controllers
       public ActionResult separarConvoy(string viaje_id, string id2, string fecha)
       {
         List<object> etapa_to_list = DaoLib.separar_convoy(viaje_id, fecha);
+
+        if (etapa_to_list.Count == 0)
+          throw new Exception("No tiene acompanantes");
+        
         Dictionary<string, string> etapa_to = etapa_to_list[0] as Dictionary<string, string>;
         return RedirectToAction("editarBarcazas", new { shipfrom = id2, shipto = etapa_to["ID"] });
       }

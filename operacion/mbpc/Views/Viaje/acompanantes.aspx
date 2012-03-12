@@ -100,7 +100,11 @@
       url: $(this).attr('action'),
       data: $(this).serialize(),
       success: (function (data) {
-        $("#columnas").html(data);
+        if (data == "nop")
+          $('#list').trigger('reloadGrid');
+        else
+          $("#columnas").html(data);
+
         $('#dialogdiv').dialog('close');
       }),
       error: (function (data) {

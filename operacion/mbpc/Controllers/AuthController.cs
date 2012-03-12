@@ -22,25 +22,24 @@ namespace mbpc.Controllers
             return View("ShowForm");
           }
 
+          var usr = Request.Form["username"];
+          var pass = Request.Form["password"];
+
           //numerico?
           int dummy = 0;
           if( int.TryParse(Request.Form["username"], out dummy) == false )
           {
-              ViewData["error"] = "Combinacion de usuario / contraseña invalida"; 
-              return View("ShowForm");
+            usr = "0";
           }
 
           //  Validar usuario
-          //  100:  usuario o pass invalido             [INVALID USERNAME]
+          //-  200:  usr no existe                       [USUARIO NO EXISTE]
+          //-  100:  pass invalido                       [INVALID PASS]
 
-          //  0:  usuario ok / destino ok / fecha ok    [TODO OK]
-          //  1:  usuario ok / destino no               [DESTINO]
-          //  2:  usuario ok / destino ok / fecha no    [VENCIDO]
-          //  3:  no dni                                [NO DNI]
-          //  4:  usuario ok / destino ok / fecha ok    [SAME USR/PASS]
-
-          var usr = Request.Form["username"];
-          var pass = Request.Form["password"];
+          //-  0:  usuario ok / destino ok / fecha ok    [TODO OK]
+          //-  1:  usuario ok / destino no               [DESTINO DISTINTO]
+          //-  2:  usuario ok / destino ok / fecha no    [CUENTA VENCIDA]
+          //-  4:  usuario ok / destino ok / fecha ok    [MISMO USR/PASS]
 
           int result = DaoLib.loguser2(usr, pass);
           
@@ -53,26 +52,68 @@ namespace mbpc.Controllers
             return Redirect(Url.Content("~/"));
           }
 
-          //[INVALID USR/PASS]
-          if (result == 100)
+          //[USUARIO NO EXISTE]
+          if (result == 200)
           {
-            ViewData["error"] = "Combinacion de usuario / contraseña invalida";
+            ViewData["error"] = "El usuario no existe.<br/>Solicite acceso al sistema o nuevo usuario a través de la intranet y/o comunicarse con el int 2940.";
             return View("ShowForm");
           }
 
-          string urlOK  = string.Format("http://{0}/auth/ShowForm?msg=Vuelva a ingresar sus datos", Request.ServerVariables["SERVER_NAME"]);
+          //[INVALID USR/PASS]
+          if (result == 100)
+          {
+            ViewData["error"] = "La contraseña es incorrecta";
+            return View("ShowForm");
+          }
+
+          //[DESTINO DISTINTO]]
+          if (result == 1)
+          {
+            ViewData["error"] = "Cambio de destino.<br/>Solicite reactivación de cuenta a través de la pagina inicial de intranet y/o comunicarse con el int 2940.";
+            return View("ShowForm");
+          }
+
+          //[CUENTA VENCIDA]
+          if (result == 2)
+          {
+            ViewData["error"] = "Cuenta vencida.<br/>Solicite reactivación de cuenta a través de la pagina inicial de intranet y/o comunicarse con el int 2940.";
+            return View("ShowForm");
+          }
+
+          // 4: [MISMO USR/PASS]
+          ViewData["ndoc"] = usr;
+          return View("SelectNewPass");
+        }
+
+        public ActionResult cambiarPassword(string ndoc, string password, string password2)
+        {
+          ViewData["ndoc"] = ndoc;
+
+          if (String.IsNullOrEmpty(password) || String.IsNullOrEmpty(password2))
+          {
+            ViewData["error"] = "Complete los dos campos con el misma password";
+            return View("SelectNewPass");
+          }
+
+          if (password != password2)
+          {
+            ViewData["error"] = "Las contraseñas no coinciden";
+            return View("SelectNewPass");
+          }
+
+          if (password == ndoc)
+          {
+            ViewData["error"] = "Las contraseña debe ser distinta al usuario.";
+            return View("SelectNewPass");
+          }
+
+          string urlOK = string.Format("http://{0}/auth/ShowForm?msg=La contraseña fue actualizada, ingrese sus datos nuevamente.", Request.ServerVariables["SERVER_NAME"]);
           string urlERR = string.Format("http://{0}/auth/ShowForm?msg=La operacion no pudo realizarse", Request.ServerVariables["SERVER_NAME"]);
 
-          string url = string.Format("http://192.168.10.231/intermedio.asp?errcod={0}&usr={1}&pass={2}&syscod=DICO_026&urlok={3}&urlerr={4}",result,usr,pass,urlOK,urlERR);
+          string url = string.Format("http://192.168.10.231/intermedio_mbpc.asp?action=1&usr={0}&pass={1}&pagina={2}&pagina_err={3}", ndoc, password, urlOK, urlERR);
           return Redirect(url);
-
-          //ViewData["error"] = "Error desconocido";
-          //if (result == 2) ViewData["error"] = "Usuario no autorizado, cambio de destino.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
-          //if (result == 3) ViewData["error"] = "Combinacion de usuario / contraseña invalida"; 
-          //if (result == 4) ViewData["error"] = "Usuario con cuenta vencida.<br><a href=\"http://192.168.10.231/Dise%F1o%20Estandar/solica_usu/default.asp\">Revalidar cuenta</a>";
-          //return View("ShowForm");
         }
-        
+
       public ActionResult Login()
       {
           //Validar usuario

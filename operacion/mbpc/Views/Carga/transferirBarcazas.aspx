@@ -10,7 +10,10 @@
     cache: false,
     url: $('#dummy').attr('href'),
     success: (function (data) {
-      $("#columnas").html(data);
+      if (data == "nop")
+        $('#list').trigger('reloadGrid');
+      else
+        $("#columnas").html(data);
       $("#fullscreen").css("display", "none");
     }),
     error: (function (data) {

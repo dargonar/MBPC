@@ -93,13 +93,9 @@ namespace mbpc.Controllers
             {
               latlon = DaoLib.parsePos(pos);
             }
-            DaoLib.insertar_cambioestado(etapa_id, notas, latlon[0], latlon[1], fecha, estado, riocanal, muelle);
 
-            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-            return View("columnas");
+            DaoLib.insertar_cambioestado(etapa_id, notas, latlon[0], latlon[1], fecha, estado, riocanal, muelle);
+            return BuildResponse();
         }
 
         public ActionResult Acompanantes(string id)
@@ -122,34 +118,25 @@ namespace mbpc.Controllers
 
         public ActionResult editarAcompanantes(string etapa_id, string buque_id, string buque2_id, string buque3_id, string buque4_id)
         {
-
           DaoLib.editar_acompanante(etapa_id, buque_id, buque2_id, buque3_id, buque4_id);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
 
         public ActionResult quitarAcompanante(string id)
         {
           DaoLib.quitar_acompanante(id);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult indicarProximo(string viaje_id, string id2)
         {
           DaoLib.indicar_proximo(viaje_id, id2);
+          return BuildResponse();
+        }
 
+        private ActionResult BuildResponse()
+        {
           if (Session["tipo_punto"].ToString() == "0")
           {
             ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
@@ -165,13 +152,7 @@ namespace mbpc.Controllers
         public ActionResult pasarBarco(string viaje_id, string id2, string eta, string fecha, string velocidad, string rumbo)
         {
           DaoLib.pasar_barco(viaje_id, id2, eta, fecha, velocidad, rumbo);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult nuevo()
@@ -190,14 +171,8 @@ namespace mbpc.Controllers
         public ActionResult insertarReporte(string viaje_id, string pos, string rumbo, string velocidad, string estado, string fecha)
         {
             var latlon = DaoLib.parsePos(pos);
-            //DaoLib.insertar_posicion(viaje_id, lat.Replace('.',','), lon.Replace('.',','));
             DaoLib.insertar_reporte(viaje_id, latlon[0], latlon[1], velocidad, rumbo, estado, fecha);
-            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-            return View("columnas");
+            return BuildResponse();
         }
 
 
@@ -211,13 +186,7 @@ namespace mbpc.Controllers
           }
           List<object> autoeditaretapa = DaoLib.crear_viaje(buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
           ViewData["AutoEditarEtapa"] = autoeditaretapa;
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult editar(string id)
@@ -237,13 +206,7 @@ namespace mbpc.Controllers
             }
 
             DaoLib.editar_viaje(viaje_id, buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
-
-            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-            return View("columnas");
+            return BuildResponse();
         }
 
 
@@ -263,13 +226,7 @@ namespace mbpc.Controllers
         public ActionResult terminar(string viaje_id, string fecha, string escalas)
         {
           DaoLib.terminar_viaje(viaje_id, fecha, escalas);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult terminados()
@@ -281,13 +238,7 @@ namespace mbpc.Controllers
         public ActionResult reactivar(string id)
         {
           DaoLib.reactivar_viaje(id);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult editarEtapa(string viaje_id, string id2)
@@ -321,13 +272,7 @@ namespace mbpc.Controllers
           if (calado_informado != null && (calado_informado == "" || calado_informado.LastIndexOf("_") != -1)) calado_informado = null;
 
           DaoLib.editar_etapa(etapa_id, calado_proa, calado_popa, calado_informado, hrp, eta, fecha_salida, cantidad_tripulantes, cantidad_pasajeros, capitan_id, rumbo, velocidad);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult editarPbip(string id)
@@ -347,13 +292,7 @@ namespace mbpc.Controllers
         public ActionResult guardarNotas(string id, string notas)
         {
           DaoLib.guardar_notas(id, notas);
-
-          ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-          ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-          ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-          ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
-
-          return View("columnas");
+          return BuildResponse();
         }
 
         public ActionResult modificarPBIP(string puertodematricula, string numeroinmarsat, string arqueobruto,  string compania,  string contactoOCPM, string objetivo, string viaje )
@@ -369,6 +308,7 @@ namespace mbpc.Controllers
             {"ID","i"},
             {"ETAPA","i"},
             {"PROXDEST","i"},
+            {"ID_BUQUE","i"},
             {"NOMBRE","s"},
             {"NRO_OMI","s"},
             {"MATRICULA","s"},
