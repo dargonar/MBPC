@@ -738,7 +738,6 @@ public static class DaoLib
     return doCall("mbpc.terminar_viaje", parameters);
   }
 
-  /// HACK tuti -> descargar array va a ser como esto, pero llama a doCall2
   public static List<object> descargar_barcaza(int etapa_id, int barcaza_id)
   {
     var parameters = new OracleParameter[] 
@@ -1282,6 +1281,54 @@ public static class DaoLib
     return doCall("mbpc.reporte_obtener_str", parameters)[0];
   }
 
+  public static List<object> reporte_obtener_html_builded()
+  {
+    var parameters = new OracleParameter[] 
+    { 
+    };
+
+    return doCall("mbpc.reporte_obtener_html_builded", parameters);
+  }
+
+  public static List<object> reporte_insertar(string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params, string form, string json_form) //FECHA_CREACION
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
+        new OracleParameter("vDescripcion", OracleDbType.Varchar2, descripcion, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCategoriaId", OracleDbType.Varchar2, categoria_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vConsultaSql", OracleDbType.Varchar2, consulta_sql, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPostParams", OracleDbType.Varchar2, post_params, System.Data.ParameterDirection.Input),
+        new OracleParameter("vForm", OracleDbType.Varchar2, form, System.Data.ParameterDirection.Input),
+        new OracleParameter("vJsonForm", OracleDbType.Varchar2, json_form, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.reporte_insertar", parameters);
+  }
+
+  public static List<object> reporte_insertar_params(int[] reporte_id, int[] indice, string[] nombre, int[] tipo_dato)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporteId", OracleDbType.Varchar2, reporte_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vIndice", OracleDbType.Varchar2, indice, System.Data.ParameterDirection.Input),
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input),
+        new OracleParameter("vTipoDato", OracleDbType.Varchar2, tipo_dato, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall2("mbpc.reporte_insertar_params", parameters, reporte_id.Length);
+  }
+
+  public static List<object> reporte_eliminar(int reporte_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporteId", OracleDbType.Varchar2, reporte_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.reporte_eliminar", parameters);
+  }
+
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
@@ -1409,7 +1456,6 @@ public static class DaoLib
 
     return retVal;
   }
-
 
   public static List<object> doSQL(OracleCommand cmd)
   {

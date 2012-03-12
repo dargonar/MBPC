@@ -26,6 +26,9 @@
       <script src="<%= Url.Content("~/Scripts/grid.locale-es.js") %>" type="text/javascript"></script>
       <script src="<%= Url.Content("~/Scripts/jquery.jqGrid.min.js") %>" type="text/javascript"></script>
       <script src="<%= Url.Content("~/Scripts/jquery.contextmenu.js")%>" type="text/javascript"></script>
+      
+      <script src="<%= Url.Content("~/Scripts/jquery.json-2.3.min.js") %>" type="text/javascript" ></script>
+      <script src="<%= Url.Content("~/Scripts/jquery.autosave.POSTA.js") %>" type="text/javascript" ></script>
 
       <script type="text/javascript">
         function cambiar_grupo() {
