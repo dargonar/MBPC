@@ -329,10 +329,10 @@
           $('#selected_entities_empty_msg').show();
         
         // Elimino las columnas de resultado y de orden.
-        $.each($(".result_column_item_select[value^="+entity+".]"), function(){
+        $.each($(".result_column_item_select[value^='"+entity+".']"), function(){
           $(this).parent().parent().remove();
         });
-        $.each($(".order_column_item_select[value^="+entity+".]"), function(){
+        $.each($(".order_column_item_select[value^='"+entity+".']"), function(){
           $(this).parent().parent().remove();
         });
       }
@@ -712,6 +712,17 @@
           return false;
         });
 
+        $('div.is_param .condition_item_is_param').live("change", function () {
+          var obj = $(this).parent().parent().find('.value input.input_value'); obj.attr('disabled', !obj.attr('disabled'));
+          return false;
+        });
+
+        $('div.actions a.delete_condition').live("click", function () {
+          if (confirm('¿Está seguro que desea quitar la condición? Esta acción es irreversible.')) 
+            $(this).parent().parent().remove();
+          return false;
+        });        
+        
       });
   </script>
 

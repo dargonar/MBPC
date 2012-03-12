@@ -353,8 +353,8 @@ namespace mbpc.Controllers
           // WHERE clause.
           StringBuilder strConditions = new StringBuilder();
           XmlDocument xmlDoc = openSQLConfig();
-          
-          Dictionary<string, int> reporteParams = new Dictionary<string,int>();
+
+          Dictionary<string, Dictionary<string, string>> reporteParams = new Dictionary<string, Dictionary<string, string>>();
           int index = 0;
           int paramCount = 1;
           int total_condition_count = 0;
@@ -388,7 +388,14 @@ namespace mbpc.Controllers
                   if (is_param != null && is_param.Equals("on"))
                   {
                     value = string.Format(":p{0}", paramCount.ToString());
-                    reporteParams.Add(value, Convert.ToInt32(Enum.Parse(typeof(ReporteParamDataType), type.ToUpper())));
+                    string name = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("name").Value.Trim();
+
+                    Dictionary<string, string> paramData = new Dictionary<string, string>();
+                    paramData.Add("data_type", Convert.ToInt32(Enum.Parse(typeof(ReporteParamDataType), type.ToUpper())).ToString());
+                    paramData.Add("name", Models.Hlp.GenerateSlug(name)); 
+                    
+                    reporteParams.Add(value, paramData);
+                    
                     paramCount++;
                     sql = string.Format(" {0} = {1} ", sql_column, value);
                   }
@@ -436,7 +443,7 @@ namespace mbpc.Controllers
               string field = Request.Form["resultcolumn-field_" + current_snajdarg.ToString()];
               string value = Request.Form["resultcolumn-value_" + current_snajdarg.ToString()];
               if (!String.IsNullOrEmpty(value))
-                value = value.Replace(" ", "_");
+                value = Models.Hlp.GenerateSlug(value) ;//value.Replace(" ", "_");
               string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", field.Split('.')[1])).Attributes.GetNamedItem("sql_column").Value.Trim();
 
               string sql = string.Format("{0} {1}", the_field, String.IsNullOrEmpty(value) ? "" : string.Format(" as {0}", value));
@@ -532,12 +539,12 @@ namespace mbpc.Controllers
           List<string> nombre = new List<string>();
 
           index = 1;
-          foreach (KeyValuePair<string, int> data in reporteParams)
+          foreach (KeyValuePair<string, Dictionary<string, string>> data in reporteParams)
           {
             reporte_id.Add(lastReportId);
             indice.Add(index);
-            tipo_dato.Add(data.Value);
-            nombre.Add(data.Key);
+            tipo_dato.Add(Convert.ToInt32(data.Value["data_type"]));
+            nombre.Add(data.Value["name"]);
             index++;
           }
 
