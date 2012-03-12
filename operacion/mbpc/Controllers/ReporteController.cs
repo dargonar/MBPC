@@ -19,7 +19,7 @@ namespace mbpc.Controllers
     public class ReporteController : MyController
     {
         // GET: /Reporte/
-        private static string fileName = "C:\\dago\\wdir\\mbpc\\operacion\\mbpc\\Res\\mbpc_sqlbuilder_metadata.xml";
+        private static string fileName = "C:\\wdir\\mbpc\\operacion\\mbpc\\Res\\mbpc_sqlbuilder_metadata.xml";
         
         public ActionResult Index()
         {

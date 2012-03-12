@@ -245,7 +245,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/conditionItem/")%>?entity='+entity+'&last='+last,
-          dataType: "text/html",
           success: (function (data) {
             $('.selected_entity[entity='+entity+'] .condition_list .items').append(data);
             hideLoading();
@@ -370,7 +369,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/entityItem/")%>?entity=' + entity+'&last='+last,
-          dataType: "text/html",
           success: (function (data) {
             
             var obj = $('#selected_entities').append(data);
@@ -482,18 +480,17 @@
             return false;
           }
 
-          $(select_obj).attr('disabled','');
-          $(input_obj).attr('disabled','');
-          $(checkbox_obj).attr('disabled','');
+          $(select_obj).attr('disabled',false);
+          $(input_obj).attr('disabled',false);
+          $(checkbox_obj).attr('disabled',false);
 
           showLoading();
           $.ajax({
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/operatorByType/")%>?data_type=' + data_type,
-          dataType: "text/html",
           success: (function (data) {
-            $(obj).parent().parent().find('select.operators').html(data).attr('disabled','');
+            $(obj).parent().parent().find('select.operators').html(data).attr('disabled',false);
             hideLoading();
           }),
           error: (function (data) {
@@ -536,7 +533,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/orderColumnItem/")%>?entities='+selected_entities.join(',')+'&last='+last,
-          dataType: "text/html",
           success: (function (data) {
             $('#orden_columnas .items').append(data);
             hideLoading();
@@ -575,7 +571,6 @@
           type: "GET",
           cache: true,
           url: '<%= Url.Content("~/Reporte/resultColumnItem/")%>?entities='+selected_entities.join(',')+'&last='+last,
-          dataType: "text/html",
           success: (function (data) {
             $('#resultado_columnas .items').append(data);
             hideLoading();

@@ -88,36 +88,36 @@
 
 
 <script type="text/javascript">
-  function myFormaty()
+  function myformatter ( totaldelay, options, rowObject )
   {
-    $totaldelay = time() - strtotime($eventTime);
-    if($totaldelay <= 0)
+    newval = 'n/a';
+    if( totaldelay < 0)
     {
-        return '';
+        alert(totaldelay);
+        return newval;
     }
-    else
+
+    var d;
+    if(d=Math.floor(totaldelay/86400))
     {
-        if($days=floor($totaldelay/86400))
-        {
-            $totaldelay = $totaldelay % 86400;
-            return $days.' days ago.';
-        }
-        if($hours=floor($totaldelay/3600))
-        {
-            $totaldelay = $totaldelay % 3600;
-            return $hours.' hours ago.';
-        }
-        if($minutes=floor($totaldelay/60))
-        {
-            $totaldelay = $totaldelay % 60;
-            return $minutes.' minutes ago.';
-        }
-        if($seconds=floor($totaldelay/1))
-        {
-            $totaldelay = $totaldelay % 1;
-            return $seconds.' seconds ago.';
-        }
+        totaldelay = totaldelay % 86400;
+        return d + ' dias';
     }
+    if(d=Math.floor(totaldelay/3600))
+    {
+        totaldelay = totaldelay % 3600;
+        return d + ' horas';
+    }
+    if(d=Math.floor(totaldelay/60))
+    {
+        totaldelay = totaldelay % 60;
+        return d + ' minutos';
+    }
+
+    d=Math.floor(totaldelay/1);
+    totaldelay = totaldelay % 1;
+    return d + ' segundos';
+
   }
   //{"PID","i"},
   //{"ID","i"}, 
@@ -155,7 +155,7 @@
     { name: 'ORIGEN', index: 'ORIGEN', width: 80 },
     { name: 'DESTINO', index: 'DESTINO', width: 80 },
     { name: 'ESTADO', index: 'ESTADO', width: 80 },
-    { name: 'ULTIMO', index: 'ULTIMO', width: 80, formatter: myFormat },
+    { name: 'ULTIMO', index: 'ULTIMO', width: 80, formatter: myformatter },
     ],
       pager: '#pager',
       rowNum: 20,

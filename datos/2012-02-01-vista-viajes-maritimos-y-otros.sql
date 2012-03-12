@@ -17,7 +17,7 @@ CREATE OR REPLACE VIEW vw_viajes_maritimos (
   estado,
   ultimo
 ) AS
-SELECT p.id PID, v.ID, e.id ETAPA, p2.ID PROXDEST, b.ID_BUQUE, b.NOMBRE, b.NRO_OMI, b.MATRICULA, b.SDIST, b.BANDERA, v.LATITUD, v.LONGITUD,
+SELECT p.id PID, v.ID, e.id ETAPA, p2.ID PROXDEST, b.ID_BUQUE, b.NOMBRE, b.NRO_OMI, b.MATRICULA, b.SDIST, b.BANDERA, trunc(v.LATITUD,2), trunc(v.LONGITUD,2),
        v.ORIGEN_ID ORIGEN, v.DESTINO_ID DESTINO , Nvl(ST.ESTADO,'N/A') ESTADO, Nvl(trunc( (sysdate-updated_at)*24*60*60 ),9999999) ULTIMO
 from
 tbl_viaje v
@@ -30,7 +30,7 @@ tbl_viaje v
 /
 
 
-
+UPDATE tbl_puntodecontrol SET uso=0;
 UPDATE tbl_puntodecontrol SET uso=1 WHERE id IN ( 
 SELECT DISTINCT(punto) FROM tbl_grupopunto WHERE grupo IN (
 SELECT id FROM tbl_grupo WHERE 

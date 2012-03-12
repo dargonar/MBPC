@@ -6,7 +6,7 @@ create or replace package mbpc as
   logged number(1,0);
   var_buque buques%ROWTYPE;
   var_puerto tbl_kstm_puertos%ROWTYPE;
-  usuario int_usuarios%ROWTYPE;
+  --usuario int_usuarios%ROWTYPE;
   usuario2 vw_int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
   etapa2 tbl_etapa%ROWTYPE;
@@ -25,7 +25,7 @@ create or replace package mbpc as
   strtemp3 varchar(50);
   tempdate date;
   --Login/Home
-  procedure login( vid in varchar2, vpassword in varchar2, logged out number);
+  --procedure login( vid in varchar2, vpassword in varchar2, logged out number);
   procedure login2( vid in varchar2, vpassword in varchar2, logged out number);
   procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
   procedure logout_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
@@ -257,18 +257,18 @@ create or replace package body mbpc as
 
   -------------------------------------------------------------------------------------------------------------
   -- Verifica que exista un registro que coincida con el ID del usuario (Legajo) y el password  
-  procedure login(vid in varchar2, vpassword in varchar2, logged out number ) is
+  --procedure login(vid in varchar2, vpassword in varchar2, logged out number ) is
 
-  begin
-    SELECT * INTO usuario FROM int_usuarios WHERE usuario_id = vid AND password = vpassword;
-      IF sql%ROWCOUNT != 0 THEN
-        logged := 1;
-      ELSE
-        logged := 0;
-      END IF;
-  exception when NO_DATA_FOUND THEN
-    logged := 0;
-  end login;
+  --begin
+  --  SELECT * INTO usuario FROM int_usuarios WHERE usuario_id = vid AND password = vpassword;
+  --    IF sql%ROWCOUNT != 0 THEN
+  --      logged := 1;
+  --    ELSE
+  --      logged := 0;
+  --    END IF;
+  --exception when NO_DATA_FOUND THEN
+  --  logged := 0;
+  --end login;
   -------------------------------------------------------------------------------------------------------------
   -- 
   procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur ) is
