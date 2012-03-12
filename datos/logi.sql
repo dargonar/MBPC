@@ -6,7 +6,6 @@ create or replace package mbpc as
   logged number(1,0);
   var_buque buques%ROWTYPE;
   var_puerto tbl_kstm_puertos%ROWTYPE;
-  --usuario int_usuarios%ROWTYPE;
   usuario2 vw_int_usuarios%ROWTYPE;
   etapa tbl_etapa%ROWTYPE;
   etapa2 tbl_etapa%ROWTYPE;
@@ -118,8 +117,6 @@ create or replace package mbpc as
   procedure traer_puertos(usrid in number, vCursor out cur);
   procedure crear_puerto(vCod in varchar2, vPuerto in varchar2, vPais in varchar2, usrid in number, vCursor out cur);
   --procedure traer_instports(vPuerto in varchar2, usrid in number, vCursor out cur);
-  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur);
-  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur);  
   procedure crear_practico(vNombre in varchar2, usrid in number, vCursor out cur);
   procedure update_practico(vNombre in varchar2, usrid in number, vCursor out cur);
   procedure asignar_pdc(vUsuario in varchar2, vPdc in varchar2, usrid in number);
@@ -288,7 +285,7 @@ create or replace package body mbpc as
   procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur ) is
   begin
     open vCursor for
-    SELECT * FROM int_usuarios WHERE usuario_id = vid;
+    SELECT * FROM vw_int_usuarios WHERE ndoc = vid;
   end datos_del_usuario;
   
   -------------------------------------------------------------------------------------------------------------
@@ -1911,24 +1908,6 @@ create or replace package body mbpc as
     open vCursor for select COD,PUERTO from tbl_kstm_puertos where cod = vCod and rownum=1;
     --insert into tbl_evento (usuario_id, tipo_id, muelle_id, fecha) VALUES (usrid, 3, vId, SYSDATE);
   end crear_puerto;
-
-  -------------------------------------------------------------------------------------------------------------
-  --
-  
-  procedure crear_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur) is
-  begin
-    insert into int_usuarios VALUES ( vNdoc, vPassword, vApellido, vNombres, vDestino, TO_DATE(vFechavenc, 'DD-MM-yy HH24:mi'), vTedirecto, vTeinterno, vEmail, vEstado, vSeccion, vNdoc_admin, TO_DATE(vFecha_audit, 'DD-MM-yy HH24:mi'), vNombredeusuario, vUsuario_id);
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
-  end crear_usuario;
-
-  -------------------------------------------------------------------------------------------------------------
-  --
-  
-  procedure update_usuario(vNdoc in varchar2, vPassword in varchar2, vApellido in varchar2, vNombres in varchar2, vDestino in varchar2, vFechavenc in varchar2, vTedirecto in varchar2, vTeinterno in varchar2, vEmail in varchar2, vEstado in varchar2, vSeccion in varchar2, vNdoc_admin in varchar2, vFecha_audit in varchar2, vNombredeusuario in varchar2, vUsuario_id in varchar2, usrid in number, vCursor out cur) is
-  begin
-    update int_usuarios set NDOC = vNdoc, PASSWORD = vPassword, APELLIDO = vApellido, NOMBRES = vNombres, DESTINO = vDestino, FECHAVENC = TO_DATE(vFechavenc, 'DD-MM-yy HH24:mi'), TEDIRECTO = vTedirecto, TEINTERNO = vTeinterno, EMAIL = vEmail, ESTADO = vEstado, SECCION = vSeccion, NDOC_ADMIN = vNdoc_admin, FECHA_AUDIT = TO_DATE(vFecha_audit, 'DD-MM-yy HH24:mi'), NOMBREDEUSUARIO = vNombredeusuario where USUARIO_ID = vUsuario_id;
-    --insert into tbl_evento (usuario_id, tipo_id, buque_id, fecha) VALUES (usrid, 2, vMatricula, SYSDATE);
-  end update_usuario;
 
   -------------------------------------------------------------------------------------------------------------
   --
