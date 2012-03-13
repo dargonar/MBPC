@@ -54,8 +54,9 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_practicoviaje pv on p.id=pv.practico_id
-               left join tbl_viaje v on pv.viaje_id=v.id</sql>
+          <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id
+               left join tbl_practico p on p.id=pv.practico_id
+          </sql>
         </relation>
       </relations>
     </entity>
@@ -90,9 +91,9 @@
       <oper id="numeric_op3" description="Es menor que" format="$c &gt; '$v'" />
     </operator>
     <operator type="date" format="{0:dd-MM-yy}">
-      <oper id="date_op1" description="Es igual a" format="$c = '$v'" />
-      <oper id="date_op2" description="Es mayor que" format="$c &lt; '$v'" />
-      <oper id="date_op3" description="Es menor que" format="$c &gt; '$v'" />
+      <oper id="date_op1" description="El dia" format="$c = '$v'" />
+      <oper id="date_op2" description="Despues de" format="$c &gt; '$v'" />
+      <oper id="date_op3" description="Antes de" format="$c &lt; '$v'" />
     </operator>
   </operators>
 </sqlbuilder>
