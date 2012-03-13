@@ -737,6 +737,37 @@
       });
   </script>
 
+  <% if (ViewData["form"] != null) {%>
+  <script language="javascript">
+    $(document).ready(function () {
+      console.log('- - - - - - - -');
+      var json_params = jQuery.parseJSON('<%= ViewData["json_params"]%>');
+      $.each($('form input[type=checkbox]'), function () {
+        $(this).attr('checked', false);
+      });
+      
+      $.each(json_params, function (key, value) {
+        var obj = $('input[name=' + key + ']');
+        //console.log($(obj).attr("type") + " :: " + key + " :: " + value);
+        if (obj.length > 0) {
+          if ($(obj).attr("type") == "text" || $(obj).attr("type") == "hidden")
+          { $(obj).val(value); }
+          else {
+            if ($(obj).attr("type") == "checkbox")
+              $("input[name='" + key + "']").attr("checked", value);
+          }
+        }
+        else {
+          obj = $('select[name=' + key + ']');
+          if (obj.length > 0) {
+            obj.val(value);
+          }
+        }
+
+      });
+    });
+  </script>
+  <% } %>
 
 </asp:Content>
 
@@ -844,29 +875,6 @@
     
     <% }else{%>
       <%= ViewData["form"] %>
-      <script language="javascript">
-        $(document).ready(function () {
-          var json_params = jQuery.parseJSON('<%= ViewData["json_params"]%>');
-          $.each(json_params, function (key, value) {
-            var obj = $('input[name=' + key + ']');
-            console.log($(obj).attr("type") + " :: " + key + " :: " + value);
-            if (obj.length > 0) {
-              if ($(obj).attr("type") == "text" || $(obj).attr("type") == "hidden")
-              { $(obj).val(value); }
-              else {
-                if ($(obj).attr("type") == "checkbox")
-                  $("input[name='" + key + "']").attr("checked", value);
-              }
-            }
-            else {
-              obj = $('select[name=' + key + ']');
-              if (obj.length > 0)
-                obj.val(value);
-            }
-
-          });
-        });
-      </script>
     <% }%>
     </form> 
   </div>

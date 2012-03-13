@@ -535,7 +535,10 @@ namespace mbpc.Controllers
           List<object> res = null;
           int lastReportId = editing_reporte_id;
           if (editing_reporte_id > 0)
+          {
+            //res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, "", json_form);
             res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
+          }
           else
           {
             res = DaoLib.reporte_insertar(nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
@@ -561,7 +564,7 @@ namespace mbpc.Controllers
 
           if (editing_reporte_id > 0)
           {
-            DaoLib.reporte_eliminar_params(editing_reporte_id);
+            DaoLib.reporte_eliminar_params(lastReportId);
           } 
           
           if (nombre.Count > 0)
