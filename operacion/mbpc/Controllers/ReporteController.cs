@@ -274,6 +274,7 @@ namespace mbpc.Controllers
           ViewData["json_params"] = reporte["JSON_PARAMS"]; 
           ViewData["editing"] = true;
           ViewData["id"] = id;
+          Response.AddHeader("X-XSS-Protection", "0");
           return View("nuevo");
         }
 
@@ -403,7 +404,11 @@ namespace mbpc.Controllers
                     reporteParams.Add(value, paramData);
                     
                     paramCount++;
-                    sql = string.Format(" {0} = {1} ", sql_column, value);
+
+                    string oper_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator/oper[@id='{0}']", oper)).Attributes.GetNamedItem("format").Value.Trim();
+                    sql = oper_format.Replace("$c", sql_column);
+                    sql = sql.Replace("$v", value);
+                    //sql = string.Format(" {0} = {1} ", sql_column, value);
                   }
                   else
                   {

@@ -473,16 +473,18 @@
           if('hardcoded'==data_type)
           {
             $(select_obj).html('');
-            $(select_obj).attr('disabled','disabled');
+            $(checkbox_obj).attr('checked', false).attr('disabled', 'disabled');
+            $(select_obj).attr('disabled', 'disabled');
             $(input_obj).attr('disabled','disabled');
-            $(checkbox_obj).attr('checked', false). attr('disabled','disabled');
+            $(input_obj).val('');
 
             return false;
           }
 
-          $(select_obj).attr('disabled',false);
+          $(checkbox_obj).attr('checked', false).attr('disabled', false);
+          $(select_obj).attr('disabled', false);
           $(input_obj).attr('disabled',false);
-          $(checkbox_obj).attr('disabled',false);
+          $(input_obj).val('');
 
           showLoading();
           $.ajax({
@@ -721,7 +723,16 @@
           if (confirm('¿Está seguro que desea quitar la condición? Esta acción es irreversible.')) 
             $(this).parent().parent().remove();
           return false;
-        });        
+        });
+
+        $('select.condition_item_selector').live("change", function () {
+
+          onFieldChanged(this);
+           
+          return false;
+          
+        });
+
         
       });
   </script>

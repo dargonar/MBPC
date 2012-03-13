@@ -2,7 +2,7 @@
   <div class="item <%= ViewData["odd_or_even"] %>">
     <input type="hidden" value="conditionitem_<%= ViewData["condition_item_index"] %>" name="conditionitem_<%= ViewData["condition_item_index"] %>" />
     <div class="field">
-      <select class="full_width" onchange="onFieldChanged(this);return false;" name="conditionitem-attribute_<%= ViewData["entity_id"] %>_<%= ViewData["condition_item_index"] %>">
+      <select class="full_width condition_item_selector" name="conditionitem-attribute_<%= ViewData["entity_id"] %>_<%= ViewData["condition_item_index"] %>">
         <% SortedDictionary<string, Dictionary<string, string>> attributes = ViewData["attributes"] as SortedDictionary<string, Dictionary<string, string>>; %>
         <% foreach (string key in attributes.Keys)  
               {
