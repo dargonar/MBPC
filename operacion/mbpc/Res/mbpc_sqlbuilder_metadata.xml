@@ -78,10 +78,10 @@
   
   <operators>
     <operator type="string" format="">
-      <oper id="string_op1" description="Comienza con" format="upper($c) like upper('$v%')" />
-      <oper id="string_op2" description="Parecido a" format="upper($c) like upper('%$v%')" />
-      <oper id="string_op3" description="Es igual a" format="upper($c) = upper('%$v%')" />
-      <oper id="string_op4" description="Termina en" format="upper($c) like upper('%$v')" />
+      <oper id="string_op1" description="Comienza con" format="upper($c) like upper($v%)||'%'" />
+      <oper id="string_op2" description="Parecido a" format="upper($c) like '%'||upper($v)||'%'" />
+      <oper id="string_op3" description="Es igual a" format="upper($c) = upper($v)" />
+      <oper id="string_op4" description="Termina en" format="upper($c) like '%'||upper($v)" />
     </operator>
     <operator type="integer" format="0.#">
       <oper id="numeric_op1" description="Es igual a" format="$c = $v" />
@@ -89,9 +89,9 @@
       <oper id="numeric_op3" description="Es menor que" format="$c &gt; $v" />
     </operator>
     <operator type="date" format="{0:dd-MM-yy}">
-      <oper id="date_op1" description="El dia" format="$c = '$v'" />
-      <oper id="date_op2" description="Despues de" format="$c &gt; '$v'" />
-      <oper id="date_op3" description="Antes de" format="$c &lt; '$v'" />
+      <oper id="date_op1" description="El dia" format="$c = $v" />
+      <oper id="date_op2" description="Despues de" format="$c &gt; $v" />
+      <oper id="date_op3" description="Antes de" format="$c &lt; $v" />
     </operator>
   </operators>
 </sqlbuilder>
