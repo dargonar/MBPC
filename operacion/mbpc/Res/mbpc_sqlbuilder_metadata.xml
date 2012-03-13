@@ -26,8 +26,8 @@
         
       </attributes>
       <relations>
-        <relation target="Practico"> 
-          <sql>left join tbl_practicoviaje pv on v.id=pv.viaje_id</sql>
+        <relation target="Practico">
+          <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id left join tbl_practico p on p.id=pv.practico_id</sql>
         </relation>
         <relation target="Carga"> 
           <sql></sql>
@@ -54,9 +54,7 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id
-               left join tbl_practico p on p.id=pv.practico_id
-          </sql>
+          <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id left join tbl_practico p on p.id=pv.practico_id</sql>
         </relation>
       </relations>
     </entity>
@@ -86,9 +84,9 @@
       <oper id="string_op4" description="Termina en" format="upper($c) like upper('%$v')" />
     </operator>
     <operator type="integer" format="0.#">
-      <oper id="numeric_op1" description="Es igual a" format="$c = $v%" />
-      <oper id="numeric_op2" description="Es mayor que" format="$c &lt; '$v'" />
-      <oper id="numeric_op3" description="Es menor que" format="$c &gt; '$v'" />
+      <oper id="numeric_op1" description="Es igual a" format="$c = $v" />
+      <oper id="numeric_op2" description="Es mayor que" format="$c &lt; $v" />
+      <oper id="numeric_op3" description="Es menor que" format="$c &gt; $v" />
     </operator>
     <operator type="date" format="{0:dd-MM-yy}">
       <oper id="date_op1" description="El dia" format="$c = '$v'" />

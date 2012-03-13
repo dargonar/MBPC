@@ -604,7 +604,7 @@ namespace mbpc.Controllers
             for (int k = 0; k < qcount; k++)
             {
               if (param["TIPO_DATO"] == "0")
-                lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+                lparams.Add(new OracleParameter(pname, OracleDbType.Date, DateTime.ParseExact(value.ToString(), "dd-MM-yy", CultureInfo.InvariantCulture), System.Data.ParameterDirection.Input));
 
               if (param["TIPO_DATO"] == "1")
                 lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
@@ -616,6 +616,8 @@ namespace mbpc.Controllers
                 lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
             }
           }
+
+          
 
           var cmd = new OracleCommand(rep["CONSULTA_SQL"]);
           cmd.Parameters.AddRange(lparams.ToArray());
