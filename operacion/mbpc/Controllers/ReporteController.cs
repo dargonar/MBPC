@@ -452,7 +452,7 @@ namespace mbpc.Controllers
                 value = Models.Hlp.GenerateSlug(value) ;//value.Replace(" ", "_");
               string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", field.Split('.')[1])).Attributes.GetNamedItem("sql_column").Value.Trim();
 
-              string sql = string.Format("{0} {1}", the_field, String.IsNullOrEmpty(value) ? "" : string.Format(" as {0}", value));
+              string sql = string.Format("{0} {1}", the_field, String.IsNullOrEmpty(value) ? "" : string.Format(" as \"{0}\"", value));
               strSelect.AppendFormat(" {0} {1} ", (my_resultfields_count>0?", ":""), sql);
               my_resultfields_count++;
             }
