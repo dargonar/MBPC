@@ -18,7 +18,16 @@ alter table
         orden     integer,
         is_param integer
        );
-       
+ 
+alter table 
+        tbl_reporte
+      drop 
+         ( 
+          JSON_PARAMS, FORM
+      );
+
+ 
+ 
   /*     INSERT INTO tbl_reporte_param( reporte_id, tipo, entity, xml_id, operador, valor, orden, is_param) 
         VALUES ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7}) ;
         

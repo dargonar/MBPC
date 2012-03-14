@@ -131,11 +131,11 @@ create or replace package mbpc as
   procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur);
   procedure reporte_obtener_str(vNombre in varchar2, usrid in number, vCursor out cur);
   procedure reporte_obtener_html_builded(usrid in number, vCursor out cur);
-  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
+  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, usrid in number, vCursor out cur);
   procedure reporte_insertar_params(vReporteId in number, vIndice in number, vNombre in varchar2, vTipoDato in number, usrid in number);
   procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur);
   procedure reporte_eliminar_params(vReporteId in number, usrid in number, vCursor out cur);
-  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
+  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, usrid in number, vCursor out cur);
   procedure reporte_metadata(vReporteId in number, usrid in number, vCursor out cur);
 end;
 
@@ -2031,7 +2031,7 @@ create or replace package body mbpc as
   procedure reporte_obtener(vReporte in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL , FORM, POST_PARAMS, JSON_PARAMS
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL , POST_PARAMS
       FROM TBL_REPORTE WHERE ID=vReporte;
   
   end reporte_obtener;
@@ -2049,15 +2049,15 @@ create or replace package body mbpc as
   procedure reporte_obtener_html_builded(usrid in number, vCursor out cur)is
   begin
     open vCursor for 
-      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL , FORM, POST_PARAMS, JSON_PARAMS
-      FROM TBL_REPORTE WHERE FORM is not null;
+      SELECT ID, NOMBRE, DESCRIPCION, FECHA_CREACION, CONSULTA_SQL ,  POST_PARAMS
+      FROM TBL_REPORTE WHERE POST_PARAMS is not null;
   
   end reporte_obtener_html_builded;
   
-  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number , vCursor out cur) is
+  procedure reporte_insertar(vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, usrid in number , vCursor out cur) is
   begin
-    insert into tbl_reporte (nombre , descripcion , categoria_id , consulta_sql , post_params , form , json_params) 
-      values (vNombre , vDescripcion , vCategoriaId , vConsultaSql , vPostParams , vForm , vJsonParams ) returning id into temp;
+    insert into tbl_reporte (nombre , descripcion , categoria_id , consulta_sql , post_params) 
+      values (vNombre , vDescripcion , vCategoriaId , vConsultaSql , vPostParams ) returning id into temp;
     
     open vCursor for select temp from dual;
 
@@ -2081,11 +2081,11 @@ create or replace package body mbpc as
     delete from tbl_reporte_param where reporte_id = vReporteId;
   end reporte_eliminar_params;
   
-  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur) is
+  procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, usrid in number, vCursor out cur) is
   begin
     update tbl_reporte set 
       nombre = vNombre, descripcion = vDescripcion, categoria_id = vCategoriaId , consulta_sql = vConsultaSql
-      , post_params = vPostParams, form = vForm, json_params = vJsonParams 
+      , post_params = vPostParams
     where id = vReporteId;
     
   end reporte_actualizar;

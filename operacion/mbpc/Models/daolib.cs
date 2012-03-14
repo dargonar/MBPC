@@ -1290,7 +1290,7 @@ public static class DaoLib
     return doCall("mbpc.reporte_obtener_html_builded", parameters);
   }
 
-  public static List<object> reporte_insertar(string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params, string form, string json_form) //FECHA_CREACION
+  public static List<object> reporte_insertar(string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params) //FECHA_CREACION
   {
     var parameters = new OracleParameter[] 
     { 
@@ -1299,8 +1299,7 @@ public static class DaoLib
         new OracleParameter("vCategoriaId", OracleDbType.Varchar2, categoria_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vConsultaSql", OracleDbType.Varchar2, consulta_sql, System.Data.ParameterDirection.Input),
         new OracleParameter("vPostParams", OracleDbType.Varchar2, post_params, System.Data.ParameterDirection.Input),
-        new OracleParameter("vForm", OracleDbType.Varchar2, form, System.Data.ParameterDirection.Input),
-        new OracleParameter("vJsonForm", OracleDbType.Varchar2, json_form, System.Data.ParameterDirection.Input),
+        
     };
 
     return doCall("mbpc.reporte_insertar", parameters);
@@ -1339,7 +1338,7 @@ public static class DaoLib
     return doCall("mbpc.reporte_eliminar_params", parameters);
   }
 
-  public static List<object> reporte_actualizar(int reporte_id, string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params, string form, string json_form) //FECHA_CREACION
+  public static List<object> reporte_actualizar(int reporte_id, string nombre, string descripcion, int categoria_id, string consulta_sql, string post_params) //FECHA_CREACION
   {
     var parameters = new OracleParameter[] 
     { 
@@ -1348,9 +1347,7 @@ public static class DaoLib
         new OracleParameter("vDescripcion", OracleDbType.Varchar2, descripcion, System.Data.ParameterDirection.Input),
         new OracleParameter("vCategoriaId", OracleDbType.Varchar2, categoria_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vConsultaSql", OracleDbType.Varchar2, consulta_sql, System.Data.ParameterDirection.Input),
-        new OracleParameter("vPostParams", OracleDbType.Varchar2, post_params, System.Data.ParameterDirection.Input),
-        new OracleParameter("vForm", OracleDbType.Varchar2, form, System.Data.ParameterDirection.Input),
-        new OracleParameter("vJsonForm", OracleDbType.Varchar2, json_form, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPostParams", OracleDbType.Varchar2, post_params, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.reporte_actualizar", parameters);
@@ -1503,7 +1500,7 @@ public static class DaoLib
       con.Open();
 
       cmd.Connection = con;
-      cmd.Prepare();
+     // cmd.Prepare();
       OracleDataReader reader = cmd.ExecuteReader();
 
       while (reader.Read())

@@ -204,6 +204,9 @@
 </style>
 
   <script language="javascript">
+
+    var attribute_types = jQuery.parseJSON('<%= ViewData["attributes_types"]%>');
+
     $(document).ready(function () {
     
       buildButtons();
@@ -459,8 +462,10 @@
       {
           
           var str = "";
-          var data_type = $(obj).find("option:selected").attr('data_type');
-          
+          var attribute_id  = $(obj).find("option:selected").val();
+
+          var data_type     = attribute_types[attribute_id];
+
           var select_obj    = $(obj).parent().parent().find('select.operators');
           var input_obj     = $(obj).parent().parent().find('input.input_value');
           var checkbox_obj  = $(obj).parent().parent().find('div.is_param input');
@@ -664,12 +669,8 @@
         $('#conditions_by_entity_count').val(conditions_by_entity_count.join(','));
         $('#entities_list').val(entities_list.join(','));
 
-        var serialized_form = $('#report-form').serialize();
-        var html_form = $('#report-form').html();
         
-        $('#json_form').val($.toJSON(getFormJSON($("#report-form")))); 
-        $('#serialized_form').val(serialized_form);
-        $('#html_form').val(html_form);
+        $('#serialized_form').val($('#report-form').serialize());
         
         return true;
       }
@@ -755,7 +756,7 @@
     </div><!-- top -->
     <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
     
-      <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
+      <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="<%= (ViewData["editing"]!=null)? (ViewData["reporte"] as Dictionary<string, string>)["NOMBRE"]:"" %>" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
       
       <div class="split-bar"></div>
     

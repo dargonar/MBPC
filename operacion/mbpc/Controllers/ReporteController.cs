@@ -305,10 +305,10 @@ namespace mbpc.Controllers
           var reporte = DaoLib.reporte_obtener(ireporte_id) as Dictionary<string, string>;
           var reporte_metadata = DaoLib.reporte_metadata(ireporte_id);
 
-          ViewData["form"] = reporte["FORM"];
-          ViewData["json_params"] = reporte["JSON_PARAMS"]; 
+          
           ViewData["editing"] = true;
           ViewData["id"] = id;
+          ViewData["reporte"] = reporte; 
           ViewData["reporte_metadata"] = reporte_metadata;
           Response.AddHeader("X-XSS-Protection", "0");
 
@@ -334,11 +334,29 @@ namespace mbpc.Controllers
           ViewData["entities"] = entities;
           ViewData["entities_by_id"] = entities_by_id;
 
+          ViewData["attributes_types"] = getAttributeTypes(xmlDoc); 
+
           closeXml();
           xmlDoc = null;
-          System.GC.Collect(); 
+          System.GC.Collect();
+
+          
 
           return View("nuevo");
+        }
+
+        private string getAttributeTypes(XmlDocument xmlDoc)
+        {
+          Dictionary<string, string> attr_types = new Dictionary<string, string>();
+          foreach (XmlNode entity in xmlDoc.SelectNodes("/sqlbuilder/entities/entity/attributes/attribute"))
+          {
+            string id = entity.Attributes.GetNamedItem("id").Value;
+            string type = entity.Attributes.GetNamedItem("type").Value;
+            attr_types.Add(id, type);
+
+          }
+          return JsonConvert.SerializeObject(attr_types);
+
         }
 
         public ActionResult dummy()
@@ -380,7 +398,8 @@ namespace mbpc.Controllers
           ViewData["entities"] = entities;
           //ViewData["operators"] = getOperators(xmlDoc);
           //ViewData["operators_json"] = getOperatorsJson(xmlDoc);
-          
+          ViewData["attributes_types"] = getAttributeTypes(xmlDoc); 
+
           closeXml();
           xmlDoc = null;
           System.GC.Collect(); 
@@ -525,7 +544,7 @@ namespace mbpc.Controllers
                 {
                   value = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("value").Value.Trim();
                   //sql = string.Format(" {0} = {1} ", sql_column, value);
-                  sql = string.Format(" {0} ", sql_column);
+                  sql = string.Format(" {0} ", value);
                   parameterCommands.AppendFormat(insertParamStatement,
                     Convert.ToString(Tipo.where),
                     entity_id,
@@ -669,8 +688,6 @@ namespace mbpc.Controllers
           
           // Parametros que van derecho al datastore.
           string serialized_form = Request.Form["serialized_form"];
-          string html_form = Request.Form["html_form"];
-          string json_form = Request.Form["json_form"]; 
           string nombre_reporte = Request.Form["nombre_reporte"];
 
           List<object> res = null;
@@ -678,11 +695,11 @@ namespace mbpc.Controllers
           if (editing_reporte_id > 0)
           {
             //res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, "", json_form);
-            res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
+            res = DaoLib.reporte_actualizar(editing_reporte_id, nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form);
           }
           else
           {
-            res = DaoLib.reporte_insertar(nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form, html_form, json_form);
+            res = DaoLib.reporte_insertar(nombre_reporte, nombre_reporte, 1, reporte_sql, serialized_form);
             Dictionary<string, string> resDict = ((res[0]) as Dictionary<string, string>);
             lastReportId = Convert.ToInt32(resDict[resDict.Keys.ElementAt(0)]);
           }
@@ -736,6 +753,8 @@ namespace mbpc.Controllers
           if (String.IsNullOrEmpty(attribute_id))
           {
             //attribute_id = PrimerAtributo;
+            string first_attr_path = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute", entity_id);
+            attribute_id = xmlDoc.SelectSingleNode(first_attr_path).Attributes.GetNamedItem("id").Value;
           }
           
           string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute[@id='{1}']", entity_id, attribute_id);
