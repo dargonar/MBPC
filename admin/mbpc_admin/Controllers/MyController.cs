@@ -10,6 +10,7 @@ namespace mbpc_admin.Controllers
   public class MyController : Controller
   {
     public static int _HACKID_ = 9999999;
+    public static string VERSION = "1.1";
 
     private NewEntities _context = null;
 

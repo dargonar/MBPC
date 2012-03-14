@@ -10,9 +10,9 @@
         <attribute id="v2" name="Fecha de Salida" description="Partió" type="date" sql_column="v.FECHA_SALIDA" is_filter="1"/>
         <attribute id="v3" name="ETA" description="ETA" type="date" sql_column="v.ETA" is_filter="1"/>
         <attribute id="v4" name="ZOE" description="ZOE" type="date" sql_column="v.ZOE" is_filter="1"/>
-        <attribute id="v5" name="Viajando" description="Está viajando" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="0" is_filter="1"/>
-        <attribute id="v6" name="Terminado" description="Está terminado" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="1" is_filter="1"/>
-        <attribute id="v7" name="Fondeado" description="Está fondeado" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="100" is_filter="1"/>
+        <attribute id="v5" name="Viajando" description="Está viajando" type="hardcoded" data_type="integer" sql_column="v.ESTADO=0" value="0" is_filter="1"/>
+        <attribute id="v6" name="Terminado" description="Está terminado" type="hardcoded" data_type="integer" sql_column="v.ESTADO=1" value="1" is_filter="1"/>
+        <attribute id="v7" name="Fondeado" description="Está fondeado" type="hardcoded" data_type="integer" sql_column="v.ESTADO=100" value="100" is_filter="1"/>
         
         <attribute id="v8" name="Origen ID" description="Puerto de partida" type="string" sql_column="v.ORIGEN_ID" is_filter="1"/>
         <attribute id="v9" name="Destino ID" description="Puerto de destino" type="string" sql_column="v.DESTINO_ID" is_filter="1"/>
@@ -30,7 +30,13 @@
           <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id left join tbl_practico p on p.id=pv.practico_id</sql>
         </relation>
         <relation target="Carga"> 
-          <sql></sql>
+          <sql>
+            left JOIN tbl_etapa e ON e.viaje_id=v.id
+            left join tbl_cargaetapa ce ON ce.etapa_id=e.id
+            left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
+            left JOIN tbl_unidad u ON ce.unidad_id=u.id
+            left JOIN buques b2 on ce.buque_id=b2.id_buque
+          </sql>
         </relation>
       </relations>
     </entity>
@@ -42,7 +48,7 @@
       <attributes>
         <attribute id="p1" name="Nombre" description="Nombre" type="string" sql_column="p.NOMBRE" is_filter="1"/>
         
-        <attribute id="p51" name="Horas Trabajadas" description="Trabajó" type="integer" sql_column="p.TOTAL" is_filter="1"/>
+        <attribute id="p51" name="Horas Trabajadas" description="Trabajó" type="integer" sql_column="pv.TOTAL" is_filter="1"/>
         
         <attribute id="p52" name="Fecha que subió" description="Fecha que subió" type="date" sql_column="pv.FECHA_SUBIDA" is_filter="0"/>
         <attribute id="p53" name="Fecha que bajó" description="Fecha que bajó" type="date" sql_column="pv.FECHA_BAJADA" is_filter="0"/>
@@ -54,23 +60,28 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id left join tbl_practico p on p.id=pv.practico_id</sql>
+          <sql>left join tbl_viaje v on v.id=pv.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
         </relation>
       </relations>
     </entity>
     
     <entity name="Carga" id="c">
       <sql>
-        tbl_carga left join 
+        tbl_cargaetapa ce
+        left JOIN tbl_etapa e ON ce.etapa_id=e.id
+        left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
+        left JOIN tbl_unidad u ON ce.unidad_id=u.id
+        left JOIN buques b2 on ce.buque_id=b2.id_buque
       </sql>
       <attributes>
-        <attribute id="c1" name="Toneladas transportadas" description="Toneladas transportadas" type="integer" sql_column="c.TOTAL" is_filter="1"/>
-        <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="c.TOTAL" is_filter="1"/>
+        <attribute id="c1" name="Cantidad transportada" description="Cantidad transportada" type="integer" sql_column="ce.CANTIDAD" is_filter="1"/>
+        <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="tc.CODIGO" is_filter="1"/>
+        <attribute id="c3" name="En barcaza" description="En barcaza" type="hardcoded" data_type="integer" sql_column="ce.BUQUE_ID is not null" value="0" is_filter="1"/>
+        <attribute id="c4" name="Barcaza" description="Barcaza" type="string" sql_column="b2.NOMBRE" is_filter="1"/>
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_practicoviaje pv on p.id=pv.practico_id
-               left join tbl_viaje v on pv.viaje_id=v.id</sql>
+          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
         </relation>
       </relations>
     </entity>

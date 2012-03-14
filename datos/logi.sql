@@ -702,9 +702,9 @@ create or replace package body mbpc as
   begin
       open vCursor for select v.id, b.id_buque, b.nombre, b.matricula, b.tipo, m.cod origen_id, m.puerto origen, u.cod destino_id, u.puerto destino, v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal 
       from tbl_viaje v 
-      join buques b on v.buque_id = b.ID_BUQUE
-      join tbl_kstm_puertos m on v.origen_id = m.cod
-      join tbl_kstm_puertos u on v.destino_id = u.cod
+      left join buques b on v.buque_id = b.ID_BUQUE
+      left join tbl_kstm_puertos m on v.origen_id = m.cod
+      left join tbl_kstm_puertos u on v.destino_id = u.cod
       left join rios_canales_km rck on v.rios_canales_km_id = rck.id
       left join rios_canales rc on rck.id_rio_canal = rc.id
       where v.id = vViaje;

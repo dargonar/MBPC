@@ -524,7 +524,8 @@ namespace mbpc.Controllers
                 else
                 {
                   value = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("value").Value.Trim();
-                  sql = string.Format(" {0} = {1} ", sql_column, value);
+                  //sql = string.Format(" {0} = {1} ", sql_column, value);
+                  sql = string.Format(" {0} ", sql_column);
                   parameterCommands.AppendFormat(insertParamStatement,
                     Convert.ToString(Tipo.where),
                     entity_id,
