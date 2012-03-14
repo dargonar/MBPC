@@ -14,7 +14,7 @@
       <%
             foreach (string attribute in entity_attribute.Keys){
       %>
-          <option value="<%= entity_key %>.<%= entity_attribute[attribute] %>"><%= attribute%></option>
+          <option value="<%= entity_key %>.<%= entity_attribute[attribute] %>" <%= entity_attribute[attribute]==Convert.ToString(ViewData["selected_attribute_id"])?"SELECTED":"" %> ><%= attribute%></option>
       <% } %>
           </optgroup>
         <% } %>      
@@ -22,8 +22,8 @@
   </div>
   <div class="order">
     <select class="full_width" name="ordercolumn-value_<%= ViewData["ordercolumn_index"] %>">
-      <option value="asc">Menor a mayor</option>
-      <option value="desc">Mayor a menor</option>
+      <option value="asc"  <%= Convert.ToString(ViewData["selected_order"])=="asc"?"SELECTED":"" %> >Menor a mayor</option>
+      <option value="desc" <%= Convert.ToString(ViewData["selected_order"])=="asc"?"SELECTED":"" %> >Mayor a menor</option>
     </select>
   </div>
   <div class="actions">

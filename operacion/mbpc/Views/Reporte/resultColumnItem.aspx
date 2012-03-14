@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
-<% string selected_attr = ""; %>
+
+<% string selected_attr = Convert.ToString(ViewData["selected_attribute_as"]); %>
+
 <div class="item <%= ViewData["odd_or_even"] %>">
   <input type="hidden" value="resultcolumn_<%= ViewData["resultcolumn_index"] %>" name="resultcolumn_<%= ViewData["resultcolumn_index"] %>"/>
   <div class="field">
@@ -16,7 +18,7 @@
               if (String.IsNullOrEmpty(selected_attr))
                 selected_attr = attribute;
       %>
-          <option value="<%= entity_key %>.<%= entity_attribute[attribute] %>"><%= attribute%></option>
+          <option value="<%= entity_key %>.<%= entity_attribute[attribute] %>" <%= entity_attribute[attribute]==Convert.ToString(ViewData["selected_attribute_id"])?"SELECTED":"" %> ><%= attribute%></option>
       <% } %>
           </optgroup>
         <% } %>      
@@ -27,7 +29,6 @@
   </div>
   <div class="actions">
     <a href="#" class="result_column_item_remove" style="font-size:10px;">Quitar campo</a>     
-    <!-- a href="#" onclick="return false;" style="font-size:10px;">Es campo de Orden >></a -->
   </div>
   <div style="clear:both;"></div>
 </div>

@@ -1356,6 +1356,16 @@ public static class DaoLib
     return doCall("mbpc.reporte_actualizar", parameters);
   }
 
+  public static List<object> reporte_metadata(int reporte_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vReporteId", OracleDbType.Varchar2, reporte_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.reporte_metadata", parameters);
+  }
+
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
     string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
@@ -1493,6 +1503,7 @@ public static class DaoLib
       con.Open();
 
       cmd.Connection = con;
+      cmd.Prepare();
       OracleDataReader reader = cmd.ExecuteReader();
 
       while (reader.Read())

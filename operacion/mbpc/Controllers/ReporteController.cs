@@ -51,7 +51,7 @@ namespace mbpc.Controllers
       // XML reader
         private static XmlReader xmlReader = null;
                 
-        private XmlDocument openSQLConfig()
+        private static XmlDocument openSQLConfig()
         {
 
 
@@ -67,7 +67,7 @@ namespace mbpc.Controllers
           return xml;
         }
 
-        private void closeXml(){
+        private static void closeXml(){
         if (ReporteController.xmlReader == null)
           return;  
         
@@ -258,6 +258,38 @@ namespace mbpc.Controllers
           return attributes_by_entity;
         }
 
+        static public SortedDictionary<string, SortedDictionary<string, string>> getAttributesByEntityIds(string[] entities_array)
+        {
+          SortedDictionary<string, SortedDictionary<string, string>> attributes_by_entity = new SortedDictionary<string, SortedDictionary<string, string>>();
+
+          XmlDocument xmlDoc = openSQLConfig();
+
+          foreach (string entity in entities_array)
+          {
+            string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute", entity);
+            SortedDictionary<string, string> cur_attributes = new SortedDictionary<string, string>();
+
+            foreach (XmlNode attr in xmlDoc.SelectNodes(mpath))
+            {
+              string attr_id = attr.Attributes.GetNamedItem("id").Value;
+              string attr_description = attr.Attributes.GetNamedItem("description").Value;
+              cur_attributes.Add(attr_description, attr_id);
+            }
+
+
+            string entity_name = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity[@id='{0}']", entity)).Attributes.GetNamedItem("name").Value;
+
+            
+            attributes_by_entity.Add(entity_name, cur_attributes);
+          }
+
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect();
+
+          return attributes_by_entity;
+        }
+
         public ActionResult eliminar(string id)
         {
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
@@ -265,16 +297,47 @@ namespace mbpc.Controllers
           ViewData["deleted"]="El reporte fue aliminado satisfactoriamente.";
           return this.RedirectToAction("listar", "Reporte");
         }
+
         public ActionResult editar(string id) 
         {
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
           int ireporte_id = Convert.ToInt32(id);
           var reporte = DaoLib.reporte_obtener(ireporte_id) as Dictionary<string, string>;
+          var reporte_metadata = DaoLib.reporte_metadata(ireporte_id);
+
           ViewData["form"] = reporte["FORM"];
           ViewData["json_params"] = reporte["JSON_PARAMS"]; 
           ViewData["editing"] = true;
           ViewData["id"] = id;
+          ViewData["reporte_metadata"] = reporte_metadata;
           Response.AddHeader("X-XSS-Protection", "0");
+
+          string mpath = "/sqlbuilder/entities/entity";
+          SortedDictionary<string, string> entities = new SortedDictionary<string, string>();
+          Dictionary<string, string> entities_by_id = new Dictionary<string, string>();
+          XmlDocument xmlDoc = openSQLConfig();
+
+          foreach (XmlNode entity in xmlDoc.SelectNodes(mpath))
+          {
+            string name = entity.Attributes.GetNamedItem("name").Value;
+            entities_by_id.Add(entity.Attributes.GetNamedItem("id").Value, name); 
+            System.Text.StringBuilder relationsSB = new System.Text.StringBuilder();
+            foreach (XmlNode relation in entity.SelectNodes(string.Format("/sqlbuilder/entities/entity[@name='{0}']/relations/relation", name)))
+            {
+              string relation_name = relation.Attributes.GetNamedItem("target").Value.Trim();
+              relationsSB.AppendFormat((relationsSB.Length > 0 ? ",{0}" : "{0}"), relation_name);
+            }
+
+            entities.Add(name, relationsSB.ToString());
+          }
+
+          ViewData["entities"] = entities;
+          ViewData["entities_by_id"] = entities_by_id;
+
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect(); 
+
           return View("nuevo");
         }
 
@@ -315,7 +378,7 @@ namespace mbpc.Controllers
           }
 
           ViewData["entities"] = entities;
-          ViewData["operators"] = getOperators(xmlDoc);
+          //ViewData["operators"] = getOperators(xmlDoc);
           //ViewData["operators_json"] = getOperatorsJson(xmlDoc);
           
           closeXml();
@@ -324,18 +387,26 @@ namespace mbpc.Controllers
           return View();
 
         }
-        
+
+        private enum Tipo { entidad, where, select, order };
+
         [ValidateInput(false)]
         public ActionResult guardar(string id) {
+
+
+          StringBuilder parameterCommands = new StringBuilder();
+          string insertParamStatement = " INTO tbl_reporte_param( reporte_id, tipo, entity, xml_id, operador, valor, orden, is_param) VALUES (:reporte_id, '{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}) ";
+          
+          string insertParamStatementReporte_id = ":reporte_id";
 
           int editing_reporte_id = 0;
           if (!String.IsNullOrEmpty(id))
           {
             editing_reporte_id = Convert.ToInt32(id);
-            // A ACTUALIZAR!!
           }
 
           // Me guardo los nombres de las entidades y los id.
+          // KEY=entity_name ; VALUE=entity_id
           Dictionary<string, string> entities = new Dictionary<string, string>();
           // Lista de ids de entidades, temporal.
           List<string> entities_id_list_tmp = new List<string>();
@@ -343,14 +414,28 @@ namespace mbpc.Controllers
           foreach (string item in Request.Form["entities_list"].Split(','))
           {
             string[] splitted_item = item.Split('=');
-            entities.Add(splitted_item[1], splitted_item[0]);
+            string entity_name = splitted_item[0];
+            string entity_id = splitted_item[1];
+            entities.Add(entity_name, entity_id);
             entities_id_list_tmp.Add(splitted_item[1]);
+
+            // Comandos para insertar Entidades y su orden.
+            parameterCommands.AppendFormat(insertParamStatement,
+              Convert.ToString(Tipo.entidad),
+              entity_id,
+              entity_id, 
+              "",
+              "",
+              entities_id_list_tmp.Count.ToString(),
+              0.ToString()
+              );
           }
+
           // Lista de entidades, para indexarlas por orden de llegada en los params del post.
           string[] entities_id = entities_id_list_tmp.ToArray();
           entities_id_list_tmp = null;
 
-          // Lista de cantidad de condiciones (where clauses) por entidad.
+          // Lista de cantidad de condiciones (where clauses) por entidad. Key=entity_<INDEX> -> como el html se arma dinamico, indizo por valor, para poder recuperarlos luego.
           Dictionary<string, int> conditions_by_entity_count = new Dictionary<string, int>();
           foreach (string item in Request.Form["conditions_by_entity_count"].Split(',')) {
             string[] splitted_item = item.Split('=');
@@ -379,7 +464,7 @@ namespace mbpc.Controllers
                 string value = Request.Form["conditionitem-value_" + entities_id[index] + "_" + current_snorbol.ToString()];
                 string is_param = Request.Form["conditionitem-isparam_" + entities_id[index] + "_" + current_snorbol.ToString()];
 
-                string the_entity = entities[entities_id[index]];
+                string entity_id = entities_id[index];
                 string type = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("type").Value.Trim();
                 
                 string sql = "";
@@ -389,8 +474,8 @@ namespace mbpc.Controllers
                 if (type != "hardcoded")
                 {
                   string value_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator[@type='{0}']", type)).Attributes.GetNamedItem("format").Value.Trim();
-                  if (!String.IsNullOrEmpty(value_format))
-                    value = String.Format(value_format, value);
+                  //if (!String.IsNullOrEmpty(value_format) && !String.IsNullOrEmpty(value))
+                  //  value = String.Format(value_format, value);
 
                   if (is_param != null && is_param.Equals("on"))
                   {
@@ -403,18 +488,36 @@ namespace mbpc.Controllers
                     
                     reporteParams.Add(value, paramData);
                     
-                    paramCount++;
-
                     string oper_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator/oper[@id='{0}']", oper)).Attributes.GetNamedItem("format").Value.Trim();
                     sql = oper_format.Replace("$c", sql_column);
                     sql = sql.Replace("$v", value);
-                    //sql = string.Format(" {0} = {1} ", sql_column, value);
+
+                    parameterCommands.AppendFormat(insertParamStatement,
+                      Convert.ToString(Tipo.where),
+                      entity_id,
+                      attr,
+                      oper,
+                      "", //value
+                      (condition_count+1).ToString(),
+                      1.ToString()
+                      );
+                    paramCount++;
                   }
                   else
                   {
                     string oper_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator/oper[@id='{0}']", oper)).Attributes.GetNamedItem("format").Value.Trim();
                     sql = oper_format.Replace("$c", sql_column);
                     sql = sql.Replace("$v", value);
+                    
+                    parameterCommands.AppendFormat(insertParamStatement,
+                      Convert.ToString(Tipo.where),
+                      entity_id,
+                      attr,
+                      oper,
+                      value,
+                      (condition_count + 1).ToString(),
+                      0.ToString()
+                      );
                   }
                   
                 }
@@ -422,6 +525,15 @@ namespace mbpc.Controllers
                 {
                   value = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", attr)).Attributes.GetNamedItem("value").Value.Trim();
                   sql = string.Format(" {0} = {1} ", sql_column, value);
+                  parameterCommands.AppendFormat(insertParamStatement,
+                    Convert.ToString(Tipo.where),
+                    entity_id,
+                    attr,
+                    "",
+                    "",
+                    (condition_count + 1).ToString(),
+                    0.ToString()
+                    );
                 }
 
                 if (!String.IsNullOrEmpty(sql))
@@ -453,13 +565,27 @@ namespace mbpc.Controllers
             {
               string field = Request.Form["resultcolumn-field_" + current_snajdarg.ToString()];
               string value = Request.Form["resultcolumn-value_" + current_snajdarg.ToString()];
-              if (!String.IsNullOrEmpty(value))
-                value = Models.Hlp.GenerateSlug(value) ;//value.Replace(" ", "_");
-              string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", field.Split('.')[1])).Attributes.GetNamedItem("sql_column").Value.Trim();
+              //if (!String.IsNullOrEmpty(value))
+              //  value = Models.Hlp.GenerateSlug(value) ;//value.Replace(" ", "_");
+
+              string entity_name = field.Split('.')[0];
+              string entity_attribute_id = field.Split('.')[1];
+
+              string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", entity_attribute_id)).Attributes.GetNamedItem("sql_column").Value.Trim();
 
               string sql = string.Format("{0} {1}", the_field, String.IsNullOrEmpty(value) ? "" : string.Format(" as \"{0}\"", value));
               strSelect.AppendFormat(" {0} {1} ", (my_resultfields_count>0?", ":""), sql);
-              my_resultfields_count++;
+
+              my_resultfields_count++; 
+              parameterCommands.AppendFormat(insertParamStatement,
+                    Convert.ToString(Tipo.select),
+                    entities[entity_name],
+                    entity_attribute_id,
+                    "",
+                    value,
+                    my_resultfields_count.ToString(),
+                    0.ToString()
+                    );
             }
             current_snajdarg++;
             
@@ -471,7 +597,7 @@ namespace mbpc.Controllers
           int fromIndex = 0;
           foreach (string key in entities.Keys)
           {
-            string entity = entities[key];
+            string entity = key;//entities[key];
             string sql = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity[@name='{0}']/sql", entity)).InnerText.Trim();
             foreach (XmlNode relation in xmlDoc.SelectNodes(string.Format("/sqlbuilder/entities/entity[@name='{0}']/relations/relation", entity)))
             { 
@@ -507,12 +633,26 @@ namespace mbpc.Controllers
               string field = Request.Form["ordercolumn-field_" + current_snajdarg.ToString()];
               string sort = Request.Form["ordercolumn-value_" + current_snajdarg.ToString()];
 
-              string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", field.Split('.')[1])).Attributes.GetNamedItem("sql_column").Value.Trim();
+              string entity_name = field.Split('.')[0];
+              string entity_attribute_id = field.Split('.')[1];
+
+              string the_field = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", entity_attribute_id)).Attributes.GetNamedItem("sql_column").Value.Trim();
 
               if(index==0)
                 strOrder.AppendFormat(" ORDER BY ");
               strOrder.AppendFormat(" {0} {1} {2} ", (my_orderfields_count > 0 ? "," : ""), the_field, sort);
               my_orderfields_count++;
+
+              parameterCommands.AppendFormat(insertParamStatement,
+                    Convert.ToString(Tipo.order),
+                    entities[entity_name],
+                    entity_attribute_id,
+                    "",
+                    sort,
+                    my_orderfields_count.ToString(),
+                    0.ToString()
+                    );
+
             }
             current_snajdarg++;
 
@@ -572,6 +712,11 @@ namespace mbpc.Controllers
             List<object> res2 = DaoLib.reporte_insertar_params(reporte_id.ToArray(), indice.ToArray(), nombre.ToArray(), tipo_dato.ToArray());
           }
 
+          parameterCommands.Replace(insertParamStatementReporte_id, lastReportId.ToString());
+          var cmd = new OracleCommand(string.Format("INSERT ALL {0}  SELECT * FROM dual", parameterCommands.ToString()));
+          cmd.CommandType = System.Data.CommandType.Text;
+          var rs = DaoLib.doSQL(cmd);
+
           return this.RedirectToAction("editar", "Reporte", new { id = lastReportId.ToString() });
           //return View();
         }
@@ -579,6 +724,94 @@ namespace mbpc.Controllers
         public enum ReporteParamDataType
         {
           DATE, INTEGER, DECIMAL, STRING
+        }
+
+        static public SelectList CreateConditionAttributeOperatorCombo(string entity_id, string attribute_id, string selected_operator_id)
+        {
+
+          SortedDictionary<string, string> _operators = new SortedDictionary<string, string>();
+
+          XmlDocument xmlDoc = openSQLConfig();
+          if (String.IsNullOrEmpty(attribute_id))
+          {
+            //attribute_id = PrimerAtributo;
+          }
+          
+          string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute[@id='{1}']", entity_id, attribute_id);
+
+          string type = xmlDoc.SelectSingleNode(mpath).Attributes.GetNamedItem("type").Value;
+
+          foreach (XmlNode oper in xmlDoc.SelectNodes(string.Format("/sqlbuilder/operators/operator[@type='{0}']/oper", type)))
+          {
+            string oper_id = oper.Attributes.GetNamedItem("id").Value;
+            string oper_description = oper.Attributes.GetNamedItem("description").Value;
+            _operators.Add(oper_id, oper_description);
+            if (String.IsNullOrEmpty(selected_operator_id))
+              selected_operator_id = oper_id;
+          }
+          
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect();
+
+          List<object> newList = new List<object>();
+          foreach (KeyValuePair<string, string> pair in _operators)
+            newList.Add(new
+            {
+              id = Convert.ToString(pair.Key),
+              nombre = Convert.ToString(pair.Value)
+            });
+
+          return new SelectList(newList, "id", "nombre", selected_operator_id);
+        }
+
+        static public SelectList CreateConditionAttributeCombo(string entity_id, string selected_id)
+        {
+          
+          XmlDocument xmlDoc = openSQLConfig();
+
+          string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute", entity_id);
+          SortedDictionary<string, string> cur_attributes = new SortedDictionary<string, string>();
+
+          foreach (XmlNode attr in xmlDoc.SelectNodes(mpath))
+          {
+            string attr_id = attr.Attributes.GetNamedItem("id").Value;
+            string attr_description = attr.Attributes.GetNamedItem("description").Value;
+            cur_attributes.Add(attr_id, attr_description);
+          }
+          
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect();
+
+          List<object> newList = new List<object>();
+          foreach (KeyValuePair<string, string> pair in cur_attributes)
+            newList.Add(new
+            {
+              id = Convert.ToString(pair.Key),
+              nombre = Convert.ToString(pair.Value)
+            });
+
+          
+          return new SelectList(newList, "id", "nombre", selected_id);
+        }
+
+        static public bool attributeTypeIsHardcoded(string selected_attribute_id) 
+        {
+          if (string.IsNullOrEmpty(selected_attribute_id))
+            return false;
+          
+          XmlDocument xmlDoc = openSQLConfig();
+          
+          string mpath = string.Format("/sqlbuilder/entities/entity/attributes/attribute[@id='{0}']", selected_attribute_id);
+
+          string type = xmlDoc.SelectSingleNode(mpath).Attributes.GetNamedItem("type").Value;
+          
+          closeXml();
+          xmlDoc = null;
+          System.GC.Collect();
+
+          return type.Equals("hardcoded");
         }
 
         /* Visual Query Builder **************************************************/
@@ -598,14 +831,15 @@ namespace mbpc.Controllers
             object value = Request.Params["param" + (i + 1).ToString()];
 
             string pname = ":p" + (i + 1).ToString();
-
+            
             string tmp=rep["CONSULTA_SQL"];
+            
             int qcount = tmp.Select((c, j) => tmp.Substring(j)).Count(sub => sub.StartsWith(pname));
             for (int k = 0; k < qcount; k++)
             {
               if (param["TIPO_DATO"] == "0")
                 lparams.Add(new OracleParameter(pname, OracleDbType.Date, DateTime.ParseExact(value.ToString(), "dd-MM-yy", CultureInfo.InvariantCulture), System.Data.ParameterDirection.Input));
-
+                
               if (param["TIPO_DATO"] == "1")
                 lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
 
@@ -617,9 +851,10 @@ namespace mbpc.Controllers
             }
           }
 
-          
+
 
           var cmd = new OracleCommand(rep["CONSULTA_SQL"]);
+          cmd.CommandType = System.Data.CommandType.Text;
           cmd.Parameters.AddRange(lparams.ToArray());
 
           var rs = DaoLib.doSQL(cmd);

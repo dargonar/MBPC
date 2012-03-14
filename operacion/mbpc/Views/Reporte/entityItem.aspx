@@ -9,6 +9,28 @@
   <a href="#" class="quitar_entidad">Quitar entidad</a>
   <div class="condition_list">
     <div class="items">
+      <% if (ViewData["reporte_metadata"] != null)
+         {
+          List<object> metadata=  ViewData["reporte_metadata"]  as List<object>; 
+          int condition_item_index = 1;
+          foreach (object obj_dict in metadata)
+          {
+            Dictionary<string, string> dict = obj_dict as Dictionary<string, string>;
+
+            if (dict["ENTIDAD_ENTIDAD"] == Convert.ToString(ViewData["entity_id"]) && dict["TIPO"] == "where")
+            {
+              ViewData["dict"] = dict;
+              ViewData["condition_item_index"] = condition_item_index;
+
+              condition_item_index++;
+            %>
+            
+            <% Html.RenderPartial("conditionItem"); %>
+            
+            <%
+            }
+          }
+        }%>
     </div>
     <hr/>
     <div class="toolbar">

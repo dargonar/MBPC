@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %> 
+<%@ Import Namespace="mbpc.Controllers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Reportes
@@ -289,7 +290,6 @@
           return;
         }
         
-        //console.log('selected entities:'+allowed_entities.join(','));
         var relations = getSelectedEntitiesRelations();
         
         $.each($('#selected_entities div.selected_entity'), function (index, value){
@@ -411,8 +411,6 @@
           return;
         }
         
-        //console.log('selected entities:'+allowed_entities.join(','));
-        
         $.each($('#entities div.entity'), function (index, value){
           var cur_entity = $(this).attr("entity");
           var cur_relations = $(this).attr("relations").split(',');
@@ -456,8 +454,6 @@
 
         $('.selected_entity[entity='+entity+'] .condition_list .items').html('');
       }
-
-      //var operators = ViewData["operators_json"];
 
       function onFieldChanged(obj)
       {
@@ -737,44 +733,16 @@
       });
   </script>
 
-  <% if (ViewData["form"] != null) {%>
-  <script language="javascript">
-    $(document).ready(function () {
-      console.log('- - - - - - - -');
-      var json_params = jQuery.parseJSON('<%= ViewData["json_params"]%>');
-      $.each($('form input[type=checkbox]'), function () {
-        $(this).attr('checked', false);
-      });
-      
-      $.each(json_params, function (key, value) {
-        var obj = $('input[name=' + key + ']');
-        //console.log($(obj).attr("type") + " :: " + key + " :: " + value);
-        if (obj.length > 0) {
-          if ($(obj).attr("type") == "text" || $(obj).attr("type") == "hidden")
-          { $(obj).val(value); }
-          else {
-            if ($(obj).attr("type") == "checkbox")
-              $("input[name='" + key + "']").attr("checked", value);
-          }
-        }
-        else {
-          obj = $('select[name=' + key + ']');
-          if (obj.length > 0) {
-            obj.val(value);
-          }
-        }
-
-      });
-    });
-  </script>
-  <% } %>
-
+  
 </asp:Content>
 
 
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+<% SortedDictionary<string, string> entities = ViewData["entities"] as SortedDictionary<string, string>; %>
+<% Dictionary<string, string> entities_by_id = ViewData["entities_by_id"] as Dictionary<string, string>; %>
 
 <div id="columnas" style="height:100%;overflow:hidden;">
 
@@ -786,16 +754,10 @@
       <a href="<%= Url.Content("~/Reporte/nuevo") %>" >Nuevo Reporte</a> | <a href="<%= Url.Content("~/Reporte/listar") %>" >Listar Reportes</a>
     </div><!-- top -->
     <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
-    <% if (ViewData["form"] == null) {%>
+    
       <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
-      <!-- a href="#" onclick="console.log($.toJSON(getFormJSON($('#report-form'))));alert('consola nene, consola');return false;" >DUMP</a -->
-    
-      <!--div id="reporte_button_bar" style="width:100%;padding: 0px 0px 10px 10px;">
-        <input type="submit" class="botonsubmit megaboton"  value="Modificar nombre de reporte" />
-      </div-->
-    
+      
       <div class="split-bar"></div>
-    
     
       <div id="contentwrapper" >
         <div id="contentcolumn">
@@ -812,10 +774,40 @@
             <input type="hidden" id="json_form" name="json_form" value="" />
 
             <div id="selected_entities">
-              <div id="selected_entities_empty_msg" class="box">
+            <% List<object> metadata=  ViewData["reporte_metadata"] as List<object>;  %>
+            <% List<string> global_selected_entities=  null;  %>
+              <div id="selected_entities_empty_msg" class="box" style="display:<%= ViewData["editing"]!=null?"none":"" %>;" >
 			          <p class="box-S">No hay condiciones.<br/> Arrastre las entidades de su preferencia aquí.</p>
               </div> 
+                <% if (ViewData["editing"] != null)
+                   { 
+                     List<string> selected_entities = new List<string>();
+                     string current_entidad = "";
+                     int entity_index = 0;
+                     foreach (object obj_dict in metadata)  
+                     {
+                       Dictionary<string, string> dict = obj_dict as Dictionary<string, string>;
+                       current_entidad = dict["ENTIDAD_ENTIDAD"];
+                       if (!selected_entities.Contains(current_entidad))
+                       {
+                        selected_entities.Add(current_entidad); 
+                        entity_index++;
+                        ViewData["entity"] = entities_by_id[current_entidad];
+                        ViewData["entity_id"] = current_entidad;
+                        ViewData["entity_index"] = entity_index.ToString();
+                        ViewData["dict"] = dict;
+                        %>
+                        
+                        <% Html.RenderPartial("entityItem"); %>
+                        
+                        <%
+                       }
+                     } 
+                     global_selected_entities=selected_entities;
+                    } %>
+              
             </div>
+            <% ViewData["attributes_by_entity"] = global_selected_entities!=null?ReporteController.getAttributesByEntityIds(global_selected_entities.ToArray()):null; %>
             <div style="clear:both;"></div>
             <h1 class="fprint" >Resultado</h1>
             <div id="resultado">
@@ -823,6 +815,27 @@
                 <h2>Campos en resultado:</h2>
                 <div class="container">
                   <div class="items">
+                  <% if (ViewData["editing"] != null)
+                     {
+                       int result_index = 0;
+                       foreach (object obj_dict in metadata)
+                       {
+                         Dictionary<string, string> dict = obj_dict as Dictionary<string, string>;
+                         if (dict["TIPO"] == "select")
+                         {
+                           result_index++;
+                           ViewData["resultcolumn_index"] = result_index;
+                           ViewData["selected_attribute_as"] = dict["VALOR"];
+                           ViewData["selected_attribute_id"] = dict["XML_ID"];
+                           ViewData["dict"] = dict;
+                        %>
+                        
+                        <% Html.RenderPartial("resultColumnItem"); %>
+                    
+                    <%  }
+                       }
+                     }
+                     %>
                   </div>
                   <hr/>
                   <div class="toolbar">
@@ -835,6 +848,28 @@
                 <h2>Orden de resultado:</h2>
                 <div class="container">
                   <div class="items">
+                  <% if (ViewData["editing"] != null)
+                     {
+                       int ordercolumn_index = 0;
+                       foreach (object obj_dict in metadata)
+                       {
+                         Dictionary<string, string> dict = obj_dict as Dictionary<string, string>;
+                         if (dict["TIPO"] == "order")
+                         {
+                           ordercolumn_index++;
+                           ViewData["ordercolumn_index"] = ordercolumn_index;
+                           ViewData["selected_order"] = dict["VALOR"];
+                           ViewData["selected_attribute_id"] = dict["XML_ID"];
+                           ViewData["dict"] = dict;
+                        %>
+                        
+                        <% Html.RenderPartial("orderColumnItem"); %>
+                    
+                    <%  }
+                       }
+                     }
+                     %>
+
                   </div>
                   <hr/> 
                   <div class="toolbar">
@@ -856,7 +891,6 @@
         <div class="innertube">
           <h1 class="fprint" >Entidades</h1>
           <div id="entities">
-            <% SortedDictionary<string, string> entities = ViewData["entities"] as SortedDictionary<string, string>; %>
             <% var index = 0;
                foreach (string key in entities.Keys )  
               {
@@ -873,9 +907,6 @@
         </div>
       </div>
     
-    <% }else{%>
-      <%= ViewData["form"] %>
-    <% }%>
     </form> 
   </div>
   

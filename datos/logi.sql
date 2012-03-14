@@ -136,6 +136,7 @@ create or replace package mbpc as
   procedure reporte_eliminar(vReporteId in number, usrid in number, vCursor out cur);
   procedure reporte_eliminar_params(vReporteId in number, usrid in number, vCursor out cur);
   procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, vForm in clob, vJsonParams in clob, usrid in number, vCursor out cur);
+  procedure reporte_metadata(vReporteId in number, usrid in number, vCursor out cur);
 end;
 
 
@@ -2009,7 +2010,7 @@ create or replace package body mbpc as
   procedure reporte_obtener_parametros(vReporte in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for 
-      SELECT INDICE,NOMBRE,TIPO_DATO FROM TBL_REPORTE_PARAM WHERE REPORTE_ID=vReporte ORDER BY INDICE;
+      SELECT INDICE,NOMBRE,TIPO_DATO FROM TBL_REPORTE_PARAM WHERE REPORTE_ID=vReporte AND IS_PARAM IS NULL ORDER BY INDICE;
   
   end reporte_obtener_parametros;
   -------------------------------------------------------------------------------------------------------------
@@ -2020,6 +2021,7 @@ create or replace package body mbpc as
     open vCursor for 
       SELECT p.INDICE, p.NOMBRE, p.TIPO_DATO FROM TBL_REPORTE_PARAM p
       JOIN TBL_REPORTE r on p.REPORTE_ID=r.ID and r.NOMBRE=vNombre
+      WHERE  IS_PARAM IS NULL 
       ORDER BY INDICE;
   
   end reporte_obtener_parametros_str;
@@ -2088,7 +2090,23 @@ create or replace package body mbpc as
     
   end reporte_actualizar;
   
-  
+  procedure reporte_metadata(vReporteId in number, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for 
+
+      SELECT a.reporte_id reporte_id, a.tipo entidad_tipo, a.entity entidad_entidad, a.xml_id entidad_xml_id, a.orden entidad_orden, 
+        b.tipo, b.entity, b.xml_id, b.operador, b.valor, b.orden, b.is_param 
+      FROM tbl_reporte_param a LEFT JOIN tbl_reporte_param b on a.reporte_id = b.reporte_id
+      WHERE 
+        a.reporte_id = vReporteId
+        AND a.nombre is NULL
+        AND b.nombre is NULL
+        AND a.entity = b.entity
+        AND a.tipo = 'entidad'
+        AND b.tipo != 'entidad'
+      ORDER by a.orden asc, b.tipo desc,  b.orden ASC      ;
+      
+  end reporte_metadata;
   
 end;
 /
