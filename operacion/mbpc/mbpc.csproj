@@ -141,6 +141,7 @@
     <Content Include="Views\Item\nuevaBarcaza.aspx" />
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
+    <Content Include="Views\Reporte\actions.aspx" />
     <Content Include="Views\Reporte\conditionItem.aspx" />
     <Content Include="Views\Reporte\dummy.aspx" />
     <Content Include="Views\Reporte\entityItem.aspx" />

@@ -648,7 +648,7 @@ namespace mbpc.Controllers
 
           while (my_orderfields_count < orderfields_count)
           {
-            if (Request.Form["ordercolumn-field_" + current_snajdarg.ToString()] != null) { }
+            if (Request.Form["ordercolumn-field_" + current_snajdarg.ToString()] != null) 
             {
               string field = Request.Form["ordercolumn-field_" + current_snajdarg.ToString()];
               string sort = Request.Form["ordercolumn-value_" + current_snajdarg.ToString()];

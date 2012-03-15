@@ -75,10 +75,23 @@
     overflow:hidden;
   }
   
-  #entities, #selected_entities, #resultado_columnas .container, #orden_columnas .container
+  #entities, #selected_entities /*, #resultado_columnas .container, #orden_columnas .container*/
   {
     overflow-x: hidden;
     overflow-y: auto;
+  }
+  
+  #resultado_columnas .toolbar, #orden_columnas .toolbar
+  {
+    bottom:0px;
+    height:20px;
+  }
+  
+  #resultado_columnas .items, #orden_columnas .items
+  {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height:80px;
   }
   
   #resultado 
@@ -208,7 +221,6 @@
     var attribute_types = jQuery.parseJSON('<%= ViewData["attributes_types"]%>');
 
     $(document).ready(function () {
-    
       buildButtons();
       if ($('#entities').height() > $('#selected_entities').height())
         $('#selected_entities').css('height', $('#entities').height() - 125);
@@ -219,7 +231,6 @@
           addClasses: false,
           containment: 'document',
           zIndex: 2700,
-          /*scope: '#selected_entities',*/
           appendTo: 'body',
           helper: 'clone'
         }
@@ -234,6 +245,8 @@
           }
         }
       );
+
+      enableDisableSidebarUnrelatedEntities();
     });
 
     function addConditionItem(entity) {
@@ -275,9 +288,6 @@
 
         doRemoveEntityItem(entity);
 
-        // Verifico que las entidades restantes esten vinculadas sin necesidad de la borrada
-        //HACK
-        //ToDo: recorrer las entidades seleccionadas que quedan y determinar relacino con las demas.
         removeSelectedEntitiesIfNotRelated();
 
         // Habilito y/o deshabilito las entidades de la sidebar en funcion de las entidades elegidas para el query.
@@ -324,20 +334,31 @@
         return relations;
       }
       function doRemoveEntityItem(entity){
-        //Elimino la entidad
+         //Elimino la entidad
         $('#selected_entities div.selected_entity[entity='+entity+']').remove();
         
         // Si no hay mas entidades, muestro el cartel de entidades vacias.
         if($('#selected_entities div.selected_entity').length<=0) 
           $('#selected_entities_empty_msg').show();
-        
+
         // Elimino las columnas de resultado y de orden.
-        $.each($(".result_column_item_select[value^='"+entity+".']"), function(){
+        
+        $.each($(".result_column_item_select"), function () {
+          if($(this).val().indexOf(entity, 0)==0)
+            $(this).parent().parent().remove();
+        });
+
+        $.each($(".order_column_item_select"), function () {
+          if ($(this).val().indexOf(entity, 0) == 0)
+            $(this).parent().parent().remove();
+        });
+
+        /*$.each($(".result_column_item_select[value^='" + entity + ".']"), function () {
           $(this).parent().parent().remove();
         });
         $.each($(".order_column_item_select[value^='"+entity+".']"), function(){
           $(this).parent().parent().remove();
-        });
+        });*/
       }
 
       function removeResultColumn(obj)
@@ -418,12 +439,9 @@
           var cur_entity = $(this).attr("entity");
           var cur_relations = $(this).attr("relations").split(',');
           
-          //console.log('['+cur_entity+'] is related to ['+$(this).attr("relations")+']');
-          
           if(jQuery.inArray(cur_entity, allowed_entities)!=-1)
           {
             $(this).removeClass("related");
-            //console.log('['+cur_entity+'] no puede ser vinculada X');
             return true;
           }
           
@@ -439,7 +457,6 @@
           if(!is_related)
           {
             $(this).removeClass("related");
-            //console.log('['+cur_entity+'] no puede ser vinculada Y');
             return true;;
           }
 
@@ -750,10 +767,9 @@
   <div id="tutto" style="width:100%;height:100%;">
 
 	  <div class="split-bar"></div>
-	  <h1 class="fprint" >Reportes</h1>
-    <div style="width:100%;padding:5px;border-bottom:1px solid #f5f5f5;">
-      <a href="<%= Url.Content("~/Reporte/nuevo") %>" >Nuevo Reporte</a> | <a href="<%= Url.Content("~/Reporte/listar") %>" >Listar Reportes</a>
-    </div><!-- top -->
+	  <h1 class="fprint" ><%= (ViewData["editing"] != null)?"Editar":"Nuevo" %> Reporte</h1>
+    <% Html.RenderPartial("actions"); %>
+
     <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
     
       <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="<%= (ViewData["editing"]!=null)? (ViewData["reporte"] as Dictionary<string, string>)["NOMBRE"]:"" %>" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
@@ -882,7 +898,7 @@
             </div>
 
             <div id="reporte_button_bar" style="width:100%;padding: 10px 0px 10px 10px;">
-              <input type="submit" class="botonsubmit megaboton"  value="Guardar" />
+              <input type="submit" class="botonsubmit megaboton"  value="<%= (ViewData["editing"] != null)?"Guardar cambios":"Crear reporte" %>" />
             </div>
           </div>
         </div>

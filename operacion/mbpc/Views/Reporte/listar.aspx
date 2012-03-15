@@ -16,6 +16,11 @@
       max-width: 50px;
       overflow:hidden;
     }
+    
+    tr
+    {
+      height: 30px;
+      overflow:hidden;}
   </style>
 </asp:Content>
 
@@ -30,16 +35,14 @@
 <div class="col" style="width:100%;height:100%;">
 
 	<div class="split-bar"></div>
-	  <h1 class="fprint" >Reportes</h1>
-    <div style="width:100%;padding:5px;border-bottom:1px solid #f5f5f5;">
-      <a href="<%= Url.Content("~/Reporte/nuevo") %>" >Nuevo Reporte</a> | <a href="<%= Url.Content("~/Reporte/listar") %>" >Listar Reportes</a>
-    </div><!-- top -->
+	  <h1 class="fprint" >Listado de Reportes</h1>
+    <% Html.RenderPartial("actions"); %>
 
 
 <% var reportes = ViewData["reportes"] as List<object>;%>
 <% var first = true; %>
 <div id="planilla" style="width: 100%;position: relative;">
-<h2 style="padding-left:10px;font-weight:normal;">Listado de reportes (generados con esta plataforma)</h2>
+<h2 style="padding-left:10px;font-weight:normal;">Listado de reportes (generados con este IDE)</h2>
   <% if (reportes.Count == 0)
      {
        Html.RenderPartial("_result_empty");

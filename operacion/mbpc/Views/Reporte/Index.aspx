@@ -124,8 +124,8 @@
 <div class="col" style="width:100%;height:100%;">
 
 	<div class="split-bar"></div>
-	<h1 class="fprint" >Reportes</h1>
-  <!-- top -->
+	<h1 class="fprint" >Ver Reportes</h1>
+  <% Html.RenderPartial("actions"); %>
 
   <div class="fprint" style="padding:20px;">
     <form id="reporte" onsubmit="return submit_me(this)" action="<%= Url.Content("~/Reporte/VerReporte") %>" method="post">
