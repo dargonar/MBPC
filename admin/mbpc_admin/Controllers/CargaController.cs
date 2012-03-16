@@ -19,6 +19,8 @@ namespace mbpc_admin.Controllers
         var etapa_temp = (from d in context.TBL_ETAPA where d.ID == decid select d).ToArray();
         ViewData["titulo"] = "nro " + etapa_temp[0].NRO_ETAPA + " del viaje " + etapa_temp[0].VIAJE_ID;
 
+        ViewData["viaje_id"] = etapa_temp[0].VIAJE_ID;
+
         if (id != null)
           ViewData["referenceId"] = id;
         
@@ -29,16 +31,17 @@ namespace mbpc_admin.Controllers
       public ActionResult Remove(int id)
       {
         FlashOK("La carga fue eliminada correctamente");
-
+        decimal eid = 0;
         try
         {
           var contract = context.TBL_CARGAETAPA.Where(c => c.ID == id).SingleOrDefault();
+          eid = contract.ETAPA_ID;
           context.TBL_CARGAETAPA.DeleteObject(contract);
           context.SaveChanges();
           ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
           ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
 
-          return View("List");
+          return RedirectToAction("List", new { @id = contract.ETAPA_ID });
         }
         catch (Exception ex)
         {
@@ -49,7 +52,7 @@ namespace mbpc_admin.Controllers
         ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
 
 
-        return View("List");
+        return RedirectToAction("List", new { @id = eid });
       }
 
       public ActionResult Edit(decimal id)
@@ -105,7 +108,7 @@ namespace mbpc_admin.Controllers
           var nuevacargaetapa = context.TBL_CARGAETAPA.OrderByDescending(c => c.ID).First();
           //HACK------------------------------------------------------
 
-          return Edit(nuevacargaetapa.ID);
+          return RedirectToAction("List", new { @id = cargaetapa.ETAPA_ID });
         }
         catch (Exception ex)
         {

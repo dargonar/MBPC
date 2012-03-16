@@ -10,12 +10,11 @@
 
 
 
-    <h2>Etapas de <%= ViewData["titulo"] %></h2>
+    <h2>Etapas del viaje  <%= ViewData["referenceId"]%></h2>
 
 <table id="list"><tr><td/></tr></table> 
 <div id="pager"></div> 
 <div id="filter" style="display:none">Search Invoices</div>
-
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
@@ -118,7 +117,7 @@
             return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID='+id;
+            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID='+id+'&viaje_id=<%=ViewData["referenceId"]%>';
           },
         position: "last"
       })<%if(ViewData["alone"]!=null){%>;<%}else{%>.navButtonAdd('#pager', {

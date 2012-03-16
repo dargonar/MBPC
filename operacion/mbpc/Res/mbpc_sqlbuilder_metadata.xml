@@ -3,7 +3,7 @@
   <entities>
     <entity name="Viaje" id="v">
       <sql description="La entidad viajes relaciona implicitamente a las tabls viajes y buques.">
-        tbl_viaje v left join tmp_buques b on v.buque_id = b.id_buque
+        tbl_viaje v left join tmp_buques b on v.buque_id = b.ID_BUQUE
       </sql>
       <attributes>
         <attribute id="v1" name="Fecha de Llegada" description="Arrivó" type="date" sql_column="v.FECHA_LLEGADA" is_filter="1"/>
@@ -35,7 +35,7 @@
             left join tbl_cargaetapa ce ON ce.etapa_id=e.id
             left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
             left JOIN tbl_unidad u ON ce.unidad_id=u.id
-            left JOIN buques b2 on ce.buque_id=b2.id_buque
+            left JOIN buques b2 on ce.buque_id=b2.ID_BUQUE
           </sql>
         </relation>
       </relations>
@@ -60,7 +60,7 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=pv.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
+          <sql>left join tbl_viaje v on v.id=pv.viaje_id left join tmp_buques b on v.buque_id = b.ID_BUQUE</sql>
         </relation>
       </relations>
     </entity>
@@ -71,7 +71,7 @@
         left JOIN tbl_etapa e ON ce.etapa_id=e.id
         left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
         left JOIN tbl_unidad u ON ce.unidad_id=u.id
-        left JOIN buques b2 on ce.buque_id=b2.id_buque
+        left JOIN buques b2 on ce.buque_id=b2.ID_BUQUE
       </sql>
       <attributes>
         <attribute id="c1" name="Cantidad transportada" description="Cantidad transportada" type="integer" sql_column="ce.CANTIDAD" is_filter="1"/>
@@ -81,7 +81,7 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
+          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.ID_BUQUE</sql>
         </relation>
       </relations>
     </entity>
