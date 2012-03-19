@@ -967,6 +967,13 @@
           </Key>
           <Property Name="ID" Type="number" Nullable="false" />
           <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+          <Property Name="PCODIGO" Type="number" />
+          <Property Name="MATRICULA" Type="number" />
+          <Property Name="DOCUMENTO" Type="varchar2" MaxLength="255" />
+          <Property Name="JURISDICCION" Type="varchar2" MaxLength="255" />
+          <Property Name="PZONA" Type="number" />
+          <Property Name="PALTA" Type="varchar2" MaxLength="255" />
+          <Property Name="MX" Type="varchar2" MaxLength="255" />
         </EntityType>
         <EntityType Name="TBL_PRACTICOVIAJE">
           <Key>
@@ -1076,8 +1083,6 @@
           <Property Name="FECHA_CREACION" Type="date" />
           <Property Name="CATEGORIA_ID" Type="number" />
           <Property Name="CONSULTA_SQL" Type="clob" />
-          <Property Name="JSON_PARAMS" Type="clob" />
-          <Property Name="FORM" Type="clob" />
           <Property Name="POST_PARAMS" Type="clob" />
         </EntityType>
         <EntityType Name="TBL_REPORTECATEGORIA">
@@ -1094,9 +1099,16 @@
           </Key>
           <Property Name="ID" Type="number" Nullable="false" />
           <Property Name="REPORTE_ID" Type="number" Nullable="false" />
-          <Property Name="INDICE" Type="number" Nullable="false" />
-          <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="56" />
-          <Property Name="TIPO_DATO" Type="number" Nullable="false" />
+          <Property Name="INDICE" Type="number" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="56" />
+          <Property Name="TIPO_DATO" Type="number" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="56" />
+          <Property Name="ENTITY" Type="varchar2" MaxLength="56" />
+          <Property Name="XML_ID" Type="varchar2" MaxLength="56" />
+          <Property Name="OPERADOR" Type="varchar2" MaxLength="56" />
+          <Property Name="VALOR" Type="varchar2" MaxLength="256" />
+          <Property Name="ORDEN" Type="number" />
+          <Property Name="IS_PARAM" Type="number" />
         </EntityType>
         <EntityType Name="TBL_TIPOCARGAUNIDAD">
           <Key>
@@ -1873,7 +1885,6 @@
           <EntitySet Name="TBL_PUNTODECONTROL" EntityType="NewModel.TBL_PUNTODECONTROL" />
           <EntitySet Name="TBL_PUNTODECONTROLUSUARIO" EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" />
           <EntitySet Name="TBL_REGISTROUSUARIO" EntityType="NewModel.TBL_REGISTROUSUARIO" />
-          <EntitySet Name="TBL_REPORTE" EntityType="NewModel.TBL_REPORTE" />
           <EntitySet Name="TBL_REPORTECATEGORIA" EntityType="NewModel.TBL_REPORTECATEGORIA" />
           <EntitySet Name="TBL_REPORTE_PARAM" EntityType="NewModel.TBL_REPORTE_PARAM" />
           <EntitySet Name="TBL_TIPOCARGAUNIDAD" EntityType="NewModel.TBL_TIPOCARGAUNIDAD" />
@@ -1997,14 +2008,6 @@
             <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
             <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
           </AssociationSet>
-          <AssociationSet Name="SYS_C0013766" Association="NewModel.SYS_C0013766">
-            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
-            <End Role="TBL_REPORTE_PARAM" EntitySet="TBL_REPORTE_PARAM" />
-          </AssociationSet>
-          <AssociationSet Name="SYS_C0013803" Association="NewModel.SYS_C0013803">
-            <End Role="TBL_REPORTECATEGORIA" EntitySet="TBL_REPORTECATEGORIA" />
-            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
-          </AssociationSet>
           <AssociationSet Name="SYS_C0013789" Association="NewModel.SYS_C0013789">
             <End Role="TBL_TIPO_CARGA" EntitySet="TBL_TIPO_CARGA" />
             <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
@@ -2014,6 +2017,15 @@
             <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
           </AssociationSet>
           <EntitySet Name="BUQUES_NEW" EntityType="NewModel.BUQUES_NEW" />
+          <EntitySet Name="TBL_REPORTE" EntityType="NewModel.TBL_REPORTE" />
+          <AssociationSet Name="SYS_C0013766" Association="NewModel.SYS_C0013766">
+            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
+            <End Role="TBL_REPORTE_PARAM" EntitySet="TBL_REPORTE_PARAM" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0013803" Association="NewModel.SYS_C0013803">
+            <End Role="TBL_REPORTECATEGORIA" EntitySet="TBL_REPORTECATEGORIA" />
+            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="INT_SISTEMAS">
           <Key>
@@ -2544,6 +2556,13 @@
           <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="String" Name="NOMBRE" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TBL_PRACTICOVIAJE" Relationship="NewModel.SYS_C0013769" FromRole="TBL_PRACTICO" ToRole="TBL_PRACTICOVIAJE" />
+          <Property Type="Decimal" Name="PCODIGO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MATRICULA" Precision="38" Scale="0" />
+          <Property Type="String" Name="DOCUMENTO" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JURISDICCION" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PZONA" Precision="38" Scale="0" />
+          <Property Type="String" Name="PALTA" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MX" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TBL_PRACTICOVIAJE">
           <Key>
@@ -2657,22 +2676,6 @@
           <Property Type="Decimal" Name="LOGIN" Precision="38" Scale="0" />
           <Property Type="DateTime" Name="CREATED_AT" />
         </EntityType>
-        <EntityType Name="TBL_REPORTE">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DESCRIPCION" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="FECHA_CREACION" />
-          <Property Type="Decimal" Name="CATEGORIA_ID" Precision="38" Scale="0" />
-          <Property Type="String" Name="CONSULTA_SQL" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TBL_REPORTE_PARAM" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE" ToRole="TBL_REPORTE_PARAM" />
-          <NavigationProperty Name="TBL_REPORTECATEGORIA" Relationship="NewModel.SYS_C0013803" FromRole="TBL_REPORTE" ToRole="TBL_REPORTECATEGORIA" />
-          <Property Type="String" Name="JSON_PARAMS" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="FORM" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="POST_PARAMS" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="TBL_REPORTECATEGORIA">
           <Key>
             <PropertyRef Name="ID" />
@@ -2691,6 +2694,13 @@
           <Property Type="Decimal" Name="INDICE" Nullable="false" Precision="38" Scale="0" />
           <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="56" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="TIPO_DATO" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TIPO" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ENTITY" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XML_ID" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="OPERADOR" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VALOR" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDEN" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="IS_PARAM" Precision="38" Scale="0" />
           <NavigationProperty Name="TBL_REPORTE" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE_PARAM" ToRole="TBL_REPORTE" />
         </EntityType>
         <EntityType Name="TBL_TIPOCARGAUNIDAD">
@@ -3329,30 +3339,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SYS_C0013766">
-          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="1" />
-          <End Type="NewModel.TBL_REPORTE_PARAM" Role="TBL_REPORTE_PARAM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_REPORTE">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_REPORTE_PARAM">
-              <PropertyRef Name="REPORTE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SYS_C0013803">
-          <End Type="NewModel.TBL_REPORTECATEGORIA" Role="TBL_REPORTECATEGORIA" Multiplicity="0..1" />
-          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_REPORTECATEGORIA">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_REPORTE">
-              <PropertyRef Name="CATEGORIA_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="SYS_C0013789">
           <End Type="NewModel.TBL_TIPO_CARGA" Role="TBL_TIPO_CARGA" Multiplicity="0..1" />
           <End Type="NewModel.TBL_TIPOCARGAUNIDAD" Role="TBL_TIPOCARGAUNIDAD" Multiplicity="*" />
@@ -3408,6 +3394,44 @@
           <Property Type="String" Name="DOTACION_MINIMA" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TIPO" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="TBL_REPORTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DESCRIPCION" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="FECHA_CREACION" />
+          <Property Type="Decimal" Name="CATEGORIA_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CONSULTA_SQL" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="POST_PARAMS" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_REPORTE_PARAM" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE" ToRole="TBL_REPORTE_PARAM" />
+          <NavigationProperty Name="TBL_REPORTECATEGORIA" Relationship="NewModel.SYS_C0013803" FromRole="TBL_REPORTE" ToRole="TBL_REPORTECATEGORIA" />
+        </EntityType>
+        <Association Name="SYS_C0013766">
+          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="1" />
+          <End Type="NewModel.TBL_REPORTE_PARAM" Role="TBL_REPORTE_PARAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_REPORTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_REPORTE_PARAM">
+              <PropertyRef Name="REPORTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0013803">
+          <End Type="NewModel.TBL_REPORTECATEGORIA" Role="TBL_REPORTECATEGORIA" Multiplicity="0..1" />
+          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_REPORTECATEGORIA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_REPORTE">
+              <PropertyRef Name="CATEGORIA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3926,6 +3950,13 @@
           <EntitySetMapping Name="TBL_PRACTICO">
             <EntityTypeMapping TypeName="NewModel.TBL_PRACTICO">
               <MappingFragment StoreEntitySet="TBL_PRACTICO">
+                <ScalarProperty Name="MX" ColumnName="MX" />
+                <ScalarProperty Name="PALTA" ColumnName="PALTA" />
+                <ScalarProperty Name="PZONA" ColumnName="PZONA" />
+                <ScalarProperty Name="JURISDICCION" ColumnName="JURISDICCION" />
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+                <ScalarProperty Name="PCODIGO" ColumnName="PCODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -4036,21 +4067,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TBL_REPORTE">
-            <EntityTypeMapping TypeName="NewModel.TBL_REPORTE">
-              <MappingFragment StoreEntitySet="TBL_REPORTE">
-                <ScalarProperty Name="POST_PARAMS" ColumnName="POST_PARAMS" />
-                <ScalarProperty Name="FORM" ColumnName="FORM" />
-                <ScalarProperty Name="JSON_PARAMS" ColumnName="JSON_PARAMS" />
-                <ScalarProperty Name="CONSULTA_SQL" ColumnName="CONSULTA_SQL" />
-                <ScalarProperty Name="CATEGORIA_ID" ColumnName="CATEGORIA_ID" />
-                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
-                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TBL_REPORTECATEGORIA">
             <EntityTypeMapping TypeName="NewModel.TBL_REPORTECATEGORIA">
               <MappingFragment StoreEntitySet="TBL_REPORTECATEGORIA">
@@ -4063,6 +4079,13 @@
           <EntitySetMapping Name="TBL_REPORTE_PARAM">
             <EntityTypeMapping TypeName="NewModel.TBL_REPORTE_PARAM">
               <MappingFragment StoreEntitySet="TBL_REPORTE_PARAM">
+                <ScalarProperty Name="IS_PARAM" ColumnName="IS_PARAM" />
+                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+                <ScalarProperty Name="OPERADOR" ColumnName="OPERADOR" />
+                <ScalarProperty Name="XML_ID" ColumnName="XML_ID" />
+                <ScalarProperty Name="ENTITY" ColumnName="ENTITY" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
                 <ScalarProperty Name="TIPO_DATO" ColumnName="TIPO_DATO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="INDICE" ColumnName="INDICE" />
@@ -4414,6 +4437,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TBL_REPORTE">
+            <EntityTypeMapping TypeName="NewModel.TBL_REPORTE">
+              <MappingFragment StoreEntitySet="TBL_REPORTE">
+                <ScalarProperty Name="POST_PARAMS" ColumnName="POST_PARAMS" />
+                <ScalarProperty Name="CONSULTA_SQL" ColumnName="CONSULTA_SQL" />
+                <ScalarProperty Name="CATEGORIA_ID" ColumnName="CATEGORIA_ID" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4471,7 +4507,6 @@
         <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROL" Width="1.5" PointX="5.25" PointY="11.125" Height="3.8931689453124818" />
         <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" Width="1.5" PointX="7.5" PointY="15.25" Height="1.756653645833353" />
         <EntityTypeShape EntityType="NewModel.TBL_REGISTROUSUARIO" Width="1.5" PointX="21.75" PointY="7.75" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="NewModel.TBL_REPORTE" Width="1.5" PointX="3" PointY="0.875" Height="2.249695638020853" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTECATEGORIA" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5923063151041106" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTE_PARAM" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9210009765624818" />
         <EntityTypeShape EntityType="NewModel.TBL_TIPOCARGAUNIDAD" Width="1.5" PointX="15.75" PointY="6.75" Height="1.756653645833353" />
@@ -4697,14 +4732,6 @@
           <ConnectorPoint PointX="7.125" PointY="14.873847153846153" />
           <ConnectorPoint PointX="7.5011528461538459" PointY="15.25" />
         </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013766" >
-          <ConnectorPoint PointX="4.5" PointY="2.0855004882812409" />
-          <ConnectorPoint PointX="5.25" PointY="2.0855004882812409" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013803" >
-          <ConnectorPoint PointX="2.25" PointY="2.0461531575520553" />
-          <ConnectorPoint PointX="3" PointY="2.0461531575520553" />
-        </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013789" >
           <ConnectorPoint PointX="11.25" PointY="6.2033902994791674" />
           <ConnectorPoint PointX="11.25" PointY="7.125" />
@@ -4724,6 +4751,15 @@
           <ConnectorPoint PointX="16.5" PointY="8.506653645833353" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NewModel.BUQUES_NEW" Width="1.5" PointX="7.375" PointY="24.75" Height="5.2079475911458246" />
+        <EntityTypeShape EntityType="NewModel.TBL_REPORTE" Width="1.5" PointX="3" PointY="0.875" Height="2.4140429687499818" />
+        <AssociationConnector Association="NewModel.SYS_C0013766" >
+          <ConnectorPoint PointX="4.5" PointY="2.2070214843749909" />
+          <ConnectorPoint PointX="5.25" PointY="2.2070214843749909" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013803" >
+          <ConnectorPoint PointX="2.25" PointY="2.0461531575520837" />
+          <ConnectorPoint PointX="3" PointY="2.0461531575520837" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>
