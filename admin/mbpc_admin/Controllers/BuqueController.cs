@@ -20,11 +20,11 @@ namespace mbpc_admin.Controllers
         {
           var columns = new string[] { "ID_BUQUE", "NOMBRE", "TIPO_SERVICIO", "TIPO_BUQUE", "REGISTRO", "NRO_ISMM", "ANIO_CONSTRUCCION", "BANDERA", "NRO_OMI", "MATRICULA", "SDIST" };
 
-          var tmp = JQGrid.Helper.PaginageS1<TMP_BUQUES>(Request.Params, columns, page, rows, sidx, sord);
+          var tmp = JQGrid.Helper.PaginageS1<BUQUES_NEW>(Request.Params, columns, page, rows, sidx, sord);
 
-          var items = context.ExecuteStoreQuery<TMP_BUQUES>((string)tmp[0], (ObjectParameter[])tmp[1]);
+          var items = context.ExecuteStoreQuery<BUQUES_NEW>((string)tmp[0], (ObjectParameter[])tmp[1]);
 
-          return Json(JQGrid.Helper.PaginateS2<TMP_BUQUES>(
+          return Json(JQGrid.Helper.PaginateS2<BUQUES_NEW>(
               items.ToArray(),
               columns, context.TMP_BUQUES.Count(), page, rows
               ), JsonRequestBehavior.AllowGet);

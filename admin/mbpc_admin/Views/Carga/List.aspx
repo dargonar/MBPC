@@ -19,6 +19,7 @@
     <table id="list"><tr><td/></tr></table> 
     <div id="pager"></div> 
     <div id="filter" style="display:none">Search Invoices</div>
+    <a href="/etapa/list?ID=<%=ViewData["viaje_id"]%>">Volver a la lista</a>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">

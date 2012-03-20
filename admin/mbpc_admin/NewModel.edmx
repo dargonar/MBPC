@@ -40,7 +40,6 @@
       FROM "MBPC"."INT_SISTEMAS" "INT_SISTEMAS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="INT_USER_SIST" EntityType="NewModel.Store.INT_USER_SIST" store:Type="Tables" Schema="MBPC" />
-          <EntitySet Name="INT_USUARIOS" EntityType="NewModel.Store.INT_USUARIOS" store:Type="Tables" Schema="MBPC" />
           <EntitySet Name="KSTM_PUERTOS" EntityType="NewModel.Store.KSTM_PUERTOS" store:Type="Tables" store:Schema="MBPC" store:Name="KSTM_PUERTOS">
             <DefiningQuery>SELECT 
       "KSTM_PUERTOS"."COD" AS "COD", 
@@ -208,6 +207,7 @@
       "BUQUE"."TIPO" AS "TIPO"
       FROM "MBPC"."BUQUE" "BUQUE"</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="BUQUES_NEW" EntityType="NewModel.Store.BUQUES_NEW" store:Type="Views" Schema="MBPC" />
           <EntitySet Name="MBPC_SIGO" EntityType="NewModel.Store.MBPC_SIGO" store:Type="Views" store:Schema="MBPC" store:Name="MBPC_SIGO">
             <DefiningQuery>SELECT 
       "MBPC_SIGO"."ID_BARCO" AS "ID_BARCO", 
@@ -345,14 +345,6 @@
           <AssociationSet Name="FK_RIO_CANAL" Association="NewModel.Store.FK_RIO_CANAL">
             <End Role="RIOS_CANALES" EntitySet="RIOS_CANALES" />
             <End Role="RIOS_CANALES_KM" EntitySet="RIOS_CANALES_KM" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TBL_USUARIO" Association="NewModel.Store.FK_TBL_USUARIO">
-            <End Role="INT_USUARIOS" EntitySet="INT_USUARIOS" />
-            <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
-          </AssociationSet>
-          <AssociationSet Name="SYS_C0013764" Association="NewModel.Store.SYS_C0013764">
-            <End Role="INT_USUARIOS" EntitySet="INT_USUARIOS" />
-            <End Role="TBL_USUARIOGRUPO" EntitySet="TBL_USUARIOGRUPO" />
           </AssociationSet>
           <AssociationSet Name="SYS_C0013765" Association="NewModel.Store.SYS_C0013765">
             <End Role="TBL_GRUPO" EntitySet="TBL_GRUPO" />
@@ -504,26 +496,6 @@
           <Property Name="NDOC" Type="number" Precision="8" />
           <Property Name="NOMBREDEUSUARIO" Type="number" Nullable="false" Precision="8" />
           <Property Name="SISTEMA_ID" Type="number" Precision="3" />
-        </EntityType>
-        <EntityType Name="INT_USUARIOS">
-          <Key>
-            <PropertyRef Name="USUARIO_ID" />
-          </Key>
-          <Property Name="NDOC" Type="number" Precision="8" />
-          <Property Name="PASSWORD" Type="varchar2" MaxLength="80" />
-          <Property Name="APELLIDO" Type="varchar2" Nullable="false" MaxLength="25" />
-          <Property Name="NOMBRES" Type="varchar2" Nullable="false" MaxLength="40" />
-          <Property Name="DESTINO" Type="varchar2" Nullable="false" MaxLength="4" />
-          <Property Name="FECHAVENC" Type="date" />
-          <Property Name="TEDIRECTO" Type="varchar2" MaxLength="15" />
-          <Property Name="TEINTERNO" Type="varchar2" MaxLength="6" />
-          <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
-          <Property Name="ESTADO" Type="number" Precision="2" />
-          <Property Name="SECCION" Type="varchar2" MaxLength="80" />
-          <Property Name="NDOC_ADMIN" Type="number" Precision="8" />
-          <Property Name="FECHA_AUDIT" Type="date" />
-          <Property Name="NOMBREDEUSUARIO" Type="number" Nullable="false" Precision="8" />
-          <Property Name="USUARIO_ID" Type="number" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'MBPC.KSTM_PUERTOS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -995,6 +967,13 @@
           </Key>
           <Property Name="ID" Type="number" Nullable="false" />
           <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
+          <Property Name="PCODIGO" Type="number" />
+          <Property Name="MATRICULA" Type="number" />
+          <Property Name="DOCUMENTO" Type="varchar2" MaxLength="255" />
+          <Property Name="JURISDICCION" Type="varchar2" MaxLength="255" />
+          <Property Name="PZONA" Type="number" />
+          <Property Name="PALTA" Type="varchar2" MaxLength="255" />
+          <Property Name="MX" Type="varchar2" MaxLength="255" />
         </EntityType>
         <EntityType Name="TBL_PRACTICOVIAJE">
           <Key>
@@ -1104,6 +1083,7 @@
           <Property Name="FECHA_CREACION" Type="date" />
           <Property Name="CATEGORIA_ID" Type="number" />
           <Property Name="CONSULTA_SQL" Type="clob" />
+          <Property Name="POST_PARAMS" Type="clob" />
         </EntityType>
         <EntityType Name="TBL_REPORTECATEGORIA">
           <Key>
@@ -1119,9 +1099,16 @@
           </Key>
           <Property Name="ID" Type="number" Nullable="false" />
           <Property Name="REPORTE_ID" Type="number" Nullable="false" />
-          <Property Name="INDICE" Type="number" Nullable="false" />
-          <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="56" />
-          <Property Name="TIPO_DATO" Type="number" Nullable="false" />
+          <Property Name="INDICE" Type="number" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="56" />
+          <Property Name="TIPO_DATO" Type="number" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="56" />
+          <Property Name="ENTITY" Type="varchar2" MaxLength="56" />
+          <Property Name="XML_ID" Type="varchar2" MaxLength="56" />
+          <Property Name="OPERADOR" Type="varchar2" MaxLength="56" />
+          <Property Name="VALOR" Type="varchar2" MaxLength="256" />
+          <Property Name="ORDEN" Type="number" />
+          <Property Name="IS_PARAM" Type="number" />
         </EntityType>
         <EntityType Name="TBL_TIPOCARGAUNIDAD">
           <Key>
@@ -1194,6 +1181,7 @@
           <Property Name="LONGITUD" Type="number" />
           <Property Name="LATITUD" Type="number" />
           <Property Name="BARCAZAS_LISTADO" Type="varchar2" MaxLength="2048" />
+          <Property Name="BUQUE_INFO" Type="varchar2" MaxLength="200" />
         </EntityType>
         <EntityType Name="TBL_ZONAS">
           <Key>
@@ -1288,6 +1276,37 @@
           <Property Name="DOTACION_MINIMA" Type="char" MaxLength="20" />
           <Property Name="TIPO" Type="char" MaxLength="15" />
         </EntityType>
+        <EntityType Name="BUQUES_NEW">
+          <Key>
+            <PropertyRef Name="ID_BUQUE" />
+          </Key>
+          <Property Name="ID_BUQUE" Type="number" Nullable="false"/>
+          <Property Name="MATRICULA" Type="varchar2" MaxLength="18" />
+          <Property Name="NRO_OMI" Type="number" />
+          <Property Name="NOMBRE" Type="varchar2" MaxLength="500" />
+          <Property Name="BANDERA" Type="varchar2" MaxLength="500" />
+          <Property Name="ANIO_CONSTRUCCION" Type="number" />
+          <Property Name="NRO_ISMM" Type="number" />
+          <Property Name="ASTILL_PARTIC" Type="varchar2" MaxLength="70" />
+          <Property Name="REGISTRO" Type="varchar2" MaxLength="4" />
+          <Property Name="TIPO_BUQUE" Type="varchar2" MaxLength="2550" />
+          <Property Name="TIPO_SERVICIO" Type="varchar2" MaxLength="60" />
+          <Property Name="TIPO_EXPLOTACION" Type="varchar2" MaxLength="60" />
+          <Property Name="ARBOLADURA" Type="varchar2" MaxLength="60" />
+          <Property Name="SDIST" Type="varchar2" MaxLength="130" />
+          <Property Name="VELOCIDAD" Type="varchar2" MaxLength="40" />
+          <Property Name="ESLORA" Type="varchar2" MaxLength="40" />
+          <Property Name="MANGA" Type="varchar2" MaxLength="40" />
+          <Property Name="PUNTAL" Type="varchar2" MaxLength="40" />
+          <Property Name="ARQUEO_TOTAL" Type="varchar2" MaxLength="40" />
+          <Property Name="CALADO_MAX" Type="varchar2" MaxLength="40" />
+          <Property Name="PUERTO_ASIENTO" Type="varchar2" MaxLength="80" />
+          <Property Name="MATERIAL" Type="varchar2" MaxLength="50" />
+          <Property Name="SOCIEDADCLASIF" Type="varchar2" MaxLength="150" />
+          <Property Name="ARQUEO_NETO" Type="varchar2" MaxLength="40" />
+          <Property Name="DOTACION_MINIMA" Type="varchar2" MaxLength="40" />
+          <Property Name="TIPO" Type="varchar2" MaxLength="15" />
+        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'MBPC.MBPC_SIGO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -1298,7 +1317,7 @@
           <Property Name="ID_BARCO" Type="number" Precision="10" />
           <Property Name="FECHA_HORA" Type="date" />
           <Property Name="COSTERA" Type="varchar2" MaxLength="4" />
-          <Property Name="USUARIO" Type="varchar2" MaxLength="66" />
+          <Property Name="USUARIO" Type="varchar2" MaxLength="101" />
           <Property Name="NOMBRE" Type="varchar2" MaxLength="50" />
           <Property Name="MATRICULA" Type="varchar2" MaxLength="18" />
           <Property Name="NRO_OMI" Type="number" />
@@ -1516,32 +1535,6 @@
             </Principal>
             <Dependent Role="RIOS_CANALES_KM">
               <PropertyRef Name="ID_RIO_CANAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TBL_USUARIO">
-          <End Role="INT_USUARIOS" Type="NewModel.Store.INT_USUARIOS" Multiplicity="0..1" />
-          <End Role="TBL_PUNTODECONTROLUSUARIO" Type="NewModel.Store.TBL_PUNTODECONTROLUSUARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INT_USUARIOS">
-              <PropertyRef Name="USUARIO_ID" />
-            </Principal>
-            <Dependent Role="TBL_PUNTODECONTROLUSUARIO">
-              <PropertyRef Name="USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SYS_C0013764">
-          <End Role="INT_USUARIOS" Type="NewModel.Store.INT_USUARIOS" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TBL_USUARIOGRUPO" Type="NewModel.Store.TBL_USUARIOGRUPO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INT_USUARIOS">
-              <PropertyRef Name="USUARIO_ID" />
-            </Principal>
-            <Dependent Role="TBL_USUARIOGRUPO">
-              <PropertyRef Name="USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1851,238 +1844,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.CODPAIS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="CODPAIS">
-        <Property Name="CPAIS" Type="varchar2" MaxLength="2" />
-        <Property Name="PAIS_CASTE" Type="varchar2" MaxLength="20" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.PRACT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="PRACT">
-        <Property Name="PCODIGO" Type="varchar2" MaxLength="320" />
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="76" />
-        <Property Name="PZONA" Type="varchar2" MaxLength="320" />
-        <Property Name="PALTA" Type="date" />
-        <Property Name="MX" Type="varchar2" MaxLength="1" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.REPETIDOS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="REPETIDOS">
-        <Property Name="NRO_OMI" Type="number" />
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="500" />
-        <Property Name="BANDERA" Type="varchar2" MaxLength="500" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_BARCAZAS_KSTM' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_BARCAZAS_KSTM">
-        <Property Name="INDI" Type="varchar2" MaxLength="8" />
-        <Property Name="BAND" Type="varchar2" MaxLength="2" />
-        <Property Name="TIPO" Type="varchar2" MaxLength="2" />
-        <Property Name="IDEN" Type="varchar2" MaxLength="20" />
-        <Property Name="MAT" Type="varchar2" MaxLength="320" />
-        <Property Name="LE" Type="varchar2" MaxLength="3" />
-        <Property Name="EX_MAT" Type="varchar2" MaxLength="320" />
-        <Property Name="EN" Type="varchar2" MaxLength="3" />
-        <Property Name="MONPE" Type="varchar2" MaxLength="5" />
-        <Property Name="IMO_" Type="varchar2" MaxLength="320" />
-        <Property Name="CLAS" Type="varchar2" MaxLength="2" />
-        <Property Name="ANIO" Type="varchar2" MaxLength="320" />
-        <Property Name="PTO_ASIENT" Type="varchar2" MaxLength="4" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_BQ_CODPROV' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_BQ_CODPROV">
-        <Property Name="PROV" Type="varchar2" MaxLength="23" />
-        <Property Name="CODIGO" Type="varchar2" MaxLength="1" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_EXTERNA_BUQUES_PESQUEROS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_EXTERNA_BUQUES_PESQUEROS">
-        <Property Name="X_LINEA" Type="varchar2" MaxLength="2000" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PESCA_ENAVAL' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PESCA_ENAVAL">
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="31" />
-        <Property Name="MATRI" Type="varchar2" MaxLength="8" />
-        <Property Name="YYMMDD" Type="varchar2" MaxLength="6" />
-        <Property Name="LATITUD" Type="varchar2" MaxLength="10" />
-        <Property Name="LONGITUD" Type="varchar2" MaxLength="10" />
-        <Property Name="RUMBO" Type="varchar2" MaxLength="6" />
-        <Property Name="VEL" Type="varchar2" MaxLength="6" />
-        <Property Name="HHMM" Type="varchar2" MaxLength="5" />
-        <Property Name="EMP" Type="varchar2" MaxLength="5" />
-        <Property Name="TIPO" Type="varchar2" MaxLength="4" />
-        <Property Name="INM" Type="varchar2" MaxLength="10" />
-        <Property Name="DNID" Type="varchar2" MaxLength="6" />
-        <Property Name="MEM" Type="varchar2" MaxLength="4" />
-        <Property Name="MMSI" Type="varchar2" MaxLength="9" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PESCA_GLOBALSTAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PESCA_GLOBALSTAR">
-        <Property Name="VESSELNAME" Type="varchar2" MaxLength="30" />
-        <Property Name="MATR" Type="varchar2" MaxLength="7" />
-        <Property Name="YYMMDD" Type="varchar2" MaxLength="6" />
-        <Property Name="LATITUD" Type="varchar2" MaxLength="9" />
-        <Property Name="LONGITUD" Type="varchar2" MaxLength="10" />
-        <Property Name="CCC" Type="varchar2" MaxLength="3" />
-        <Property Name="SP" Type="varchar2" MaxLength="4" />
-        <Property Name="HHMM" Type="varchar2" MaxLength="4" />
-        <Property Name="EMP" Type="varchar2" MaxLength="3" />
-        <Property Name="MDN" Type="varchar2" MaxLength="10" />
-        <Property Name="MMSI" Type="varchar2" MaxLength="9" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PESCA_NAVALSTAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PESCA_NAVALSTAR">
-        <Property Name="NOMBREDELBUQUE" Type="varchar2" MaxLength="30" />
-        <Property Name="MATRI" Type="varchar2" MaxLength="7" />
-        <Property Name="YYMMDD" Type="varchar2" MaxLength="6" />
-        <Property Name="LATITUD" Type="varchar2" MaxLength="9" />
-        <Property Name="LONGITUD" Type="varchar2" MaxLength="10" />
-        <Property Name="RUM" Type="varchar2" MaxLength="3" />
-        <Property Name="VEL" Type="varchar2" MaxLength="4" />
-        <Property Name="HHMM" Type="varchar2" MaxLength="4" />
-        <Property Name="EMP" Type="varchar2" MaxLength="3" />
-        <Property Name="T" Type="varchar2" MaxLength="1" />
-        <Property Name="INM" Type="varchar2" MaxLength="9" />
-        <Property Name="DNID" Type="varchar2" MaxLength="5" />
-        <Property Name="MEM" Type="varchar2" MaxLength="3" />
-        <Property Name="MMSI" Type="varchar2" MaxLength="9" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PESCA_SITRACK' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PESCA_SITRACK">
-        <Property Name="NOMBREDELBUQUE" Type="varchar2" MaxLength="30" />
-        <Property Name="MATRI" Type="varchar2" MaxLength="7" />
-        <Property Name="YYMMDD" Type="varchar2" MaxLength="6" />
-        <Property Name="LATITUD" Type="varchar2" MaxLength="9" />
-        <Property Name="LONGITUD" Type="varchar2" MaxLength="10" />
-        <Property Name="RUM" Type="varchar2" MaxLength="3" />
-        <Property Name="VEL" Type="varchar2" MaxLength="4" />
-        <Property Name="HHMM" Type="varchar2" MaxLength="4" />
-        <Property Name="EMP" Type="varchar2" MaxLength="3" />
-        <Property Name="TIPO" Type="varchar2" MaxLength="1" />
-        <Property Name="INM" Type="varchar2" MaxLength="9" />
-        <Property Name="DNID" Type="varchar2" MaxLength="5" />
-        <Property Name="MEM" Type="varchar2" MaxLength="3" />
-        <Property Name="MMSI" Type="varchar2" MaxLength="9" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PRACTICOS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PRACTICOS">
-        <Property Name="PCODIGO" Type="varchar2" MaxLength="320" />
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="255" />
-        <Property Name="PZONA" Type="varchar2" MaxLength="320" />
-        <Property Name="PALTA" Type="date" />
-        <Property Name="MX" Type="varchar2" MaxLength="255" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_PUERTOS_DPSN' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_PUERTOS_DPSN">
-        <Property Name="SITUACION" Type="varchar2" MaxLength="255" />
-        <Property Name="N°" Type="varchar2" MaxLength="320" />
-        <Property Name="CARP" Type="varchar2" MaxLength="255" />
-        <Property Name="PUERTOS Y TERMINALES / NOMBRE" Type="varchar2" MaxLength="255" />
-        <Property Name="DEST" Type="varchar2" MaxLength="255" />
-        <Property Name="PZ" Type="varchar2" MaxLength="255" />
-        <Property Name="UBICACIÓN" Type="varchar2" MaxLength="255" />
-        <Property Name="DISP# AUT# AMARRE   FECHA" Type="varchar2" MaxLength="255" />
-        <Property Name="ESL# MAX#" Type="varchar2" MaxLength="255" />
-        <Property Name="TIPO CARGA" Type="varchar2" MaxLength="255" />
-        <Property Name="ID_PUERTO_DPSN" Type="number" Precision="4" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TBL_TIPO_CARGAS_PELIGROSAS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TBL_TIPO_CARGAS_PELIGROSAS">
-        <Property Name="ID" Type="number" />
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="50" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.TIPO_CAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="TIPO_CAR">
-        <Property Name="COD" Type="varchar2" MaxLength="3" />
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="77" />
-        <Property Name="AGRUPA" Type="varchar2" MaxLength="1" />
-        <Property Name="SUBAGRUP" Type="varchar2" MaxLength="50" />
-        <Property Name="UN" Type="varchar2" MaxLength="2" />
-        <Property Name="ESTADO" Type="varchar2" MaxLength="50" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.XXX' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="XXX">
-        <Property Name="A" Type="number" Scale="8" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.BLABLA_PBIP' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="BLABLA_PBIP">
-        <Property Name="VIAJE_ID" Type="number" />
-        <Property Name="NRO_OMI" Type="number" Precision="7" />
-        <Property Name="BUQUE" Type="varchar2" MaxLength="50" />
-        <Property Name="PUERTODEMATRICULA" Type="varchar2" MaxLength="255" />
-        <Property Name="BANDERA_ID" Type="number" Precision="3" />
-        <Property Name="TIPO_BUQUE" Type="number" Precision="3" />
-        <Property Name="SDIST" Type="varchar2" MaxLength="255" />
-        <Property Name="NROINMARSAT" Type="varchar2" MaxLength="255" />
-        <Property Name="ARQUEOBRUTO" Type="varchar2" MaxLength="255" />
-        <Property Name="COMPANIA" Type="varchar2" MaxLength="255" />
-        <Property Name="CONTACTOOCPM" Type="varchar2" MaxLength="255" />
-        <Property Name="PUERTO" Type="varchar2" MaxLength="255" />
-        <Property Name="INSTPORT" Type="varchar2" MaxLength="400" />
-        <Property Name="ETA" Type="date" />
-        <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.FILL_PBIP' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="FILL_PBIP">
-        <Property Name="VIAJE_ID" Type="number" />
-        <Property Name="NRO_OMI" Type="number" Precision="7" />
-        <Property Name="BUQUE" Type="varchar2" MaxLength="50" />
-        <Property Name="PUERTODEMATRICULA" Type="varchar2" MaxLength="255" />
-        <Property Name="BANDERA_ID" Type="number" Precision="3" />
-        <Property Name="TIPO_BUQUE" Type="number" Precision="3" />
-        <Property Name="SDIST" Type="varchar2" MaxLength="255" />
-        <Property Name="NROINMARSAT" Type="varchar2" MaxLength="255" />
-        <Property Name="ARQUEOBRUTO" Type="varchar2" MaxLength="255" />
-        <Property Name="COMPANIA" Type="varchar2" MaxLength="255" />
-        <Property Name="CONTACTOOCPM" Type="varchar2" MaxLength="255" />
-        <Property Name="PUERTO" Type="varchar2" MaxLength="255" />
-        <Property Name="INSTPORT" Type="varchar2" MaxLength="400" />
-        <Property Name="ETA" Type="date" />
-        <Property Name="OBJETIVO" Type="varchar2" MaxLength="255" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.VIEW_TIPOCARGAS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="VIEW_TIPOCARGAS">
-        <Property Name="NOMBRE" Type="varchar2" MaxLength="100" />
-        <Property Name="UNIDAD" Type="number" />
-      </EntityType>
-      Errors Found During Generation:
-      warning 6013: The table/view 'MBPC.VW_PUERTOS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="VW_PUERTOS">
-        <Property Name="DESCRIPCION" Type="varchar2" MaxLength="255" />
-      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -2090,7 +1851,6 @@
         <EntityContainer Name="NewEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="INT_SISTEMAS" EntityType="NewModel.INT_SISTEMAS" />
           <EntitySet Name="INT_USER_SIST" EntityType="NewModel.INT_USER_SIST" />
-          <EntitySet Name="INT_USUARIOS" EntityType="NewModel.INT_USUARIOS" />
           <EntitySet Name="KSTM_PUERTOS" EntityType="NewModel.KSTM_PUERTOS" />
           <EntitySet Name="PAISES" EntityType="NewModel.PAIS" />
           <EntitySet Name="PUERTOS_INTERNAC" EntityType="NewModel.PUERTOS_INTERNAC" />
@@ -2125,7 +1885,6 @@
           <EntitySet Name="TBL_PUNTODECONTROL" EntityType="NewModel.TBL_PUNTODECONTROL" />
           <EntitySet Name="TBL_PUNTODECONTROLUSUARIO" EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" />
           <EntitySet Name="TBL_REGISTROUSUARIO" EntityType="NewModel.TBL_REGISTROUSUARIO" />
-          <EntitySet Name="TBL_REPORTE" EntityType="NewModel.TBL_REPORTE" />
           <EntitySet Name="TBL_REPORTECATEGORIA" EntityType="NewModel.TBL_REPORTECATEGORIA" />
           <EntitySet Name="TBL_REPORTE_PARAM" EntityType="NewModel.TBL_REPORTE_PARAM" />
           <EntitySet Name="TBL_TIPOCARGAUNIDAD" EntityType="NewModel.TBL_TIPOCARGAUNIDAD" />
@@ -2145,14 +1904,6 @@
           <EntitySet Name="VW_INT_USUARIOS" EntityType="NewModel.VW_INT_USUARIOS" />
           <EntitySet Name="VW_INT_USUARIOS_EXT" EntityType="NewModel.VW_INT_USUARIOS_EXT" />
           <EntitySet Name="VW_PERS_DESTI" EntityType="NewModel.VW_PERS_DESTI" />
-          <AssociationSet Name="FK_TBL_USUARIO" Association="NewModel.FK_TBL_USUARIO">
-            <End Role="INT_USUARIOS" EntitySet="INT_USUARIOS" />
-            <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
-          </AssociationSet>
-          <AssociationSet Name="SYS_C0013764" Association="NewModel.SYS_C0013764">
-            <End Role="INT_USUARIOS" EntitySet="INT_USUARIOS" />
-            <End Role="TBL_USUARIOGRUPO" EntitySet="TBL_USUARIOGRUPO" />
-          </AssociationSet>
           <AssociationSet Name="FK_RIO_CANAL" Association="NewModel.FK_RIO_CANAL">
             <End Role="RIOS_CANALES" EntitySet="RIOS_CANALES" />
             <End Role="RIOS_CANALES_KM" EntitySet="RIOS_CANALES_KM" />
@@ -2257,14 +2008,6 @@
             <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
             <End Role="TBL_PUNTODECONTROLUSUARIO" EntitySet="TBL_PUNTODECONTROLUSUARIO" />
           </AssociationSet>
-          <AssociationSet Name="SYS_C0013766" Association="NewModel.SYS_C0013766">
-            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
-            <End Role="TBL_REPORTE_PARAM" EntitySet="TBL_REPORTE_PARAM" />
-          </AssociationSet>
-          <AssociationSet Name="SYS_C0013803" Association="NewModel.SYS_C0013803">
-            <End Role="TBL_REPORTECATEGORIA" EntitySet="TBL_REPORTECATEGORIA" />
-            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
-          </AssociationSet>
           <AssociationSet Name="SYS_C0013789" Association="NewModel.SYS_C0013789">
             <End Role="TBL_TIPO_CARGA" EntitySet="TBL_TIPO_CARGA" />
             <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
@@ -2272,6 +2015,16 @@
           <AssociationSet Name="SYS_C0013790" Association="NewModel.SYS_C0013790">
             <End Role="TBL_UNIDAD" EntitySet="TBL_UNIDAD" />
             <End Role="TBL_TIPOCARGAUNIDAD" EntitySet="TBL_TIPOCARGAUNIDAD" />
+          </AssociationSet>
+          <EntitySet Name="BUQUES_NEW" EntityType="NewModel.BUQUES_NEW" />
+          <EntitySet Name="TBL_REPORTE" EntityType="NewModel.TBL_REPORTE" />
+          <AssociationSet Name="SYS_C0013766" Association="NewModel.SYS_C0013766">
+            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
+            <End Role="TBL_REPORTE_PARAM" EntitySet="TBL_REPORTE_PARAM" />
+          </AssociationSet>
+          <AssociationSet Name="SYS_C0013803" Association="NewModel.SYS_C0013803">
+            <End Role="TBL_REPORTECATEGORIA" EntitySet="TBL_REPORTECATEGORIA" />
+            <End Role="TBL_REPORTE" EntitySet="TBL_REPORTE" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="INT_SISTEMAS">
@@ -2320,28 +2073,6 @@
           <Property Type="Decimal" Name="NDOC" Precision="8" Scale="0" />
           <Property Type="Decimal" Name="NOMBREDEUSUARIO" Nullable="false" Precision="8" Scale="0" />
           <Property Type="Decimal" Name="SISTEMA_ID" Precision="3" Scale="0" />
-        </EntityType>
-        <EntityType Name="INT_USUARIOS">
-          <Key>
-            <PropertyRef Name="USUARIO_ID" />
-          </Key>
-          <Property Type="Decimal" Name="NDOC" Precision="8" Scale="0" />
-          <Property Type="String" Name="PASSWORD" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="APELLIDO" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NOMBRES" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DESTINO" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="FECHAVENC" />
-          <Property Type="String" Name="TEDIRECTO" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TEINTERNO" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EMAIL" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="ESTADO" Precision="2" Scale="0" />
-          <Property Type="String" Name="SECCION" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="NDOC_ADMIN" Precision="8" Scale="0" />
-          <Property Type="DateTime" Name="FECHA_AUDIT" />
-          <Property Type="Decimal" Name="NOMBREDEUSUARIO" Nullable="false" Precision="8" Scale="0" />
-          <Property Type="Decimal" Name="USUARIO_ID" Nullable="false" Precision="38" Scale="0" />
-          <NavigationProperty Name="TBL_PUNTODECONTROLUSUARIO" Relationship="NewModel.FK_TBL_USUARIO" FromRole="INT_USUARIOS" ToRole="TBL_PUNTODECONTROLUSUARIO" />
-          <NavigationProperty Name="TBL_USUARIOGRUPO" Relationship="NewModel.SYS_C0013764" FromRole="INT_USUARIOS" ToRole="TBL_USUARIOGRUPO" />
         </EntityType>
         <EntityType Name="KSTM_PUERTOS">
           <Key>
@@ -2825,6 +2556,13 @@
           <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="String" Name="NOMBRE" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TBL_PRACTICOVIAJE" Relationship="NewModel.SYS_C0013769" FromRole="TBL_PRACTICO" ToRole="TBL_PRACTICOVIAJE" />
+          <Property Type="Decimal" Name="PCODIGO" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="MATRICULA" Precision="38" Scale="0" />
+          <Property Type="String" Name="DOCUMENTO" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JURISDICCION" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="PZONA" Precision="38" Scale="0" />
+          <Property Type="String" Name="PALTA" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MX" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TBL_PRACTICOVIAJE">
           <Key>
@@ -2927,7 +2665,6 @@
           <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="PUNTODECONTROL" Precision="6" Scale="0" />
           <Property Type="Decimal" Name="USUARIO" Precision="38" Scale="0" />
-          <NavigationProperty Name="INT_USUARIOS" Relationship="NewModel.FK_TBL_USUARIO" FromRole="TBL_PUNTODECONTROLUSUARIO" ToRole="INT_USUARIOS" />
           <NavigationProperty Name="TBL_PUNTODECONTROL" Relationship="NewModel.SYS_C0013792" FromRole="TBL_PUNTODECONTROLUSUARIO" ToRole="TBL_PUNTODECONTROL" />
         </EntityType>
         <EntityType Name="TBL_REGISTROUSUARIO">
@@ -2938,19 +2675,6 @@
           <Property Type="Decimal" Name="USUARIO_ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="LOGIN" Precision="38" Scale="0" />
           <Property Type="DateTime" Name="CREATED_AT" />
-        </EntityType>
-        <EntityType Name="TBL_REPORTE">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
-          <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DESCRIPCION" MaxLength="512" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="FECHA_CREACION" />
-          <Property Type="Decimal" Name="CATEGORIA_ID" Precision="38" Scale="0" />
-          <Property Type="String" Name="CONSULTA_SQL" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TBL_REPORTE_PARAM" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE" ToRole="TBL_REPORTE_PARAM" />
-          <NavigationProperty Name="TBL_REPORTECATEGORIA" Relationship="NewModel.SYS_C0013803" FromRole="TBL_REPORTE" ToRole="TBL_REPORTECATEGORIA" />
         </EntityType>
         <EntityType Name="TBL_REPORTECATEGORIA">
           <Key>
@@ -2970,6 +2694,13 @@
           <Property Type="Decimal" Name="INDICE" Nullable="false" Precision="38" Scale="0" />
           <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="56" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="TIPO_DATO" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="TIPO" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ENTITY" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XML_ID" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="OPERADOR" MaxLength="56" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VALOR" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ORDEN" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="IS_PARAM" Precision="38" Scale="0" />
           <NavigationProperty Name="TBL_REPORTE" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE_PARAM" ToRole="TBL_REPORTE" />
         </EntityType>
         <EntityType Name="TBL_TIPOCARGAUNIDAD">
@@ -3022,7 +2753,6 @@
           <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="GRUPO" Nullable="false" Precision="38" Scale="0" />
           <Property Type="Decimal" Name="USUARIO" Nullable="false" Precision="38" Scale="0" />
-          <NavigationProperty Name="INT_USUARIOS" Relationship="NewModel.SYS_C0013764" FromRole="TBL_USUARIOGRUPO" ToRole="INT_USUARIOS" />
           <NavigationProperty Name="TBL_GRUPO" Relationship="NewModel.SYS_C0013765" FromRole="TBL_USUARIOGRUPO" ToRole="TBL_GRUPO" />
         </EntityType>
         <EntityType Name="TBL_VIAJE">
@@ -3055,6 +2785,7 @@
           <NavigationProperty Name="TBL_ETAPA" Relationship="NewModel.SYS_C0013782" FromRole="TBL_VIAJE" ToRole="TBL_ETAPA" />
           <NavigationProperty Name="TBL_PBIP" Relationship="NewModel.SYS_C0013788" FromRole="TBL_VIAJE" ToRole="TBL_PBIP" />
           <NavigationProperty Name="TBL_PRACTICOVIAJE" Relationship="NewModel.SYS_C0013770" FromRole="TBL_VIAJE" ToRole="TBL_PRACTICOVIAJE" />
+          <Property Type="String" Name="BUQUE_INFO" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TBL_ZONAS">
           <Key>
@@ -3296,30 +3027,6 @@
           <Property Type="String" Name="DESTINO" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="NDOC" Nullable="false" Precision="11" Scale="0" />
         </EntityType>
-        <Association Name="FK_TBL_USUARIO">
-          <End Type="NewModel.INT_USUARIOS" Role="INT_USUARIOS" Multiplicity="0..1" />
-          <End Type="NewModel.TBL_PUNTODECONTROLUSUARIO" Role="TBL_PUNTODECONTROLUSUARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INT_USUARIOS">
-              <PropertyRef Name="USUARIO_ID" />
-            </Principal>
-            <Dependent Role="TBL_PUNTODECONTROLUSUARIO">
-              <PropertyRef Name="USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SYS_C0013764">
-          <End Type="NewModel.INT_USUARIOS" Role="INT_USUARIOS" Multiplicity="1" />
-          <End Type="NewModel.TBL_USUARIOGRUPO" Role="TBL_USUARIOGRUPO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INT_USUARIOS">
-              <PropertyRef Name="USUARIO_ID" />
-            </Principal>
-            <Dependent Role="TBL_USUARIOGRUPO">
-              <PropertyRef Name="USUARIO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RIO_CANAL">
           <End Type="NewModel.RIOS_CANALES" Role="RIOS_CANALES" Multiplicity="1" />
           <End Type="NewModel.RIOS_CANALES_KM" Role="RIOS_CANALES_KM" Multiplicity="*" />
@@ -3632,30 +3339,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SYS_C0013766">
-          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="1" />
-          <End Type="NewModel.TBL_REPORTE_PARAM" Role="TBL_REPORTE_PARAM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_REPORTE">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_REPORTE_PARAM">
-              <PropertyRef Name="REPORTE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="SYS_C0013803">
-          <End Type="NewModel.TBL_REPORTECATEGORIA" Role="TBL_REPORTECATEGORIA" Multiplicity="0..1" />
-          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TBL_REPORTECATEGORIA">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TBL_REPORTE">
-              <PropertyRef Name="CATEGORIA_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="SYS_C0013789">
           <End Type="NewModel.TBL_TIPO_CARGA" Role="TBL_TIPO_CARGA" Multiplicity="0..1" />
           <End Type="NewModel.TBL_TIPOCARGAUNIDAD" Role="TBL_TIPOCARGAUNIDAD" Multiplicity="*" />
@@ -3677,6 +3360,75 @@
             </Principal>
             <Dependent Role="TBL_TIPOCARGAUNIDAD">
               <PropertyRef Name="UNIDAD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BUQUES_NEW">
+          <Key>
+            <PropertyRef Name="ID_BUQUE" />
+          </Key>
+          <Property Type="Decimal" Name="ID_BUQUE" Precision="38" Scale="0" Nullable="false" />
+          <Property Type="String" Name="MATRICULA" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="NRO_OMI" Precision="38" Scale="0" />
+          <Property Type="String" Name="NOMBRE" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BANDERA" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="ANIO_CONSTRUCCION" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="NRO_ISMM" Precision="38" Scale="0" />
+          <Property Type="String" Name="ASTILL_PARTIC" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REGISTRO" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_BUQUE" MaxLength="2550" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_SERVICIO" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO_EXPLOTACION" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ARBOLADURA" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SDIST" MaxLength="130" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VELOCIDAD" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ESLORA" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MANGA" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PUNTAL" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ARQUEO_TOTAL" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CALADO_MAX" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PUERTO_ASIENTO" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MATERIAL" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOCIEDADCLASIF" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ARQUEO_NETO" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DOTACION_MINIMA" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TIPO" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TBL_REPORTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Decimal" Name="ID" Nullable="false" Precision="38" Scale="0" />
+          <Property Type="String" Name="NOMBRE" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DESCRIPCION" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="FECHA_CREACION" />
+          <Property Type="Decimal" Name="CATEGORIA_ID" Precision="38" Scale="0" />
+          <Property Type="String" Name="CONSULTA_SQL" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="POST_PARAMS" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_REPORTE_PARAM" Relationship="NewModel.SYS_C0013766" FromRole="TBL_REPORTE" ToRole="TBL_REPORTE_PARAM" />
+          <NavigationProperty Name="TBL_REPORTECATEGORIA" Relationship="NewModel.SYS_C0013803" FromRole="TBL_REPORTE" ToRole="TBL_REPORTECATEGORIA" />
+        </EntityType>
+        <Association Name="SYS_C0013766">
+          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="1" />
+          <End Type="NewModel.TBL_REPORTE_PARAM" Role="TBL_REPORTE_PARAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_REPORTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_REPORTE_PARAM">
+              <PropertyRef Name="REPORTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SYS_C0013803">
+          <End Type="NewModel.TBL_REPORTECATEGORIA" Role="TBL_REPORTECATEGORIA" Multiplicity="0..1" />
+          <End Type="NewModel.TBL_REPORTE" Role="TBL_REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_REPORTECATEGORIA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TBL_REPORTE">
+              <PropertyRef Name="CATEGORIA_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3732,27 +3484,6 @@
                 <ScalarProperty Name="NRO_PRIV_SIST" ColumnName="NRO_PRIV_SIST" />
                 <ScalarProperty Name="NRO_SISTEMA" ColumnName="NRO_SISTEMA" />
                 <ScalarProperty Name="UNICO" ColumnName="UNICO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="INT_USUARIOS">
-            <EntityTypeMapping TypeName="NewModel.INT_USUARIOS">
-              <MappingFragment StoreEntitySet="INT_USUARIOS">
-                <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
-                <ScalarProperty Name="NOMBREDEUSUARIO" ColumnName="NOMBREDEUSUARIO" />
-                <ScalarProperty Name="FECHA_AUDIT" ColumnName="FECHA_AUDIT" />
-                <ScalarProperty Name="NDOC_ADMIN" ColumnName="NDOC_ADMIN" />
-                <ScalarProperty Name="SECCION" ColumnName="SECCION" />
-                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="TEINTERNO" ColumnName="TEINTERNO" />
-                <ScalarProperty Name="TEDIRECTO" ColumnName="TEDIRECTO" />
-                <ScalarProperty Name="FECHAVENC" ColumnName="FECHAVENC" />
-                <ScalarProperty Name="DESTINO" ColumnName="DESTINO" />
-                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
-                <ScalarProperty Name="APELLIDO" ColumnName="APELLIDO" />
-                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
-                <ScalarProperty Name="NDOC" ColumnName="NDOC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4219,6 +3950,13 @@
           <EntitySetMapping Name="TBL_PRACTICO">
             <EntityTypeMapping TypeName="NewModel.TBL_PRACTICO">
               <MappingFragment StoreEntitySet="TBL_PRACTICO">
+                <ScalarProperty Name="MX" ColumnName="MX" />
+                <ScalarProperty Name="PALTA" ColumnName="PALTA" />
+                <ScalarProperty Name="PZONA" ColumnName="PZONA" />
+                <ScalarProperty Name="JURISDICCION" ColumnName="JURISDICCION" />
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+                <ScalarProperty Name="PCODIGO" ColumnName="PCODIGO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -4329,18 +4067,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TBL_REPORTE">
-            <EntityTypeMapping TypeName="NewModel.TBL_REPORTE">
-              <MappingFragment StoreEntitySet="TBL_REPORTE">
-                <ScalarProperty Name="CONSULTA_SQL" ColumnName="CONSULTA_SQL" />
-                <ScalarProperty Name="CATEGORIA_ID" ColumnName="CATEGORIA_ID" />
-                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
-                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TBL_REPORTECATEGORIA">
             <EntityTypeMapping TypeName="NewModel.TBL_REPORTECATEGORIA">
               <MappingFragment StoreEntitySet="TBL_REPORTECATEGORIA">
@@ -4353,6 +4079,13 @@
           <EntitySetMapping Name="TBL_REPORTE_PARAM">
             <EntityTypeMapping TypeName="NewModel.TBL_REPORTE_PARAM">
               <MappingFragment StoreEntitySet="TBL_REPORTE_PARAM">
+                <ScalarProperty Name="IS_PARAM" ColumnName="IS_PARAM" />
+                <ScalarProperty Name="ORDEN" ColumnName="ORDEN" />
+                <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+                <ScalarProperty Name="OPERADOR" ColumnName="OPERADOR" />
+                <ScalarProperty Name="XML_ID" ColumnName="XML_ID" />
+                <ScalarProperty Name="ENTITY" ColumnName="ENTITY" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
                 <ScalarProperty Name="TIPO_DATO" ColumnName="TIPO_DATO" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="INDICE" ColumnName="INDICE" />
@@ -4413,6 +4146,7 @@
           <EntitySetMapping Name="TBL_VIAJE">
             <EntityTypeMapping TypeName="NewModel.TBL_VIAJE">
               <MappingFragment StoreEntitySet="TBL_VIAJE">
+                <ScalarProperty Name="BUQUE_INFO" ColumnName="BUQUE_INFO" />
                 <ScalarProperty Name="BARCAZAS_LISTADO" ColumnName="BARCAZAS_LISTADO" />
                 <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
                 <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
@@ -4671,6 +4405,51 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BUQUES_NEW">
+            <EntityTypeMapping TypeName="NewModel.BUQUES_NEW">
+              <MappingFragment StoreEntitySet="BUQUES_NEW">
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+                <ScalarProperty Name="DOTACION_MINIMA" ColumnName="DOTACION_MINIMA" />
+                <ScalarProperty Name="ARQUEO_NETO" ColumnName="ARQUEO_NETO" />
+                <ScalarProperty Name="SOCIEDADCLASIF" ColumnName="SOCIEDADCLASIF" />
+                <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+                <ScalarProperty Name="PUERTO_ASIENTO" ColumnName="PUERTO_ASIENTO" />
+                <ScalarProperty Name="CALADO_MAX" ColumnName="CALADO_MAX" />
+                <ScalarProperty Name="ARQUEO_TOTAL" ColumnName="ARQUEO_TOTAL" />
+                <ScalarProperty Name="PUNTAL" ColumnName="PUNTAL" />
+                <ScalarProperty Name="MANGA" ColumnName="MANGA" />
+                <ScalarProperty Name="ESLORA" ColumnName="ESLORA" />
+                <ScalarProperty Name="VELOCIDAD" ColumnName="VELOCIDAD" />
+                <ScalarProperty Name="SDIST" ColumnName="SDIST" />
+                <ScalarProperty Name="ARBOLADURA" ColumnName="ARBOLADURA" />
+                <ScalarProperty Name="TIPO_EXPLOTACION" ColumnName="TIPO_EXPLOTACION" />
+                <ScalarProperty Name="TIPO_SERVICIO" ColumnName="TIPO_SERVICIO" />
+                <ScalarProperty Name="TIPO_BUQUE" ColumnName="TIPO_BUQUE" />
+                <ScalarProperty Name="REGISTRO" ColumnName="REGISTRO" />
+                <ScalarProperty Name="ASTILL_PARTIC" ColumnName="ASTILL_PARTIC" />
+                <ScalarProperty Name="NRO_ISMM" ColumnName="NRO_ISMM" />
+                <ScalarProperty Name="ANIO_CONSTRUCCION" ColumnName="ANIO_CONSTRUCCION" />
+                <ScalarProperty Name="BANDERA" ColumnName="BANDERA" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="NRO_OMI" ColumnName="NRO_OMI" />
+                <ScalarProperty Name="MATRICULA" ColumnName="MATRICULA" />
+                <ScalarProperty Name="ID_BUQUE" ColumnName="ID_BUQUE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_REPORTE">
+            <EntityTypeMapping TypeName="NewModel.TBL_REPORTE">
+              <MappingFragment StoreEntitySet="TBL_REPORTE">
+                <ScalarProperty Name="POST_PARAMS" ColumnName="POST_PARAMS" />
+                <ScalarProperty Name="CONSULTA_SQL" ColumnName="CONSULTA_SQL" />
+                <ScalarProperty Name="CATEGORIA_ID" ColumnName="CATEGORIA_ID" />
+                <ScalarProperty Name="FECHA_CREACION" ColumnName="FECHA_CREACION" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4691,260 +4470,295 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NewModel" ZoomLevel="69">
-        <EntityTypeShape EntityType="NewModel.INT_SISTEMAS" Width="1.5" PointX="15.875" PointY="0.5" Height="6.5955208333333326" />
+      <Diagram Name="NewModel" ZoomLevel="54">
+        <EntityTypeShape EntityType="NewModel.INT_SISTEMAS" Width="1.5" PointX="12.75" PointY="0.75" Height="5.700989583333353" />
         <EntityTypeShape EntityType="NewModel.INT_USER_SIST" Width="1.5" PointX="7.75" PointY="0.75" Height="2.249695638020853" />
-        <EntityTypeShape EntityType="NewModel.INT_USUARIOS" Width="1.5" PointX="3.75" PointY="16.375" Height="4.2879036458333353" />
         <EntityTypeShape EntityType="NewModel.KSTM_PUERTOS" Width="1.5" PointX="9.75" PointY="0.75" Height="2.0853483072916674" />
-        <EntityTypeShape EntityType="NewModel.PAIS" Width="1.5" PointX="12.125" PointY="0.5" Height="2.9417936197916665" />
-        <EntityTypeShape EntityType="NewModel.PUERTOS_INTERNAC" Width="2.375" PointX="0.75" PointY="15.75" Height="3.7109993489583353" />
-        <EntityTypeShape EntityType="NewModel.RIOS_CANALES" Width="1.5" PointX="0.5" PointY="11.75" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="NewModel.RIOS_CANALES_KM" Width="2" PointX="2.25" PointY="12.625" Height="2.7494921874999996" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_BUQUES" Width="1.5" PointX="18" PointY="0.5" Height="6.9801236979166656" />
+        <EntityTypeShape EntityType="NewModel.PAIS" Width="1.5" PointX="14.75" PointY="0.75" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NewModel.PUERTOS_INTERNAC" Width="1.5" PointX="0.75" PointY="15.75" Height="3.235779622395853" />
+        <EntityTypeShape EntityType="NewModel.RIOS_CANALES" Width="1.5" PointX="0.75" PointY="12.375" Height="1.4279589843749818" />
+        <EntityTypeShape EntityType="NewModel.RIOS_CANALES_KM" Width="1.5" PointX="3" PointY="11.875" Height="2.4140429687499818" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_BUQUES" Width="1.5" PointX="17.75" PointY="1.125" Height="6.0296842447916106" />
         <EntityTypeShape EntityType="NewModel.TBL_BQ_ESTADOS" Width="1.5" PointX="7.75" PointY="3.75" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_INTERNAC" Width="1.5" PointX="20.25" PointY="7.875" Height="5.2494108072916656" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPBUQ" Width="2" PointX="20" PointY="1.5" Height="6.0186165364583326" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPIETARIOS" Width="1.5" PointX="20.375" PointY="13.375" Height="3.1340950520833353" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_INTERNAC" Width="1.5" PointX="17.75" PointY="8.75" Height="4.5505582682291674" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPBUQ" Width="1.5" PointX="20" PointY="1.5" Height="5.207947591145853" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPIETARIOS" Width="1.5" PointX="17.75" PointY="14.75" Height="2.742737630208353" />
         <EntityTypeShape EntityType="NewModel.TBL_CAPITAN" Width="1.5" PointX="8.25" PointY="6.375" Height="1.4279589843749818" />
-        <EntityTypeShape EntityType="NewModel.TBL_CARGAETAPA" Width="1.5" PointX="12.375" PointY="9.5" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="NewModel.TBL_CARGAETAPA" Width="1.5" PointX="12.75" PointY="11.625" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NewModel.TBL_CARGAS" Width="1.5" PointX="15.75" PointY="18.75" Height="1.756653645833353" />
         <EntityTypeShape EntityType="NewModel.TBL_CLASIFICACION" Width="1.5" PointX="0.75" PointY="4.75" Height="1.263611653645853" />
-        <EntityTypeShape EntityType="NewModel.TBL_CONEXIONPUNTODECONTROL" Width="2.25" PointX="7.5" PointY="12.875" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="NewModel.TBL_CONEXIONPUNTODECONTROL" Width="1.5" PointX="7.5" PointY="12.125" Height="2.0853483072916674" />
         <EntityTypeShape EntityType="NewModel.TBL_ESTADO" Width="1.5" PointX="2.75" PointY="4.75" Height="1.263611653645853" />
-        <EntityTypeShape EntityType="NewModel.TBL_ETAPA" Width="1.5" PointX="10.5" PointY="10.25" Height="7.9416308593750031" />
-        <EntityTypeShape EntityType="NewModel.TBL_EVENTO" Width="1.5" PointX="18" PointY="9.5" Height="7.3647265625000031" />
-        <EntityTypeShape EntityType="NewModel.TBL_GRUPO" Width="1.5" PointX="3.25" PointY="7" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="NewModel.TBL_GRUPOPUNTO" Width="1.875" PointX="5.875" PointY="7.5" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="NewModel.TBL_ETAPA" Width="1.5" PointX="10.5" PointY="9.75" Height="6.8514208984374818" />
+        <EntityTypeShape EntityType="NewModel.TBL_EVENTO" Width="1.5" PointX="15.75" PointY="9.875" Height="6.3583789062499818" />
+        <EntityTypeShape EntityType="NewModel.TBL_GRUPO" Width="1.5" PointX="5.25" PointY="8.375" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NewModel.TBL_GRUPOPUNTO" Width="1.5" PointX="7.5" PointY="9.125" Height="1.9210009765624818" />
         <EntityTypeShape EntityType="NewModel.TBL_INSTA_PUERT" Width="1.5" PointX="17.75" PointY="18.75" Height="6.0296842447916674" />
         <EntityTypeShape EntityType="NewModel.TBL_KSTM_PUERTOS" Width="1.5" PointX="0.75" PointY="19.75" Height="2.0853483072916674" />
-        <EntityTypeShape EntityType="NewModel.TBL_MOVIMIENTOS_BUQUE" Width="1.75" PointX="22.375" PointY="7.875" Height="4.2879036458333335" />
-        <EntityTypeShape EntityType="NewModel.TBL_MUELLES" Width="1.5" PointX="22" PointY="12.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="NewModel.TBL_MOVIMIENTOS_BUQUE" Width="1.5" PointX="19.75" PointY="7.75" Height="3.728821614583353" />
+        <EntityTypeShape EntityType="NewModel.TBL_MUELLES" Width="1.5" PointX="19.75" PointY="12.75" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NewModel.TBL_PAISES_CIALA" Width="1.5" PointX="19.75" PointY="16.75" Height="2.4140429687499818" />
         <EntityTypeShape EntityType="NewModel.TBL_PBIP" Width="1.5" PointX="10.5" PointY="21.125" Height="2.249695638020853" />
-        <EntityTypeShape EntityType="NewModel.TBL_PRACTICO" Width="1.5" PointX="9.875" PointY="4.25" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="NewModel.TBL_PRACTICOVIAJE" Width="1.5" PointX="11.5" PointY="5.125" Height="3.9033007812499996" />
+        <EntityTypeShape EntityType="NewModel.TBL_PRACTICO" Width="1.5" PointX="10.5" PointY="7.375" Height="1.4279589843749818" />
+        <EntityTypeShape EntityType="NewModel.TBL_PRACTICOVIAJE" Width="1.5" PointX="12.75" PointY="7.375" Height="3.4001269531249818" />
         <EntityTypeShape EntityType="NewModel.TBL_PUERTOS" Width="1.5" PointX="2.75" PointY="20.75" Height="4.0575162760416674" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_KSTM" Width="2" PointX="4.75" PointY="20.75" Height="2.1725878906250031" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_OMI" Width="2" PointX="19.75" PointY="20.75" Height="3.1340950520833353" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROL" Width="1.5" PointX="5.375" PointY="10.25" Height="4.480205078125" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" Width="2.25" PointX="7" PointY="18" Height="1.9802864583333353" />
-        <EntityTypeShape EntityType="NewModel.TBL_REGISTROUSUARIO" Width="1.5" PointX="24.25" PointY="6" Height="1.7879850260416657" />
-        <EntityTypeShape EntityType="NewModel.TBL_REPORTE" Width="1.5" PointX="3" PointY="0.875" Height="2.249695638020853" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_KSTM" Width="1.5" PointX="4.75" PointY="20.75" Height="1.9210009765624818" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_OMI" Width="1.5" PointX="19.75" PointY="20.75" Height="2.742737630208353" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROL" Width="1.5" PointX="5.25" PointY="11.125" Height="3.8931689453124818" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" Width="1.5" PointX="7.5" PointY="15.25" Height="1.756653645833353" />
+        <EntityTypeShape EntityType="NewModel.TBL_REGISTROUSUARIO" Width="1.5" PointX="21.75" PointY="7.75" Height="1.5923063151041674" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTECATEGORIA" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5923063151041106" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTE_PARAM" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9210009765624818" />
-        <EntityTypeShape EntityType="NewModel.TBL_TIPOCARGAUNIDAD" Width="2.25" PointX="16.125" PointY="7.625" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="NewModel.TBL_TIPOCARGAUNIDAD" Width="1.5" PointX="15.75" PointY="6.75" Height="1.756653645833353" />
         <EntityTypeShape EntityType="NewModel.TBL_TIPOEVENTO" Width="1.5" PointX="13.5" PointY="16.375" Height="1.5923063151041106" />
-        <EntityTypeShape EntityType="NewModel.TBL_TIPO_CARGA" Width="1.5" PointX="14.25" PointY="7.375" Height="2.9417936197916656" />
-        <EntityTypeShape EntityType="NewModel.TBL_UNIDAD" Width="1.5" PointX="15.25" PointY="14.625" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="NewModel.TBL_TIPO_CARGA" Width="1.5" PointX="10.5" PointY="3.625" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NewModel.TBL_UNIDAD" Width="1.5" PointX="10.5" PointY="18" Height="1.5923063151041674" />
         <EntityTypeShape EntityType="NewModel.TBL_USUARIOGRUPO" Width="1.5" PointX="13.5" PointY="19.25" Height="1.756653645833353" />
-        <EntityTypeShape EntityType="NewModel.TBL_VIAJE" Width="1.5" PointX="8.25" PointY="21.375" Height="6.0186165364583353" />
-        <EntityTypeShape EntityType="NewModel.TBL_ZONAS" Width="1.5" PointX="1.25" PointY="6.875" Height="4.6725065104166656" />
-        <EntityTypeShape EntityType="NewModel.TMP_BUQUES" Width="1.5" PointX="24.375" PointY="10.375" Height="6.0186165364583353" />
+        <EntityTypeShape EntityType="NewModel.TBL_VIAJE" Width="1.5" PointX="8.25" PointY="18.625" Height="5.207947591145853" />
+        <EntityTypeShape EntityType="NewModel.TBL_ZONAS" Width="1.5" PointX="3" PointY="7.125" Height="4.0575162760416674" />
+        <EntityTypeShape EntityType="NewModel.TMP_BUQUES" Width="1.5" PointX="21.75" PointY="10.75" Height="5.207947591145853" />
         <EntityTypeShape EntityType="NewModel.BUQUE" Width="1.5" PointX="21.75" PointY="16.75" Height="5.207947591145853" />
         <EntityTypeShape EntityType="NewModel.MBPC_SIGO" Width="1.5" PointX="22.75" PointY="0.75" Height="4.0575162760416106" />
         <EntityTypeShape EntityType="NewModel.VIEW_ETAPAS" Width="1.5" PointX="12.75" PointY="22.75" Height="3.728821614583353" />
         <EntityTypeShape EntityType="NewModel.VIEW_MUELLES" Width="1.5" PointX="14.75" PointY="22.75" Height="1.5923063151042243" />
         <EntityTypeShape EntityType="NewModel.VIEW_PBIP" Width="1.5" PointX="21.75" PointY="22.75" Height="3.5644742838542243" />
         <EntityTypeShape EntityType="NewModel.VPUNTO_DE_CONTROL" Width="1.5" PointX="4.75" PointY="23.75" Height="1.5923063151042243" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="1.75" PointX="26.25" PointY="5.75" Height="3.9033007812499996" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="4.125" PointX="26.625" PointY="10.375" Height="4.6725065104166656" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="4.25" PointX="23.75" PointY="5.75" Height="3.4001269531249996" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="4.125" PointX="23.75" PointY="10.75" Height="4.0575162760416656" />
         <EntityTypeShape EntityType="NewModel.VW_PERS_DESTI" Width="1.5" PointX="4.75" PointY="4.75" Height="1.263611653645853" />
-        <AssociationConnector Association="NewModel.FK_TBL_USUARIO" >
-          <ConnectorPoint PointX="5.25" PointY="18.990143229166669" />
-          <ConnectorPoint PointX="7" PointY="18.990143229166669" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013764" >
-          <ConnectorPoint PointX="5.25" PointY="17.419410057291671" />
-          <ConnectorPoint PointX="6.104166666666667" PointY="17.419410057291671" />
-          <ConnectorPoint PointX="6.270833333333333" PointY="17.419410057291671" />
-          <ConnectorPoint PointX="6.75" PointY="17.419410057291671" />
-          <ConnectorPoint PointX="6.75" PointY="17.75" />
-          <ConnectorPoint PointX="10.072916666666666" PointY="17.75" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="17.75" />
-          <ConnectorPoint PointX="10.25" PointY="17.75" />
-          <ConnectorPoint PointX="10.25" PointY="18.412985026041667" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="18.412985026041667" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="18.412985026041667" />
-          <ConnectorPoint PointX="14.25" PointY="18.412985026041667" />
-          <ConnectorPoint PointX="14.25" PointY="19.25" />
-        </AssociationConnector>
         <AssociationConnector Association="NewModel.FK_RIO_CANAL" >
-          <ConnectorPoint PointX="2" PointY="12.985341796875" />
-          <ConnectorPoint PointX="2.25" PointY="12.985341796875" />
+          <ConnectorPoint PointX="2.25" PointY="13.088979492187491" />
+          <ConnectorPoint PointX="3" PointY="13.088979492187491" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.FK_RIOS_CANALES" >
-          <ConnectorPoint PointX="4.25" PointY="13.6776025390625" />
-          <ConnectorPoint PointX="5.375" PointY="13.6776025390625" />
+          <ConnectorPoint PointX="4.5" PointY="13.082021484374991" />
+          <ConnectorPoint PointX="5.25" PointY="13.082021484374991" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013779" >
-          <ConnectorPoint PointX="3.4062525" PointY="12.625" />
-          <ConnectorPoint PointX="3.4062525" PointY="10" />
-          <ConnectorPoint PointX="6.291666666666667" PointY="10" />
-          <ConnectorPoint PointX="6.458333333333333" PointY="10" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="10" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="10" />
-          <ConnectorPoint PointX="11.666666666666666" PointY="10" />
-          <ConnectorPoint PointX="11.833333333333334" PointY="10" />
-          <ConnectorPoint PointX="11.854166666666666" PointY="10" />
-          <ConnectorPoint PointX="12.020833333333334" PointY="10" />
-          <ConnectorPoint PointX="12.125" PointY="10" />
-          <ConnectorPoint PointX="12.125" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="15.854166666666666" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="16.020833333333332" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="16.354166666666668" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="16.520833333333332" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="17.625" PointY="13.268697916666667" />
-          <ConnectorPoint PointX="17.625" PointY="13.235007010416666" />
-          <ConnectorPoint PointX="18" PointY="13.235007010416666" />
+          <ConnectorPoint PointX="3.75" PointY="11.875" />
+          <ConnectorPoint PointX="3.75" PointY="11.625" />
+          <ConnectorPoint PointX="5" PointY="11.625" />
+          <ConnectorPoint PointX="5" PointY="10.875" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="10.874999999999998" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="10.875" />
+          <ConnectorPoint PointX="7.25" PointY="10.875" />
+          <ConnectorPoint PointX="7.25" PointY="11.875" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="11.875" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="11.875" />
+          <ConnectorPoint PointX="9.4947916666666661" PointY="11.875" />
+          <ConnectorPoint PointX="9.6614583333333339" PointY="11.875" />
+          <ConnectorPoint PointX="9.9166666666666661" PointY="11.874999999999998" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="11.875" />
+          <ConnectorPoint PointX="10.25" PointY="11.875" />
+          <ConnectorPoint PointX="10.25" PointY="9.5" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="9.5" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="9.5" />
+          <ConnectorPoint PointX="12.5" PointY="9.5" />
+          <ConnectorPoint PointX="12.5" PointY="11.375" />
+          <ConnectorPoint PointX="15.375" PointY="11.375" />
+          <ConnectorPoint PointX="15.375" PointY="13.054189453124991" />
+          <ConnectorPoint PointX="15.416666666666666" PointY="13.054189453124991" />
+          <ConnectorPoint PointX="15.583333333333334" PointY="13.054189453124991" />
+          <ConnectorPoint PointX="15.75" PointY="13.054189453124991" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.FK_PROPBUQ_MATRI" >
-          <ConnectorPoint PointX="19.5" PointY="4.4900618489583328" />
-          <ConnectorPoint PointX="20" PointY="4.4900618489583328" />
+          <ConnectorPoint PointX="19.25" PointY="4.1039737955729265" />
+          <ConnectorPoint PointX="20" PointY="4.1039737955729265" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013786" >
-          <ConnectorPoint PointX="9.75" PointY="7.9695287475961534" />
-          <ConnectorPoint PointX="10.125" PointY="8.3445287475961543" />
-          <ConnectorPoint PointX="10.125" PointY="14.220815429687502" />
-          <ConnectorPoint PointX="10.5" PointY="14.220815429687502" />
+          <ConnectorPoint PointX="9.40625" PointY="7.8029589843749818" />
+          <ConnectorPoint PointX="9.40625" PointY="14.730174153645834" />
+          <ConnectorPoint PointX="9.4947916666666661" PointY="14.730174153645834" />
+          <ConnectorPoint PointX="9.6614583333333339" PointY="14.730174153645834" />
+          <ConnectorPoint PointX="9.9166666666666661" PointY="14.730174153645832" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="14.730174153645834" />
+          <ConnectorPoint PointX="10.5" PointY="14.730174153645834" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013776" >
-          <ConnectorPoint PointX="14.25" PointY="9.9083968098958337" />
-          <ConnectorPoint PointX="13.875" PointY="9.9083968098958337" />
+          <ConnectorPoint PointX="12" PointY="6.2022354533253212" />
+          <ConnectorPoint PointX="12.375" PointY="6.5772354533253212" />
+          <ConnectorPoint PointX="12.375" PointY="13.160716145833334" />
+          <ConnectorPoint PointX="12.75" PointY="13.160716145833334" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013777" >
-          <ConnectorPoint PointX="15.9375" PointY="14.625" />
-          <ConnectorPoint PointX="15.9375" PointY="11.698995768229167" />
-          <ConnectorPoint PointX="13.875" PointY="11.698995768229167" />
+          <ConnectorPoint PointX="12" PointY="18.59375" />
+          <ConnectorPoint PointX="13.09375" PointY="18.59375" />
+          <ConnectorPoint PointX="13.09375" PointY="14.696432291666667" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013778" >
-          <ConnectorPoint PointX="12" PointY="11.634348958333334" />
-          <ConnectorPoint PointX="12.041666666666666" PointY="11.634348958333332" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="11.634348958333334" />
-          <ConnectorPoint PointX="12.375" PointY="11.634348958333334" />
+          <ConnectorPoint PointX="12" PointY="12.330358072916667" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="12.330358072916667" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="12.330358072916667" />
+          <ConnectorPoint PointX="12.75" PointY="12.330358072916667" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.FK_PUNTODECONTROL1" >
-          <ConnectorPoint PointX="6.875" PointY="13.8026025390625" />
-          <ConnectorPoint PointX="7.5" PointY="13.8026025390625" />
+          <ConnectorPoint PointX="6.75" PointY="13.167674153645834" />
+          <ConnectorPoint PointX="7.5" PointY="13.167674153645834" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.FK_PUNTODECONTROL2" >
-          <ConnectorPoint PointX="6.875" PointY="13.276301269531249" />
-          <ConnectorPoint PointX="7.5" PointY="13.276301269531249" />
+          <ConnectorPoint PointX="6.75" PointY="12.583837076822917" />
+          <ConnectorPoint PointX="7.5" PointY="12.583837076822917" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013771" >
-          <ConnectorPoint PointX="11.75" PointY="10.25" />
-          <ConnectorPoint PointX="11.75" PointY="9.02830078125" />
+          <ConnectorPoint PointX="12" PointY="10.262563476562491" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="10.262563476562489" />
+          <ConnectorPoint PointX="12.583333333333334" PointY="10.262563476562491" />
+          <ConnectorPoint PointX="12.75" PointY="10.262563476562491" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013772" >
-          <ConnectorPoint PointX="11.9375" PointY="10.25" />
-          <ConnectorPoint PointX="11.9375" PointY="9.02830078125" />
+          <ConnectorPoint PointX="12" PointY="9.9437817382812455" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="9.9437817382812437" />
+          <ConnectorPoint PointX="12.583333333333334" PointY="9.9437817382812455" />
+          <ConnectorPoint PointX="12.75" PointY="9.9437817382812455" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013780" >
-          <ConnectorPoint PointX="12" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="15.854166666666666" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="16.020833333333332" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="16.354166666666668" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="16.520833333333332" PointY="13.978098958333334" />
-          <ConnectorPoint PointX="18" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="12" PointY="15.496155598958325" />
+          <ConnectorPoint PointX="13.010416666666666" PointY="15.496155598958325" />
+          <ConnectorPoint PointX="13.177083333333334" PointY="15.496155598958325" />
+          <ConnectorPoint PointX="15.416666666666666" PointY="15.496155598958325" />
+          <ConnectorPoint PointX="15.583333333333334" PointY="15.496155598958325" />
+          <ConnectorPoint PointX="15.75" PointY="15.496155598958325" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013782" >
-          <ConnectorPoint PointX="9.75" PointY="21.400383615384616" />
-          <ConnectorPoint PointX="10.1875" PointY="20.962883615384616" />
-          <ConnectorPoint PointX="10.1875" PointY="16.016660214843746" />
-          <ConnectorPoint PointX="10.5" PointY="16.016660214843746" />
+          <ConnectorPoint PointX="9.234375" PointY="18.625" />
+          <ConnectorPoint PointX="9.234375" PointY="11.489690610351545" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="11.489690610351545" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="11.489690610351545" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="11.489690610351543" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="11.489690610351545" />
+          <ConnectorPoint PointX="10.5" PointY="11.489690610351545" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013783" >
-          <ConnectorPoint PointX="6.875" PointY="11.53125" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="11.53125" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="11.53125" />
-          <ConnectorPoint PointX="10.5" PointY="11.53125" />
+          <ConnectorPoint PointX="6.75" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="9.4947916666666661" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="9.6614583333333339" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="9.9166666666666661" PointY="14.439011230468749" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="14.439011230468751" />
+          <ConnectorPoint PointX="10.5" PointY="14.439011230468751" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013784" >
-          <ConnectorPoint PointX="6.875" PointY="12.234375" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="12.234375" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="12.234375" />
-          <ConnectorPoint PointX="10.5" PointY="12.234375" />
+          <ConnectorPoint PointX="6.75" PointY="11.245875244140621" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="11.245875244140619" />
+          <ConnectorPoint PointX="7.3846119119090412" PointY="11.245875244140621" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="11.245875244140621" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="11.245875244140621" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="11.245875244140619" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="11.245875244140621" />
+          <ConnectorPoint PointX="10.5" PointY="11.245875244140621" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013785" >
-          <ConnectorPoint PointX="6.875" PointY="10.828125" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="10.828125" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="10.828125" />
-          <ConnectorPoint PointX="10.5" PointY="10.828125" />
+          <ConnectorPoint PointX="6.75" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="7.1044910622996715" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="7.2711577289663376" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="9.4947916666666661" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="9.6614583333333339" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="9.9166666666666661" PointY="14.936671549479156" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="14.936671549479158" />
+          <ConnectorPoint PointX="10.5" PointY="14.936671549479158" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013781" >
-          <ConnectorPoint PointX="15" PointY="16.670105794270835" />
-          <ConnectorPoint PointX="18" PointY="16.670105794270835" />
+          <ConnectorPoint PointX="15" PointY="17.171153157552055" />
+          <ConnectorPoint PointX="15.416666666666666" PointY="17.171153157552055" />
+          <ConnectorPoint PointX="15.583333333333334" PointY="17.171153157552055" />
+          <ConnectorPoint PointX="16.5" PointY="17.171153157552055" />
+          <ConnectorPoint PointX="16.5" PointY="16.233378906249982" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013765" >
-          <ConnectorPoint PointX="4.75" PointY="7.5407442565104166" />
-          <ConnectorPoint PointX="5.625" PointY="7.5407442565104166" />
-          <ConnectorPoint PointX="5.625" PointY="10" />
-          <ConnectorPoint PointX="6.291666666666667" PointY="10" />
-          <ConnectorPoint PointX="6.458333333333333" PointY="10" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="10" />
-          <ConnectorPoint PointX="10.239583333333334" PointY="10" />
-          <ConnectorPoint PointX="11.666666666666666" PointY="10" />
-          <ConnectorPoint PointX="11.833333333333334" PointY="10" />
-          <ConnectorPoint PointX="11.854166666666666" PointY="10" />
-          <ConnectorPoint PointX="12.020833333333334" PointY="10" />
-          <ConnectorPoint PointX="12.25" PointY="10" />
-          <ConnectorPoint PointX="12.25" PointY="18.875" />
-          <ConnectorPoint PointX="13.843748" PointY="18.875" />
-          <ConnectorPoint PointX="13.843748" PointY="19.25" />
+          <ConnectorPoint PointX="6.75" PointY="9.1711531575520837" />
+          <ConnectorPoint PointX="7" PointY="9.1711531575520837" />
+          <ConnectorPoint PointX="7" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="9.3229166666666661" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="9.4895833333333339" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="9.4947916666666661" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="9.6614583333333339" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="10" PointY="11.671000976562482" />
+          <ConnectorPoint PointX="10" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="13.010416666666666" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="13.177083333333334" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="13.25" PointY="16.851420898437482" />
+          <ConnectorPoint PointX="13.25" PointY="18.217306315104111" />
+          <ConnectorPoint PointX="14.25" PointY="18.217306315104111" />
+          <ConnectorPoint PointX="14.25" PointY="19.25" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013794" >
-          <ConnectorPoint PointX="4.75" PointY="8.1439925130208337" />
-          <ConnectorPoint PointX="5.541666666666667" PointY="8.1439925130208337" />
-          <ConnectorPoint PointX="5.708333333333333" PointY="8.1439925130208337" />
-          <ConnectorPoint PointX="5.875" PointY="8.1439925130208337" />
+          <ConnectorPoint PointX="6.75" PointY="9.6317297363281256" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="9.6317297363281256" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="9.6317297363281256" />
+          <ConnectorPoint PointX="7.5" PointY="9.6317297363281256" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013793" >
-          <ConnectorPoint PointX="6.375" PointY="10.25" />
-          <ConnectorPoint PointX="6.375" PointY="9.672587890625" />
+          <ConnectorPoint PointX="6.75" PointY="11.126152846153847" />
+          <ConnectorPoint PointX="6.9410744349011209" PointY="10.935078411252725" />
+          <ConnectorPoint PointX="7.0589255650988791" PointY="10.817227281054969" />
+          <ConnectorPoint PointX="7.125" PointY="10.751152846153847" />
+          <ConnectorPoint PointX="7.125" PointY="11.422153822716329" />
+          <ConnectorPoint PointX="7.1910744349011209" PointY="11.356079387815207" />
+          <ConnectorPoint PointX="7.3089255650988791" PointY="11.23822825761745" />
+          <ConnectorPoint PointX="7.5011528461538459" PointY="11.046000976562482" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013788" >
-          <ConnectorPoint PointX="9.75" PointY="22.528595377604169" />
-          <ConnectorPoint PointX="10.5" PointY="22.528595377604169" />
+          <ConnectorPoint PointX="9.75" PointY="22.249847819010427" />
+          <ConnectorPoint PointX="10.5" PointY="22.249847819010427" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013769" >
-          <ConnectorPoint PointX="11.375" PointY="5.485341796875" />
-          <ConnectorPoint PointX="11.5" PointY="5.485341796875" />
+          <ConnectorPoint PointX="12" PointY="8.0889794921874909" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="8.0889794921874909" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="8.0889794921874909" />
+          <ConnectorPoint PointX="12.75" PointY="8.0889794921874909" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013770" >
-          <ConnectorPoint PointX="9.75" PointY="21.381922076923075" />
-          <ConnectorPoint PointX="10.15625" PointY="20.975672076923075" />
-          <ConnectorPoint PointX="10.15625" PointY="7.4369926875" />
-          <ConnectorPoint PointX="11.5" PointY="7.4369926875" />
+          <ConnectorPoint PointX="9.75" PointY="18.625" />
+          <ConnectorPoint PointX="10.125" PointY="18.25" />
+          <ConnectorPoint PointX="10.125" PointY="9.1827294921874909" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="9.1827294921874909" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="9.1827294921874909" />
+          <ConnectorPoint PointX="12.75" PointY="9.1827294921874909" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013768" >
-          <ConnectorPoint PointX="2.75" PointY="10.898753255208334" />
-          <ConnectorPoint PointX="3.3229191666666664" PointY="10.898753255208334" />
-          <ConnectorPoint PointX="3.4895858333333334" PointY="10.898753255208334" />
-          <ConnectorPoint PointX="5.375" PointY="10.898753255208334" />
+          <ConnectorPoint PointX="4.5" PointY="11.182516276041667" />
+          <ConnectorPoint PointX="4.875" PointY="11.557516276041667" />
+          <ConnectorPoint PointX="4.875" PointY="10.748847153846153" />
+          <ConnectorPoint PointX="5.2511528461538459" PointY="11.125" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013792" >
-          <ConnectorPoint PointX="6.1875" PointY="14.730205078125" />
-          <ConnectorPoint PointX="6.1875" PointY="18.463819114583341" />
-          <ConnectorPoint PointX="7" PointY="18.463819114583341" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013766" >
-          <ConnectorPoint PointX="4.5" PointY="2.0855004882812409" />
-          <ConnectorPoint PointX="5.25" PointY="2.0855004882812409" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013803" >
-          <ConnectorPoint PointX="2.25" PointY="2.0461531575520553" />
-          <ConnectorPoint PointX="3" PointY="2.0461531575520553" />
+          <ConnectorPoint PointX="6.75" PointY="15.018168945312482" />
+          <ConnectorPoint PointX="7.125" PointY="15.393168945312482" />
+          <ConnectorPoint PointX="7.125" PointY="14.873847153846153" />
+          <ConnectorPoint PointX="7.5011528461538459" PointY="15.25" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013789" >
-          <ConnectorPoint PointX="15.75" PointY="8.6151432291666659" />
-          <ConnectorPoint PointX="16.125" PointY="8.6151432291666659" />
+          <ConnectorPoint PointX="11.25" PointY="6.2033902994791674" />
+          <ConnectorPoint PointX="11.25" PointY="7.125" />
+          <ConnectorPoint PointX="12.291666666666666" PointY="7.1249999999999991" />
+          <ConnectorPoint PointX="12.458333333333334" PointY="7.125" />
+          <ConnectorPoint PointX="15.375" PointY="7.125" />
+          <ConnectorPoint PointX="15.375" PointY="7.6283268229166765" />
+          <ConnectorPoint PointX="15.75" PointY="7.6283268229166765" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013790" >
-          <ConnectorPoint PointX="16.4375" PointY="14.625" />
-          <ConnectorPoint PointX="16.4375" PointY="9.6052864583333335" />
+          <ConnectorPoint PointX="12" PointY="18.921877499999994" />
+          <ConnectorPoint PointX="14.166666666666666" PointY="18.921877499999994" />
+          <ConnectorPoint PointX="14.333333333333334" PointY="18.921877499999994" />
+          <ConnectorPoint PointX="15.5" PointY="18.921877499999994" />
+          <ConnectorPoint PointX="15.5" PointY="8.881653645833353" />
+          <ConnectorPoint PointX="16.5" PointY="8.881653645833353" />
+          <ConnectorPoint PointX="16.5" PointY="8.506653645833353" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NewModel.BUQUES_NEW" Width="1.5" PointX="7.375" PointY="24.75" Height="5.2079475911458246" />
+        <EntityTypeShape EntityType="NewModel.TBL_REPORTE" Width="1.5" PointX="3" PointY="0.875" Height="2.4140429687499818" />
+        <AssociationConnector Association="NewModel.SYS_C0013766" >
+          <ConnectorPoint PointX="4.5" PointY="2.2070214843749909" />
+          <ConnectorPoint PointX="5.25" PointY="2.2070214843749909" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013803" >
+          <ConnectorPoint PointX="2.25" PointY="2.0461531575520837" />
+          <ConnectorPoint PointX="3" PointY="2.0461531575520837" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

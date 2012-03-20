@@ -28,7 +28,7 @@
 
             <p>
             <%= Html.Label("CARGA") %>
-            <%= Html.DropDownList("TIPOCARGA_ID") %>                <br />
+            <%= Html.DropDownList("TIPOCARGA_ID", (SelectList)ViewData["TIPOCARGA_ID"]) %>                <br />
                 <span class="smltxt red">
             <%= Html.ValidationMessageFor(model => model.TIPOCARGA_ID) %> </span>
             </p>
