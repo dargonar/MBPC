@@ -4691,284 +4691,244 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NewModel" ZoomLevel="54">
-        <EntityTypeShape EntityType="NewModel.INT_SISTEMAS" Width="1.5" PointX="12.75" PointY="0.75" Height="5.700989583333353" />
+      <Diagram Name="NewModel" ZoomLevel="69">
+        <EntityTypeShape EntityType="NewModel.INT_SISTEMAS" Width="1.5" PointX="15.875" PointY="0.5" Height="6.5955208333333326" />
         <EntityTypeShape EntityType="NewModel.INT_USER_SIST" Width="1.5" PointX="7.75" PointY="0.75" Height="2.249695638020853" />
-        <EntityTypeShape EntityType="NewModel.INT_USUARIOS" Width="1.5" PointX="5.25" PointY="16.25" Height="3.728821614583353" />
+        <EntityTypeShape EntityType="NewModel.INT_USUARIOS" Width="1.5" PointX="3.75" PointY="16.375" Height="4.2879036458333353" />
         <EntityTypeShape EntityType="NewModel.KSTM_PUERTOS" Width="1.5" PointX="9.75" PointY="0.75" Height="2.0853483072916674" />
-        <EntityTypeShape EntityType="NewModel.PAIS" Width="1.5" PointX="14.75" PointY="0.75" Height="2.5783902994791674" />
-        <EntityTypeShape EntityType="NewModel.PUERTOS_INTERNAC" Width="1.5" PointX="0.75" PointY="15.75" Height="3.235779622395853" />
-        <EntityTypeShape EntityType="NewModel.RIOS_CANALES" Width="1.5" PointX="0.75" PointY="12.375" Height="1.4279589843749818" />
-        <EntityTypeShape EntityType="NewModel.RIOS_CANALES_KM" Width="1.5" PointX="3" PointY="11.875" Height="2.4140429687499818" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_BUQUES" Width="1.5" PointX="17.75" PointY="1.125" Height="6.0296842447916106" />
+        <EntityTypeShape EntityType="NewModel.PAIS" Width="1.5" PointX="12.125" PointY="0.5" Height="2.9417936197916665" />
+        <EntityTypeShape EntityType="NewModel.PUERTOS_INTERNAC" Width="2.375" PointX="0.75" PointY="15.75" Height="3.7109993489583353" />
+        <EntityTypeShape EntityType="NewModel.RIOS_CANALES" Width="1.5" PointX="0.5" PointY="11.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="NewModel.RIOS_CANALES_KM" Width="2" PointX="2.25" PointY="12.625" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_BUQUES" Width="1.5" PointX="18" PointY="0.5" Height="6.9801236979166656" />
         <EntityTypeShape EntityType="NewModel.TBL_BQ_ESTADOS" Width="1.5" PointX="7.75" PointY="3.75" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_INTERNAC" Width="1.5" PointX="17.75" PointY="8.75" Height="4.5505582682291674" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPBUQ" Width="1.5" PointX="20" PointY="1.5" Height="5.207947591145853" />
-        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPIETARIOS" Width="1.5" PointX="17.75" PointY="14.75" Height="2.742737630208353" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_INTERNAC" Width="1.5" PointX="20.25" PointY="7.875" Height="5.2494108072916656" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPBUQ" Width="2" PointX="20" PointY="1.5" Height="6.0186165364583326" />
+        <EntityTypeShape EntityType="NewModel.TBL_BQ_PROPIETARIOS" Width="1.5" PointX="20.375" PointY="13.375" Height="3.1340950520833353" />
         <EntityTypeShape EntityType="NewModel.TBL_CAPITAN" Width="1.5" PointX="8.25" PointY="6.375" Height="1.4279589843749818" />
-        <EntityTypeShape EntityType="NewModel.TBL_CARGAETAPA" Width="1.5" PointX="12.75" PointY="11.625" Height="3.0714322916666674" />
+        <EntityTypeShape EntityType="NewModel.TBL_CARGAETAPA" Width="1.5" PointX="12.375" PointY="9.5" Height="3.5186979166666656" />
         <EntityTypeShape EntityType="NewModel.TBL_CARGAS" Width="1.5" PointX="15.75" PointY="18.75" Height="1.756653645833353" />
         <EntityTypeShape EntityType="NewModel.TBL_CLASIFICACION" Width="1.5" PointX="0.75" PointY="4.75" Height="1.263611653645853" />
-        <EntityTypeShape EntityType="NewModel.TBL_CONEXIONPUNTODECONTROL" Width="1.5" PointX="7.5" PointY="12.125" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NewModel.TBL_CONEXIONPUNTODECONTROL" Width="2.25" PointX="7.5" PointY="12.875" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="NewModel.TBL_ESTADO" Width="1.5" PointX="2.75" PointY="4.75" Height="1.263611653645853" />
-        <EntityTypeShape EntityType="NewModel.TBL_ETAPA" Width="1.5" PointX="10.5" PointY="9.75" Height="6.8514208984374818" />
-        <EntityTypeShape EntityType="NewModel.TBL_EVENTO" Width="1.5" PointX="15.75" PointY="9.875" Height="6.3583789062499818" />
-        <EntityTypeShape EntityType="NewModel.TBL_GRUPO" Width="1.5" PointX="5.25" PointY="8.375" Height="1.5923063151041674" />
-        <EntityTypeShape EntityType="NewModel.TBL_GRUPOPUNTO" Width="1.5" PointX="7.5" PointY="9.125" Height="1.9210009765624818" />
+        <EntityTypeShape EntityType="NewModel.TBL_ETAPA" Width="1.5" PointX="10.5" PointY="10.25" Height="7.9416308593750031" />
+        <EntityTypeShape EntityType="NewModel.TBL_EVENTO" Width="1.5" PointX="18" PointY="9.5" Height="7.3647265625000031" />
+        <EntityTypeShape EntityType="NewModel.TBL_GRUPO" Width="1.5" PointX="3.25" PointY="7" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="NewModel.TBL_GRUPOPUNTO" Width="1.875" PointX="5.875" PointY="7.5" Height="2.1725878906249996" />
         <EntityTypeShape EntityType="NewModel.TBL_INSTA_PUERT" Width="1.5" PointX="17.75" PointY="18.75" Height="6.0296842447916674" />
         <EntityTypeShape EntityType="NewModel.TBL_KSTM_PUERTOS" Width="1.5" PointX="0.75" PointY="19.75" Height="2.0853483072916674" />
-        <EntityTypeShape EntityType="NewModel.TBL_MOVIMIENTOS_BUQUE" Width="1.5" PointX="19.75" PointY="7.75" Height="3.728821614583353" />
-        <EntityTypeShape EntityType="NewModel.TBL_MUELLES" Width="1.5" PointX="19.75" PointY="12.75" Height="3.0714322916666674" />
+        <EntityTypeShape EntityType="NewModel.TBL_MOVIMIENTOS_BUQUE" Width="1.75" PointX="22.375" PointY="7.875" Height="4.2879036458333335" />
+        <EntityTypeShape EntityType="NewModel.TBL_MUELLES" Width="1.5" PointX="22" PointY="12.75" Height="3.5186979166666674" />
         <EntityTypeShape EntityType="NewModel.TBL_PAISES_CIALA" Width="1.5" PointX="19.75" PointY="16.75" Height="2.4140429687499818" />
         <EntityTypeShape EntityType="NewModel.TBL_PBIP" Width="1.5" PointX="10.5" PointY="21.125" Height="2.249695638020853" />
-        <EntityTypeShape EntityType="NewModel.TBL_PRACTICO" Width="1.5" PointX="10.5" PointY="7.375" Height="1.4279589843749818" />
-        <EntityTypeShape EntityType="NewModel.TBL_PRACTICOVIAJE" Width="1.5" PointX="12.75" PointY="7.375" Height="3.4001269531249818" />
+        <EntityTypeShape EntityType="NewModel.TBL_PRACTICO" Width="1.5" PointX="9.875" PointY="4.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="NewModel.TBL_PRACTICOVIAJE" Width="1.5" PointX="11.5" PointY="5.125" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="NewModel.TBL_PUERTOS" Width="1.5" PointX="2.75" PointY="20.75" Height="4.0575162760416674" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_KSTM" Width="1.5" PointX="4.75" PointY="20.75" Height="1.9210009765624818" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_OMI" Width="1.5" PointX="19.75" PointY="20.75" Height="2.742737630208353" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROL" Width="1.5" PointX="5.25" PointY="11.125" Height="3.8931689453124818" />
-        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" Width="1.5" PointX="7.5" PointY="15.25" Height="1.756653645833353" />
-        <EntityTypeShape EntityType="NewModel.TBL_REGISTROUSUARIO" Width="1.5" PointX="21.75" PointY="7.75" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_KSTM" Width="2" PointX="4.75" PointY="20.75" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUERTOS_OMI" Width="2" PointX="19.75" PointY="20.75" Height="3.1340950520833353" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROL" Width="1.5" PointX="5.375" PointY="10.25" Height="4.480205078125" />
+        <EntityTypeShape EntityType="NewModel.TBL_PUNTODECONTROLUSUARIO" Width="2.25" PointX="7" PointY="18" Height="1.9802864583333353" />
+        <EntityTypeShape EntityType="NewModel.TBL_REGISTROUSUARIO" Width="1.5" PointX="24.25" PointY="6" Height="1.7879850260416657" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTE" Width="1.5" PointX="3" PointY="0.875" Height="2.249695638020853" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTECATEGORIA" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5923063151041106" />
         <EntityTypeShape EntityType="NewModel.TBL_REPORTE_PARAM" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9210009765624818" />
-        <EntityTypeShape EntityType="NewModel.TBL_TIPOCARGAUNIDAD" Width="1.5" PointX="15.75" PointY="6.75" Height="1.756653645833353" />
+        <EntityTypeShape EntityType="NewModel.TBL_TIPOCARGAUNIDAD" Width="2.25" PointX="16.125" PointY="7.625" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="NewModel.TBL_TIPOEVENTO" Width="1.5" PointX="13.5" PointY="16.375" Height="1.5923063151041106" />
-        <EntityTypeShape EntityType="NewModel.TBL_TIPO_CARGA" Width="1.5" PointX="10.5" PointY="3.625" Height="2.5783902994791674" />
-        <EntityTypeShape EntityType="NewModel.TBL_UNIDAD" Width="1.5" PointX="10.5" PointY="18" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NewModel.TBL_TIPO_CARGA" Width="1.5" PointX="14.25" PointY="7.375" Height="2.9417936197916656" />
+        <EntityTypeShape EntityType="NewModel.TBL_UNIDAD" Width="1.5" PointX="15.25" PointY="14.625" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="NewModel.TBL_USUARIOGRUPO" Width="1.5" PointX="13.5" PointY="19.25" Height="1.756653645833353" />
-        <EntityTypeShape EntityType="NewModel.TBL_VIAJE" Width="1.5" PointX="8.25" PointY="18.625" Height="5.207947591145853" />
-        <EntityTypeShape EntityType="NewModel.TBL_ZONAS" Width="1.5" PointX="3" PointY="7.125" Height="4.0575162760416674" />
-        <EntityTypeShape EntityType="NewModel.TMP_BUQUES" Width="1.5" PointX="21.75" PointY="10.75" Height="5.207947591145853" />
+        <EntityTypeShape EntityType="NewModel.TBL_VIAJE" Width="1.5" PointX="8.25" PointY="21.375" Height="6.0186165364583353" />
+        <EntityTypeShape EntityType="NewModel.TBL_ZONAS" Width="1.5" PointX="1.25" PointY="6.875" Height="4.6725065104166656" />
+        <EntityTypeShape EntityType="NewModel.TMP_BUQUES" Width="1.5" PointX="24.375" PointY="10.375" Height="6.0186165364583353" />
         <EntityTypeShape EntityType="NewModel.BUQUE" Width="1.5" PointX="21.75" PointY="16.75" Height="5.207947591145853" />
         <EntityTypeShape EntityType="NewModel.MBPC_SIGO" Width="1.5" PointX="22.75" PointY="0.75" Height="4.0575162760416106" />
         <EntityTypeShape EntityType="NewModel.VIEW_ETAPAS" Width="1.5" PointX="12.75" PointY="22.75" Height="3.728821614583353" />
         <EntityTypeShape EntityType="NewModel.VIEW_MUELLES" Width="1.5" PointX="14.75" PointY="22.75" Height="1.5923063151042243" />
         <EntityTypeShape EntityType="NewModel.VIEW_PBIP" Width="1.5" PointX="21.75" PointY="22.75" Height="3.5644742838542243" />
         <EntityTypeShape EntityType="NewModel.VPUNTO_DE_CONTROL" Width="1.5" PointX="4.75" PointY="23.75" Height="1.5923063151042243" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="4.25" PointX="23.75" PointY="5.75" Height="3.4001269531249996" />
-        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="4.125" PointX="23.75" PointY="10.75" Height="4.0575162760416656" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS" Width="1.75" PointX="26.25" PointY="5.75" Height="3.9033007812499996" />
+        <EntityTypeShape EntityType="NewModel.VW_INT_USUARIOS_EXT" Width="4.125" PointX="26.625" PointY="10.375" Height="4.6725065104166656" />
         <EntityTypeShape EntityType="NewModel.VW_PERS_DESTI" Width="1.5" PointX="4.75" PointY="4.75" Height="1.263611653645853" />
         <AssociationConnector Association="NewModel.FK_TBL_USUARIO" >
-          <ConnectorPoint PointX="6.75" PointY="16.628326822916677" />
-          <ConnectorPoint PointX="7.5" PointY="16.628326822916677" />
+          <ConnectorPoint PointX="5.25" PointY="18.990143229166669" />
+          <ConnectorPoint PointX="7" PointY="18.990143229166669" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013764" >
-          <ConnectorPoint PointX="6" PointY="19.978821614583353" />
-          <ConnectorPoint PointX="6" PointY="20.128326822916677" />
-          <ConnectorPoint PointX="8" PointY="20.128326822916677" />
-          <ConnectorPoint PointX="8" PointY="18.375" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="18.375" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="18.375" />
-          <ConnectorPoint PointX="9.9166666666666661" PointY="18.375" />
-          <ConnectorPoint PointX="10.083333333333334" PointY="18.375" />
-          <ConnectorPoint PointX="10.25" PointY="18.375" />
-          <ConnectorPoint PointX="10.25" PointY="20.330729480468761" />
-          <ConnectorPoint PointX="13.5" PointY="20.330729480468761" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.FK_RIO_CANAL" >
-          <ConnectorPoint PointX="2.25" PointY="13.088979492187491" />
-          <ConnectorPoint PointX="3" PointY="13.088979492187491" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.FK_RIOS_CANALES" >
-          <ConnectorPoint PointX="4.5" PointY="13.082021484374991" />
-          <ConnectorPoint PointX="5.25" PointY="13.082021484374991" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013779" >
-          <ConnectorPoint PointX="3.75" PointY="11.875" />
-          <ConnectorPoint PointX="3.75" PointY="11.625" />
-          <ConnectorPoint PointX="5" PointY="11.625" />
-          <ConnectorPoint PointX="5" PointY="10.875" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="10.874999999999998" />
-          <ConnectorPoint PointX="7.208333333333333" PointY="10.875" />
-          <ConnectorPoint PointX="7.25" PointY="10.875" />
-          <ConnectorPoint PointX="7.25" PointY="11.875" />
-          <ConnectorPoint PointX="9.3229166666666661" PointY="11.875" />
-          <ConnectorPoint PointX="9.4895833333333339" PointY="11.875" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="11.875" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="11.875" />
-          <ConnectorPoint PointX="9.9166666666666661" PointY="11.874999999999998" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="11.875" />
-          <ConnectorPoint PointX="10.25" PointY="11.875" />
-          <ConnectorPoint PointX="10.25" PointY="9.5" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="9.5" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="9.5" />
-          <ConnectorPoint PointX="12.5" PointY="9.5" />
-          <ConnectorPoint PointX="12.5" PointY="11.375" />
-          <ConnectorPoint PointX="15.375" PointY="11.375" />
-          <ConnectorPoint PointX="15.375" PointY="13.054189453124991" />
-          <ConnectorPoint PointX="15.416666666666666" PointY="13.054189453124991" />
-          <ConnectorPoint PointX="15.583333333333334" PointY="13.054189453124991" />
-          <ConnectorPoint PointX="15.75" PointY="13.054189453124991" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.FK_PROPBUQ_MATRI" >
-          <ConnectorPoint PointX="19.25" PointY="4.1039737955729265" />
-          <ConnectorPoint PointX="20" PointY="4.1039737955729265" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013786" >
-          <ConnectorPoint PointX="9.40625" PointY="7.8029589843749818" />
-          <ConnectorPoint PointX="9.40625" PointY="14.730174153645834" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="14.730174153645834" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="14.730174153645834" />
-          <ConnectorPoint PointX="9.9166666666666661" PointY="14.730174153645832" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="14.730174153645834" />
-          <ConnectorPoint PointX="10.5" PointY="14.730174153645834" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013776" >
-          <ConnectorPoint PointX="12" PointY="6.2022354533253212" />
-          <ConnectorPoint PointX="12.375" PointY="6.5772354533253212" />
-          <ConnectorPoint PointX="12.375" PointY="13.160716145833334" />
-          <ConnectorPoint PointX="12.75" PointY="13.160716145833334" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013777" >
-          <ConnectorPoint PointX="12" PointY="18.59375" />
-          <ConnectorPoint PointX="13.09375" PointY="18.59375" />
-          <ConnectorPoint PointX="13.09375" PointY="14.696432291666667" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013778" >
-          <ConnectorPoint PointX="12" PointY="12.330358072916667" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="12.330358072916667" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="12.330358072916667" />
-          <ConnectorPoint PointX="12.75" PointY="12.330358072916667" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.FK_PUNTODECONTROL1" >
-          <ConnectorPoint PointX="6.75" PointY="13.167674153645834" />
-          <ConnectorPoint PointX="7.5" PointY="13.167674153645834" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.FK_PUNTODECONTROL2" >
-          <ConnectorPoint PointX="6.75" PointY="12.583837076822917" />
-          <ConnectorPoint PointX="7.5" PointY="12.583837076822917" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013771" >
-          <ConnectorPoint PointX="12" PointY="10.262563476562491" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="10.262563476562489" />
-          <ConnectorPoint PointX="12.583333333333334" PointY="10.262563476562491" />
-          <ConnectorPoint PointX="12.75" PointY="10.262563476562491" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013772" >
-          <ConnectorPoint PointX="12" PointY="9.9437817382812455" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="9.9437817382812437" />
-          <ConnectorPoint PointX="12.583333333333334" PointY="9.9437817382812455" />
-          <ConnectorPoint PointX="12.75" PointY="9.9437817382812455" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013780" >
-          <ConnectorPoint PointX="12" PointY="15.496155598958325" />
-          <ConnectorPoint PointX="13.010416666666666" PointY="15.496155598958325" />
-          <ConnectorPoint PointX="13.177083333333334" PointY="15.496155598958325" />
-          <ConnectorPoint PointX="15.416666666666666" PointY="15.496155598958325" />
-          <ConnectorPoint PointX="15.583333333333334" PointY="15.496155598958325" />
-          <ConnectorPoint PointX="15.75" PointY="15.496155598958325" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013782" >
-          <ConnectorPoint PointX="9.578125" PointY="18.625" />
-          <ConnectorPoint PointX="9.578125" PointY="11.491750488281241" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="11.491750488281239" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="11.491750488281241" />
-          <ConnectorPoint PointX="10.5" PointY="11.491750488281241" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013783" >
-          <ConnectorPoint PointX="6.75" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="9.3229166666666661" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="9.4895833333333339" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="9.9166666666666661" PointY="14.439011230468749" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="14.439011230468751" />
-          <ConnectorPoint PointX="10.5" PointY="14.439011230468751" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013784" >
-          <ConnectorPoint PointX="6.75" PointY="11.245875244140621" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="11.245875244140619" />
-          <ConnectorPoint PointX="7.3846119119090412" PointY="11.245875244140621" />
-          <ConnectorPoint PointX="9.3229166666666661" PointY="11.245875244140621" />
-          <ConnectorPoint PointX="9.4895833333333339" PointY="11.245875244140621" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="11.245875244140619" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="11.245875244140621" />
-          <ConnectorPoint PointX="10.5" PointY="11.245875244140621" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013785" >
-          <ConnectorPoint PointX="6.75" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="7.1044910622996715" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="7.2711577289663376" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="9.9166666666666661" PointY="14.936671549479156" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="14.936671549479158" />
-          <ConnectorPoint PointX="10.5" PointY="14.936671549479158" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013781" >
-          <ConnectorPoint PointX="15" PointY="17.171153157552055" />
-          <ConnectorPoint PointX="15.416666666666666" PointY="17.171153157552055" />
-          <ConnectorPoint PointX="15.583333333333334" PointY="17.171153157552055" />
-          <ConnectorPoint PointX="16.5" PointY="17.171153157552055" />
-          <ConnectorPoint PointX="16.5" PointY="16.233378906249982" />
-        </AssociationConnector>
-        <AssociationConnector Association="NewModel.SYS_C0013765" >
-          <ConnectorPoint PointX="6.75" PointY="9.1711531575520837" />
-          <ConnectorPoint PointX="7" PointY="9.1711531575520837" />
-          <ConnectorPoint PointX="7" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="7.166666666666667" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="9.3229166666666661" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="9.4895833333333339" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="9.4947916666666661" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="9.6614583333333339" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="10" PointY="11.671000976562482" />
-          <ConnectorPoint PointX="10" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="13.010416666666666" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="13.177083333333334" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="13.25" PointY="16.851420898437482" />
-          <ConnectorPoint PointX="13.25" PointY="18.217306315104111" />
-          <ConnectorPoint PointX="14.25" PointY="18.217306315104111" />
+          <ConnectorPoint PointX="5.25" PointY="17.419410057291671" />
+          <ConnectorPoint PointX="6.104166666666667" PointY="17.419410057291671" />
+          <ConnectorPoint PointX="6.270833333333333" PointY="17.419410057291671" />
+          <ConnectorPoint PointX="6.75" PointY="17.419410057291671" />
+          <ConnectorPoint PointX="6.75" PointY="17.75" />
+          <ConnectorPoint PointX="10.072916666666666" PointY="17.75" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="17.75" />
+          <ConnectorPoint PointX="10.25" PointY="17.75" />
+          <ConnectorPoint PointX="10.25" PointY="18.412985026041667" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="18.412985026041667" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="18.412985026041667" />
+          <ConnectorPoint PointX="14.25" PointY="18.412985026041667" />
           <ConnectorPoint PointX="14.25" PointY="19.25" />
         </AssociationConnector>
+        <AssociationConnector Association="NewModel.FK_RIO_CANAL" >
+          <ConnectorPoint PointX="2" PointY="12.985341796875" />
+          <ConnectorPoint PointX="2.25" PointY="12.985341796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.FK_RIOS_CANALES" >
+          <ConnectorPoint PointX="4.25" PointY="13.6776025390625" />
+          <ConnectorPoint PointX="5.375" PointY="13.6776025390625" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013779" >
+          <ConnectorPoint PointX="3.4062525" PointY="12.625" />
+          <ConnectorPoint PointX="3.4062525" PointY="10" />
+          <ConnectorPoint PointX="6.291666666666667" PointY="10" />
+          <ConnectorPoint PointX="6.458333333333333" PointY="10" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="10" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="10" />
+          <ConnectorPoint PointX="11.666666666666666" PointY="10" />
+          <ConnectorPoint PointX="11.833333333333334" PointY="10" />
+          <ConnectorPoint PointX="11.854166666666666" PointY="10" />
+          <ConnectorPoint PointX="12.020833333333334" PointY="10" />
+          <ConnectorPoint PointX="12.125" PointY="10" />
+          <ConnectorPoint PointX="12.125" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="15.854166666666666" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="16.020833333333332" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="16.354166666666668" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="16.520833333333332" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="17.625" PointY="13.268697916666667" />
+          <ConnectorPoint PointX="17.625" PointY="13.235007010416666" />
+          <ConnectorPoint PointX="18" PointY="13.235007010416666" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.FK_PROPBUQ_MATRI" >
+          <ConnectorPoint PointX="19.5" PointY="4.4900618489583328" />
+          <ConnectorPoint PointX="20" PointY="4.4900618489583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013786" >
+          <ConnectorPoint PointX="9.75" PointY="7.9695287475961534" />
+          <ConnectorPoint PointX="10.125" PointY="8.3445287475961543" />
+          <ConnectorPoint PointX="10.125" PointY="14.220815429687502" />
+          <ConnectorPoint PointX="10.5" PointY="14.220815429687502" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013776" >
+          <ConnectorPoint PointX="14.25" PointY="9.9083968098958337" />
+          <ConnectorPoint PointX="13.875" PointY="9.9083968098958337" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013777" >
+          <ConnectorPoint PointX="15.9375" PointY="14.625" />
+          <ConnectorPoint PointX="15.9375" PointY="11.698995768229167" />
+          <ConnectorPoint PointX="13.875" PointY="11.698995768229167" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013778" >
+          <ConnectorPoint PointX="12" PointY="11.634348958333334" />
+          <ConnectorPoint PointX="12.041666666666666" PointY="11.634348958333332" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="11.634348958333334" />
+          <ConnectorPoint PointX="12.375" PointY="11.634348958333334" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.FK_PUNTODECONTROL1" >
+          <ConnectorPoint PointX="6.875" PointY="13.8026025390625" />
+          <ConnectorPoint PointX="7.5" PointY="13.8026025390625" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.FK_PUNTODECONTROL2" >
+          <ConnectorPoint PointX="6.875" PointY="13.276301269531249" />
+          <ConnectorPoint PointX="7.5" PointY="13.276301269531249" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013771" >
+          <ConnectorPoint PointX="11.75" PointY="10.25" />
+          <ConnectorPoint PointX="11.75" PointY="9.02830078125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013772" >
+          <ConnectorPoint PointX="11.9375" PointY="10.25" />
+          <ConnectorPoint PointX="11.9375" PointY="9.02830078125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013780" >
+          <ConnectorPoint PointX="12" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="15.854166666666666" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="16.020833333333332" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="16.354166666666668" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="16.520833333333332" PointY="13.978098958333334" />
+          <ConnectorPoint PointX="18" PointY="13.978098958333334" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013782" >
+          <ConnectorPoint PointX="9.75" PointY="21.400383615384616" />
+          <ConnectorPoint PointX="10.1875" PointY="20.962883615384616" />
+          <ConnectorPoint PointX="10.1875" PointY="16.016660214843746" />
+          <ConnectorPoint PointX="10.5" PointY="16.016660214843746" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013783" >
+          <ConnectorPoint PointX="6.875" PointY="11.53125" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="11.53125" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="11.53125" />
+          <ConnectorPoint PointX="10.5" PointY="11.53125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013784" >
+          <ConnectorPoint PointX="6.875" PointY="12.234375" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="12.234375" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="12.234375" />
+          <ConnectorPoint PointX="10.5" PointY="12.234375" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013785" >
+          <ConnectorPoint PointX="6.875" PointY="10.828125" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="10.828125" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="10.828125" />
+          <ConnectorPoint PointX="10.5" PointY="10.828125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013781" >
+          <ConnectorPoint PointX="15" PointY="16.670105794270835" />
+          <ConnectorPoint PointX="18" PointY="16.670105794270835" />
+        </AssociationConnector>
+        <AssociationConnector Association="NewModel.SYS_C0013765" >
+          <ConnectorPoint PointX="4.75" PointY="7.5407442565104166" />
+          <ConnectorPoint PointX="5.625" PointY="7.5407442565104166" />
+          <ConnectorPoint PointX="5.625" PointY="10" />
+          <ConnectorPoint PointX="6.291666666666667" PointY="10" />
+          <ConnectorPoint PointX="6.458333333333333" PointY="10" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="10" />
+          <ConnectorPoint PointX="10.239583333333334" PointY="10" />
+          <ConnectorPoint PointX="11.666666666666666" PointY="10" />
+          <ConnectorPoint PointX="11.833333333333334" PointY="10" />
+          <ConnectorPoint PointX="11.854166666666666" PointY="10" />
+          <ConnectorPoint PointX="12.020833333333334" PointY="10" />
+          <ConnectorPoint PointX="12.25" PointY="10" />
+          <ConnectorPoint PointX="12.25" PointY="18.875" />
+          <ConnectorPoint PointX="13.843748" PointY="18.875" />
+          <ConnectorPoint PointX="13.843748" PointY="19.25" />
+        </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013794" >
-          <ConnectorPoint PointX="6.75" PointY="9.6317297363281256" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="9.6317297363281256" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="9.6317297363281256" />
-          <ConnectorPoint PointX="7.5" PointY="9.6317297363281256" />
+          <ConnectorPoint PointX="4.75" PointY="8.1439925130208337" />
+          <ConnectorPoint PointX="5.541666666666667" PointY="8.1439925130208337" />
+          <ConnectorPoint PointX="5.708333333333333" PointY="8.1439925130208337" />
+          <ConnectorPoint PointX="5.875" PointY="8.1439925130208337" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013793" >
-          <ConnectorPoint PointX="6.75" PointY="11.126152846153847" />
-          <ConnectorPoint PointX="6.9410744349011209" PointY="10.935078411252725" />
-          <ConnectorPoint PointX="7.0589255650988791" PointY="10.817227281054969" />
-          <ConnectorPoint PointX="7.125" PointY="10.751152846153847" />
-          <ConnectorPoint PointX="7.125" PointY="11.422153822716329" />
-          <ConnectorPoint PointX="7.1910744349011209" PointY="11.356079387815207" />
-          <ConnectorPoint PointX="7.3089255650988791" PointY="11.23822825761745" />
-          <ConnectorPoint PointX="7.5011528461538459" PointY="11.046000976562482" />
+          <ConnectorPoint PointX="6.375" PointY="10.25" />
+          <ConnectorPoint PointX="6.375" PointY="9.672587890625" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013788" >
-          <ConnectorPoint PointX="9.75" PointY="22.249847819010427" />
-          <ConnectorPoint PointX="10.5" PointY="22.249847819010427" />
+          <ConnectorPoint PointX="9.75" PointY="22.528595377604169" />
+          <ConnectorPoint PointX="10.5" PointY="22.528595377604169" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013769" >
-          <ConnectorPoint PointX="12" PointY="8.0889794921874909" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="8.0889794921874909" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="8.0889794921874909" />
-          <ConnectorPoint PointX="12.75" PointY="8.0889794921874909" />
+          <ConnectorPoint PointX="11.375" PointY="5.485341796875" />
+          <ConnectorPoint PointX="11.5" PointY="5.485341796875" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013770" >
-          <ConnectorPoint PointX="9.75" PointY="18.625" />
-          <ConnectorPoint PointX="10.125" PointY="18.25" />
-          <ConnectorPoint PointX="10.125" PointY="9.1827294921874909" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="9.1827294921874909" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="9.1827294921874909" />
-          <ConnectorPoint PointX="12.75" PointY="9.1827294921874909" />
+          <ConnectorPoint PointX="9.75" PointY="21.381922076923075" />
+          <ConnectorPoint PointX="10.15625" PointY="20.975672076923075" />
+          <ConnectorPoint PointX="10.15625" PointY="7.4369926875" />
+          <ConnectorPoint PointX="11.5" PointY="7.4369926875" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013768" >
-          <ConnectorPoint PointX="4.5" PointY="11.182516276041667" />
-          <ConnectorPoint PointX="4.875" PointY="11.557516276041667" />
-          <ConnectorPoint PointX="4.875" PointY="10.748847153846153" />
-          <ConnectorPoint PointX="5.2511528461538459" PointY="11.125" />
+          <ConnectorPoint PointX="2.75" PointY="10.898753255208334" />
+          <ConnectorPoint PointX="3.3229191666666664" PointY="10.898753255208334" />
+          <ConnectorPoint PointX="3.4895858333333334" PointY="10.898753255208334" />
+          <ConnectorPoint PointX="5.375" PointY="10.898753255208334" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013792" >
-          <ConnectorPoint PointX="6.75" PointY="15.018168945312482" />
-          <ConnectorPoint PointX="7.125" PointY="15.393168945312482" />
-          <ConnectorPoint PointX="7.125" PointY="14.873847153846153" />
-          <ConnectorPoint PointX="7.5011528461538459" PointY="15.25" />
+          <ConnectorPoint PointX="6.1875" PointY="14.730205078125" />
+          <ConnectorPoint PointX="6.1875" PointY="18.463819114583341" />
+          <ConnectorPoint PointX="7" PointY="18.463819114583341" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013766" >
           <ConnectorPoint PointX="4.5" PointY="2.0855004882812409" />
@@ -4979,22 +4939,12 @@
           <ConnectorPoint PointX="3" PointY="2.0461531575520553" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013789" >
-          <ConnectorPoint PointX="11.25" PointY="6.2033902994791674" />
-          <ConnectorPoint PointX="11.25" PointY="7.125" />
-          <ConnectorPoint PointX="12.291666666666666" PointY="7.1249999999999991" />
-          <ConnectorPoint PointX="12.458333333333334" PointY="7.125" />
-          <ConnectorPoint PointX="15.375" PointY="7.125" />
-          <ConnectorPoint PointX="15.375" PointY="7.6283268229166765" />
-          <ConnectorPoint PointX="15.75" PointY="7.6283268229166765" />
+          <ConnectorPoint PointX="15.75" PointY="8.6151432291666659" />
+          <ConnectorPoint PointX="16.125" PointY="8.6151432291666659" />
         </AssociationConnector>
         <AssociationConnector Association="NewModel.SYS_C0013790" >
-          <ConnectorPoint PointX="12" PointY="18.921877499999994" />
-          <ConnectorPoint PointX="14.166666666666666" PointY="18.921877499999994" />
-          <ConnectorPoint PointX="14.333333333333334" PointY="18.921877499999994" />
-          <ConnectorPoint PointX="15.5" PointY="18.921877499999994" />
-          <ConnectorPoint PointX="15.5" PointY="8.881653645833353" />
-          <ConnectorPoint PointX="16.5" PointY="8.881653645833353" />
-          <ConnectorPoint PointX="16.5" PointY="8.506653645833353" />
+          <ConnectorPoint PointX="16.4375" PointY="14.625" />
+          <ConnectorPoint PointX="16.4375" PointY="9.6052864583333335" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

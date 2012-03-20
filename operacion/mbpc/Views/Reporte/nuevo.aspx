@@ -555,7 +555,8 @@
           url: '<%= Url.Content("~/Reporte/orderColumnItem/")%>?entities='+selected_entities.join(',')+'&last='+last,
           success: (function (data) {
             $('#orden_columnas .items').append(data);
-            hideLoading();
+            $('#orden_columnas .items').scrollTop($('#orden_columnas .items').height());
+             hideLoading();
           }),
           error: (function (data) {
             hideLoading();
@@ -594,6 +595,7 @@
           success: (function (data) {
             $('#resultado_columnas .items').append(data);
             hideLoading();
+            $('#resultado_columnas .items').scrollTop($('#resultado_columnas .items').height());
           }),
           error: (function (data) {
             hideLoading();

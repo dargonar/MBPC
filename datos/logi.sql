@@ -2103,7 +2103,7 @@ create or replace package body mbpc as
         AND b.nombre is NULL
         AND a.entity = b.entity
         AND a.tipo = 'entidad'
-        AND b.tipo != 'entidad'
+        /*AND b.tipo != 'entidad'*/
       ORDER by a.orden asc, b.tipo desc,  b.orden ASC      ;
       
   end reporte_metadata;

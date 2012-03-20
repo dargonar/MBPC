@@ -62,8 +62,11 @@ namespace mbpc.Controllers
           ReporteController.xmlReader = XmlReader.Create(System.IO.File.Open(fileName2, FileMode.Open));
           
           XmlDocument xml = new XmlDocument();
+          
           xml.Load(ReporteController.xmlReader);
+          
           ReporteController.xmlReader.Close();
+          
           return xml;
         }
 
@@ -753,7 +756,7 @@ namespace mbpc.Controllers
           if (String.IsNullOrEmpty(attribute_id))
           {
             //attribute_id = PrimerAtributo;
-            string first_attr_path = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute", entity_id);
+            string first_attr_path = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute[@is_filter=1]", entity_id);
             attribute_id = xmlDoc.SelectSingleNode(first_attr_path).Attributes.GetNamedItem("id").Value;
           }
           
@@ -790,9 +793,9 @@ namespace mbpc.Controllers
           
           XmlDocument xmlDoc = openSQLConfig();
 
-          string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute", entity_id);
+          string mpath = string.Format("/sqlbuilder/entities/entity[@id='{0}']/attributes/attribute[@is_filter=1]", entity_id);
           SortedDictionary<string, string> cur_attributes = new SortedDictionary<string, string>();
-
+          
           foreach (XmlNode attr in xmlDoc.SelectNodes(mpath))
           {
             string attr_id = attr.Attributes.GetNamedItem("id").Value;
@@ -805,7 +808,7 @@ namespace mbpc.Controllers
           System.GC.Collect();
 
           List<object> newList = new List<object>();
-          foreach (KeyValuePair<string, string> pair in cur_attributes)
+          foreach (KeyValuePair<string, string> pair in cur_attributes.OrderBy(element => element.Value))
             newList.Add(new
             {
               id = Convert.ToString(pair.Key),

@@ -6,8 +6,8 @@
         tbl_viaje v left join tmp_buques b on v.buque_id = b.id_buque
       </sql>
       <attributes>
-        <attribute id="v1" name="Fecha de Llegada" description="Arrivó" type="date" sql_column="v.FECHA_LLEGADA" is_filter="1"/>
-        <attribute id="v2" name="Fecha de Salida" description="Partió" type="date" sql_column="v.FECHA_SALIDA" is_filter="1"/>
+        <attribute id="v1" name="Fecha de Llegada" description="Arrivó / Fecha llegada" type="date" sql_column="v.FECHA_LLEGADA" is_filter="1"/>
+        <attribute id="v2" name="Fecha de Salida" description="Partió / Fecha Salida" type="date" sql_column="v.FECHA_SALIDA" is_filter="1"/>
         <attribute id="v3" name="ETA" description="ETA" type="date" sql_column="v.ETA" is_filter="1"/>
         <attribute id="v4" name="ZOE" description="ZOE" type="date" sql_column="v.ZOE" is_filter="1"/>
         <attribute id="v5" name="Viajando" description="Está viajando" type="hardcoded" data_type="integer" sql_column="v.ESTADO" value="v.ESTADO=0" is_filter="1"/>
@@ -21,21 +21,46 @@
         
         <attribute id="v51" name="Número OMI de buque" description="Número OMI" type="string" sql_column="b.NRO_OMI" is_filter="1"/>
         <attribute id="v52" name="Matrícula de buque" description="Matrícula" type="string" sql_column="b.MATRICULA" is_filter="1"/>
-        <attribute id="v53" name="Nombre de buque" description="Nombre" type="string" sql_column="b.NOMBRE" is_filter="1"/>
-        <attribute id="v54" name="Bandera de buque" description="Bandera" type="string" sql_column="b.BANDERA" is_filter="1"/>
+        <attribute id="v53" name="Nombre de buque" description="Nombre de buque" type="string" sql_column="b.NOMBRE" is_filter="1"/>
+        <attribute id="v54" name="Bandera de buque" description="Bandera de buque" type="string" sql_column="b.BANDERA" is_filter="1"/>
+        <attribute id="v55" name="Id de buque" description="Id de buque" type="integer" sql_column="b.ID_BUQUE" is_filter="1"/>
+        <attribute id="v56" name="Año construcción buque" description="Año construcción buque" type="integer" sql_column="b.ANIO_CONSTRUCCION" is_filter="1" hint="Ej: 1980, 1958"/>
+        <attribute id="v57" name="Tipo de buque" description="Tipo de buque" type="string" sql_column="b.TIPO_BUQUE" is_filter="1" hint="Ej: barcaza, carga, general"/>
         
       </attributes>
       <relations>
         <relation target="Practico">
           <sql>left join tbl_practicoviaje pv on pv.viaje_id=v.id left join tbl_practico p on p.id=pv.practico_id</sql>
         </relation>
-        <relation target="Carga"> 
+        <!--relation target="Carga"> 
           <sql>
             left JOIN tbl_etapa e ON e.viaje_id=v.id
             left join tbl_cargaetapa ce ON ce.etapa_id=e.id
             left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
             left JOIN tbl_unidad u ON ce.unidad_id=u.id
             left JOIN buques b2 on ce.buque_id=b2.id_buque
+          </sql>
+        </relation-->
+        <relation target="Etapa Viaje"> 
+          <sql>
+            left join tbl_etapa ev on ev.viaje_id = v.id
+              
+              left JOIN tbl_capitan cap on ev.CAPITAN_ID = cap.ID
+        
+              left JOIN TBL_PUNTODECONTROL pdc_destino on pdc_destino.ID = ev.DESTINO_ID
+              left JOIN RIOS_CANALES_KM rckm_destino on rckm_destino.ID = pdc_destino.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_destino on rc_destino.id = rckm_destino.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_destino on z_destino.id = pdc_destino.ZONA_ID
+              
+              left JOIN TBL_PUNTODECONTROL pdc_origen on pdc_origen.ID = ev.ORIGEN_ID
+              left JOIN RIOS_CANALES_KM rckm_origen on rckm_origen.ID = pdc_origen.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_origen on rc_origen.id = rckm_origen.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_origen on z_origen.id = pdc_origen.ZONA_ID
+              
+              left JOIN TBL_PUNTODECONTROL pdc_actual on pdc_actual.ID = ev.ACTUAL_ID
+              left JOIN RIOS_CANALES_KM rckm_actual on rckm_actual.ID = pdc_actual.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_actual on rc_actual.id = rckm_actual.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_actual on z_actual.id = pdc_actual.ZONA_ID
           </sql>
         </relation>
       </relations>
@@ -68,7 +93,6 @@
     <entity name="Carga" id="c">
       <sql>
         tbl_cargaetapa ce
-        left JOIN tbl_etapa e ON ce.etapa_id=e.id
         left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
         left JOIN tbl_unidad u ON ce.unidad_id=u.id
         left JOIN buques b2 on ce.buque_id=b2.id_buque
@@ -78,13 +102,196 @@
         <attribute id="c2" name="Tipo de carga" description="Tipo de carga" type="string" sql_column="tc.CODIGO" is_filter="1"/>
         <attribute id="c3" name="En barcaza" description="En barcaza" type="hardcoded" data_type="integer" sql_column="ce.BUQUE_ID" value="ce.BUQUE_ID is not null" is_filter="1"/>
         <attribute id="c4" name="Barcaza" description="Barcaza" type="string" sql_column="b2.NOMBRE" is_filter="1"/>
+        <attribute id="c5" name="Unidad" description="Unidad" type="string" sql_column="u.NOMBRE" is_filter="1"/>
+      </attributes>
+      <relations>
+        <!--relation target="Viaje"> 
+          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
+        </relation-->
+        <relation target="Etapa Viaje"> 
+          <sql>
+            left join tbl_etapa ev on ev.id = ce.etapa_id
+              
+              left JOIN tbl_capitan cap on ev.CAPITAN_ID = cap.ID
+        
+              left JOIN TBL_PUNTODECONTROL pdc_destino on pdc_destino.ID = ev.DESTINO_ID
+              left JOIN RIOS_CANALES_KM rckm_destino on rckm_destino.ID = pdc_destino.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_destino on rc_destino.id = rckm_destino.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_destino on z_destino.id = pdc_destino.ZONA_ID
+              
+              left JOIN TBL_PUNTODECONTROL pdc_origen on pdc_origen.ID = ev.ORIGEN_ID
+              left JOIN RIOS_CANALES_KM rckm_origen on rckm_origen.ID = pdc_origen.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_origen on rc_origen.id = rckm_origen.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_origen on z_origen.id = pdc_origen.ZONA_ID
+              
+              left JOIN TBL_PUNTODECONTROL pdc_actual on pdc_actual.ID = ev.ACTUAL_ID
+              left JOIN RIOS_CANALES_KM rckm_actual on rckm_actual.ID = pdc_actual.RIOS_CANALES_KM_ID
+              left JOIN RIOS_CANALES rc_actual on rc_actual.id = rckm_actual.ID_RIO_CANAL
+              left JOIN TBL_ZONAS z_actual on z_actual.id = pdc_actual.ZONA_ID
+          </sql>
+        </relation>
+      </relations>
+    </entity>
+    
+    <entity name="Etapa Viaje" id="ev">
+      <sql>
+        tbl_etapa ev
+        
+        left JOIN tbl_capitan cap on ev.CAPITAN_ID = cap.ID
+        
+        left JOIN TBL_PUNTODECONTROL pdc_destino on pdc_destino.ID = ev.DESTINO_ID
+        left JOIN RIOS_CANALES_KM rckm_destino on rckm_destino.ID = pdc_destino.RIOS_CANALES_KM_ID
+        left JOIN RIOS_CANALES rc_destino on rc_destino.id = rckm_destino.ID_RIO_CANAL
+        left JOIN TBL_ZONAS z_destino on z_destino.id = pdc_destino.ZONA_ID
+        
+        left JOIN TBL_PUNTODECONTROL pdc_origen on pdc_origen.ID = ev.ORIGEN_ID
+        left JOIN RIOS_CANALES_KM rckm_origen on rckm_origen.ID = pdc_origen.RIOS_CANALES_KM_ID
+        left JOIN RIOS_CANALES rc_origen on rc_origen.id = rckm_origen.ID_RIO_CANAL
+        left JOIN TBL_ZONAS z_origen on z_origen.id = pdc_origen.ZONA_ID
+        
+        left JOIN TBL_PUNTODECONTROL pdc_actual on pdc_actual.ID = ev.ACTUAL_ID
+        left JOIN RIOS_CANALES_KM rckm_actual on rckm_actual.ID = pdc_actual.RIOS_CANALES_KM_ID
+        left JOIN RIOS_CANALES rc_actual on rc_actual.id = rckm_actual.ID_RIO_CANAL
+        left JOIN TBL_ZONAS z_actual on z_actual.id = pdc_actual.ZONA_ID
+      </sql>
+      <attributes>
+        <!-- DESTINO -->
+        <attribute id="ev9" name="Aguas arriba" description="Aguas arriba" type="hardcoded" data_type="integer" sql_column="ev.SENTIDO" value="ev.SENTIDO=0" is_filter="1"/>
+        <attribute id="ev10" name="Aguas abajo" description="Aguas abajo" type="hardcoded" data_type="integer" sql_column="ev.SENTIDO" value="ev.SENTIDO=1" is_filter="1"/>
+        <attribute id="ev8" name="Calados" description="Calados" type="string" sql_column="'Calado PROA:[' || ev.CALADO_PROA || ']; Calado POPA:[' || ev.CALADO_POPA || ']; Calado MAXIMO:[' || ev.CALADO_MAXIMO || ']; Calado INFORMADO:[' || ev.CALADO_INFORMADO || '];'" is_filter="0"/>
+        <attribute id="ev7" name="Cantidad de pasajeros" description="Cantidad de pasajeros" type="integer" sql_column="ev.CANTIDAD_PASAJEROS" is_filter="1"/>
+        <attribute id="ev6" name="Cantidad de tripulantes" description="Cantidad de tripulantes" type="integer" sql_column="ev.CANTIDAD_TRIPULANTES" is_filter="1"/>
+        <attribute id="ev5" name="ETA" description="ETA" type="date" sql_column="ev.ETA" is_filter="1"/>
+        <attribute id="ev1" name="Fecha de Salida" description="Fecha de Salida" type="date" sql_column="ev.FECHA_SALIDA" is_filter="1"/>
+        <attribute id="ev2" name="Fecha de Llegada" description="Fecha de Llegada" type="date" sql_column="ev.FECHA_LLEGADA" is_filter="1"/>
+        <attribute id="ev3" name="Número de etapa" description="Número de etapa" type="integer" sql_column="ev.NRO_ETAPA" is_filter="1"/>
+        <attribute id="ev4" name="HRP" description="HRP" type="date" sql_column="ev.HRP" is_filter="1"/>
+        <attribute id="ev11" name="Rumbo-Velocidad" description="Rumbo-Velocidad" type="string" sql_column="ev.RUMBO || ' - ' || ev.VELOCIDAD" is_filter="0"/>
+        <attribute id="ev12" name="Rumbo" description="Rumbo" type="string" sql_column="ev.RUMBO" is_filter="1"/>
+        <attribute id="ev13" name="Velocidad" description="Velocidad" type="string" sql_column="ev.VELOCIDAD" is_filter="1"/>
+        
+        <attribute id="ev50" name="Capitán" description="Capitán" type="string" sql_column="cap.NOMBRE" is_filter="1"/>
+        
+        <attribute id="ev002" name="(Destino) Canal" description="(Destino) Canal" type="string" sql_column="pdc_destino.CANAL" is_filter="1"/>
+        <attribute id="ev003" name="(Destino) Entrada" description="(Destino) Entrada" type="integer" sql_column="pdc_destino.ENTRADA" is_filter="1"/>
+        <attribute id="ev004" name="(Destino) Uso" description="(Destino) Uso" type="integer" sql_column="pdc_destino.USO" is_filter="1"/>
+        
+          <!-- RIOS_CANALES_KM -->
+        <attribute id="ev021" name="(Destino) Canal: Kilómetro" description="(Destino) Canal: Kilómetro" type="integer" sql_column="rckm_destino.KM" is_filter="1"/>
+        <attribute id="ev022" name="(Destino) Canal: Unidad" description="(Destino) Canal: Unidad" type="string" sql_column="rckm_destino.UNIDAD" is_filter="1"/>
+        <attribute id="ev023" name="(Destino) Canal: Kilómetro-Unidad" description="(Destino) Canal: Kilómetro - Unidad" type="string" sql_column="rckm_destino.KM || ' - ' || rckm.UNIDAD" is_filter="0"/>
+        <attribute id="ev024" name="(Destino) Canal: Latitud-Longitud" description="(Destino) Canal: Latitud - Longitud" type="string" sql_column="rckm_destino.LATITUD || ' - ' || rckm_destino.LONGITUD" is_filter="0"/>
+        <attribute id="ev025" name="(Destino) Canal: Latitud" description="(Destino) Canal: Latitud" type="integer" sql_column="rckm_destino.LATITUD" is_filter="0"/>
+        <attribute id="ev026" name="(Destino) Canal: Longitud" description="(Destino) Canal: Longitud" type="integer" sql_column="rckm_destino.LONGITUD" is_filter="1"/>
+        
+          <!-- RIOS_CANALES -->
+        <attribute id="ev031" name="(Destino) Canal: Nombre" description="(Destino) Canal: Nombre" type="string" sql_column="rc_destino.NOMBRE" is_filter="1"/>
+        
+          <!-- TBL_ZONAS -->
+        <attribute id="ev041" name="(Destino) Zona: Cuatrigrama" description="(Destino) Zona: Cuatrigrama" type="string" sql_column="z_destino.CUATRIGRAMA" is_filter="1"/>
+        <attribute id="ev042" name="(Destino) Zona: Descripción" description="(Destino) Zona: Descripción" type="string" sql_column="z_destino.DESCRIPCION" is_filter="1"/>
+        <attribute id="ev043" name="(Destino) Zona: Nivel" description="(Destino) Zona: Nivel" type="integer" sql_column="z_destino.NIVEL" is_filter="1"/>
+        <attribute id="ev044" name="(Destino) Zona: Nivel - Num" description="(Destino) Zona: Nivel - Num" type="string" sql_column="z_destino.NIVEL || '-' || z_destino.NIVELNUM" is_filter="0"/>
+        <attribute id="ev045" name="(Destino) Zona: Nivel Num" description="(Destino) Zona: Nivel Num" type="string" sql_column="z_destino.NIVELNUM" is_filter="1"/>
+        <attribute id="ev046" name="(Destino) Zona: Ubicación Geográfica" description="(Destino) Zona: Ubicación Geográfica" type="string" sql_column="z_destino.UBIC_GEOG" is_filter="1"/>
+        <attribute id="ev047" name="(Destino) Zona: Dependencia" description="(Destino) Zona: Dependencia" type="string" sql_column="z_destino.DEPENDENCIA" is_filter="1"/>
+        <attribute id="ev048" name="(Destino) Zona: Código" description="(Destino) Zona: Código" type="string" sql_column="z_destino.CODNUM" is_filter="1"/>
+        <attribute id="ev049" name="(Destino) Zona: Id" description="(Destino) Zona: Id" type="integer" sql_column="z_destino.ID" is_filter="1"/>
+        <attribute id="ev050" name="(Destino) Zona: Info de contacto" description="(Destino) Zona: Info de contacto" type="string" sql_column="'RPV: [' || z_destino.RPV || ']; Interno: [' || z_destino.INT || ']; MAIL: [' || z_destino.MAIL || ']; TE: [' || z_destino.TE || ']; FAX: [' || z_destino.FAX || ']; COD_CARGO: [' || z_destino.COD_CARGO || ']; Dirección Postal: [' || z_destino.DIRECCION_POSTAL || '];'" is_filter="0"/>
+        
+        <!-- ORIGEN -->
+        <attribute id="ev102" name="(Origen) Canal" description="(Origen) Canal" type="string" sql_column="pdc_origen.CANAL" is_filter="1"/>
+        <attribute id="ev103" name="(Origen) Entrada" description="(Origen) Entrada" type="integer" sql_column="pdc_origen.ENTRADA" is_filter="1"/>
+        <attribute id="ev104" name="(Origen) Uso" description="(Origen) Uso" type="integer" sql_column="pdc_origen.USO" is_filter="1"/>
+        
+          <!-- RIOS_CANALES_KM -->
+        <attribute id="ev121" name="(Origen) Canal: Kilómetro" description="(Origen) Canal: Kilómetro" type="integer" sql_column="rckm_origen.KM" is_filter="1"/>
+        <attribute id="ev122" name="(Origen) Canal: Unidad" description="(Origen) Canal: Unidad" type="string" sql_column="rckm_origen.UNIDAD" is_filter="1"/>
+        <attribute id="ev123" name="(Origen) Canal: Kilómetro - Unidad" description="(Origen) Canal: Kilómetro - Unidad" type="string" sql_column="rckm_origen.KM || ' - ' || rckm.UNIDAD" is_filter="0"/>
+        <attribute id="ev124" name="(Origen) Canal: Latitud - Longitud" description="(Origen) Canal: Latitud - Longitud" type="string" sql_column="rckm_origen.LATITUD || ' - ' || rckm_origen.LONGITUD" is_filter="0"/>
+        <attribute id="ev125" name="(Origen) Canal: Latitud" description="(Origen) Canal: Latitud" type="integer" sql_column="rckm_origen.LATITUD" is_filter="0"/>
+        <attribute id="ev126" name="(Origen) Canal: Longitud" description="(Origen) Canal: Longitud" type="integer" sql_column="rckm_origen.LONGITUD" is_filter="1"/>
+        
+          <!-- RIOS_CANALES -->
+        <attribute id="ev131" name="(Origen) Canal: Nombre" description="(Origen) Canal: Nombre" type="string" sql_column="rc_origen.NOMBRE" is_filter="1"/>
+       
+          <!-- TBL_ZONAS -->
+        <attribute id="ev141" name="(Origen) Zona: Cuatrigrama" description="(Origen) Zona: Cuatrigrama" type="string" sql_column="z_origen.CUATRIGRAMA" is_filter="1"/>
+        <attribute id="ev142" name="(Origen) Zona: Descripción" description="(Origen) Zona: Descripción" type="string" sql_column="z_origen.DESCRIPCION" is_filter="1"/>
+        <attribute id="ev143" name="(Origen) Zona: Nivel" description="(Origen) Zona: Nivel" type="integer" sql_column="z_origen.NIVEL" is_filter="1"/>
+        <attribute id="ev144" name="(Origen) Zona: Nivel - Num" description="(Origen) Zona: Nivel - Num" type="string" sql_column="z_origen.NIVEL || '-' || z_origen.NIVELNUM" is_filter="0"/>
+        <attribute id="ev145" name="(Origen) Zona: Nivel Num" description="(Origen) Zona: Nivel Num" type="string" sql_column="z_origen.NIVELNUM" is_filter="1"/>
+        <attribute id="ev146" name="(Origen) Zona: Ubicación Geográfica" description="(Origen) Zona: Ubicación Geográfica" type="string" sql_column="z_origen.UBIC_GEOG" is_filter="1"/>
+        <attribute id="ev147" name="(Origen) Zona: Dependencia" description="(Origen) Zona: Dependencia" type="string" sql_column="z_origen.DEPENDENCIA" is_filter="1"/>
+        <attribute id="ev148" name="(Origen) Zona: Código" description="(Origen) Zona: Código" type="string" sql_column="z_origen.CODNUM" is_filter="1"/>
+        <attribute id="ev149" name="(Origen) Zona: Id" description="(Origen) Zona: Id" type="integer" sql_column="z_origen.ID" is_filter="1"/>
+        <attribute id="ev150" name="(Origen) Zona: Info de contacto" description="(Origen) Zona: Info de contacto" type="string" sql_column="'RPV: [' || z_origen.RPV || ']; Interno: [' || z_origen.INT || ']; MAIL: [' || z_origen.MAIL || ']; TE: [' || z_origen.TE || ']; FAX: [' || z_origen.FAX || ']; COD_CARGO: [' || z_origen.COD_CARGO || ']; Dirección Postal: [' || z_origen.DIRECCION_POSTAL || '];'" is_filter="0"/>
+        
+        <!-- ACTUAL -->
+        <attribute id="ev202" name="(Actual) Canal" description="(Actual) Canal" type="string" sql_column="pdc_actual.CANAL" is_filter="1"/>
+        <attribute id="ev203" name="(Actual) Entrada" description="(Actual) Entrada" type="integer" sql_column="pdc_actual.ENTRADA" is_filter="1"/>
+        <attribute id="ev204" name="(Actual) Uso" description="(Actual) Uso" type="integer" sql_column="pdc_actual.USO" is_filter="1"/>
+        
+          <!-- RIOS_CANALES_KM -->
+        <attribute id="ev221" name="(Actual) Canal: Kilómetro" description="(Actual) Canal: Kilómetro" type="integer" sql_column="rckm_actual.KM" is_filter="1"/>
+        <attribute id="ev222" name="(Actual) Canal: Unidad" description="(Actual) Canal: Unidad" type="string" sql_column="rckm_actual.UNIDAD" is_filter="1"/>
+        <attribute id="ev223" name="(Actual) Canal: Kilómetro - Unidad" description="(Actual) Canal: Kilómetro - Unidad" type="string" sql_column="rckm_actual.KM || ' - ' || rckm.UNIDAD" is_filter="0"/>
+        <attribute id="ev224" name="(Actual) Canal: Latitud - Longitud" description="(Actual) Canal: Latitud - Longitud" type="string" sql_column="rckm_actual.LATITUD || ' - ' || rckm_actual.LONGITUD" is_filter="0"/>
+        <attribute id="ev225" name="(Actual) Canal: Latitud" description="(Actual) Canal: Latitud" type="integer" sql_column="rckm_actual.LATITUD" is_filter="0"/>
+        <attribute id="ev226" name="(Actual) Canal: Longitud" description="(Actual) Canal: Longitud" type="integer" sql_column="rckm_actual.LONGITUD" is_filter="1"/>
+        
+          <!-- RIOS_CANALES -->
+        <attribute id="ev231" name="(Actual) Canal: Nombre" description="(Actual) Canal: Nombre" type="string" sql_column="rc_actual.NOMBRE" is_filter="1"/>
+        
+          <!-- TBL_ZONAS -->
+        <attribute id="ev241" name="(Actual) Zona: Cuatrigrama" description="(Actual) Zona: Cuatrigrama" type="string" sql_column="z_actual.CUATRIGRAMA" is_filter="1"/>
+        <attribute id="ev242" name="(Actual) Zona: Descripción" description="(Actual) Zona: Descripción" type="string" sql_column="z_actual.DESCRIPCION" is_filter="1"/>
+        <attribute id="ev243" name="(Actual) Zona: Nivel" description="(Actual) Zona: Nivel" type="integer" sql_column="z_actual.NIVEL" is_filter="1"/>
+        <attribute id="ev244" name="(Actual) Zona: Nivel - Num" description="(Actual) Zona: Nivel - Num" type="string" sql_column="z_actual.NIVEL || '-' || z_actual.NIVELNUM" is_filter="0"/>
+        <attribute id="ev245" name="(Actual) Zona: Nivel Num" description="(Actual) Zona: Nivel Num" type="string" sql_column="z_actual.NIVELNUM" is_filter="1"/>
+        <attribute id="ev246" name="(Actual) Zona: Ubicación Geográfica" description="(Actual) Zona: Ubicación Geográfica" type="string" sql_column="z_actual.UBIC_GEOG" is_filter="1"/>
+        <attribute id="ev247" name="(Actual) Zona: Dependencia" description="(Actual) Zona: Dependencia" type="string" sql_column="z_actual.DEPENDENCIA" is_filter="1"/>
+        <attribute id="ev248" name="(Actual) Zona: Código" description="(Actual) Zona: Código" type="string" sql_column="z_actual.CODNUM" is_filter="1"/>
+        <attribute id="ev249" name="(Actual) Zona: Id" description="(Actual) Zona: Id" type="integer" sql_column="z_actual.ID" is_filter="1"/>
+        <attribute id="ev250" name="(Actual) Zona: Info de contacto" description="(Actual) Zona: Info de contacto" type="string" sql_column="'RPV: [' || z_actual.RPV || ']; Interno: [' || z_actual.INT || ']; MAIL: [' || z_actual.MAIL || ']; TE: [' || z_actual.TE || ']; FAX: [' || z_actual.FAX || ']; COD_CARGO: [' || z_actual.COD_CARGO || ']; Dirección Postal: [' || z_actual.DIRECCION_POSTAL || '];'" is_filter="0"/>
+        
+      </attributes>
+      <relations>
+        <relation target="Viaje"> 
+          <sql>left join tbl_viaje v on v.id=ev.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
+        </relation>
+        <relation target="Carga"> 
+          <sql>
+            left tbl_cargaetapa ce on ce.etapa_id = ev.id
+              left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
+              left JOIN tbl_unidad u ON ce.unidad_id=u.id
+              left JOIN buques b2 on ce.buque_id=b2.id_buque
+          </sql>
+        </relation>
+      </relations>
+    </entity>
+    
+    <!--entity name="Evento" id="e">
+      <sql>
+        tbl_evento e
+        left JOIN vw_int_usuarios vwiu on vwiu.ndoc = e.usuario_id
+        left JOIN tbl_tipoevento te on te.id = e.tipo_id
+        
+      </sql>
+      <attributes>
+        <attribute id="e1" name="Fecha" description="Fecha" type="date" sql_column="e.FECHA" is_filter="1"/>
+        <attribute id="e2" name="Tipo de Evento" description="Tipo de Evento" type="string" sql_column="te.DESCRIPCION" is_filter="1"/>
       </attributes>
       <relations>
         <relation target="Viaje"> 
           <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
         </relation>
+        <relation target="Practico"> 
+          <sql>left join tbl_practico p on p.id=e.practico_id</sql>
+        </relation>
       </relations>
-    </entity>
+    </entity -->
+    
   </entities>
   
   <operators>
@@ -93,16 +300,19 @@
       <oper id="string_op2" description="Parecido a" format="upper($c) like '%'||upper($v)||'%'" />
       <oper id="string_op3" description="Es igual a" format="upper($c) = upper($v)" />
       <oper id="string_op4" description="Termina en" format="upper($c) like '%'||upper($v)" />
+      <oper id="string_op5" description="No es nulo" format="$c is not null" />
     </operator>
     <operator type="integer" format="0.#">
       <oper id="numeric_op1" description="Es igual a" format="$c = $v" />
       <oper id="numeric_op2" description="Es mayor que" format="$c &lt; $v" />
       <oper id="numeric_op3" description="Es menor que" format="$c &gt; $v" />
+      <oper id="numeric_op4" description="No es nulo" format="$c is not null" />
     </operator>
     <operator type="date" format="{0:dd-MM-yy}">
       <oper id="date_op1" description="El dia" format="$c = $v" />
       <oper id="date_op2" description="Despues de" format="$c &gt; $v" />
       <oper id="date_op3" description="Antes de" format="$c &lt; $v" />
+      <oper id="date_op4" description="No es nulo" format="$c is not null" />
     </operator>
   </operators>
 </sqlbuilder>
