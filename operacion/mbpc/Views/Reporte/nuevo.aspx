@@ -58,10 +58,11 @@
     border: #B4B4B4 solid 1px;
   }
   
-  .megaboton.entity
+  /*.megaboton.entity
   {
     padding: 15px 15px 15px 15px;
-  }
+
+  }*/
     
   #entities, #selected_entities, #resultado 
   {
@@ -137,11 +138,30 @@
   #entities {z-index:2;min-height:500px;}
   #selected_entities{/*padding:5px;*/}
   
-  #entities div.entity
+  /*#entities */div.entity
   {
     margin:5px;
-    z-index:3;  
+    z-index:3; 
+    
+    /*padding: 15px 15px 15px 15px;*/
+    display: block;
+    padding: 7px 15px 7px 15px;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    background-color: #cccccc;
+    border: #c0c0c0 solid 1px; 
   }
+  /*#entities */div.entity.related
+  {
+    border: #B4B4B4 solid 1px; 
+    color: black;
+    background-color: #E6E6E6;
+  }
+  
+  
   #entities div.entity.first
   {
     margin-top:0px;
@@ -917,7 +937,8 @@
                 string entity_relations = entities[key];   
               %>
               <div class="entity related <%=(index<1?"first":"") %>" entity="<%= entity_key %>" relations="<%= entity_relations %>">
-                <a href="#" class="megaboton entity"><%= entity_key %></a>
+                <%= entity_key %>
+                <br/><small>Relacionado con <%= entity_relations.Replace(",", ", ") %>.</small>
               </div>     
            <% index++; 
              } %>

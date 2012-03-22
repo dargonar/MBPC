@@ -3,7 +3,9 @@
   <entities>
     <entity name="Viaje" id="v">
       <sql description="La entidad viajes relaciona implicitamente a las tabls viajes y buques.">
-        tbl_viaje v left join tmp_buques b on v.buque_id = b.ID_BUQUE
+        tbl_viaje v left join tmp_buques b on v.buque_id = b.id_buque
+          left join tbl_kstm_puertos vp_origen on v.origen_id = vp_origen.cod
+          left join tbl_kstm_puertos vp_destino on v.destino_id = vp_destino.cod 
       </sql>
       <attributes>
         <attribute id="v1" name="Fecha de Llegada" description="Arrivó / Fecha llegada" type="date" sql_column="v.FECHA_LLEGADA" is_filter="1"/>
@@ -27,6 +29,23 @@
         <attribute id="v56" name="Año construcción buque" description="Año construcción buque" type="integer" sql_column="b.ANIO_CONSTRUCCION" is_filter="1" hint="Ej: 1980, 1958"/>
         <attribute id="v57" name="Tipo de buque" description="Tipo de buque" type="string" sql_column="b.TIPO_BUQUE" is_filter="1" hint="Ej: barcaza, carga, general"/>
         
+        <attribute id="v101" name="(Origen) Código Puerto" description="(Origen) Código Puerto" type="string" sql_column="vp_origen.COD" is_filter="1"/>
+        <attribute id="v102" name="(Origen) Nombre Puerto" description="(Origen) Nombre Puerto" type="string" sql_column="vp_origen.PUERTO" is_filter="1"/>
+        <attribute id="v103" name="(Origen) Código País" description="(Origen) Código País" type="string" sql_column="vp_origen.CPAIS" is_filter="1"/>
+        <attribute id="v104" name="(Origen) Latitud Puerto" description="(Origen) Latitud Puerto" type="integer" sql_column="vp_origen.LATITUD" is_filter="0"/>
+        <attribute id="v105" name="(Origen) Longitud Puerto" description="(Origen) Longitud Puerto" type="integer" sql_column="vp_origen.LONGITUD" is_filter="1"/>
+        <attribute id="v106" name="(Origen) Latitud-Longitud Puerto" description="(Origen) Latitud-Longitud Puerto" type="string" sql_column="vp_origen.LATITUD || ' - ' || vp_origen.LONGITUD" is_filter="0"/>
+        <attribute id="v107" name="(Origen) Agrupación Puerto" description="(Origen) Agrupación Puerto" type="string" sql_column="vp_origen.AGRUP" is_filter="1"/>
+        
+        <attribute id="v201" name="(Destino) Código Puerto" description="(Destino) Código Puerto" type="string" sql_column="vp_destino.COD" is_filter="1"/>
+        <attribute id="v202" name="(Destino) Nombre Puerto" description="(Destino) Nombre Puerto" type="string" sql_column="vp_destino.PUERTO" is_filter="1"/>
+        <attribute id="v203" name="(Destino) Código País" description="(Destino) Código País" type="string" sql_column="vp_destino.CPAIS" is_filter="1"/>
+        <attribute id="v204" name="(Destino) Latitud Puerto" description="(Destino) Latitud Puerto" type="integer" sql_column="vp_destino.LATITUD" is_filter="0"/>
+        <attribute id="v205" name="(Destino) Longitud Puerto" description="(Destino) Longitud Puerto" type="integer" sql_column="vp_destino.LONGITUD" is_filter="1"/>
+        <attribute id="v206" name="(Destino) Latitud-Longitud Puerto" description="(Destino) Latitud-Longitud Puerto" type="string" sql_column="vp_destino.LATITUD || ' - ' || vp_destino.LONGITUD" is_filter="0"/>
+        <attribute id="v207" name="(Destino) Agrupación Puerto" description="(Destino) Agrupación Puerto" type="string" sql_column="vp_destino.AGRUP" is_filter="1"/>
+        
+        
       </attributes>
       <relations>
         <relation target="Practico">
@@ -38,10 +57,10 @@
             left join tbl_cargaetapa ce ON ce.etapa_id=e.id
             left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
             left JOIN tbl_unidad u ON ce.unidad_id=u.id
-            left JOIN buques b2 on ce.buque_id=b2.ID_BUQUE
+            left JOIN buques b2 on ce.buque_id=b2.id_buque
           </sql>
         </relation-->
-        <relation target="Etapa Viaje"> 
+        <relation target="Etapa-Viaje"> 
           <sql>
             left join tbl_etapa ev on ev.viaje_id = v.id
               
@@ -85,7 +104,11 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=pv.viaje_id left join tmp_buques b on v.buque_id = b.ID_BUQUE</sql>
+          <sql> 
+                left join tbl_viaje v on v.id=pv.viaje_id left join tmp_buques b on v.buque_id = b.id_buque
+                left join tbl_kstm_puertos vp_origen on v.origen_id = vp_origen.cod
+                left join tbl_kstm_puertos vp_destino on v.destino_id = vp_destino.cod 
+          </sql>
         </relation>
       </relations>
     </entity>
@@ -95,7 +118,7 @@
         tbl_cargaetapa ce
         left JOIN tbl_tipo_carga tc ON ce.tipocarga_id=tc.id
         left JOIN tbl_unidad u ON ce.unidad_id=u.id
-        left JOIN buques b2 on ce.buque_id=b2.ID_BUQUE
+        left JOIN buques b2 on ce.buque_id=b2.id_buque
       </sql>
       <attributes>
         <attribute id="c1" name="Cantidad transportada" description="Cantidad transportada" type="integer" sql_column="ce.CANTIDAD" is_filter="1"/>
@@ -105,11 +128,10 @@
         <attribute id="c5" name="Unidad" description="Unidad" type="string" sql_column="u.NOMBRE" is_filter="1"/>
       </attributes>
       <relations>
-<<<<<<< HEAD
         <!--relation target="Viaje"> 
           <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
         </relation-->
-        <relation target="Etapa Viaje"> 
+        <relation target="Etapa-Viaje"> 
           <sql>
             left join tbl_etapa ev on ev.id = ce.etapa_id
               
@@ -134,7 +156,7 @@
       </relations>
     </entity>
     
-    <entity name="Etapa Viaje" id="ev">
+    <entity name="Etapa-Viaje" id="ev">
       <sql>
         tbl_etapa ev
         
@@ -259,7 +281,11 @@
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=ev.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
+          <sql>
+            left join tbl_viaje v on v.id=ev.viaje_id left join tmp_buques b on v.buque_id = b.id_buque
+              left join tbl_kstm_puertos vp_origen on v.origen_id = vp_origen.cod
+              left join tbl_kstm_puertos vp_destino on v.destino_id = vp_destino.cod 
+        </sql>
         </relation>
         <relation target="Carga"> 
           <sql>
@@ -268,39 +294,35 @@
               left JOIN tbl_unidad u ON ce.unidad_id=u.id
               left JOIN buques b2 on ce.buque_id=b2.id_buque
           </sql>
-=======
-        <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.ID_BUQUE</sql>
->>>>>>> 26b81cd637c90094b7ce24fe48bf0ea63aa64608
         </relation>
       </relations>
     </entity>
     
-    <!--entity name="Evento" id="e">
+    <!-- entity name="Evento de Viaje" id="evtv">
       <sql>
-        tbl_evento e
-        left JOIN vw_int_usuarios vwiu on vwiu.ndoc = e.usuario_id
-        left JOIN tbl_tipoevento te on te.id = e.tipo_id
-        
+        tbl_evento evtv
+        left JOIN vw_int_usuarios vwiu on vwiu.ndoc = evtv.usuario_id
+        left JOIN tbl_tipoevento te on te.id = evtv.tipo_id
+          
       </sql>
       <attributes>
         <attribute id="e1" name="Fecha" description="Fecha" type="date" sql_column="e.FECHA" is_filter="1"/>
         <attribute id="e2" name="Tipo de Evento" description="Tipo de Evento" type="string" sql_column="te.DESCRIPCION" is_filter="1"/>
+        
+        <attribute id="v50" name="Tipo" description="" type="hardcoded" data_type="auto_select" sql_column="evtv.TIPO_ID" values="{{1:'Se Creó viaje'}, {9:'Finalizacion de viaje'}, {12: 'Reactivacion de viaje'}}" is_filter="1"/>
+        
       </attributes>
       <relations>
         <relation target="Viaje"> 
-          <sql>left join tbl_viaje v on v.id=e.viaje_id left join tmp_buques b on v.buque_id = b.id_buque</sql>
-        </relation>
-        <relation target="Practico"> 
-          <sql>left join tbl_practico p on p.id=e.practico_id</sql>
+          <sql></sql>
         </relation>
       </relations>
-    </entity -->
+    </entity-->
     
   </entities>
   
   <operators>
-    <operator type="string" format="">
+    <operator type="string" format="'{0}'">
       <oper id="string_op1" description="Comienza con" format="upper($c) like upper($v)||'%'" />
       <oper id="string_op2" description="Parecido a" format="upper($c) like '%'||upper($v)||'%'" />
       <oper id="string_op3" description="Es igual a" format="upper($c) = upper($v)" />

@@ -105,7 +105,7 @@ namespace mbpc.Controllers
 
         private string getOperatorsJson(XmlDocument xmlDoc)
         {
-          return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operators"), Newtonsoft.Json.Formatting.Indented, true);
+return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operators"), Newtonsoft.Json.Formatting.Indented, true);
           
         }
 
@@ -362,8 +362,16 @@ namespace mbpc.Controllers
 
         }
 
-        public ActionResult dummy()
+        public ActionResult dummy(string data)
         {
+          //data_type = data_type.Replace("'", "\"");
+
+          //Newtonsoft.Json.Linq.JArray tete = JsonConvert.DeserializeObject(data_type) as Newtonsoft.Json.Linq.JArray;
+
+          //ViewData["response"] = data_type;
+
+          //return View("dummy");
+          ViewData["response"] = data.Replace("'", "''");
           return View();
         }
 
@@ -496,9 +504,7 @@ namespace mbpc.Controllers
                 if (type != "hardcoded")
                 {
                   string value_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator[@type='{0}']", type)).Attributes.GetNamedItem("format").Value.Trim();
-                  //if (!String.IsNullOrEmpty(value_format) && !String.IsNullOrEmpty(value))
-                  //  value = String.Format(value_format, value);
-
+                  
                   if (is_param != null && is_param.Equals("on"))
                   {
                     value = string.Format(":p{0}", paramCount.ToString());
@@ -527,9 +533,19 @@ namespace mbpc.Controllers
                   }
                   else
                   {
+                    string formatted_value = value;
+                    if (type == "string")
+                    {
+                      
+                      value = value.Replace("'", "''");
+                      formatted_value = String.Format(value_format, value);
+                    }
+                    //if (!String.IsNullOrEmpty(value_format) && !String.IsNullOrEmpty(value))
+                    //  value = String.Format(value_format, value);
+
                     string oper_format = xmlDoc.SelectSingleNode(string.Format("/sqlbuilder/operators/operator/oper[@id='{0}']", oper)).Attributes.GetNamedItem("format").Value.Trim();
                     sql = oper_format.Replace("$c", sql_column);
-                    sql = sql.Replace("$v", value);
+                    sql = sql.Replace("$v", formatted_value);
                     
                     parameterCommands.AppendFormat(insertParamStatement,
                       Convert.ToString(Tipo.where),
