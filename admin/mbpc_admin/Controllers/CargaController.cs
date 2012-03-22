@@ -82,13 +82,11 @@ namespace mbpc_admin.Controllers
       private void CreateCombo(TBL_CARGAETAPA cargaetapa)
       {
         
-        //var barcazas = from b in context.TBL_BQ_BUQUES where b.TIPO_SERVICIO == 99 select b;
-        
         var xxx = context.TBL_TIPO_CARGA.OrderBy(tc => tc.CODIGO).Select( c => new { @NOMBRE = "(" + c.CODIGO + ") " + c.NOMBRE, @ID = c.ID } );
 
+        ViewData["TIPOCARGA_ID"] = new SelectList(xxx, "ID", "NOMBRE", cargaetapa.TIPOCARGA_ID.ToString());
+        ViewData["TIPOCARGA_ID_SELECTED"] = cargaetapa.TIPOCARGA_ID.ToString();
 
-
-        ViewData["TIPOCARGA_ID"] = new SelectList(xxx, "ID", "NOMBRE", cargaetapa.TIPOCARGA_ID);
         ViewData["UNIDAD_ID"] = new SelectList(context.TBL_UNIDAD, "ID", "NOMBRE", cargaetapa.UNIDAD_ID.ToString());
       }
 

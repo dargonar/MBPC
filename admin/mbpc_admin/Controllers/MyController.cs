@@ -35,6 +35,7 @@ namespace mbpc_admin.Controllers
       }
       //checkFlash();
     }
+
     protected override void OnActionExecuting(ActionExecutingContext filterContext)
     {
       if (Request.Params.HasKeys() && Request.Params.Get("alone") != null)
