@@ -8,7 +8,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.32";
+      public static string VERSION = "1.34";
       
         //
         // GET: /Home/

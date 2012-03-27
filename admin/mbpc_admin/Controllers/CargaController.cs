@@ -41,7 +41,7 @@ namespace mbpc_admin.Controllers
           ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
           ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
 
-          return RedirectToAction("List", new { @id = contract.ETAPA_ID });
+          return RedirectToAction("List", new { @alone = ViewData["alone"], @id = contract.ETAPA_ID });
         }
         catch (Exception ex)
         {
@@ -94,6 +94,9 @@ namespace mbpc_admin.Controllers
       {
         try
         {
+          //HACK
+          cargaetapa.EN_TRANSITO = Request.Params["EN TRANSITO"] != "false" ? 1 : 0;
+
           if (cargaetapa.ID == 0)
           {
             context.TBL_CARGAETAPA.AddObject(cargaetapa);
@@ -102,7 +105,7 @@ namespace mbpc_admin.Controllers
           else
           {
             var updatedCargaEtapa = context.TBL_CARGAETAPA.Where(c => c.ID == cargaetapa.ID).SingleOrDefault();
-            updatedCargaEtapa.SimpleCopyFrom(cargaetapa, new string[] {"TIPOCARGA_ID", "CANTIDAD", "UNIDAD_ID"});
+            updatedCargaEtapa.SimpleCopyFrom(cargaetapa, new string[] { "TIPOCARGA_ID", "CANTIDAD_INICIAL", "CANTIDAD_ENTRADA", "CANTIDAD_SALIDA", "EN_TRANSITO", "UNIDAD_ID" });
             FlashOK("La carga se modifico con exito");
           }
           context.SaveChanges();
@@ -111,7 +114,7 @@ namespace mbpc_admin.Controllers
           var nuevacargaetapa = context.TBL_CARGAETAPA.OrderByDescending(c => c.ID).First();
           //HACK------------------------------------------------------
 
-          return RedirectToAction("List", new { @id = cargaetapa.ETAPA_ID });
+          return RedirectToAction("List", new { alone = ViewData["alone"], @id = cargaetapa.ETAPA_ID });
         }
         catch (Exception ex)
         {
@@ -128,7 +131,7 @@ namespace mbpc_admin.Controllers
 
       public ActionResult ListJSON(string sidx, string sord, int page, int rows)
       {
-        var columns = new string[] { "ID", "TIPOCARGA_ID", "CANTIDAD", "UNIDAD_ID", "ETAPA_ID", "BUQUE_ID" };
+        var columns = new string[] { "ID", "TIPOCARGA_ID", "CANTIDAD_INICIAL", "CANTIDAD_ENTRADA", "CANTIDAD_SALIDA", "EN_TRANSITO", "UNIDAD_ID", "ETAPA_ID", "BUQUE_ID" };
 
         var tmp = JQGrid.Helper.PaginageS1<TBL_CARGAETAPA>(Request.Params, columns, page, rows, sidx, sord);
 

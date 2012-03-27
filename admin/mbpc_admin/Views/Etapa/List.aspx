@@ -15,6 +15,7 @@
 <table id="list"><tr><td/></tr></table> 
 <div id="pager"></div> 
 <div id="filter" style="display:none">Search Invoices</div>
+<a href="/Viaje/List?alone=<%=ViewData["alone"]%>">Volver a la lista de viajes</a>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">
@@ -107,7 +108,7 @@
         add: false,
         del: false,
         search: false
-      }).navButtonAdd('#pager', {
+      })<%if((string)ViewData["alone"]=="1"){%>;<%}else{%>.navButtonAdd('#pager', {
         caption: "Ver Cargas",
         buttonicon: "ui-icon-add",
         onClickButton: function () {
@@ -117,24 +118,10 @@
             return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID='+id+'&viaje_id=<%=ViewData["referenceId"]%>';
-          },
-        position: "last"
-      })<%if(ViewData["alone"]!=null){%>;<%}else{%>.navButtonAdd('#pager', {
-        caption: "Agregar Carga",
-        buttonicon: "ui-icon-add",
-        onClickButton: function () {
-            var gsr = mygrid.getGridParam('selrow');
-            if (!gsr){
-            alert("Debe elegir una etapa");
-            return;
-            }
-            var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/Carga/New?etapa_id='+id;
+            window.location = '/carga/list?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%>&<%}%>ID='+id+'&viaje_id=<%=ViewData["referenceId"]%>';
           },
         position: "last"
       });<%}%>
-
     });
   });
 </script>

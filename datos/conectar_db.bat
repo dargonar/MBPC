@@ -9,7 +9,7 @@ echo Poniendo GW para IPs en %IP%
 route add 192.168.10.0 mask 255.255.255.0 %IP%
 route add 192.168.50.0 mask 255.255.255.0 %IP%
 
-ping -t 192.168.10.120
+REM ping -W 5000 -t 192.168.50.89
 goto fin
 :error
 pause

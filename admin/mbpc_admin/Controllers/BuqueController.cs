@@ -26,7 +26,7 @@ namespace mbpc_admin.Controllers
 
           return Json(JQGrid.Helper.PaginateS2<BUQUES_NEW>(
               items.ToArray(),
-              columns, context.TMP_BUQUES.Count(), page, rows
+              columns, context.BUQUES_NEW.Count(), page, rows
               ), JsonRequestBehavior.AllowGet);
         }
 

@@ -73,7 +73,7 @@
             <%// Html.DropDownList("BUQUE_ID") %>
             <%//</p> Html.ValidationMessageFor(model => model.BUQUE_ID) %>
             
-
+            <input type="hidden" name="alone" value="<%=ViewData["alone"]%>"
 
             <p>
                 <input type="submit" value="<%= ViewData["titulo"] %>" class="btn" />
@@ -81,11 +81,16 @@
     <% } %>
 
     <div>
-        <%: Html.ActionLink("Volver a la lista", "List", new { id = decimal.Parse(ViewData["etapa_id"].ToString())})%>
+        <%: Html.ActionLink("Volver a la lista de cargas", "List", new { alone = ViewData["alone"],  id = decimal.Parse(ViewData["etapa_id"].ToString())})%>
     </div>
 
 
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#TIPOCARGA_ID').val('<%=ViewData["TIPOCARGA_ID_SELECTED"]%>');
+        });
+    </script>
 
 </asp:Content>
 

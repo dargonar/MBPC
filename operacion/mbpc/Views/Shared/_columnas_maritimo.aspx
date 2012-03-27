@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#"  Inherits="System.Web.Mvc.ViewPage" %>
 
 <div id="linkos" style="display:none">
+<a id="l0" href="#" xhref="<%= Url.Content("~/Viaje/agregarReporte/") + "?id=%SHIPID%&nombre=%NOMBRE%"%>" onclick="return agregarreporte(this);">Agregar Reporte</a>
 <a id="l1" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/%SHIPID%/false"%>" onclick="return dialogozonas(this,'Proximo Destino');">Proximo Destino</a>
 <a id="l2" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/%SHIPID%" %>" onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="#" class="pasarbarcolink" >Pasar Barco</a>
 <a id="l3" href="#" xhref="<%= Url.Content("~/Viaje/preguntarFecha/") + "%SHIPID%/terminarviaje" %>" onclick="return preguntarfecha(this,2);">Terminar Viaje</a>
@@ -20,6 +21,7 @@
 
 <div class="contextMenu" id="myMenu1" style="display:none">
   <ul style="width: 200px">
+    <li id="m0"><span style="font-size:80%; font-family:Verdana">Agregar Reporte</span></li>
     <li id="m1"><span style="font-size:80%; font-family:Verdana">Proximo Destino</span></li>
     <li id="m2"><span style="font-size:80%; font-family:Verdana">Pasar Barco</span></li>                
     <li id="m3"><span style="font-size:80%; font-family:Verdana">Terminar Viaje</span></li>                
@@ -75,6 +77,8 @@
        <div class="btn-new-class">
         <a id="agregar_reporte" href="<%= Url.Content("~/Viaje/agregarReporte/") %>" onclick="return agregarreporte(this);" class="agregarreportelink"> Agregar Reporte</a>
        </div>
+       
+       <%Html.RenderPartial("_boton_edicion_cargas"); %>
 
       </ul>
   <div class="split"></div>	
@@ -138,10 +142,11 @@
       url: '/Viaje/ListJson?PID=<%=Session["zona"].ToString()%>',
       datatype: 'json',
       mtype: 'GET',
-      colNames: ["PID", "ID", "ETAPA", "PROXDEST", "ID_BUQUE", "Buque", "OMI", "Matricula", "Señal Dist.", "Bandera", "Lat", "Lon", "Origen", "Destino", "Estado", "Ultimo Reporte"],
+      colNames: ["PID", "ID", "COSTERA", "ETAPA", "PROXDEST", "ID_BUQUE", "Buque", "OMI", "Matricula", "Señal Dist.", "Bandera", "Lat", "Lon", "Origen", "Destino", "Estado", "Ultimo Reporte"],
       colModel: [
     { name: 'PID', index: 'PID', width: 90, hidden: true },
     { name: 'ID', index: 'ID', width: 90 },
+    { name: 'COSTERA', index: 'COSTERA', width: 90 },
     { name: 'ETAPA', index: 'ETAPA', width: 90, hidden: true },
     { name: 'PROXDEST', index: 'PROXDEST', width: 90, hidden: true },
     { name: 'ID_BUQUE', index: 'ID_BUQUE', width: 90, hidden: true },
@@ -198,11 +203,16 @@ function runlink(linkname)
   var etapaid = mygrid.getRowData(gsr)['ETAPA'];
   var proxdest = mygrid.getRowData(gsr)['PROXDEST'];
   var idbuque = mygrid.getRowData(gsr)['ID_BUQUE'];
+  var nombre  = mygrid.getRowData(gsr)['NOMBRE'];
+
+  
 
   var href = $('#'+linkname).attr('xhref');
   href = href.replace('%SHIPID%', shipid);
   href = href.replace('%ETAPAID%', etapaid);
   href = href.replace('%IDBUQUE%', idbuque);
+  href = href.replace('%NOMBRE%', nombre);
+  
 
   $('#'+linkname).attr('href', href).click();
   $('#'+linkname).attr('nextdest',proxdest);
@@ -212,6 +222,7 @@ function runlink(linkname)
 function initGrid() {
   jQuery(".jqgrow", "#list").contextMenu('myMenu1', {
     bindings: {
+      'm0': function (t) { runlink('l0'); },
       'm1': function (t) { runlink('l1'); },
       'm2': function (t) { runlink('l2'); },
       'm3': function (t) { runlink('l3'); },
