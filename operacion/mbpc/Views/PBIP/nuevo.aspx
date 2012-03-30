@@ -96,7 +96,7 @@
     
     <div class="pbip_container left">
       <label>2.2 Eta</label><br />
-      <input autocomplete="off" class="format_date" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA_fmt"]:"" %>"  /><br />
+      <input autocomplete="off" class="format_date" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA"]:"" %>"  /><br />
     </div>
     
     <div class="pbip_container right">
@@ -114,7 +114,7 @@
     <div class="pbip_container left">
       <label>3.1 Posee CIPB</label><br />
       <select name="cipb_estado" id="cipb_estado" autocomplete="off">
-        <% int cipb_estado = (pbip != null) ? (Convert.ToInt32(pbip["CIPB_ESTADO"])) : 0;  %>>
+        <% int cipb_estado = (pbip != null && !String.IsNullOrEmpty(pbip["CIPB_ESTADO"])) ? (Convert.ToInt32(pbip["CIPB_ESTADO"])) : 0;  %>>
         <option value="0" <%= cipb_estado==0?"SELECTED":"" %>">No posee</option>
         <option value="1" <%= cipb_estado==1?"SELECTED":"" %>">Válido</option>
         <option value="2" <%= cipb_estado==2?"SELECTED":"" %>">Aprobado</option>
@@ -136,7 +136,7 @@
     <div class="pbip_container right">
       <label>3.1.2.1 ¿Hay a bordo un plan de protección aprobado?</label><br />
       <select name="proteccion_plan_aprobado" autocomplete="off">
-        <% int plan_aprobado = (pbip != null) ? (Convert.ToInt32(pbip["PROTECCION_PLAN_APROBADO"])) : (0);  %>>
+        <% int plan_aprobado = (pbip != null && !String.IsNullOrEmpty(pbip["PROTECCION_PLAN_APROBADO"])) ? (Convert.ToInt32(pbip["PROTECCION_PLAN_APROBADO"])) : (0);  %>>
         <option value="0" <%= plan_aprobado==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= plan_aprobado==1?"SELECTED":"" %>">SI</option>
       </select>
@@ -147,7 +147,7 @@
     <div class="pbip_container left">
       <label>3.2 Nivel de protección actual</label><br />
       <select name="proteccion_nivel_actual" autocomplete="off">
-        <% int proteccion_nivel_actual = (pbip != null) ? (Convert.ToInt32(pbip["PROTECCION_NIVEL_ACTUAL"])) : (0);  %>>
+        <% int proteccion_nivel_actual = (pbip != null && !String.IsNullOrEmpty(pbip["PROTECCION_NIVEL_ACTUAL"])) ? (Convert.ToInt32(pbip["PROTECCION_NIVEL_ACTUAL"])) : (0);  %>>
         <option value="0" <%= proteccion_nivel_actual==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= proteccion_nivel_actual==1?"SELECTED":"" %>">Nivel 1</option>
         <option value="2" <%= proteccion_nivel_actual==2?"SELECTED":"" %>">Nivel 2</option>
@@ -192,7 +192,7 @@
         <% for (int index = 1; index <= 10; index++)
            { 
              Dictionary<string, string> dict = null;
-             if(pbip_params!=null)
+             if(pbip_params != null && index-1 < pbip_params.Count)
                 dict = pbip_params[index-1] as Dictionary<string, string>;
              %>
            
@@ -202,24 +202,24 @@
             <input type="hidden" name="indice_<%=index %>" value="<%=index %>"/>
           </div> 
           <div class="tabla_td tabla_td_desde"> 
-            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE_fmt"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_desde_<%=index %>" value="<%= (dict != null) ? dict["FECHA_DESDE"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_hasta"> 
-            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA_fmt"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_hasta_<%=index %>" value="<%= (dict != null) ? dict["FECHA_HASTA"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_descripcion"> 
-            <input autocomplete="off" type="text" name="escalas_descripcion_<%=index %>" value="<%= (pbip_params != null) ? dict["DESCRIPCION"]:"" %>" />
+            <input autocomplete="off" type="text" name="escalas_descripcion_<%=index %>" value="<%= (dict != null) ? dict["DESCRIPCION"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_nivel_proteccion"> 
-            <input autocomplete="off" type="text" class="integer_only" name="escalas_nivel_proteccion_<%=index %>" value="<%= (pbip_params != null) ? dict["NIVEL_PROTECCION"]:"" %>" />
+            <input autocomplete="off" type="text" class="integer_only" name="escalas_nivel_proteccion_<%=index %>" value="<%= (dict != null) ? dict["NIVEL_PROTECCION"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_medida_proteccion"> 
-            <% int medidas_adic = (pbip_params != null) ? (Convert.ToInt32(dict["ESCALAS_MEDIDAS_ADIC"])) : (0);  %>
+            <% int medidas_adic = (dict != null) ? (Convert.ToInt32(dict["ESCALAS_MEDIDAS_ADIC"])) : (0);  %>
             <select name="escalas_medidas_adic_<%=index %>">
               <option value="0" <%= medidas_adic==0?"SELECTED":"" %>">NO</option>
               <option value="1" <%= medidas_adic==1?"SELECTED":"" %>">SI</option>
             </select>&nbsp;&nbsp;
-            <input autocomplete="off" type="text" name="escalas_medidas_adic_desc_<%=index %>" value="<%= (pbip_params != null) ? dict["ESCALAS_MEDIDAS_ADIC_DESC"]:"" %>" />
+            <input autocomplete="off" type="text" name="escalas_medidas_adic_desc_<%=index %>" value="<%= (dict != null) ? dict["ESCALAS_MEDIDAS_ADIC_DESC"]:"" %>" />
           </div> 
         </div>
         <% } %>
@@ -254,7 +254,7 @@
         <% for (int index = 1; index <= 10; index++)
            {
              Dictionary<string, string> dict = null;
-             if (pbip_params != null)
+             if (pbip_params != null && index-1+10 < pbip_params.Count)
                dict = pbip_params[index - 1 + 10] as Dictionary<string, string>;
              %>
         <div class="tabla_content-body"> 
@@ -263,19 +263,19 @@
             <input type="hidden" name="indice_<%=index %>" value="<%=index %>"/>
           </div> 
           <div class="tabla_td tabla_td_desde"> 
-            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE_fmt"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_desde_<%=index %>" value="<%= (dict != null) ? dict["FECHA_DESDE"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_hasta"> 
-            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA_fmt"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_hasta_<%=index %>" value="<%= (dict != null) ? dict["FECHA_HASTA"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_descripcion"> 
-            <input autocomplete="off" type="text" name="actividades_descripcion_<%=index %>" value="<%= (pbip_params != null) ? dict["DESCRIPCION"]:"" %>" />
+            <input autocomplete="off" type="text" name="actividades_descripcion_<%=index %>" value="<%= (dict != null) ? dict["DESCRIPCION"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_nivel_proteccion"> 
-            <input autocomplete="off" type="text" class="integer_only" name="actividades_nivel_proteccion_<%=index %>" value="<%= (pbip_params != null) ? dict["NIVEL_PROTECCION"]:"" %>" />
+            <input autocomplete="off" type="text" class="integer_only" name="actividades_nivel_proteccion_<%=index %>" value="<%= (dict != null) ? dict["NIVEL_PROTECCION"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_medida_proteccion wider"> 
-            <input autocomplete="off" type="text" name="actividades_actividad_bab_<%=index %>" value="<%= (pbip_params != null) ? dict["ACTIVIDAD_BAB"]:"" %>" />
+            <input autocomplete="off" type="text" name="actividades_actividad_bab_<%=index %>" value="<%= (dict != null) ? dict["ACTIVIDAD_BAB"]:"" %>" />
           </div> 
         </div>
         <% } %>
@@ -288,7 +288,7 @@
 
     <div class="pbip_container left">
       <label>3.4.1 ¿Se mantuvieron los procedimientos de protección del plan en la interfaz buque a buque?</label><br />
-      <% int plan_proteccion_mant_bab = pbip!= null ? (Convert.ToInt32(pbip["PLAN_PROTECCION_MANT_BAB"])) : (0);  %>
+      <% int plan_proteccion_mant_bab = pbip!= null && !String.IsNullOrEmpty(pbip["PLAN_PROTECCION_MANT_BAB"]) ? (Convert.ToInt32(pbip["PLAN_PROTECCION_MANT_BAB"])) : (0);  %>
       <select name="plan_proteccion_mant_bab">
         <option value="0" <%= plan_proteccion_mant_bab==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= plan_proteccion_mant_bab==1?"SELECTED":"" %>">SI</option>
@@ -308,7 +308,7 @@
 
     <div class="pbip_container right">
       <label>3.5.1 ¿Transporta sustancias peligrosas?</label><br />
-      <% int carga_sust_peligrosas = (pbip != null) ? (Convert.ToInt32(pbip["CARGA_SUST_PELIGROSAS"])) : (0);  %>
+      <% int carga_sust_peligrosas = (pbip != null && !String.IsNullOrEmpty(pbip["CARGA_SUST_PELIGROSAS"])) ? (Convert.ToInt32(pbip["CARGA_SUST_PELIGROSAS"])) : (0);  %>
       <select name="carga_sust_peligrosas">
         <option value="0" <%= carga_sust_peligrosas==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= carga_sust_peligrosas==1?"SELECTED":"" %>">SI</option>
@@ -327,7 +327,7 @@
 
     <div class="pbip_container left">
       <label>3.6 ¿Adjunta lista de tripulantes?</label><br />
-      <% int lista_tripulantes = (pbip != null) ? (Convert.ToInt32(pbip["LISTA_TRIPULANTES"])) : (0);  %>
+      <% int lista_tripulantes = (pbip != null && !String.IsNullOrEmpty(pbip["LISTA_TRIPULANTES"])) ? (Convert.ToInt32(pbip["LISTA_TRIPULANTES"])) : (0);  %>
       <select name="lista_tripulantes">
         <option value="0" <%= lista_tripulantes==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= lista_tripulantes==1?"SELECTED":"" %>">SI</option>
@@ -337,7 +337,7 @@
     
     <div class="pbip_container right">
       <label>3.6 ¿Adjunta lista de pasajeros?</label><br />
-      <% int lista_pasajeros = (pbip != null) ? (Convert.ToInt32(pbip["LISTA_PASAJEROS"])) : (0);  %>
+      <% int lista_pasajeros = (pbip != null && !String.IsNullOrEmpty(pbip["LISTA_PASAJEROS"])) ? (Convert.ToInt32(pbip["LISTA_PASAJEROS"])) : (0);  %>
       <select name="lista_pasajeros">
         <option value="0" <%= lista_pasajeros==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= lista_pasajeros==1?"SELECTED":"" %>">SI</option>
@@ -353,7 +353,7 @@
 
     <div class="pbip_container left">
       <label>4.1 ¿Hay alguna cuestión relacionada con la protección que desee notificar?</label><br />
-      <% int prot_notifica_cuestion = (pbip != null) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_CUESTION"])) : (0);  %>
+      <% int prot_notifica_cuestion = (pbip != null && !String.IsNullOrEmpty(pbip["PROT_NOTIFICA_CUESTION"])) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_CUESTION"])) : (0);  %>
       <select name="prot_notifica_cuestion">
         <option value="0" <%= lista_pasajeros==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= lista_pasajeros==1?"SELECTED":"" %>">SI</option>
@@ -367,7 +367,7 @@
 
     <div class="pbip_container left">
       <label>4.1a Polizones</label><br />
-      <% int prot_notifica_polizon = (pbip != null) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_POLIZON"])) : (0);  %>
+      <% int prot_notifica_polizon = (pbip != null && !String.IsNullOrEmpty(pbip["PROT_NOTIFICA_POLIZON"])) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_POLIZON"])) : (0);  %>
       <select name="prot_notifica_polizon">
         <option value="0" <%= prot_notifica_polizon==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= prot_notifica_polizon==1?"SELECTED":"" %>">SI</option>
@@ -382,7 +382,7 @@
 
     <div class="pbip_container left">
       <label>4.1c Personas rescatadas</label><br />
-      <% int prot_notifica_rescate = (pbip != null) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_RESCATE"])) : (0);  %>
+      <% int prot_notifica_rescate = (pbip != null && !String.IsNullOrEmpty(pbip["PROT_NOTIFICA_RESCATE"]) ) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_RESCATE"])) : (0);  %>
       <select name="prot_notifica_rescate">
         <option value="0" <%= prot_notifica_rescate==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= prot_notifica_rescate==1?"SELECTED":"" %>">SI</option>
@@ -397,7 +397,7 @@
 
     <div class="pbip_container left">
       <label>4.1e Otra cuestión de protección</label><br />
-      <% int prot_notifica_otra = (pbip != null) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_OTRA"])) : (0);  %>
+      <% int prot_notifica_otra = (pbip != null && !String.IsNullOrEmpty(pbip["PROT_NOTIFICA_OTRA"])) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_OTRA"])) : (0);  %>
       <select name="prot_notifica_otra">
         <option value="0" <%= prot_notifica_otra==0?"SELECTED":"" %>">NO</option>
         <option value="1" <%= prot_notifica_otra==1?"SELECTED":"" %>">SI</option>
@@ -460,7 +460,7 @@
 
     <div class="pbip_container right">
       <label>Fecha</label><br />
-      <input autocomplete="off" type="text" class="format_date" id="facilitador_fecha" name="facilitador_fecha" value="<%= (pbip!= null) ?pbip["FACILITADOR_FECHA_fmt"]:"" %>" /><br />      
+      <input autocomplete="off" type="text" class="format_date" id="facilitador_fecha" name="facilitador_fecha" value="<%= (pbip!= null) ?pbip["FACILITADOR_FECHA"]:"" %>" /><br />      
     </div>
     <div style="clear:both"></div>
   </fieldset>
@@ -482,7 +482,7 @@
     function () {
       $("#posicion_latlon").mask("9999S99999W");
       $('#cipb_expiracion').mask("99-99-99");
-      $('.format_date').mask("99-99-99").attr("title", "DD-MM-yy");
+      $('.format_date').mask("99-99-99");
       $(".integer_only").numeric({ decimal: false, negative: false });
     }
   );
