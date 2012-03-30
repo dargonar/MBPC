@@ -991,7 +991,7 @@ CREATE OR REPLACE package body mbpc as
     --nuevo log
     posicion_viaje(viaje.id);
     insert into tbl_evento (usuario_id , viaje_id , etapa_id, tipo_id, puntodecontrol1_id, puntodecontrol2_id, fecha, latviaje, lonviaje, ptoviaje)
-    values ( usrid, viaje.id , etapa.id, 7, etapa.origen_id, etapa.actual_id , tempdate, viajepos.lat, viajepos.lon, viajepos.pto);
+    values ( usrid, viaje.id , etapa.id, 7, etapa.origen_id, etapa.actual_id , TO_DATE(vLlegada , 'DD-MM-yy HH24:mi'), viajepos.lat, viajepos.lon, viajepos.pto);
 
     open vCursor for select * from tbl_etapa where id = etapa.id;
   end pasar_barco;

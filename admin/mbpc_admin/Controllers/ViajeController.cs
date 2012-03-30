@@ -25,15 +25,22 @@ namespace mbpc_admin.Controllers
 
         public ActionResult ListJSON(string sidx, string sord, int page, int rows)
         {
-          var columns = new string[] { "ID", "ORIGEN_ID", "DESTINO_ID", "BUQUE_ID", "FECHA_SALIDA", "FECHA_LLEGADA", "ETA", "ZOE", "ETAPA_ACTUAL", "ESTADO", "NOTAS", "VIAJE_PADRE", "LATITUD", "LONGITUD", "CREATED_AT" };
+          var columns = new string[] { 
+            "ID", "PID", "ACTUAL",
+            "NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA",
+            "ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"
+          };
 
-          var tmp = JQGrid.Helper.PaginageS1<TBL_VIAJE>(Request.Params, columns, page, rows, sidx, sord);
-          
-          var items = context.ExecuteStoreQuery<TBL_VIAJE>((string)tmp[0], (ObjectParameter[])tmp[1]);
+          var tmp = JQGrid.Helper.PaginageS1<VW_VIAJES_MARITIMOS>(Request.Params, columns, page, rows, sidx, sord);
 
-          return Json(JQGrid.Helper.PaginateS2<TBL_VIAJE>(
-            items.ToArray(),
-            columns, context.TBL_VIAJE.Count(), page, rows
+          var items = context.ExecuteStoreQuery<VW_VIAJES_MARITIMOS>((string)tmp[0], (ObjectParameter[])tmp[1]);
+
+          var todos = items.ToArray();
+          var xx = todos.Length;
+
+          return Json(JQGrid.Helper.PaginateS2<VW_VIAJES_MARITIMOS>(
+            todos,
+            columns, context.VW_VIAJES_MARITIMOS.Count(), page, rows
             ), JsonRequestBehavior.AllowGet);
         }
     }

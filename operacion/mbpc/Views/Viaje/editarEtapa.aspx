@@ -119,8 +119,10 @@
     <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
     -->
 
+    <!--
     <label>Capitan</label><br />
     <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
+    -->
   
     <label>Velocidad</label><br />
     <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />

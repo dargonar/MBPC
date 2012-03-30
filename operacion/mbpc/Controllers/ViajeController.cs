@@ -322,7 +322,8 @@ namespace mbpc.Controllers
             {"ORIGEN","s"},
             {"DESTINO","s"},
             {"ESTADO","s"},
-            {"ULTIMO","i"}
+            {"ULTIMO","i"},
+            {"VESTADO","i"}
           };
 
           //Agregamos a mano el filtro

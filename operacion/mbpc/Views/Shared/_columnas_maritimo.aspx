@@ -139,7 +139,7 @@
   var mygrid;
   $(function () {
     mygrid = $("#list").jqGrid({
-      url: '/Viaje/ListJson?PID=<%=Session["zona"].ToString()%>',
+      url: '/Viaje/ListJson?VESTADO=0&PID=<%=Session["zona"].ToString()%>',
       datatype: 'json',
       mtype: 'GET',
       colNames: ["PID", "ID", "COSTERA", "ETAPA", "PROXDEST", "ID_BUQUE", "Buque", "OMI", "Matricula", "Señal Dist.", "Bandera", "Lat", "Lon", "Origen", "Destino", "Estado", "Ultimo Reporte"],

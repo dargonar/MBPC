@@ -56,12 +56,14 @@
     $("#nuevoBuque").submit(function () {
 
         $('.botonsubmitb').attr('disabled', 'disabled');
-
+        
+        /*
         if ($("#bbandera").val() != 'PARAGUAY' && $("#bmatriculaN").val() == "") {
             alert("Debe ingresar " + $('#bmatlabel').html());
             $('.botonsubmitb').removeAttr('disabled');
             return false;
         }
+        */
 
         if ($("#bnombreN").val() == "") {
             alert("Debe ingresar un nombre");

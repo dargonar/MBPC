@@ -17,19 +17,64 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-
+    //"ID", "PID", "ACTUAL",
+    //"NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA"
+    //"ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"
     $(function () {
       var mygrid = $("#list").jqGrid({
         url: '/viaje/ListJSON',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ['ID', 'Origen', 'Destino', 'Buque', 'Fecha de salida', 'Fecha de llegada', 'ETA', 'ZOE', 'Etapa Actual', 'Estado', 'Notas', 'Viaje Padre', 'Latitud', 'Longitud', 'creado'],  
+        colNames: ["ID", "PID", "ACTUAL", "NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA", "ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"],  
         colModel: [
       { name: 'ID', index: 'ID', width: 90, hidden: true },
-      { name: 'ORIGEN_ID', index: 'ORIGEN_ID', width: 80},
-      { name: 'DESTINO_ID', index: 'DESTINO_ID', width: 80},
-      { name: 'BUQUE_ID', index: 'BUQUE_ID', width: 80 },
-	    { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 80,
+      { name: 'PID', index: 'PID', width: 80 },
+      { name: 'ACTUAL', index: 'ACTUAL', width: 80 },
+      { name: 'NOMBRE', index: 'NOMBRE', width: 80 },
+      { name: 'NRO_OMI', index: 'NRO_OMI', width: 80 },
+      { name: 'MATRICULA', index: 'MATRICULA', width: 80 },
+      { name: 'BANDERA', index: 'BANDERA', width: 80 },
+      { name: 'ORIGEN', index: 'ORIGEN', width: 80 },
+      { name: 'DESTINO', index: 'DESTINO', width: 80 },
+      { name: 'ESTADO', index: 'ESTADO', width: 80 },
+      { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 80 },
+      { name: 'ETA', index: 'ETA', width: 80 }
+    ],
+        pager: '#pager',
+        rowNum: 20,
+        rowList: [10, 20, 30],
+        sortname: 'ID',
+        sortorder: 'desc',
+        viewrecords: true,
+        gridview: true,
+        height: 400,
+        autowidth: true,
+        search: true,
+        caption: 'Viajes'
+      });
+
+      mygrid.filterToolbar();
+      mygrid.navGrid('#pager', { edit: false,
+        add: false,
+        del: false,
+        search: false
+      }).navButtonAdd('#pager', {
+        caption: "Ver Etapas",
+        buttonicon: "ui-icon-add",
+        onClickButton: function () {
+            var gsr = mygrid.getGridParam('selrow');
+            if (!gsr) {
+            alert("Debe elegir un viaje");
+            return;
+            }
+            var id = mygrid.getRowData(gsr)['ID'];
+            window.location = '/etapa/list?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%>&<%}%>ID=' + id;
+        },
+        position: "last"
+      });
+    });
+  });
+/*      { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 80,
 	      searchoptions: {
 	        dataInit: function (el) {
 	          $(el).daterangepicker({
@@ -75,47 +120,6 @@
 	        }
 	      }
 	    },
-      { name: 'ETAPA_ACTUAL', index: 'ETAPA_ACTUAL', width: 80 },
-      { name: 'ESTADO', index: 'ESTADO', width: 80 },
-      { name: 'NOTAS', index: 'NOTAS', width: 80 },
-      { name: 'VIAJE_PADRE', index: 'VIAJE_PADRE', width: 80 },
-      { name: 'LATITUD', index: 'LATITUD', width: 80 },
-      { name: 'LONGITUD', index: 'LONGITUD', width: 80 },
-      { name: 'CREATED_AT', index: 'CREATED_AT', width: 80 }
-    ],
-        pager: '#pager',
-        rowNum: 20,
-        rowList: [10, 20, 30],
-        sortname: 'ID',
-        sortorder: 'desc',
-        viewrecords: true,
-        gridview: true,
-        height: 400,
-        autowidth: true,
-        search: true,
-        caption: 'Viajes'
-      });
-
-      mygrid.filterToolbar();
-      mygrid.navGrid('#pager', { edit: false,
-        add: false,
-        del: false,
-        search: false
-      }).navButtonAdd('#pager', {
-        caption: "Ver Etapas",
-        buttonicon: "ui-icon-add",
-        onClickButton: function () {
-            var gsr = mygrid.getGridParam('selrow');
-            if (!gsr) {
-            alert("Debe elegir un viaje");
-            return;
-            }
-            var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/etapa/list?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%>&<%}%>ID=' + id;
-        },
-        position: "last"
-      });
-    });
-  });
+*/
 </script>
 </asp:Content>

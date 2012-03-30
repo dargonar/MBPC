@@ -24,9 +24,10 @@ namespace mbpc_admin.Controllers
 
           var items = context.ExecuteStoreQuery<BUQUES_NEW>((string)tmp[0], (ObjectParameter[])tmp[1]);
 
+          var todos = items.ToArray();
           return Json(JQGrid.Helper.PaginateS2<BUQUES_NEW>(
-              items.ToArray(),
-              columns, context.BUQUES_NEW.Count(), page, rows
+              todos,
+              columns, todos.Count(), page, rows
               ), JsonRequestBehavior.AllowGet);
         }
 
