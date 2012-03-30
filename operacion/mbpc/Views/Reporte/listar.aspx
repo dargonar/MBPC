@@ -42,7 +42,7 @@
 <% var reportes = ViewData["reportes"] as List<object>;%>
 <% var first = true; %>
 <div id="planilla" style="width: 100%;position: relative;">
-<h2 style="padding-left:10px;font-weight:normal;">Listado de reportes (generados con este IDE)</h2>
+  <h2 style="padding-left:10px;font-weight:normal;">Listado de reportes (generados con este IDE)</h2>
   <% if (reportes.Count == 0)
      {
        Html.RenderPartial("_result_empty");

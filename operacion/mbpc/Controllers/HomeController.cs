@@ -102,7 +102,6 @@ namespace mbpc.Controllers
 
           return Content("nop");
         }
-
         
         public ActionResult cambiarZona(string id)
         {
@@ -111,7 +110,6 @@ namespace mbpc.Controllers
 
           return View("columnas");
         }
-
 
         public ActionResult CambiarGrupo(int grupo)
         {
