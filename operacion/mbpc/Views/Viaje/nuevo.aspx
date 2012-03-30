@@ -114,7 +114,8 @@
                    sdist    : item.SDIST,
                    tipo     : item.TIPO,
                    bandera  : item.BANDERA,
-                   costera  : item.COSTERA
+                   costera  : item.COSTERA,
+                   matricula: item.MATRICULA
                  }
                }));
              }
@@ -153,7 +154,7 @@
 
             return $( "<li "+ bg + "></li>" )
 				      .data( "item.autocomplete", item )
-				      .append( "<a>" + item.nombre + " (SD:" + item.sdist + " - IMO:" + item.omi + " - " + item.bandera + ")" 
+				      .append( "<a>" + item.nombre + " (SD:" + item.sdist + ", IMO:" + item.omi + ", MR:" + item.matricula + ", " + item.bandera + ")" 
                              + mr
                              + "</a>" )
 				      .appendTo( ul );

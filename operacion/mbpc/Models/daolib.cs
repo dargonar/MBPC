@@ -573,7 +573,7 @@ public static class DaoLib
         new OracleParameter("vZoe", OracleDbType.Varchar2, zoe, System.Data.ParameterDirection.Input),
         new OracleParameter("vZona", OracleDbType.Varchar2, zona, System.Data.ParameterDirection.Input),
         new OracleParameter("vProx", OracleDbType.Varchar2, proximo_punto, System.Data.ParameterDirection.Input),
-        new OracleParameter("vInternacional", OracleDbType.Varchar2, decimal.Parse(intl), System.Data.ParameterDirection.Input),
+        new OracleParameter("vInternacional", OracleDbType.Varchar2, 0, System.Data.ParameterDirection.Input),
         new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
         new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
         new OracleParameter("vRiocanal", OracleDbType.Decimal, riocanal, System.Data.ParameterDirection.Input)
@@ -1684,7 +1684,7 @@ public static class DaoLib
       con.Open();
 
       cmd.Connection = con;
-     // cmd.Prepare();
+      cmd.Prepare();
       OracleDataReader reader = cmd.ExecuteReader();
 
       while (reader.Read())

@@ -34,11 +34,31 @@
             </p>
 
             <p>
-            <%= Html.Label("CANTIDAD") %>
-            <%= Html.TextBox("CANTIDAD", String.Format("{0:0.}", Model.CANTIDAD), new { @class = "inputbox" })%>
-                            <br />
+            <%= Html.Label("CANTIDAD INICIAL") %>
+            <%= Html.TextBox("CANTIDAD_INICIAL", String.Format("{0:0.}", Model.CANTIDAD_INICIAL), new { @class = "inputbox" })%><br />
                 <span class="smltxt red">
             <%= Html.ValidationMessageFor(model => model.CANTIDAD) %></span>
+            </p>
+            
+            <p>
+            <%= Html.Label("CANTIDAD CARGADA") %>
+            <%= Html.TextBox("CANTIDAD_ENTRADA", String.Format("{0:0.}", Model.CANTIDAD_ENTRADA), new { @class = "inputbox" })%><br />
+                <span class="smltxt red">
+            <%= Html.ValidationMessageFor(model => model.CANTIDAD_ENTRADA)%></span>
+            </p>
+
+            <p>
+            <%= Html.Label("CANTIDAD DESCARGADA") %>
+            <%= Html.TextBox("CANTIDAD_SALIDA", String.Format("{0:0.}", Model.CANTIDAD_SALIDA), new { @class = "inputbox" })%><br />
+                <span class="smltxt red">
+            <%= Html.ValidationMessageFor(model => model.CANTIDAD_SALIDA)%></span>
+            </p>
+
+            <p>
+            <%= Html.Label("EN TRANSITO") %>
+            <%= Html.CheckBox("EN_TRANSITO", Model.EN_TRANSITO != 0) %><br />
+              <span class="smltxt red">
+            <%= Html.ValidationMessageFor(model => model.EN_TRANSITO)%></span>
             </p>
 
             <p>
@@ -53,7 +73,7 @@
             <%// Html.DropDownList("BUQUE_ID") %>
             <%//</p> Html.ValidationMessageFor(model => model.BUQUE_ID) %>
             
-
+            <input type="hidden" name="alone" value="<%=ViewData["alone"]%>"
 
             <p>
                 <input type="submit" value="<%= ViewData["titulo"] %>" class="btn" />
@@ -61,11 +81,16 @@
     <% } %>
 
     <div>
-        <%: Html.ActionLink("Volver a la lista", "List", new { id = decimal.Parse(ViewData["etapa_id"].ToString())})%>
+        <%: Html.ActionLink("Volver a la lista de cargas", "List", new { alone = ViewData["alone"],  id = decimal.Parse(ViewData["etapa_id"].ToString())})%>
     </div>
 
 
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#TIPOCARGA_ID').val('<%=ViewData["TIPOCARGA_ID_SELECTED"]%>');
+        });
+    </script>
 
 </asp:Content>
 

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
- 
+<%@ Import Namespace="mbpc.Controllers" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Reportes
 </asp:Content>
@@ -77,7 +78,7 @@
 
 
       if ($(this).val() == "150000") {
-        $("#rresult").html('<iframe id="yoframe" width="100%" height="100%" src="http://localhost:7238/Viaje/List?alone=1"></iframe>');
+          $("#rresult").html('<iframe frameborder="0" id="yoframe" width="100%" height="100%" src="<%=MyController.URLPara("lista_viaje", Request)%>"></iframe>');
         $("#rresult").show();
         $("#fullscreen").hide();
         return;
@@ -118,7 +119,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div id="columnas">
+<div id="columnas" style="height:20000px">
 
 <!-- LEFT COL -->
 <div class="col" style="width:100%;height:100%;">

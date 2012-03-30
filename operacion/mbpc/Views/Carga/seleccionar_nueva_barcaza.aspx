@@ -81,8 +81,8 @@ $("#barcaza_text").autocomplete({
           response($.map(data, function (item) {
             return {
               id:    item.ID_BUQUE,
-              label: item.NOMBRE,
-              value: item.NOMBRE,
+              label: item.NOMBRE + ' (' + item.BANDERA + ')',
+              value: item.NOMBRE + ' (' + item.BANDERA + ')'
             }
           }));
         }

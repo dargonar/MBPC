@@ -2,8 +2,8 @@
 
 <form id="agregarPosicionForm" action="<%= Url.Content("~/Viaje/insertarReporte") %>" method="post">
       <label>Barco</label><br />
-      <input autocomplete="off" type="text" id="barco" style="width:270px" /><br />
-      <input  type="hidden" name="barco" id="barcoh" />
+      <input autocomplete="off" type="text" id="barco" style="width:270px" <%if(ViewData["nombre_buque"] != null){%>value="<%=ViewData["nombre_buque"]%>"<%}%>/><br />
+      <input  type="hidden" name="barco" id="barcoh"/>
 
       <label>Posicion</label><br />
       <input autocomplete="off" type="text" id="pos" name="pos" style="width:270px" /><br />
@@ -23,7 +23,7 @@
       <input autocomplete="off" type="text" id="fecha" name="fecha" style="width:270px"  /><br />
       <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
 
-      <input type="hidden" id="viaje_id" name="viaje_id" />
+      <input type="hidden" id="viaje_id" name="viaje_id" <%if(ViewData["viaje_id"] != null){%>value="<%=ViewData["viaje_id"]%>"<%}%>/>
       <input type="submit" class="botonsubmit" style="margin-left: 163px" value="Agregar" />
 </form>
 

@@ -55,59 +55,61 @@
 
     $("#nuevoBuque").submit(function () {
 
-      $('.botonsubmitb').attr('disabled', 'disabled');
+        $('.botonsubmitb').attr('disabled', 'disabled');
 
-      if ($("#bmatriculaN").val() == "") {
-        alert("Debe ingresar " + $('#bmatlabel').html() );
-        $('.botonsubmitb').removeAttr('disabled');
+        if ($("#bbandera").val() != 'PARAGUAY' && $("#bmatriculaN").val() == "") {
+            alert("Debe ingresar " + $('#bmatlabel').html());
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#bnombreN").val() == "") {
+            alert("Debe ingresar un nombre");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#bbandera").val() != 'PARAGUAY' && $("#bsdist").val() == "") {
+            alert("Debe ingresar la señal distintiva");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#binter").val() != 0 && $("#bbandera").val() == null) {
+            alert("Seleccione la bandera");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#bservicio").val() == "") {
+            alert("Debe seleccionar el tipo de servicio");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: (function (data) {
+                $('#dialogdiv3').dialog('close');
+
+                $('#buque_id').val(data[0].ID_BUQUE);
+                $('#buquetext').val($('#bnombreN').val()).nextAll('.nexttab:eq(0)').focus();
+            }),
+            error: (function (data) {
+                var titletag = /<title\b[^>]*>.*?<\/title>/
+
+                if (titletag != "")
+                    alert(unescape(titletag.exec(data.responseText)));
+                else
+                    alert(data);
+
+                $('.botonsubmitb').removeAttr('disabled');
+            })
+        });
         return false;
-      }
-
-      if ($("#bnombreN").val() == "") {
-        alert("Debe ingresar un nombre");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      if ($("#bsdist").val() == "") {
-        alert("Debe ingresar la señal distintiva");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      if( $("#binter").val() != 0 && $("#bbandera").val() == null ) {
-        alert("Seleccione la bandera");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-      
-      if( $("#bservicio").val() == "" ) {
-        alert("Debe seleccionar el tipo de servicio");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      $.ajax({
-        type: "POST",
-        cache: false,
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        success: (function (data) {
-          $('#dialogdiv3').dialog('close');
-          pegar_y_cerrar($('#nombreN').val(), data[0].ID_BUQUE, $("input[name=internacional]:checked").val());
-        }),
-        error: (function (data) {
-          var titletag = /<title\b[^>]*>.*?<\/title>/
-
-          if(titletag != "")
-            alert(unescape(titletag.exec(data.responseText)));
-          else
-            alert(data);
-
-          $('.botonsubmitb').removeAttr('disabled');
-        })
-      });
-      return false;
     });
   
   

@@ -161,10 +161,12 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult agregarReporte()
+        public ActionResult agregarReporte(string id, string nombre)
         {
           var now = DateTime.Now;
           ViewData["fecha"] = now.ToString("dd-MM-yy");
+          ViewData["viaje_id"] = id;
+          ViewData["nombre_buque"] = nombre;
           return View();
         }
 
@@ -306,6 +308,7 @@ namespace mbpc.Controllers
           var columns = new Dictionary<string,string> { 
             {"PID","i"},
             {"ID","i"},
+            {"COSTERA","s"},
             {"ETAPA","i"},
             {"PROXDEST","i"},
             {"ID_BUQUE","i"},

@@ -111,7 +111,7 @@
             return;
             }
             var id = mygrid.getRowData(gsr)['ID'];
-            window.location = '/etapa/list?<%if(ViewData["alone"]!=null){%>alone=1&<%}%>ID=' + id;
+            window.location = '/etapa/list?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%>&<%}%>ID=' + id;
         },
         position: "last"
       });
