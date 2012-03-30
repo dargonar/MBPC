@@ -96,7 +96,7 @@
     
     <div class="pbip_container left">
       <label>2.2 Eta</label><br />
-      <input autocomplete="off" class="format_date" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA"]:"" %>"  /><br />
+      <input autocomplete="off" class="format_date" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA_fmt"]:"" %>"  /><br />
     </div>
     
     <div class="pbip_container right">
@@ -202,10 +202,10 @@
             <input type="hidden" name="indice_<%=index %>" value="<%=index %>"/>
           </div> 
           <div class="tabla_td tabla_td_desde"> 
-            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE_fmt"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_hasta"> 
-            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="escalas_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA_fmt"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_descripcion"> 
             <input autocomplete="off" type="text" name="escalas_descripcion_<%=index %>" value="<%= (pbip_params != null) ? dict["DESCRIPCION"]:"" %>" />
@@ -263,10 +263,10 @@
             <input type="hidden" name="indice_<%=index %>" value="<%=index %>"/>
           </div> 
           <div class="tabla_td tabla_td_desde"> 
-            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_desde_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_DESDE_fmt"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_hasta"> 
-            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA"]:"" %>" />
+            <input autocomplete="off" type="text" class="format_date" name="actividades_fecha_hasta_<%=index %>" value="<%= (pbip_params != null) ? dict["FECHA_HASTA_fmt"]:"" %>" />
           </div> 
           <div class="tabla_td tabla_td_descripcion"> 
             <input autocomplete="off" type="text" name="actividades_descripcion_<%=index %>" value="<%= (pbip_params != null) ? dict["DESCRIPCION"]:"" %>" />
@@ -460,7 +460,7 @@
 
     <div class="pbip_container right">
       <label>Fecha</label><br />
-      <input autocomplete="off" type="text" class="format_date" id="facilitador_fecha" name="facilitador_fecha" value="<%= (pbip!= null) ?pbip["FACILITADOR_FECHA"]:"" %>" /><br />      
+      <input autocomplete="off" type="text" class="format_date" id="facilitador_fecha" name="facilitador_fecha" value="<%= (pbip!= null) ?pbip["FACILITADOR_FECHA_fmt"]:"" %>" /><br />      
     </div>
     <div style="clear:both"></div>
   </fieldset>
@@ -482,7 +482,7 @@
     function () {
       $("#posicion_latlon").mask("9999S99999W");
       $('#cipb_expiracion').mask("99-99-99");
-      $('.format_date').mask("99-99-99");
+      $('.format_date').mask("99-99-99").attr("title", "DD-MM-yy");
       $(".integer_only").numeric({ decimal: false, negative: false });
     }
   );
