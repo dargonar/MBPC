@@ -171,6 +171,7 @@
     <Content Include="Views\Shared\_practicos.aspx" />
     <Content Include="Views\Shared\_tablareporte.aspx" />
     <Content Include="Views\Carga\barcoenzona.aspx" />
+    <Content Include="Views\Shared\_tabs_main.aspx" />
     <Content Include="Views\Viaje\agregarReporte.aspx" />
     <Content Include="Views\Home\detallesTecnicos.aspx" />
     <Content Include="Views\Home\Index.aspx" />
