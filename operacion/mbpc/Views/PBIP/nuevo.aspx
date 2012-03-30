@@ -96,7 +96,7 @@
     
     <div class="pbip_container left">
       <label>2.2 Eta</label><br />
-      <input autocomplete="off" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA"]:"" %>"  /><br />
+      <input autocomplete="off" class="format_date" type="text" id="eta" name="eta" value="<%= (pbip!=null)?pbip["ETA"]:"" %>"  /><br />
     </div>
     
     <div class="pbip_container right">

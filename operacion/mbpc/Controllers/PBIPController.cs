@@ -48,7 +48,6 @@ namespace mbpc.Controllers
         ViewData["id"] = id;
 
         ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
-        ViewData["message"] = "Acción completada con éxito"; 
 
         return View("Index");
       }
@@ -57,7 +56,7 @@ namespace mbpc.Controllers
       {
         int pbpip_id = Convert.ToInt32(id);
         DaoLib.pbip_eliminar(pbpip_id);
-        return View();
+        return this.RedirectToAction("Index", "PBIP", new {msg="del"});
       }
 
       public ActionResult nuevo()
@@ -219,7 +218,10 @@ namespace mbpc.Controllers
                     v_fecha_hasta.ToArray(), v_descripcion.ToArray(), v_nivel_proteccion.ToArray(), v_escalas_medidas_adic.ToArray(), v_escalas_medidas_adic_desc.ToArray(), 
                     v_actividad_bab.ToArray());
 
-        return this.RedirectToAction("editar", "PBIP", new { id = lastPBIPId.ToString() });
+        if (editing_pbpip_id > 0)
+          return this.RedirectToAction("Index", "PBIP", new { msg = "mod" });
+        return this.RedirectToAction("Index", "PBIP", new { msg = "add" });
+        //return this.RedirectToAction("editar", "PBIP", new { id = lastPBIPId.ToString() });
       }
 
       public enum PBPIPEnum {
@@ -231,7 +233,7 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public ActionResult Index()
+      public ActionResult Index(string msg)
       {
         Session["grupos"] = null;
 
@@ -243,8 +245,22 @@ namespace mbpc.Controllers
           return this.RedirectToAction("ShowForm", "Auth");
         }
 
-        ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString()); 
-          
+        ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+
+        if(!String.IsNullOrEmpty(msg))
+        { 
+          string message="";
+          msg = msg.ToUpper();
+          if (msg == "DEL")
+            message = "PBIP borrado satisfactoriamente!";
+          if (msg == "ADD")
+            message = "PBIP creado satisfactoriamente!";
+          if (msg == "MOD")
+            message = "PBIP modificado satisfactoriamente!";
+          if (message != "")
+            ViewData["result_message"] = message;
+        }
+        
         return View();
       }
 

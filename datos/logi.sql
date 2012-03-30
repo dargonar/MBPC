@@ -144,18 +144,21 @@ CREATE OR REPLACE package mbpc as
   procedure pbip_nuevo(  v_viaje_id in INTEGER 
     ,v_puertodematricula in VARCHAR2, v_bandera in VARCHAR2 ,v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,
     v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,
-    v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in DATE ,
-    v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in DATE ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB,  
-  v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,
-  v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,
-  v_lista_tripulantes  in NUMBER  ,
-  v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in DATE , usrid in number, vCursor out cur);
+    v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in VARCHAR2 ,
+    v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in VARCHAR2 ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB,  
+    v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,
+    v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,
+    v_lista_tripulantes  in NUMBER  ,
+    v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  
+    , v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 
+    ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 
+    ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in VARCHAR2 , usrid in number, vCursor out cur);
   
-  procedure pbip_nuevo_param(v_tbl_pbip_id in INTEGER, v_tipo_param in INTEGER , v_indice in INTEGER ,v_fecha_desde in DATE,v_fecha_hasta in DATE,v_descripcion in CLOB,v_nivel_proteccion in INTEGER,v_escalas_medidas_adic in INTEGER,v_escalas_medidas_adic_desc in CLOB,v_actividad_bab in CLOB, usrid in number);
+  procedure pbip_nuevo_param(v_tbl_pbip_id in INTEGER, v_tipo_param in INTEGER , v_indice in INTEGER ,v_fecha_desde in VARCHAR2,v_fecha_hasta in VARCHAR2,v_descripcion in CLOB,v_nivel_proteccion in INTEGER,v_escalas_medidas_adic in INTEGER,v_escalas_medidas_adic_desc in CLOB,v_actividad_bab in CLOB, usrid in number);
   
   procedure pbip_eliminar(v_tbl_pbip_id in INTEGER, usrid in number, vCursor out cur);
   procedure pbip_eliminar_params(v_tbl_pbip_id in INTEGER, usrid in number, vCursor out cur);
-  procedure pbip_modificar(v_id in INTEGER,  v_viaje_id in INTEGER ,v_puertodematricula in VARCHAR2, v_bandera in VARCHAR2, v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in DATE ,v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in DATE ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB ,  v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,v_lista_tripulantes  in NUMBER  ,v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in DATE , usrid in number, vCursor out cur);
+  procedure pbip_modificar(v_id in INTEGER,  v_viaje_id in INTEGER ,v_puertodematricula in VARCHAR2, v_bandera in VARCHAR2, v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in VARCHAR2 ,v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in VARCHAR2 ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB ,  v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,v_lista_tripulantes  in NUMBER  ,v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in VARCHAR2 , usrid in number, vCursor out cur);
   
   procedure pbip_obtener(v_id in INTEGER, usrid in number, vCursor out cur);
   procedure pbip_obtener_params(v_id in INTEGER, usrid in number, vCursor out cur);
@@ -2203,28 +2206,56 @@ CREATE OR REPLACE package body mbpc as
   procedure pbip_nuevo(  v_viaje_id in INTEGER 
     ,v_puertodematricula in VARCHAR2, v_bandera in VARCHAR2 ,v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,
     v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,
-    v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in DATE ,
-    v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in DATE ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB,  
-  v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,
-  v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,
-  v_lista_tripulantes  in NUMBER  ,
-  v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in DATE , usrid in number, vCursor out cur)is
-  begin
-      INSERT INTO tbl_pbip (viaje_id ,puertodematricula, bandera ,nroinmarsat ,arqueobruto ,compania ,contactoocpm ,objetivo ,nro_imo  ,buque_nombre ,tipo_buque  ,distintivo_llamada   ,nro_identif_compania ,puerto_llegada ,eta   ,instalacion_portuaria   ,cipb_estado ,cipb_expedido_por ,cipb_expiracion   ,cipb_motivo_incumplimiento ,proteccion_plan_aprobado ,proteccion_nivel_actual ,longitud_notif ,latitud_notif  
-      ,plan_proteccion_mant_bab ,plan_proteccion_mant_bab_desc , carga_desc_gral   ,carga_sust_peligrosas   ,carga_sust_peligrosas_desc , lista_pasajeros   ,lista_tripulantes  ,prot_notifica_cuestion  ,prot_notifica_polizon   ,prot_notifica_polizon_desc , prot_notifica_rescate   ,prot_notifica_rescate_desc , prot_notifica_otra   ,prot_notifica_otra_desc , agente_pto_llegada_nombre  ,agente_pto_llegada_tel  ,agente_pto_llegada_mail ,facilitador_nombre   ,facilitador_titulo_cargo ,facilitador_lugar ,facilitador_fecha )
-      VALUES (v_viaje_id ,v_puertodematricula, v_bandera ,v_nroinmarsat ,v_arqueobruto ,v_compania ,v_contactoocpm ,v_objetivo ,v_nro_imo  ,v_buque_nombre ,v_tipo_buque  ,v_distintivo_llamada   ,v_nro_identif_compania ,v_puerto_llegada ,v_eta   ,v_instalacion_portuaria   ,v_cipb_estado ,v_cipb_expedido_por ,v_cipb_expiracion   ,v_cipb_motivo_incumplimiento ,v_proteccion_plan_aprobado ,v_proteccion_nivel_actual ,v_longitud_notif ,v_latitud_notif  
-      ,v_plan_proteccion_mant_bab ,v_plan_protec_mant_bab_desc , v_carga_desc_gral   ,v_carga_sust_peligrosas   ,v_carga_sust_peligrosas_desc , v_lista_pasajeros   ,v_lista_tripulantes  ,v_prot_notifica_cuestion  ,v_prot_notifica_polizon   ,v_prot_notifica_polizon_desc ,v_prot_notifica_rescate   ,v_prot_notifica_rescate_desc , v_prot_notifica_otra   ,v_prot_notifica_otra_desc , v_agente_pto_llegada_nombre  ,v_agente_pto_llegada_tel  ,v_agente_pto_llegada_mail ,v_facilitador_nombre   ,v_facilitador_titulo_cargo ,v_facilitador_lugar ,v_facilitador_fecha ) returning id into temp;
+    v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in VARCHAR2 ,
+    v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in VARCHAR2 
+    ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,
+    v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  ,v_plan_protec_mant_bab_desc in CLOB,  
+    v_carga_desc_gral   in CLOB ,v_carga_sust_peligrosas   in NUMBER  ,
+    v_carga_sust_peligrosas_desc in CLOB ,v_lista_pasajeros   in NUMBER  ,
+    v_lista_tripulantes  in NUMBER  ,
+    v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc in CLOB ,v_prot_notifica_rescate   in NUMBER  ,
+    v_prot_notifica_rescate_desc in CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc in CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,
+    v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,
+    v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in VARCHAR2 , usrid in number, vCursor out cur)is
+    begin
+      
+      INSERT INTO tbl_pbip (viaje_id, puertodematricula, bandera, nroinmarsat, arqueobruto, compania, contactoocpm, objetivo, nro_imo 
+      , buque_nombre, tipo_buque , distintivo_llamada  , nro_identif_compania, puerto_llegada, eta  
+      , instalacion_portuaria  , cipb_estado, cipb_expedido_por, cipb_expiracion  , cipb_motivo_incumplimiento
+      , proteccion_plan_aprobado, proteccion_nivel_actual
+     , plan_proteccion_mant_bab, plan_proteccion_mant_bab_desc,  carga_desc_gral  , carga_sust_peligrosas  
+     , carga_sust_peligrosas_desc,  lista_pasajeros  , lista_tripulantes , prot_notifica_cuestion , prot_notifica_polizon  
+     , prot_notifica_polizon_desc,  prot_notifica_rescate  , prot_notifica_rescate_desc,  prot_notifica_otra  
+     , prot_notifica_otra_desc,  agente_pto_llegada_nombre , agente_pto_llegada_tel , agente_pto_llegada_mail, facilitador_nombre  
+     , facilitador_titulo_cargo, facilitador_lugar, facilitador_fecha )
+      
+      VALUES (v_viaje_id, v_puertodematricula, v_bandera, v_nroinmarsat, v_arqueobruto, v_compania, v_contactoocpm, v_objetivo, 
+        v_nro_imo , v_buque_nombre, v_tipo_buque , v_distintivo_llamada  , v_nro_identif_compania, v_puerto_llegada,  
+        TO_DATE(v_eta, 'DD-MM-yy')  , v_instalacion_portuaria  , v_cipb_estado, v_cipb_expedido_por, 
+        TO_DATE(v_cipb_expiracion, 'DD-MM-yy')  , v_cipb_motivo_incumplimiento
+        , v_proteccion_plan_aprobado, v_proteccion_nivel_actual
+        , v_plan_proteccion_mant_bab, v_plan_protec_mant_bab_desc,  v_carga_desc_gral  , 
+        v_carga_sust_peligrosas  , v_carga_sust_peligrosas_desc,  v_lista_pasajeros  , v_lista_tripulantes , 
+        v_prot_notifica_cuestion , v_prot_notifica_polizon  , v_prot_notifica_polizon_desc, v_prot_notifica_rescate  , 
+        v_prot_notifica_rescate_desc,  v_prot_notifica_otra  , v_prot_notifica_otra_desc,  v_agente_pto_llegada_nombre , 
+        v_agente_pto_llegada_tel , v_agente_pto_llegada_mail, v_facilitador_nombre  , v_facilitador_titulo_cargo, v_facilitador_lugar, 
+        TO_DATE(v_facilitador_fecha, 'DD-MM-yy') ) returning id into temp;
 
+      
+      IF v_longitud_notif is not null and v_latitud_notif is not null THEN
+        UPDATE tbl_pbip SET longitud_notif = v_longitud_notif , latitud_notif  = v_latitud_notif WHERE id = temp;
+      END IF;
+    
       open vCursor for select temp from dual;    
   end pbip_nuevo;
   
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure pbip_nuevo_param(v_tbl_pbip_id in INTEGER, v_tipo_param in INTEGER , v_indice in INTEGER ,v_fecha_desde in DATE,v_fecha_hasta in DATE,v_descripcion in CLOB,v_nivel_proteccion in INTEGER,v_escalas_medidas_adic in INTEGER,v_escalas_medidas_adic_desc in CLOB,v_actividad_bab in CLOB, usrid in number) is
+  procedure pbip_nuevo_param(v_tbl_pbip_id in INTEGER, v_tipo_param in INTEGER , v_indice in INTEGER ,v_fecha_desde in VARCHAR2,v_fecha_hasta in VARCHAR2,v_descripcion in CLOB,v_nivel_proteccion in INTEGER,v_escalas_medidas_adic in INTEGER,v_escalas_medidas_adic_desc in CLOB,v_actividad_bab in CLOB, usrid in number) is
   begin
     INSERT INTO tbl_pbip_params (tbl_pbip_id , tipo_param  , indice  ,fecha_desde ,fecha_hasta ,descripcion ,nivel_proteccion ,escalas_medidas_adic ,escalas_medidas_adic_desc ,actividad_bab )
-    VALUES (v_tbl_pbip_id , v_tipo_param  , v_indice  ,v_fecha_desde ,v_fecha_hasta ,v_descripcion ,v_nivel_proteccion ,v_escalas_medidas_adic ,v_escalas_medidas_adic_desc ,v_actividad_bab);
+    VALUES (v_tbl_pbip_id , v_tipo_param  , v_indice, TO_DATE(v_fecha_desde, 'DD-MM-yy') , TO_DATE(v_fecha_hasta, 'DD-MM-yy') ,v_descripcion ,v_nivel_proteccion ,v_escalas_medidas_adic ,v_escalas_medidas_adic_desc ,v_actividad_bab);
     
   end pbip_nuevo_param;
   
@@ -2246,25 +2277,28 @@ CREATE OR REPLACE package body mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
   
-  procedure pbip_modificar(v_id in INTEGER, v_viaje_id in INTEGER ,v_puertodematricula in VARCHAR2 ,v_bandera in VARCHAR2, v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in DATE ,v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2 ,v_cipb_expiracion   in DATE ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  , v_plan_protec_mant_bab_desc in CLOB, v_carga_desc_gral   IN CLOB ,v_carga_sust_peligrosas   in NUMBER  ,v_carga_sust_peligrosas_desc IN CLOB ,v_lista_pasajeros   in NUMBER  ,v_lista_tripulantes  in NUMBER  ,v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc IN CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc IN CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc IN CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in DATE , usrid in number, vCursor out cur) is
+  procedure pbip_modificar(v_id in INTEGER, v_viaje_id in INTEGER ,v_puertodematricula in VARCHAR2 ,v_bandera in VARCHAR2, v_nroinmarsat in VARCHAR2 ,v_arqueobruto in VARCHAR2 ,v_compania in VARCHAR2 ,v_contactoocpm in VARCHAR2 ,v_objetivo in VARCHAR2 ,v_nro_imo  in VARCHAR2 ,v_buque_nombre in VARCHAR2 ,v_tipo_buque  in VARCHAR2 ,v_distintivo_llamada   in VARCHAR2 ,v_nro_identif_compania in VARCHAR2 ,v_puerto_llegada in VARCHAR2 ,v_eta   in VARCHAR2 ,v_instalacion_portuaria   in VARCHAR2 ,v_cipb_estado in VARCHAR2 ,v_cipb_expedido_por in VARCHAR2, v_cipb_expiracion   in VARCHAR2 ,v_cipb_motivo_incumplimiento in VARCHAR2 ,v_proteccion_plan_aprobado in NUMBER ,v_proteccion_nivel_actual in NUMBER ,v_longitud_notif in NUMBER ,v_latitud_notif  in NUMBER ,v_plan_proteccion_mant_bab in NUMBER  , v_plan_protec_mant_bab_desc in CLOB, v_carga_desc_gral   IN CLOB ,v_carga_sust_peligrosas   in NUMBER  ,v_carga_sust_peligrosas_desc IN CLOB ,v_lista_pasajeros   in NUMBER  ,v_lista_tripulantes  in NUMBER  ,v_prot_notifica_cuestion  in NUMBER  ,v_prot_notifica_polizon   in NUMBER  ,v_prot_notifica_polizon_desc IN CLOB ,v_prot_notifica_rescate   in NUMBER  ,v_prot_notifica_rescate_desc IN CLOB ,v_prot_notifica_otra   in NUMBER  ,v_prot_notifica_otra_desc IN CLOB ,v_agente_pto_llegada_nombre  in VARCHAR2 ,v_agente_pto_llegada_tel  in VARCHAR2 ,v_agente_pto_llegada_mail in VARCHAR2 ,v_facilitador_nombre   in VARCHAR2 ,v_facilitador_titulo_cargo in VARCHAR2 ,v_facilitador_lugar in VARCHAR2 ,v_facilitador_fecha in VARCHAR2 , usrid in number, vCursor out cur) is
   begin  
     UPDATE tbl_pbip SET viaje_id = v_viaje_id ,
       puertodematricula = v_puertodematricula ,   bandera =v_bandera,  nroinmarsat = v_nroinmarsat ,     arqueobruto = v_arqueobruto ,      compania = v_compania ,
       contactoocpm = v_contactoocpm ,      objetivo = v_objetivo ,      nro_imo  = v_nro_imo  ,      buque_nombre = v_buque_nombre ,
       tipo_buque  = v_tipo_buque  ,      distintivo_llamada   = v_distintivo_llamada   ,      nro_identif_compania = v_nro_identif_compania ,
-      puerto_llegada = v_puerto_llegada ,     eta   = v_eta   ,      instalacion_portuaria   = v_instalacion_portuaria   ,      cipb_estado = v_cipb_estado ,
-      cipb_expedido_por = v_cipb_expedido_por ,      cipb_expiracion   = v_cipb_expiracion   ,      cipb_motivo_incumplimiento = v_cipb_motivo_incumplimiento ,
-      proteccion_plan_aprobado = v_proteccion_plan_aprobado ,      proteccion_nivel_actual = v_proteccion_nivel_actual ,      longitud_notif = v_longitud_notif ,
-      latitud_notif  = v_latitud_notif  ,      plan_proteccion_mant_bab = v_plan_proteccion_mant_bab , plan_proteccion_mant_bab_desc = v_plan_protec_mant_bab_desc,
+      puerto_llegada = v_puerto_llegada ,     eta = TO_DATE(v_eta, 'DD-MM-yy')   ,      instalacion_portuaria   = v_instalacion_portuaria   ,      cipb_estado = v_cipb_estado ,
+      cipb_expedido_por = v_cipb_expedido_por ,      cipb_expiracion   = TO_DATE(v_cipb_expiracion, 'DD-MM-yy')   ,      cipb_motivo_incumplimiento = v_cipb_motivo_incumplimiento ,
+      proteccion_plan_aprobado = v_proteccion_plan_aprobado ,      proteccion_nivel_actual = v_proteccion_nivel_actual ,  plan_proteccion_mant_bab = v_plan_proteccion_mant_bab , plan_proteccion_mant_bab_desc = v_plan_protec_mant_bab_desc,
       carga_desc_gral   = v_carga_desc_gral   ,      carga_sust_peligrosas   = v_carga_sust_peligrosas   ,      carga_sust_peligrosas_desc = v_carga_sust_peligrosas_desc ,
        lista_pasajeros   = v_lista_pasajeros   ,      lista_tripulantes  = v_lista_tripulantes  ,      prot_notifica_cuestion  = v_prot_notifica_cuestion  ,
       prot_notifica_polizon   = v_prot_notifica_polizon   ,      prot_notifica_polizon_desc = v_prot_notifica_polizon_desc ,       prot_notifica_rescate   = v_prot_notifica_rescate   ,
       prot_notifica_rescate_desc = v_prot_notifica_rescate_desc ,       prot_notifica_otra   = v_prot_notifica_otra   ,      prot_notifica_otra_desc = v_prot_notifica_otra_desc ,
        agente_pto_llegada_nombre  = v_agente_pto_llegada_nombre  ,      agente_pto_llegada_tel  = v_agente_pto_llegada_tel  ,      agente_pto_llegada_mail = v_agente_pto_llegada_mail ,
       facilitador_nombre   = v_facilitador_nombre   ,      facilitador_titulo_cargo = v_facilitador_titulo_cargo ,      facilitador_lugar = v_facilitador_lugar ,
-      facilitador_fecha= v_facilitador_fecha
+      facilitador_fecha= TO_DATE(v_facilitador_fecha, 'DD-MM-yy')
       WHERE id = v_id;
-  
+    
+    IF v_longitud_notif is not null and v_latitud_notif is not null THEN
+      UPDATE tbl_pbip SET longitud_notif = v_longitud_notif , latitud_notif  = v_latitud_notif WHERE id = v_id;
+    END IF;
+    
   end pbip_modificar;
   
   procedure pbip_obtener(v_id in INTEGER, usrid in number, vCursor out cur) is
