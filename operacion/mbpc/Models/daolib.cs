@@ -1524,7 +1524,7 @@ public static class DaoLib
         new OracleParameter("v_tbl_pbip_id", OracleDbType.Varchar2, v_tbl_pbip_id, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.pbip_eliminar", parameters);
+    return doCall("mbpc.pbip_eliminar_params", parameters);
   }
 
   public static object pbip_obtener(int v_pbp_id )
