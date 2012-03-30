@@ -466,21 +466,24 @@
     
     }
 
-    function pbip (aelement) {
-
+    function pbip (aelement, title) {
+      return pbip2($(aelement).attr("href"), title);
+    }
+    
+    function pbip2(href, title) {
       $("#fullscreen").css("display", "block");
 
       $.ajax({
         type: "GET",
         cache: false,
-        url: $(aelement).attr("href"),
+        url: href,
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
             height: 600,
-            width: 350,
+            width: 705,
             modal: true,
-            title: 'Formulario PBIP',
+            title: title/*'Formulario PBIP'*/,
           });
           $("#fullscreen").css("display", "none");
         }),

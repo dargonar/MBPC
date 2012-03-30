@@ -1363,6 +1363,190 @@ public static class DaoLib
     return doCall("mbpc.reporte_metadata", parameters);
   }
 
+  public static List<object> pbip_nuevo(int? v_viaje_id ,string v_puertodematricula, string v_bandera, string v_nroinmarsat ,string v_arqueobruto 
+    , string v_compania ,string v_contactoocpm ,string v_objetivo ,string v_nro_imo  ,string v_buque_nombre ,string v_tipo_buque  
+    , string v_distintivo_llamada ,string v_nro_identif_compania ,string v_puerto_llegada ,string v_eta   ,string v_instalacion_portuaria
+    , string v_cipb_estado ,string v_cipb_expedido_por ,string v_cipb_expiracion,
+    string v_cipb_motivo_incumplimiento,int v_proteccion_plan_aprobado ,int v_proteccion_nivel_actual ,decimal? v_longitud_notif ,decimal? v_latitud_notif,
+    int v_plan_proteccion_mant_bab ,string v_plan_prot_mant_bab_desc ,
+    string v_carga_desc_gral   ,int v_carga_sust_peligrosas   ,string v_carga_sust_peligrosas_desc ,int v_lista_pasajeros,int v_lista_tripulantes,int v_prot_notifica_cuestion  ,
+    int v_prot_notifica_polizon ,string v_prot_notifica_polizon_desc ,int v_prot_notifica_rescate,string v_prot_notifica_rescate_desc,int v_prot_notifica_otra,
+    string v_prot_notifica_otra_desc ,
+    string v_agente_pto_llegada_nombre,string v_agente_pto_llegada_tel  ,string v_agente_pto_llegada_mail ,string v_facilitador_nombre ,string v_facilitador_titulo_cargo ,
+    string v_facilitador_lugar ,    string v_facilitador_fecha)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_viaje_id", OracleDbType.Varchar2,  "1", System.Data.ParameterDirection.Input),
+        new OracleParameter("v_puertodematricula", OracleDbType.Varchar2,  v_puertodematricula , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_bandera", OracleDbType.Varchar2,  v_bandera , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nroinmarsat", OracleDbType.Varchar2,  v_nroinmarsat , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_arqueobruto", OracleDbType.Varchar2,  v_arqueobruto , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_compania", OracleDbType.Varchar2,  v_compania , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_contactoocpm", OracleDbType.Varchar2,  v_contactoocpm , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_objetivo", OracleDbType.Varchar2,  v_objetivo , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nro_imo", OracleDbType.Varchar2,  v_nro_imo  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_buque_nombre", OracleDbType.Varchar2,  v_buque_nombre , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_tipo_buque", OracleDbType.Varchar2,  v_tipo_buque  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_distintivo_llamada", OracleDbType.Varchar2,  v_distintivo_llamada , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nro_identif_compania", OracleDbType.Varchar2,  v_nro_identif_compania , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_puerto_llegada", OracleDbType.Varchar2,  v_puerto_llegada , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_eta", OracleDbType.Varchar2,  v_eta   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_instalacion_portuaria", OracleDbType.Varchar2,  v_instalacion_portuaria, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_estado", OracleDbType.Varchar2,  v_cipb_estado , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_expedido_por", OracleDbType.Varchar2,  v_cipb_expedido_por , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_expiracion", OracleDbType.Varchar2,  v_cipb_expiracion, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_motivo_incumplimiento", OracleDbType.Varchar2,  v_cipb_motivo_incumplimiento, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_proteccion_plan_aprobado", OracleDbType.Varchar2,  v_proteccion_plan_aprobado , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_proteccion_nivel_actual", OracleDbType.Varchar2,  v_proteccion_nivel_actual , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_longitud_notif", OracleDbType.Varchar2, 0/* v_longitud_notif */, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_latitud_notif", OracleDbType.Varchar2,  0/*v_latitud_notif*/, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_plan_proteccion_mant_bab", OracleDbType.Varchar2,  v_plan_proteccion_mant_bab , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_plan_prot_mant_bab_desc", OracleDbType.Varchar2,  v_plan_prot_mant_bab_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_desc_gral", OracleDbType.Varchar2,  v_carga_desc_gral   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_sust_peligrosas", OracleDbType.Varchar2,  v_carga_sust_peligrosas   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_sust_peligrosas_desc", OracleDbType.Varchar2,  v_carga_sust_peligrosas_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_lista_pasajeros", OracleDbType.Varchar2,  v_lista_pasajeros, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_lista_tripulantes", OracleDbType.Varchar2,  v_lista_tripulantes, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_cuestion", OracleDbType.Varchar2,  v_prot_notifica_cuestion  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_polizon", OracleDbType.Varchar2,  v_prot_notifica_polizon , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_polizon_desc", OracleDbType.Varchar2,  v_prot_notifica_polizon_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_rescate", OracleDbType.Varchar2,  v_prot_notifica_rescate, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_rescate_desc", OracleDbType.Varchar2,  v_prot_notifica_rescate_desc, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_otra", OracleDbType.Varchar2,  v_prot_notifica_otra, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_otra_desc", OracleDbType.Varchar2,  v_prot_notifica_otra_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_nombre", OracleDbType.Varchar2,  v_agente_pto_llegada_nombre, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_tel", OracleDbType.Varchar2,  v_agente_pto_llegada_tel  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_mail", OracleDbType.Varchar2,  v_agente_pto_llegada_mail , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_nombre", OracleDbType.Varchar2,  v_facilitador_nombre , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_titulo_cargo", OracleDbType.Varchar2,  v_facilitador_titulo_cargo , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_lugar", OracleDbType.Varchar2,  v_facilitador_lugar , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_fecha", OracleDbType.Varchar2,  v_facilitador_fecha , System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.pbip_nuevo", parameters);
+  }
+
+  public static List<object> pbip_modificar(int v_id, int? v_viaje_id, string v_puertodematricula, string v_bandera, string v_nroinmarsat, string v_arqueobruto, string v_compania, string v_contactoocpm, string v_objetivo, string v_nro_imo, string v_buque_nombre, string v_tipo_buque, string v_distintivo_llamada, string v_nro_identif_compania, string v_puerto_llegada, string v_eta, string v_instalacion_portuaria, string v_cipb_estado, string v_cipb_expedido_por, string v_cipb_expiracion,
+    string v_cipb_motivo_incumplimiento,int v_proteccion_plan_aprobado ,int v_proteccion_nivel_actual ,decimal? v_longitud_notif ,decimal? v_latitud_notif,int v_plan_proteccion_mant_bab ,string v_plan_prot_mant_bab_desc ,
+    string v_carga_desc_gral   ,int v_carga_sust_peligrosas   ,string v_carga_sust_peligrosas_desc ,int v_lista_pasajeros,int v_lista_tripulantes,int v_prot_notifica_cuestion  ,int v_prot_notifica_polizon ,string v_prot_notifica_polizon_desc ,int v_prot_notifica_rescate,string v_prot_notifica_rescate_desc,int v_prot_notifica_otra,string v_prot_notifica_otra_desc ,
+    string v_agente_pto_llegada_nombre,string v_agente_pto_llegada_tel  ,string v_agente_pto_llegada_mail ,string v_facilitador_nombre ,string v_facilitador_titulo_cargo ,string v_facilitador_lugar ,
+    string v_facilitador_fecha)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_id", OracleDbType.Varchar2,  v_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_viaje_id", OracleDbType.Varchar2,  v_viaje_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_puertodematricula", OracleDbType.Varchar2,  v_puertodematricula , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_bandera", OracleDbType.Varchar2,  v_bandera , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nroinmarsat", OracleDbType.Varchar2,  v_nroinmarsat , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_arqueobruto", OracleDbType.Varchar2,  v_arqueobruto , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_compania", OracleDbType.Varchar2,  v_compania , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_contactoocpm", OracleDbType.Varchar2,  v_contactoocpm , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_objetivo", OracleDbType.Varchar2,  v_objetivo , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nro_imo", OracleDbType.Varchar2,  v_nro_imo  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_buque_nombre", OracleDbType.Varchar2,  v_buque_nombre , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_tipo_buque", OracleDbType.Varchar2,  v_tipo_buque  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_distintivo_llamada", OracleDbType.Varchar2,  v_distintivo_llamada , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nro_identif_compania", OracleDbType.Varchar2,  v_nro_identif_compania , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_puerto_llegada", OracleDbType.Varchar2,  v_puerto_llegada , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_eta", OracleDbType.Varchar2,  v_eta   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_instalacion_portuaria", OracleDbType.Varchar2,  v_instalacion_portuaria, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_estado", OracleDbType.Varchar2,  v_cipb_estado , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_expedido_por", OracleDbType.Varchar2,  v_cipb_expedido_por , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_expiracion", OracleDbType.Varchar2,  v_cipb_expiracion, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_cipb_motivo_incumplimiento", OracleDbType.Varchar2,  v_cipb_motivo_incumplimiento, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_proteccion_plan_aprobado", OracleDbType.Varchar2,  v_proteccion_plan_aprobado , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_proteccion_nivel_actual", OracleDbType.Varchar2,  v_proteccion_nivel_actual , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_longitud_notif", OracleDbType.Varchar2,  v_longitud_notif , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_latitud_notif", OracleDbType.Varchar2,  v_latitud_notif, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_plan_proteccion_mant_bab", OracleDbType.Varchar2,  v_plan_proteccion_mant_bab , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_plan_prot_mant_bab_desc", OracleDbType.Varchar2,  v_plan_prot_mant_bab_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_desc_gral", OracleDbType.Varchar2,  v_carga_desc_gral   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_sust_peligrosas", OracleDbType.Varchar2,  v_carga_sust_peligrosas   , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_carga_sust_peligrosas_desc", OracleDbType.Varchar2,  v_carga_sust_peligrosas_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_lista_pasajeros", OracleDbType.Varchar2,  v_lista_pasajeros, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_lista_tripulantes", OracleDbType.Varchar2,  v_lista_tripulantes, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_cuestion", OracleDbType.Varchar2,  v_prot_notifica_cuestion  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_polizon", OracleDbType.Varchar2,  v_prot_notifica_polizon , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_polizon_desc", OracleDbType.Varchar2,  v_prot_notifica_polizon_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_rescate", OracleDbType.Varchar2,  v_prot_notifica_rescate, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_rescate_desc", OracleDbType.Varchar2,  v_prot_notifica_rescate_desc, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_otra", OracleDbType.Varchar2,  v_prot_notifica_otra, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_prot_notifica_otra_desc", OracleDbType.Varchar2,  v_prot_notifica_otra_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_nombre", OracleDbType.Varchar2,  v_agente_pto_llegada_nombre, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_tel", OracleDbType.Varchar2,  v_agente_pto_llegada_tel  , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_agente_pto_llegada_mail", OracleDbType.Varchar2,  v_agente_pto_llegada_mail , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_nombre", OracleDbType.Varchar2,  v_facilitador_nombre , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_titulo_cargo", OracleDbType.Varchar2,  v_facilitador_titulo_cargo , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_lugar", OracleDbType.Varchar2,  v_facilitador_lugar , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_facilitador_fecha", OracleDbType.Varchar2,  v_facilitador_fecha , System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.pbip_modificar", parameters);
+  }
+
+  public static List<object> pbip_nuevo_param(int[] v_tbl_pbip_id, int[] v_tipo_param, int[] v_indice, string[] v_fecha_desde,
+    string[] v_fecha_hasta, string[] v_descripcion, int[] v_nivel_proteccion, int[] v_escalas_medidas_adic, string[] v_escalas_medidas_adic_desc
+    , string[] v_actividad_bab) 
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_tbl_pbip_id", OracleDbType.Varchar2,  v_tbl_pbip_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_tipo_param", OracleDbType.Varchar2,  v_tipo_param, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_indice", OracleDbType.Varchar2,  v_indice, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_fecha_desde", OracleDbType.Varchar2,  v_fecha_desde, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_fecha_hasta", OracleDbType.Varchar2,  v_fecha_hasta, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_descripcion", OracleDbType.Varchar2,  v_descripcion, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_nivel_proteccion", OracleDbType.Varchar2,  v_nivel_proteccion, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_escalas_medidas_adic", OracleDbType.Varchar2,  v_escalas_medidas_adic, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_escalas_medidas_adic_desc", OracleDbType.Varchar2,  v_escalas_medidas_adic_desc , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_actividad_bab", OracleDbType.Varchar2,  v_actividad_bab , System.Data.ParameterDirection.Input)
+    };
+
+    return doCall2("mbpc.pbip_nuevo_param", parameters, v_tbl_pbip_id.Length);
+  }
+
+  public static List<object> pbip_eliminar(int v_tbl_pbip_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_tbl_pbip_id", OracleDbType.Varchar2, v_tbl_pbip_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.pbip_eliminar", parameters);
+  }
+
+  public static List<object> pbip_eliminar_params(int v_tbl_pbip_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_tbl_pbip_id", OracleDbType.Varchar2, v_tbl_pbip_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.pbip_eliminar", parameters);
+  }
+
+  public static object pbip_obtener(int v_pbp_id )
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_id", OracleDbType.Varchar2, v_pbp_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.pbip_obtener", parameters)[0];
+  }
+
+  public static List<object> pbip_obtener_params(int v_pbp_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_id", OracleDbType.Varchar2, v_pbp_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.pbip_obtener_params", parameters);
+  }
+
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
     string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;

@@ -85,6 +85,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\MyController.cs" />
+    <Compile Include="Controllers\PBIPController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\ViajeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -141,6 +142,9 @@
     <Content Include="Views\Item\nuevaBarcaza.aspx" />
     <Content Include="Views\Item\nuevoPractico.aspx" />
     <Content Include="Views\Item\nuevoUsuario.aspx" />
+    <Content Include="Views\PBIP\Index.aspx" />
+    <Content Include="Views\PBIP\lista.aspx" />
+    <Content Include="Views\PBIP\nuevo.aspx" />
     <Content Include="Views\Reporte\actions.aspx" />
     <Content Include="Views\Reporte\conditionItem.aspx" />
     <Content Include="Views\Reporte\dummy.aspx" />

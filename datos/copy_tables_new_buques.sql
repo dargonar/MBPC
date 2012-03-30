@@ -8,7 +8,7 @@ CREATE TABLE VM_BUQUES_NAC (
   ANIO_CONSTRUCCION                                  NUMBER(4),
   NRO_ISMM                                           NUMBER(9),
   ASTILL_PARTIC                                      VARCHAR2(80),
-  REGISTRO                                           VARCHAR2(3),
+  REGISTRO                                           VARCHAR2(10),
   TIPO_BUQUE                                         VARCHAR2(45),
   TIPO_SERVICIO                                      VARCHAR2(35),
   TIPO_EXPLOTACION                                   VARCHAR2(35),
