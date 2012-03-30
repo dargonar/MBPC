@@ -1377,7 +1377,7 @@ public static class DaoLib
   {
     var parameters = new OracleParameter[] 
     { 
-        new OracleParameter("v_viaje_id", OracleDbType.Varchar2,  "1", System.Data.ParameterDirection.Input),
+        new OracleParameter("v_viaje_id", OracleDbType.Varchar2,  "1" /*v_viaje_id*/, System.Data.ParameterDirection.Input),
         new OracleParameter("v_puertodematricula", OracleDbType.Varchar2,  v_puertodematricula , System.Data.ParameterDirection.Input),
         new OracleParameter("v_bandera", OracleDbType.Varchar2,  v_bandera , System.Data.ParameterDirection.Input),
         new OracleParameter("v_nroinmarsat", OracleDbType.Varchar2,  v_nroinmarsat , System.Data.ParameterDirection.Input),
@@ -1399,8 +1399,8 @@ public static class DaoLib
         new OracleParameter("v_cipb_motivo_incumplimiento", OracleDbType.Varchar2,  v_cipb_motivo_incumplimiento, System.Data.ParameterDirection.Input),
         new OracleParameter("v_proteccion_plan_aprobado", OracleDbType.Varchar2,  v_proteccion_plan_aprobado , System.Data.ParameterDirection.Input),
         new OracleParameter("v_proteccion_nivel_actual", OracleDbType.Varchar2,  v_proteccion_nivel_actual , System.Data.ParameterDirection.Input),
-        new OracleParameter("v_longitud_notif", OracleDbType.Varchar2, 0/* v_longitud_notif */, System.Data.ParameterDirection.Input),
-        new OracleParameter("v_latitud_notif", OracleDbType.Varchar2,  0/*v_latitud_notif*/, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_longitud_notif", OracleDbType.Decimal, v_longitud_notif, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_latitud_notif", OracleDbType.Decimal,  v_latitud_notif, System.Data.ParameterDirection.Input),
         new OracleParameter("v_plan_proteccion_mant_bab", OracleDbType.Varchar2,  v_plan_proteccion_mant_bab , System.Data.ParameterDirection.Input),
         new OracleParameter("v_plan_prot_mant_bab_desc", OracleDbType.Varchar2,  v_plan_prot_mant_bab_desc , System.Data.ParameterDirection.Input),
         new OracleParameter("v_carga_desc_gral", OracleDbType.Varchar2,  v_carga_desc_gral   , System.Data.ParameterDirection.Input),
@@ -1458,8 +1458,8 @@ public static class DaoLib
         new OracleParameter("v_cipb_motivo_incumplimiento", OracleDbType.Varchar2,  v_cipb_motivo_incumplimiento, System.Data.ParameterDirection.Input),
         new OracleParameter("v_proteccion_plan_aprobado", OracleDbType.Varchar2,  v_proteccion_plan_aprobado , System.Data.ParameterDirection.Input),
         new OracleParameter("v_proteccion_nivel_actual", OracleDbType.Varchar2,  v_proteccion_nivel_actual , System.Data.ParameterDirection.Input),
-        new OracleParameter("v_longitud_notif", OracleDbType.Varchar2,  v_longitud_notif , System.Data.ParameterDirection.Input),
-        new OracleParameter("v_latitud_notif", OracleDbType.Varchar2,  v_latitud_notif, System.Data.ParameterDirection.Input),
+        new OracleParameter("v_longitud_notif", OracleDbType.Decimal,  v_longitud_notif , System.Data.ParameterDirection.Input),
+        new OracleParameter("v_latitud_notif", OracleDbType.Decimal,  v_latitud_notif, System.Data.ParameterDirection.Input),
         new OracleParameter("v_plan_proteccion_mant_bab", OracleDbType.Varchar2,  v_plan_proteccion_mant_bab , System.Data.ParameterDirection.Input),
         new OracleParameter("v_plan_prot_mant_bab_desc", OracleDbType.Varchar2,  v_plan_prot_mant_bab_desc , System.Data.ParameterDirection.Input),
         new OracleParameter("v_carga_desc_gral", OracleDbType.Varchar2,  v_carga_desc_gral   , System.Data.ParameterDirection.Input),

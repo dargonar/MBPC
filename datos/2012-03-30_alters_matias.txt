@@ -1,0 +1,6 @@
+alter table tbl_evento add(ptoviaje             INTEGER        DEFAULT 0 NULL,
+latviaje             NUMBER(21,18) NULL,
+lonviaje             NUMBER(21,18) NULL);
+
+alter table tmp_buques add( created_at         DATE          DEFAULT sysdate NULL);
+alter table tmp_buques add( created_by         NUMBER        NULL);
