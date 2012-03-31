@@ -10,7 +10,7 @@ using Oracle.DataAccess.Types;
 
 namespace mbpc.Controllers
 {
-    public class PBIPController : Controller
+    public class PBIPController : MyController
     {
 
       public static string maskLatLon(string str_lat, string str_lon)
@@ -32,8 +32,19 @@ namespace mbpc.Controllers
         // functions
       public ActionResult modificar(string id)
       {
+        var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+        var destino = (datos[0] as Dictionary<string, string>)["DESTINO"];
+
         int pbpip_id = Convert.ToInt32(id);
-        ViewData["pbip"] = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+
+        var pbip = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+        ViewData["pbip"] = pbip;
+
+        if (pbip["DESTINO"] != destino)
+        {
+          throw new Exception("No puede editar un PBIP creado por otra costera.");
+        }
+
         ViewData["pbip_params"] = DaoLib.pbip_obtener_params(pbpip_id);
         ViewData["id"] = id;
 
@@ -42,19 +53,40 @@ namespace mbpc.Controllers
 
       public ActionResult editar(string id)
       {
+        var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+        ViewData["datos_del_usuario"] = datos;
+
+        var destino = (datos[0] as Dictionary<string, string>)["DESTINO"];
+
         int pbpip_id = Convert.ToInt32(id);
-        ViewData["pbip"] = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+        var pbip = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+
+        ViewData["pbip"] = pbip;
+
+        if (pbip["DESTINO"] != destino)
+        {
+          throw new Exception("No puede editar un PBIP creado por otra costera.");
+        }
+        
         ViewData["pbip_params"] = DaoLib.pbip_obtener_params(pbpip_id);
         ViewData["id"] = id;
-
-        ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
 
         return View("Index");
       }
 
       public ActionResult borrar(string id)
       {
+        var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+        var destino = (datos[0] as Dictionary<string, string>)["DESTINO"];
+
         int pbpip_id = Convert.ToInt32(id);
+        var pbip = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+
+        if (pbip["DESTINO"] != destino)
+        {
+          return this.RedirectToAction("Index", "PBIP", new { msg = "cost" });
+        }
+        
         DaoLib.pbip_eliminar(pbpip_id);
         return this.RedirectToAction("Index", "PBIP", new {msg="del"});
       }
@@ -257,8 +289,14 @@ namespace mbpc.Controllers
             message = "PBIP creado satisfactoriamente!";
           if (msg == "MOD")
             message = "PBIP modificado satisfactoriamente!";
+          if (msg == "COST")
+            message = "No se puede borrar un PBIP creado por otra costera.";
+
           if (message != "")
+          {
             ViewData["result_message"] = message;
+            ViewData["result_type"] = msg == "COST" ? "err" : "success";
+          }
         }
         
         return View();
@@ -268,30 +306,15 @@ namespace mbpc.Controllers
       {
         var columns = new Dictionary<string, string> { 
           {"ID","i"},
-          {"NRO_IMO","i" },
-          {"BUQUE_NOMBRE","s" },
-          {"COMPANIA","s" },
-          {"OBJETIVO","s" },
+          {"COSTERA","s" },
+          {"NOMBRE","s" },
+          {"BANDERA","s" },
+          {"IMO","s" },
+          {"ETA","d" },
           {"PUERTO_LLEGADA","s" },
-          {"ETA","s" },
-          {"CIPB_ESTADO","s" }
-          /*
-          {"ID","i"},
-          {"NRO_OMI","i"},
-          {"BUQUE","s"},
-          {"PUERTODEMATRICULA","i"},
-          {"BANDERA_ID","i"},
-          {"TIPO_BUQUE","s"},
-          {"SDIST","s"},
-          {"NROINMARSAT","s"},
-          {"ARQUEOBRUTO","s"},
-          {"COMPANIA","s"},
-          {"CONTACTOOCPM","s"},
-          {"ETA","d"},
-          {"VIAJE","s"},
-          {"OBJETIVO","s"},
-          {"DESTINO","s"},
-          {"ORIGEN","s"}*/
+          {"PROCEDENCIA","s" },
+          {"NIVEL_PROTECCION_ACTUAL","i" },
+          {"CIPB_EXPIRACION","d" }
         };
 
         //Agregamos a mano el filtro

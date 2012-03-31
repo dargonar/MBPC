@@ -831,8 +831,8 @@
           <Property Name="DTO" Type="varchar2" MaxLength="50" />
           <Property Name="SEC" Type="varchar2" MaxLength="50" />
           <Property Name="NDOC" Type="number" Precision="8" />
-          <Property Name="NIVACC" Type="number" Precision="1" />
-          <Property Name="ESTADO" Type="number" Precision="1" />
+          <Property Name="NIVACC" Type="number" Precision="8" />
+          <Property Name="ESTADO" Type="number" Precision="8" />
           <Property Name="NOMBRE" Type="varchar2" Nullable="false" MaxLength="50" />
           <Property Name="CODIGO" Type="varchar2" Nullable="false" MaxLength="8" />
         </EntityType>
@@ -1988,8 +1988,6 @@
           <Property Name="DTO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="SEC" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="NDOC" Type="Decimal" Precision="8" Scale="0" />
-          <Property Name="NIVACC" Type="Boolean" />
-          <Property Name="ESTADO" Type="Boolean" />
           <Property Name="NOMBRE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="CODIGO" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
         </EntityType>
@@ -2847,8 +2845,6 @@
             <ScalarProperty Name="DTO" ColumnName="DTO" />
             <ScalarProperty Name="SEC" ColumnName="SEC" />
             <ScalarProperty Name="NDOC" ColumnName="NDOC" />
-            <ScalarProperty Name="NIVACC" ColumnName="NIVACC" />
-            <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
             <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
             <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
@@ -2989,7 +2985,7 @@
         <EntityTypeShape EntityType="Model.VIEW_ETAPAS" Width="1.5" PointX="15.75" PointY="0.75" Height="3.7288216145833246" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.VIEW_PBIP" Width="1.5" PointX="0.75" PointY="15.75" Height="3.5644742838541674" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.VPUNTO_DE_CONTROL" Width="1.5" PointX="15.75" PointY="5.75" Height="1.5923063151041674" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.VW_INT_USUARIOS" Width="1.5" PointX="17.75" PointY="0.75" Height="3.7288216145833246" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.VW_INT_USUARIOS" Width="1.5" PointX="17.75" PointY="0.75" Height="3.4001269531249996" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.VW_INT_USUARIOS_EXT" Width="1.5" PointX="17.75" PointY="5.75" Height="4.38621093750001" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.VW_PERS_DESTI" Width="1.5" PointX="17.75" PointY="11.75" Height="1.2636116536458246" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.VW_VIAJES_MARITIMOS" Width="1.5" PointX="17.75" PointY="14.75" Height="3.7288216145833246" IsExpanded="true" />

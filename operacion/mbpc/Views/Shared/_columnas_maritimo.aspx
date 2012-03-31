@@ -200,7 +200,8 @@ function initGrid() {
     onContextMenu: function (event, menu) {
       var rowId = $(event.target).parent("tr").attr("id")
       var grid = $("#list");
-      grid.setSelection(rowId);
+      $('#'+rowId).click();
+      //grid.setSelection(rowId, true);
 
       return true;
 

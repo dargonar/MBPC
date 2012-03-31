@@ -12529,54 +12529,6 @@ namespace mbpc_admin
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> NIVACC
-        {
-            get
-            {
-                return _NIVACC;
-            }
-            set
-            {
-                OnNIVACCChanging(value);
-                ReportPropertyChanging("NIVACC");
-                _NIVACC = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NIVACC");
-                OnNIVACCChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _NIVACC;
-        partial void OnNIVACCChanging(Nullable<global::System.Boolean> value);
-        partial void OnNIVACCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> ESTADO
-        {
-            get
-            {
-                return _ESTADO;
-            }
-            set
-            {
-                OnESTADOChanging(value);
-                ReportPropertyChanging("ESTADO");
-                _ESTADO = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ESTADO");
-                OnESTADOChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _ESTADO;
-        partial void OnESTADOChanging(Nullable<global::System.Boolean> value);
-        partial void OnESTADOChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String NOMBRE

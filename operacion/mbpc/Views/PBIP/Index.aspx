@@ -63,6 +63,11 @@
 	    color: #4F8A10;
 	    background-color: #DFF2BF;
     }
+    .msg_info.msg_err {
+	    color: #FFFFFF;
+	    background-color: #AA0000;
+    }
+
 </style>
 </asp:Content>
 

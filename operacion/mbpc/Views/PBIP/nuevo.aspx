@@ -124,7 +124,7 @@
     <div class="pbip_container right">
       <label>3.1.1 CIPB expedido por</label><br />
       <input autocomplete="off" type="text" id="cipb_expedido_por" name="cipb_expedido_por" value="<%= (pbip!=null)?pbip["CIPB_EXPEDIDO_POR"]:"" %>" /><br />
-      Expira el:<input autocomplete="off" type="text" id="cipb_expiracion" name="cipb_expiracion" value="<%= (pbip!=null)?pbip["CIPB_EXPIRACION"]:"" %>" /><br />
+      Expira el:<input autocomplete="off" type="text" id="cipb_expiracion" name="cipb_expiracion" value="<%= (pbip!=null)?pbip["CIPB_EXPIRACION_fmt"]:"" %>" /><br />
     </div>
     <div style="clear:both"></div>
     
@@ -355,8 +355,8 @@
       <label>4.1 ¿Hay alguna cuestión relacionada con la protección que desee notificar?</label><br />
       <% int prot_notifica_cuestion = (pbip != null && !String.IsNullOrEmpty(pbip["PROT_NOTIFICA_CUESTION"])) ? (Convert.ToInt32(pbip["PROT_NOTIFICA_CUESTION"])) : (0);  %>
       <select name="prot_notifica_cuestion">
-        <option value="0" <%= lista_pasajeros==0?"SELECTED":"" %>>NO</option>
-        <option value="1" <%= lista_pasajeros==1?"SELECTED":"" %>>SI</option>
+        <option value="0" <%= prot_notifica_cuestion==0?"SELECTED":"" %>>NO</option>
+        <option value="1" <%= prot_notifica_cuestion==1?"SELECTED":"" %>>SI</option>
       </select>
     </div>
     

@@ -28,7 +28,7 @@
 
 <% if (!String.IsNullOrEmpty(Convert.ToString(ViewData["result_message"])))
    { %>
-    <div class="msg_info msg_success"><%=ViewData["result_message"]%></div>
+    <div class="msg_info msg_<%=ViewData["result_type"]%>"><%=ViewData["result_message"]%></div>
     
 <% } %>
 
@@ -88,25 +88,18 @@
       url: '/PBIP/ListJson',
       datatype: 'json',
       mtype: 'GET',
-      colNames: ["ID", "NRO_IMO", "BUQUE_NOMBRE", "COMPANIA", "OBJETIVO", "PUERTO_LLEGADA", "ETA", "CIPB_ESTADO"],
+      colNames: ["ID", "COSTERA", "NOMBRE", "BANDERA", "IMO", "ETA", "PUERTO_LLEGADA", "PROCEDENCIA", "NIVEL_PROTECCION_ACTUAL", "CIPB_EXPIRACION"],
       colModel: [
     { name: 'ID', index: 'ID', width: 90, hidden: true },
-    { name: 'NRO_IMO', index: 'NRO_IMO', width: 90 },
-    { name: 'BUQUE_NOMBRE', index: 'BUQUE_NOMBRE', width: 90 },
-    { name: 'COMPANIA', index: 'COMPANIA', width: 90 },
-    { name: 'OBJETIVO', index: 'OBJETIVO', width: 90 },
-    { name: 'DESTINO', index: 'PUERTO_LLEGADA', width: 90 },
+    { name: 'COSTERA', index: 'COSTERA', width: 90 },
+    { name: 'NOMBRE', index: 'NOMBRE', width: 90 },
+    { name: 'BANDERA', index: 'BANDERA', width: 90 },
+    { name: 'IMO', index: 'IMO', width: 90 },
     { name: 'ETA', index: 'ETA', width: 90 },
-    { name: 'CIPB ESTADO', index: 'CIPB_ESTADO', width: 80 }/*,
-    { name: 'ARQUEOBRUTO', index: 'ARQUEOBRUTO', width: 80 },
-    { name: 'COMPANIA', index: 'COMPANIA', width: 80 },
-    { name: 'CONTACTOOCPM', index: 'CONTACTOOCPM', width: 80 },
-    { name: 'ETA', index: 'ETA', width: 80 },
-    { name: 'VIAJE', index: 'VIAJE', width: 80 },
-    { name: 'OBJETIVO', index: 'OBJETIVO', width: 80 },
-    { name: 'DESTINO', index: 'DESTINO', width: 80 },
-    { name: 'ORIGEN', index: 'ORIGEN', width: 80 },*/
-    /*{ name: ' ', index: 'ULTIMO', width: 80, formatter: myformatter },*/
+    { name: 'PUERTO_LLEGADA', index: 'PUERTO_LLEGADA', width: 90 },
+    { name: 'PROCEDENCIA', index: 'PROCEDENCIA', width: 80 },
+    { name: 'NIVEL_PROTECCION_ACTUAL', index: 'NIVEL_PROTECCION_ACTUAL', width: 80 },
+    { name: 'CIPB_EXPIRACION', index: 'CIPB_EXPIRACION', width: 80 }
     ],
       pager: '#pager',
       rowNum: 20,
@@ -164,7 +157,8 @@ function initGrid() {
     onContextMenu: function (event, menu) {
       var rowId = $(event.target).parent("tr").attr("id")
       var grid = $("#list");
-      grid.setSelection(rowId);
+      $('#'+rowId).click();
+      //grid.setSelection(rowId);
 
       return true;
 

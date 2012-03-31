@@ -8,7 +8,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.6";
+      public static string VERSION = "1.3.8";
       
         //
         // GET: /Home/
@@ -24,7 +24,6 @@ namespace mbpc.Controllers
             return RedirectToAction("Login", "Auth");
           }
 
-          
           var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
           ViewData["datos_del_usuario"] = datos;
 

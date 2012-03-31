@@ -1660,7 +1660,7 @@ CREATE OR REPLACE package body mbpc as
   begin
     open vCursor for
       --Todas las barcazas
-      select id_buque, nombre, bandera from buques_new b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' )
+      select id_buque, nombre, bandera from buques_new b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
                                               and   UPPER(nombre) like '%'||UPPER(vQuery)||'%'
       --Que no sean las ...
       and UPPER(id_buque) not in (
@@ -2227,7 +2227,7 @@ CREATE OR REPLACE package body mbpc as
      , carga_sust_peligrosas_desc,  lista_pasajeros  , lista_tripulantes , prot_notifica_cuestion , prot_notifica_polizon  
      , prot_notifica_polizon_desc,  prot_notifica_rescate  , prot_notifica_rescate_desc,  prot_notifica_otra  
      , prot_notifica_otra_desc,  agente_pto_llegada_nombre , agente_pto_llegada_tel , agente_pto_llegada_mail, facilitador_nombre  
-     , facilitador_titulo_cargo, facilitador_lugar, facilitador_fecha )
+     , facilitador_titulo_cargo, facilitador_lugar, facilitador_fecha, created_by, created_at )
       
       VALUES (v_viaje_id, v_puertodematricula, v_bandera, v_nroinmarsat, v_arqueobruto, v_compania, v_contactoocpm, v_objetivo, 
         v_nro_imo , v_buque_nombre, v_tipo_buque , v_distintivo_llamada  , v_nro_identif_compania, v_puerto_llegada,  
@@ -2239,7 +2239,7 @@ CREATE OR REPLACE package body mbpc as
         v_prot_notifica_cuestion , v_prot_notifica_polizon  , v_prot_notifica_polizon_desc, v_prot_notifica_rescate  , 
         v_prot_notifica_rescate_desc,  v_prot_notifica_otra  , v_prot_notifica_otra_desc,  v_agente_pto_llegada_nombre , 
         v_agente_pto_llegada_tel , v_agente_pto_llegada_mail, v_facilitador_nombre  , v_facilitador_titulo_cargo, v_facilitador_lugar, 
-        TO_DATE(v_facilitador_fecha, 'DD-MM-yy') ) returning id into temp;
+        TO_DATE(v_facilitador_fecha, 'DD-MM-yy'), usrid, SYSDATE ) returning id into temp;
 
       
       IF v_longitud_notif is not null and v_latitud_notif is not null THEN
@@ -2292,7 +2292,7 @@ CREATE OR REPLACE package body mbpc as
       prot_notifica_rescate_desc = v_prot_notifica_rescate_desc ,       prot_notifica_otra   = v_prot_notifica_otra   ,      prot_notifica_otra_desc = v_prot_notifica_otra_desc ,
        agente_pto_llegada_nombre  = v_agente_pto_llegada_nombre  ,      agente_pto_llegada_tel  = v_agente_pto_llegada_tel  ,      agente_pto_llegada_mail = v_agente_pto_llegada_mail ,
       facilitador_nombre   = v_facilitador_nombre   ,      facilitador_titulo_cargo = v_facilitador_titulo_cargo ,      facilitador_lugar = v_facilitador_lugar ,
-      facilitador_fecha= TO_DATE(v_facilitador_fecha, 'DD-MM-yy')
+      facilitador_fecha= TO_DATE(v_facilitador_fecha, 'DD-MM-yy'), updated_at=SYSDATE, updated_by=usrid
       WHERE id = v_id;
     
     IF v_longitud_notif is not null and v_latitud_notif is not null THEN
@@ -2306,10 +2306,17 @@ CREATE OR REPLACE package body mbpc as
     open vCursor for
     
     SELECT 
-      id, viaje_id ,puertodematricula, bandera ,nroinmarsat ,arqueobruto ,compania ,contactoocpm ,objetivo ,nro_imo  ,buque_nombre ,tipo_buque  ,distintivo_llamada   ,nro_identif_compania ,puerto_llegada ,eta   ,instalacion_portuaria   ,cipb_estado ,cipb_expedido_por ,cipb_expiracion   ,cipb_motivo_incumplimiento ,proteccion_plan_aprobado ,proteccion_nivel_actual ,longitud_notif ,latitud_notif  
-      ,plan_proteccion_mant_bab ,plan_proteccion_mant_bab_desc , carga_desc_gral   ,carga_sust_peligrosas   ,carga_sust_peligrosas_desc , lista_pasajeros   ,lista_tripulantes  ,prot_notifica_cuestion  ,prot_notifica_polizon   ,prot_notifica_polizon_desc , prot_notifica_rescate   ,prot_notifica_rescate_desc , prot_notifica_otra   ,prot_notifica_otra_desc , agente_pto_llegada_nombre  ,agente_pto_llegada_tel  ,agente_pto_llegada_mail ,facilitador_nombre   ,facilitador_titulo_cargo ,facilitador_lugar ,facilitador_fecha 
-      FROM TBL_PBIP 
-      WHERE id = v_id;
+      p.id, p.viaje_id ,p.puertodematricula, p.bandera ,p.nroinmarsat ,p.arqueobruto ,p.compania ,p.contactoocpm ,p.objetivo ,p.nro_imo,p.buque_nombre,
+      p.tipo_buque,p.distintivo_llamada ,p.nro_identif_compania,p.puerto_llegada,p.eta,p.instalacion_portuaria,p.cipb_estado,
+      p.cipb_expedido_por,p.cipb_expiracion,p.cipb_motivo_incumplimiento,p.proteccion_plan_aprobado,p.proteccion_nivel_actual,
+      p.longitud_notif,p.latitud_notif,p.plan_proteccion_mant_bab,p.plan_proteccion_mant_bab_desc,p.carga_desc_gral,p.carga_sust_peligrosas,
+      p.carga_sust_peligrosas_desc,p.lista_pasajeros,p.lista_tripulantes,p.prot_notifica_cuestion,p.prot_notifica_polizon,
+      p.prot_notifica_polizon_desc,p.prot_notifica_rescate,p.prot_notifica_rescate_desc,p.prot_notifica_otra,p.prot_notifica_otra_desc,
+      p.agente_pto_llegada_nombre,p.agente_pto_llegada_tel,p.agente_pto_llegada_mail,p.facilitador_nombre,p.facilitador_titulo_cargo,
+      p.facilitador_lugar,p.facilitador_fecha, u.destino
+      FROM TBL_PBIP p
+      LEFT JOIN vw_int_usuarios u on p.created_by=u.ndoc
+      WHERE p.id = v_id;
   
   end pbip_obtener;
   
