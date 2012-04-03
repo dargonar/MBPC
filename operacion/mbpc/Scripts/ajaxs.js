@@ -809,7 +809,7 @@
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
             height: 610 ,
-            width: 340,
+            width: 370,
             modal: true,
             title: 'Nuevo Viaje',
           });

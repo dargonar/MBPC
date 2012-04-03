@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="mbpc.Controllers" %>
   <% string url;
      string titulo;
      string boton;
@@ -26,6 +27,11 @@
     <% if (ViewData["action"].ToString() == "terminarviaje") { %>
     <label>Escalas</label>
     <input style="float:left; width: 300px" autocomplete="off"  name="escalas" id="escalas" type="text" value=""/>
+    <div style="clear:both"></div>
+    <label>¿Va a o viene de  Malvinas?</label><br />
+    <%= Html.DropDownList("codigo_malvinas"
+                      , ViajeController.MalvinasOptions(true)
+                          , new Dictionary<string, object> { { "style", "width:300px;" } })%>
     <div style="clear:both"></div>
     <% } %>
 

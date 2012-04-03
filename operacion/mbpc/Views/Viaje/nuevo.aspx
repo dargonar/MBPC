@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="mbpc.Controllers" %>
 <div>
 <form id="nuevoViaje" action="<%= Url.Content("~/Viaje/crear") %>" method="post">
 
@@ -53,8 +54,13 @@
 
   <label>Rio/Canal Km/Par</label><br />
   <input autocomplete="off" type="text" id="riocanal" style="width:270px" /><br />
-  <input  type="hidden" id="riocanalh" name="riocanal" />
+  <input  type="hidden" id="riocanalh" name="riocanal" /><br />
 
+  <label>¿Va a o viene de  Malvinas?</label><br />
+  <%= Html.DropDownList("codigo_malvinas"
+                      , ViajeController.MalvinasOptions(true)
+                          , new Dictionary<string, object> { { "style", "width:270px;" } })%>
+  <br />
 
   <input type="submit" class="botonsubmit" style="margin-left: 190px" value="Crear Viaje" />
 

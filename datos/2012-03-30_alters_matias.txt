@@ -4,3 +4,12 @@ lonviaje             NUMBER(21,18) NULL);
 
 alter table tmp_buques add( created_at         DATE          DEFAULT sysdate NULL);
 alter table tmp_buques add( created_by         NUMBER        NULL);
+
+
+alter table tbl_pbip add( created_at         DATE          DEFAULT sysdate NULL);
+alter table tbl_pbip add( created_by         NUMBER        NULL);
+
+alter table tbl_pbip add( updated_at         DATE          DEFAULT sysdate NULL);
+alter table tbl_pbip add( updated_by         NUMBER        NULL);
+
+

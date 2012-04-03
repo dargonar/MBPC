@@ -41,10 +41,10 @@ CREATE OR REPLACE package mbpc as
   procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur );
   procedure todos_los_pdc(usrid in number, vCursor out cur);
   --Viaje
-  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
+  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
   procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
   procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur);
-  procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, usrid in number, vCursor out cur);
+  procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
   procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur);
   procedure reactivar_viaje(vViajeId in number , usrid in number, vCursor out cur);
   procedure traer_pbip(vViaje in varchar2, usrid in number, vCursor out cur);
@@ -162,8 +162,9 @@ CREATE OR REPLACE package mbpc as
   
   procedure pbip_obtener(v_id in INTEGER, usrid in number, vCursor out cur);
   procedure pbip_obtener_params(v_id in INTEGER, usrid in number, vCursor out cur);
+  
+  procedure obtener_opciones_malvinas(v_va_a_malvinas in INTEGER, usrid in number, vCursor out cur);
 end;
-
 
 
 
@@ -663,7 +664,7 @@ CREATE OR REPLACE package body mbpc as
   --se crea la etapa inicial,
   --registra el evento
 
-  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur) is
+  procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur) is
   begin
 
     select latitud, longitud, uso, rios_canales_km_id into posicion
@@ -698,11 +699,11 @@ CREATE OR REPLACE package body mbpc as
 
       INSERT INTO tbl_viaje ( id, buque_id, origen_id, destino_id, fecha_salida, eta,
                               zoe, latitud, longitud, created_at, rios_canales_km_id, riokm_actual,
-                               created_by, updated_at, updated_by, buque_info )
+                               created_by, updated_at, updated_by, buque_info, codigo_malvinas_inicio )
 
       VALUES ( id_cargas.nextval, vBuque, vOrigen, vDestino, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vEta, 'DD-MM-yy HH24:mi'),
               TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), lat, lon, tempdate, riokm, posicion.riokm,
-              usrid, tempdate, usrid, temp3 ) returning id into temp;
+              usrid, tempdate, usrid, temp3, vCodigoMalvinas ) returning id into temp;
 
       insert into tbl_etapa ( viaje_id, actual_id, destino_id, hrp, fecha_salida, created_at, sentido, created_by )
       VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid ) returning id into temp2;
@@ -749,7 +750,7 @@ CREATE OR REPLACE package body mbpc as
   --Finaliza el viaje, (Lo pasa a estado 1)
   --Registra el evento
 
-  procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, usrid in number, vCursor out cur) is
+  procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur) is
   begin
 
     tempdate := SYSDATE;
@@ -758,7 +759,8 @@ CREATE OR REPLACE package body mbpc as
            fecha_llegada = TO_DATE(vFecha, 'DD-MM-yy HH24:mi'),
            escalas = vEscalas,
            updated_by=usrid,
-           updated_at=tempdate
+           updated_at=tempdate,
+           codigo_malvinas_final=vCodigoMalvinas
            where id = vViajeId;
 
     --nuevo log
@@ -1916,9 +1918,9 @@ CREATE OR REPLACE package body mbpc as
   procedure crear_buque(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur) is
   begin
 
-	tempdate := sysdate;
+  tempdate := sysdate;
 
-	insert into tmp_buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_ISMM, CREATED_BY, CREATED_AT)
+  insert into tmp_buques (ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_ISMM, CREATED_BY, CREATED_AT)
       VALUES ( SQ_FLUVIAL_ID.nextval, vMatricula, vNombre, 'ARGENTINA', 0, vServicio, vServicio, vSDist, vMMSI, usrid, tempdate )
 
   returning ID_BUQUE,MATRICULA,NRO_OMI,NOMBRE,BANDERA,ANIO_CONSTRUCCION,NRO_ISMM,ASTILL_PARTIC,REGISTRO,TIPO_BUQUE,TIPO_SERVICIO,TIPO_EXPLOTACION,ARBOLADURA,SDIST,VELOCIDAD,ESLORA,MANGA,PUNTAL,ARQUEO_TOTAL,CALADO_MAX,PUERTO_ASIENTO,MATERIAL,SOCIEDADCLASIF,ARQUEO_NETO,DOTACION_MINIMA,TIPO into var_buque;
@@ -1934,7 +1936,7 @@ CREATE OR REPLACE package body mbpc as
 
   procedure crear_buque_int(vMatricula in varchar2, vNombre in varchar2, vSDist in varchar2, vBandera in varchar2, vServicio in varchar2, vMMSI in varchar2, usrid in number, vCursor out cur) is
   begin
-	tempdate := sysdate;
+  tempdate := sysdate;
 
     insert into tmp_buques ( ID_BUQUE, MATRICULA, NOMBRE, BANDERA, ANIO_CONSTRUCCION, TIPO_BUQUE, TIPO_SERVICIO, SDIST, NRO_OMI, NRO_ISMM, CREATED_BY, CREATED_AT)
       VALUES ( SQ_FLUVIAL_ID.nextval, 'n/a', vNombre,  vBandera, 0, vServicio, vServicio, vSDist, vMatricula, vMMSI, usrid, tempdate)
@@ -2331,5 +2333,17 @@ CREATE OR REPLACE package body mbpc as
       order by tipo_param asc, indice asc;
   
   end pbip_obtener_params;
+  
+  procedure obtener_opciones_malvinas(v_va_a_malvinas in INTEGER, usrid in number, vCursor out cur)is
+  begin 
+    open vCursor for
+    
+    SELECT 
+      id, codigo, descripcion, tipo
+      FROM TBL_CODIGO_MALVINAS 
+      /*WHERE tipo = v_va_a_malvinas*/
+      order by tipo asc, descripcion asc, codigo asc;
+  
+  end obtener_opciones_malvinas;
 end;
 /

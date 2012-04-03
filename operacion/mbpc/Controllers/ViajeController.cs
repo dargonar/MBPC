@@ -14,6 +14,26 @@ namespace mbpc.Controllers
 {
     public class ViajeController : MyController
     {
+      static public SelectList MalvinasOptions(bool to_malvinas)
+      {
+        int va_a_malvinas = to_malvinas ? 1 : 0;
+        List<object> malvinas= DaoLib.obtener_opciones_malvinas(va_a_malvinas);
+        List<object> newList = new List<object>();
+        string selected = "";
+        foreach (object obj in malvinas)
+        {
+          Dictionary<string, string> option = (Dictionary<string, string>)obj;
+          newList.Add(new
+            {
+              id = Convert.ToString(option["ID"]),
+              nombre = Convert.ToString(option["DESCRIPCION"])
+            });
+          if (selected == "")
+            selected = Convert.ToString(option["ID"]);
+        }
+        return new SelectList(newList, "id", "nombre", selected);  
+      }
+
       public ActionResult practicos(string id)
       {
 
@@ -178,7 +198,7 @@ namespace mbpc.Controllers
         }
 
 
-        public ActionResult crear(string buque_id, string desde_id, string hasta_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal)
+        public ActionResult crear(string buque_id, string desde_id, string hasta_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal, string codigo_malvinas)
         {
           //decimal[] latlon = new decimal[2];
           decimal?[] latlon = new decimal?[2];
@@ -186,7 +206,7 @@ namespace mbpc.Controllers
           {
             latlon = DaoLib.parsePos(pos);
           }
-          List<object> autoeditaretapa = DaoLib.crear_viaje(buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
+          List<object> autoeditaretapa = DaoLib.crear_viaje(buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, Convert.ToInt32(codigo_malvinas));
           ViewData["AutoEditarEtapa"] = autoeditaretapa;
           return BuildResponse();
         }
@@ -225,9 +245,9 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult terminar(string viaje_id, string fecha, string escalas)
+        public ActionResult terminar(string viaje_id, string fecha, string escalas, string codigo_malvinas)
         {
-          DaoLib.terminar_viaje(viaje_id, fecha, escalas);
+          DaoLib.terminar_viaje(viaje_id, fecha, escalas, Convert.ToInt32(codigo_malvinas));
           return BuildResponse();
         }
 

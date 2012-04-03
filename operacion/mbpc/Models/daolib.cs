@@ -561,7 +561,7 @@ public static class DaoLib
   }
 
 
-  public static List<object> crear_viaje(string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
+  public static List<object> crear_viaje(string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal, int codigo_malvinas)
   {
     var parameters = new OracleParameter[] 
     { 
@@ -576,7 +576,8 @@ public static class DaoLib
         new OracleParameter("vInternacional", OracleDbType.Varchar2, 0, System.Data.ParameterDirection.Input),
         new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
         new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
-        new OracleParameter("vRiocanal", OracleDbType.Decimal, riocanal, System.Data.ParameterDirection.Input)
+        new OracleParameter("vRiocanal", OracleDbType.Decimal, riocanal, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.crear_viaje", parameters);
@@ -726,13 +727,14 @@ public static class DaoLib
     return doCall("mbpc.traer_viaje", parameters);
   }
 
-  public static List<object> terminar_viaje(string viajeId, string fecha, string escalas)
+  public static List<object> terminar_viaje(string viajeId, string fecha, string escalas, int codigo_malvinas)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vViajeId", OracleDbType.Varchar2, decimal.Parse(viajeId), System.Data.ParameterDirection.Input),
         new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
         new OracleParameter("vEscalas", OracleDbType.Varchar2, escalas, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
     return doCall("mbpc.terminar_viaje", parameters);
@@ -1545,6 +1547,16 @@ public static class DaoLib
     };
 
     return doCall("mbpc.pbip_obtener_params", parameters);
+  }
+
+  public static List<object> obtener_opciones_malvinas(int va_a_malvinas)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("v_va_a_malvinas", OracleDbType.Varchar2, va_a_malvinas, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.obtener_opciones_malvinas", parameters);
   }
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
