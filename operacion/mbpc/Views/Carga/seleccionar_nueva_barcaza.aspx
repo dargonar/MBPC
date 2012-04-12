@@ -2,14 +2,15 @@
 <form action="<%= Url.Content("~/Carga/corregir_barcaza/") %>" method="post" onsubmit="return corregir_barcaza(this);">
 
       <label>Barcaza</label><br />
-      <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" /><br />
-      <a id="newbarcaza" href="<%=Url.Content("~/Item/nuevaBarcaza")%>" onclick="return nuevaBarcaza(this);">Nueva Barcaza</a>
+      <input type="text" id="barcaza_text" style="width: 200px;" autocomplete="off" />
+      <input href="<%=Url.Content("~/Item/nuevaBarcaza")%>" id="newbarcaza" type="button" value="..." onclick="return nuevaBarcaza(this);" title="NUEVA BARCAZA"/> <br />
+      <input type="submit" value="Corregir Barcaza" />
 
       <input type="hidden" id="buque_id" name="buque_id" />
       <input type="hidden" id="etapa_id" name="etapa_id" value="<%= ViewData["etapa_id"] %>"/>
       <input type="hidden" id="barcaza_id" name="barcaza_id" value="<%= ViewData["barcaza_id"]%>" />
 
-      <input type="submit" class="botonsubmit" style="margin-left: 147px;float:right" value="Corregir Barcaza" />
+      
 </form>
 
 <script type="text/javascript">

@@ -242,9 +242,6 @@
       return false;
     }
 
-    $('.botonsubmit').removeAttr('disabled');
-    return false;
-
     if ( $("#enbarcaza").is(":checked") && $("#buque_id").val()=='' ) {
       alert("Debe ingresar la barcaza");
       $('.botonsubmit').removeAttr('disabled');

@@ -24,13 +24,13 @@
 
   <label>Desde</label><br />
   <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= viaje["ORIGEN"] %>"/>
-  <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',2);"/> <br />
+  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',2);"/>--> <br />
   <input id="desde_id" name="desde_id" type="hidden" value="<%= viaje["ORIGEN_ID"] %>"/>
 
   <label>Hasta</label><br />
   <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= viaje["DESTINO"] %>" />
   <input id="hasta_id" name="hasta_id" type="hidden" value="<%= viaje["DESTINO_ID"] %>"/>
-  <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);"/> <br />
+  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);"/>--> <br />
 
   <label>Fecha de partida</label><br />
   <input autocomplete="off" type="text" id="partidav" name="partida" class="editaretapatext" value="<%= viaje["FECHA_SALIDA_fmt"] %>" /><br />

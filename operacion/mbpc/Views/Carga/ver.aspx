@@ -214,8 +214,8 @@
       success: (function (data) {
         $('#dialogdiv3').html(data);
         $('#dialogdiv3').dialog({
-          height: 200,
-          width: 300,
+          height: 174,
+          width: 280,
           modal: true,
           title: 'Corregir Barcaza'
         });

@@ -1,0 +1,1 @@
+alter table tbl_etapa add (  puerto_origen              VARCHAR2(3)    NULL,  puerto_destino             VARCHAR2(3)    NULL)

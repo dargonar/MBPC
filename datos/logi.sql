@@ -709,8 +709,8 @@ CREATE OR REPLACE package body mbpc as
               TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), lat, lon, tempdate, riokm, posicion.riokm,
               usrid, tempdate, usrid, temp3, vCodigoMalvinas ) returning id into temp;
 
-      insert into tbl_etapa ( viaje_id, actual_id, destino_id, hrp, fecha_salida, created_at, sentido, created_by )
-      VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid ) returning id into temp2;
+      insert into tbl_etapa ( viaje_id, actual_id, destino_id, hrp, fecha_salida, created_at, sentido, created_by, puerto_origen, puerto_destino )
+      VALUES ( temp, vZona, vProx, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), tempdate, null, usrid, vOrigen, vDestino ) returning id into temp2;
 
       --nuevo log
       insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, puntodecontrol1_id, puntodecontrol2_id, latviaje, lonviaje, ptoviaje)
@@ -726,12 +726,28 @@ CREATE OR REPLACE package body mbpc as
 
   procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2,usrid in number, vCursor out cur) is
   begin
-    --IF vInternacional = 0 THEN
-    --Sacar ID de esta lista cuando se habilite el sequence para los viajes
-    update tbl_viaje SET  buque_id = vBuque, origen_id = vOrigen, destino_id = vDestino, fecha_salida = TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), eta = TO_DATE(vEta, 'DD-MM-yy HH24:mi'), zoe = TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), latitud = vLat, longitud = vLon, rios_canales_km_id = vRiocanal where id = vViaje ;
-    --ELSE               --Sacar ID de esta lista cuando se habilite el sequence para los viajes
-    --update tbl_viaje SET  buque_int_id = vBuque, origen_id = vOrigen, destino_id = vDestino, fecha_salida = vInicio, eta = vEta, zoe = vZoe, latitud = vLat, longitud = vLon, rios_canales_km_id = vRiocanal where id = vViaje;
-    --END IF;
+    
+    update tbl_viaje SET  
+      buque_id           = vBuque, 
+      --origen_id        = vOrigen, 
+      --destino_id       = vDestino, 
+      fecha_salida       = TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), 
+      eta                = TO_DATE(vEta, 'DD-MM-yy HH24:mi'), 
+      zoe                = TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), 
+      latitud            = vLat, 
+      longitud           = vLon, 
+      rios_canales_km_id = vRiocanal 
+    where id = vViaje;
+    
+    UPDATE (
+      SELECT e.puerto_origen, e.puerto_destino
+      FROM tbl_viaje v
+      LEFT JOIN tbl_etapa e ON v.id=e.viaje_id and v.etapa_actual=e.nro_etapa
+      WHERE e.viaje_id=vViaje
+    ) t
+    SET t.puerto_origen=vOrigen, t.puerto_destino=vDestino;
+
+    
   end editar_viaje;
 
   ---------------------------------------------------------------------------------------------------------------
@@ -740,14 +756,18 @@ CREATE OR REPLACE package body mbpc as
 
   procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
-      open vCursor for select v.id, b.ID_BUQUE, b.nombre, b.matricula, b.tipo, m.cod origen_id, m.puerto origen, u.cod destino_id, u.puerto destino, v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal
-      from tbl_viaje v
-      left join buques_new b on v.buque_id = b.ID_BUQUE
-      left join tbl_kstm_puertos m on v.origen_id = m.cod
-      left join tbl_kstm_puertos u on v.destino_id = u.cod
-      left join rios_canales_km rck on v.rios_canales_km_id = rck.id
-      left join rios_canales rc on rck.id_rio_canal = rc.id
-      where v.id = vViaje;
+      open vCursor for 
+        select v.id, b.ID_BUQUE, b.nombre, b.matricula, b.tipo, 
+        m.cod origen_id, m.puerto origen, u.cod destino_id, u.puerto destino, 
+        v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal
+        from tbl_viaje v
+        left join tbl_etapa e ON v.id=e.viaje_id and v.etapa_actual=e.nro_etapa
+        left join buques_new b on v.buque_id = b.ID_BUQUE
+        left join tbl_kstm_puertos m on e.puerto_origen = m.cod
+        left join tbl_kstm_puertos u on e.puerto_destino = u.cod
+        left join rios_canales_km rck on v.rios_canales_km_id = rck.id
+        left join rios_canales rc on rck.id_rio_canal = rc.id
+        where v.id = vViaje;
   end traer_viaje;
 
   ---------------------------------------------------------------------------------------------------------------
@@ -990,19 +1010,18 @@ CREATE OR REPLACE package body mbpc as
                            FECHA_SALIDA, CANTIDAD_TRIPULANTES, CANTIDAD_PASAJEROS,
                            CAPITAN_ID, SENTIDO, CALADO_PROA, CALADO_POPA, CALADO_MAXIMO,
                            CALADO_INFORMADO, KM, CREATED_AT, acompanante_id, acompanante2_id,
-                           acompanante3_id, acompanante4_id, VELOCIDAD, RUMBO, CREATED_BY )
+                           acompanante3_id, acompanante4_id, VELOCIDAD, RUMBO, CREATED_BY, PUERTO_ORIGEN, PUERTO_DESTINO )
 
     VALUES ( etapa.viaje_id, etapa.actual_id, vZonaId, etapa.fecha_llegada, TO_DATE(vEta, 'DD-MM-yy HH24:mi'),
             etapa.fecha_llegada, etapa.cantidad_tripulantes, etapa.cantidad_pasajeros,
             etapa.capitan_id, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo,
             etapa.calado_informado, etapa.km, tempdate, etapa.acompanante_id, etapa.acompanante2_id,
-            etapa.acompanante3_id, etapa.acompanante4_id, vVelocidad, vRumbo, usrid )
+            etapa.acompanante3_id, etapa.acompanante4_id, vVelocidad, vRumbo, usrid, etapa.PUERTO_ORIGEN, etapa.PUERTO_DESTINO )
 
     returning ID,NRO_ETAPA,VIAJE_ID,ORIGEN_ID,ACTUAL_ID,DESTINO_ID,HRP,ETA,FECHA_SALIDA,
               FECHA_LLEGADA,CANTIDAD_TRIPULANTES,CANTIDAD_PASAJEROS,CAPITAN_ID,CALADO_PROA,
               CALADO_POPA,CALADO_MAXIMO,CALADO_INFORMADO,KM,CREATED_AT,ACOMPANANTE_ID,
-              ACOMPANANTE2_ID, ACOMPANANTE3_ID, ACOMPANANTE4_ID, SENTIDO,VELOCIDAD,RUMBO, CREATED_BY
-
+              ACOMPANANTE2_ID, ACOMPANANTE3_ID, ACOMPANANTE4_ID, SENTIDO,VELOCIDAD,RUMBO, CREATED_BY, PUERTO_ORIGEN, PUERTO_DESTINO
     into etapa;
 
     --hack--
@@ -1676,7 +1695,7 @@ CREATE OR REPLACE package body mbpc as
   begin
     open vCursor for
       --Todas las barcazas
-      select id_buque, nombre, bandera from buques_new b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
+      select id_buque, nombre, bandera, '0' info from buques_new b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
                                               and   UPPER(nombre) like '%'||UPPER(vQuery)||'%'
       --Que no sean las ...
       and UPPER(id_buque) not in (
@@ -2404,6 +2423,9 @@ CREATE OR REPLACE package body mbpc as
           case when soundex(b.nombre) = soundex(vNombre) then 1 else 0 end as gsound,
           case when Upper(b.nombre) = Upper(vNombre) then 1 else 0 end as gequal
           FROM buques_new b
+          WHERE ( b.TIPO_BUQUE IS NULL OR not (
+                  UPPER(b.TIPO_BUQUE) like 'BARCAZA%' or UPPER(b.TIPO_BUQUE) like 'BALSA%'
+                ))          
           ORDER BY gequal desc,glike desc,gsound DESC
         ) a
       )

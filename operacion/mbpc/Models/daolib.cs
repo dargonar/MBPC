@@ -1206,7 +1206,7 @@ public static class DaoLib
       
     };
 
-    return doCall("mbpc.autocomplete_barcazas_new", parameters);
+    return doCall("mbpc.autocomplete_barcazas", parameters);
   }
 
   public static List<object> autocomplete_buques_disponibles(string query)
