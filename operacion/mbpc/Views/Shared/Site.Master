@@ -130,6 +130,7 @@
 <div id="selector" title="el titulo"></div>
 <div id="dialogdiv3" title="el titulo"></div>
 <div id="dialogdiv4" title="el titulo"></div>
+<div id="dialogdiv5" title="el titulo"></div>
 <div id="fullscreen" style="position:absolute; z-index:8"  > <img alt="loading" id="loader" src="<%= Url.Content("~/img/ajax-loader.gif") %>" /></div>
 
   </body>

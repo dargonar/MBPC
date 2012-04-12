@@ -33,7 +33,7 @@
           <% if (carga["TIPOCARGA_ID"] != "412") { //LASTRE?%>
           <a href="<%= Url.Content("~/Carga/descargar_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return descargar_barcaza(this)" title="Descargar">Desc.</a>&nbsp;-&nbsp;
           <% } %>
-          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)" title="Fondear">Fond.</a>&nbsp;-&nbsp;
+          <a href="<%= Url.Content("~/Carga/zona_fondeo/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return zona_fondeo(this)" title="Fondear/Amarrar">Fond/Amarr.</a>&nbsp;-&nbsp;
           <a href="<%= Url.Content("~/Carga/seleccionar_nueva_barcaza/") + ViewData["ETAPA_ID"] + "?barcaza_id=" + carga["ID_BUQUE"] %>" onclick="return seleccionar_nueva_barcaza(this)" title="Corregir">Correg.</a>
           </td>
           <% }%>
@@ -93,7 +93,7 @@
         </div>
         <div class="btn-new-class" style="float:left; margin-left:5px;">
         
-          <a onclick="return fondear_barcazas_seleccionadas(this);" href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" default_href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" title="Fondear barcazas seleccionadas">Fondear barcazas...</a>
+          <a onclick="return fondear_barcazas_seleccionadas(this);" href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" default_href="<%= Url.Content("~/Carga/zona_fondeo_multiple/") + ViewData["ETAPA_ID"] + "?barcaza_id="%>" title="Fondear barcazas seleccionadas">Fondear/Amarr. barcazas</a>
         </div>
     </td>
   </tr>
@@ -101,7 +101,7 @@
 <br />
 
 <div class="btn-new-class" style="float:left">
-  <a onclick="return barcazas_fondeadas(this);" href="<%= Url.Content("~/Carga/barcazas_fondeadas/" + ViewData["etapa_id"]  ) %>">Adjuntar Barcaza Fondeada</a>
+  <a onclick="return barcazas_fondeadas(this);" href="<%= Url.Content("~/Carga/barcazas_fondeadas/" + ViewData["etapa_id"]  ) %>">Adjuntar Barcaza Fondeada/Amarr.</a>
 </div>
 
 <div class="btn-new-class">
@@ -289,8 +289,8 @@
       success: (function (data) {
         $('#dialogdiv3').html(data);
         $('#dialogdiv3').dialog({
-          height: 380,
-          width: 300,
+          height: 344,
+          width: 316,
           modal: true,
           title: 'Nueva Carga'
         });

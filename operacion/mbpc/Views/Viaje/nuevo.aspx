@@ -12,12 +12,12 @@
   <label>Desde</label><br />
   <input autocomplete="off" type="text" style="width:270px" id="desdetext" class="nexttab"/>
   <input id="desde_id" name="desde_id" type="hidden" />
-  <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',2);" title="NUEVO PUERTO"/> <br />
+  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',2);" title="NUEVO PUERTO"/>--> <br />
 
   <label>Hasta</label><br />
   <input autocomplete="off" type="text" style="width:270px" id="hastatext" class="nexttab"/>
   <input id="hasta_id" name="hasta_id" type="hidden" />
-  <input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);" title="NUEVO PUERTO"/> <br />
+  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);" title="NUEVO PUERTO"/>--> <br />
 
   <label>Pr&oacute;ximo punto de control</label><br />
   <select id="proximo_punto" name="proximo_punto" style="margin:0; width:274px;" class="nexttab">

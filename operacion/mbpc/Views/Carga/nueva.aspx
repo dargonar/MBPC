@@ -29,12 +29,10 @@
     <p>
     <input type="checkbox" name="enbarcaza" value="" id="enbarcaza" />Está en barcaza
     </p>
-    <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" disabled="disabled"/><br />
-    <a id="newbarcaza" style="visibility:hidden" href="<%=Url.Content("~/Item/nuevaBarcaza")%>" onclick="return nuevaBarcaza(this);">Nueva Barcaza</a>
-    <br /><br /><br />
-
-    
-    <input type="submit" class="botonsubmit" style="margin-left: 180px"value="agregar" />
+    <input type="text" id="barcaza_text" style="width: 250px;" autocomplete="off" disabled="disabled"/>
+    <input href="<%=Url.Content("~/Item/nuevaBarcaza")%>" id="newbarcaza" type="button" value="..." onclick="return nuevaBarcaza(this);" title="NUEVA BARCAZA" disabled="disabled"/> <br />
+    <br />
+    <input type="submit" value="agregar" />
 </form>
 
 <script type="text/javascript">
@@ -154,9 +152,10 @@
         success: function (data) {
           response($.map(data, function (item) {
             return {
-              id:    item.ID_BUQUE,
-              label: item.NOMBRE + ' (' + item.BANDERA + ')',
-              value: item.NOMBRE + ' (' + item.BANDERA + ')'
+              id     : item.ID_BUQUE,
+              nombre : item.NOMBRE,
+              bandera: item.BANDERA,
+              info   : item.INFO
             }
           }));
         }
@@ -164,21 +163,53 @@
     },
     minLength: 2,
     select: function (event, ui) {
+
+        if( ui.item.info != '0' )
+        {
+            alert('por b');
+            $("#buque_id").val('');
+            $("#barcaza_text").val('');
+            event.preventDefault();
+            return false;
+        }
+
       $("#buque_id").val(ui.item.id);
+      $("#barcaza_text").val(ui.item.nombre);
+      return false;
     }
-  });
+  }).data( "autocomplete" )._renderItem = function( ul, item ) {
+			      
+    var bg = '';
+    var mr = '';
+
+    if( item.info != '0' )
+    {
+        bg = 'style="background:#B99"';
+        mr = item.info;
+    }
+
+    return $( "<li "+ bg + "></li>" )
+			    .data( "item.autocomplete", item )
+			    .append( "<a>" + item.nombre + " (" + item.bandera + ") " 
+                        + mr
+                        + "</a>" )
+			    .appendTo( ul );
+  }; 
 
 
   $("#enbarcaza").change(function () {
 
     if ($(this).is(":checked")) {
       $('#barcaza_text').removeAttr('disabled');
-      $('#newbarcaza').css('visibility','visible');
+      $('#newbarcaza').removeAttr('disabled');
+      $("#buque_id").val('');
+      //$("#barcaza_text").val('');
     }
     else {
       $('#barcaza_text').attr('disabled', 'disabled');
+      $('#newbarcaza').attr('disabled', 'disabled');
       $("#buque_id").val('');
-      $('#newbarcaza').css('visibility','hidden');
+      //$("#barcaza_text").val('');
     }
     return false;
   });
@@ -210,6 +241,16 @@
       $('.botonsubmit').removeAttr('disabled');
       return false;
     }
+
+    $('.botonsubmit').removeAttr('disabled');
+    return false;
+
+    if ( $("#enbarcaza").is(":checked") && $("#buque_id").val()=='' ) {
+      alert("Debe ingresar la barcaza");
+      $('.botonsubmit').removeAttr('disabled');
+      return false;
+    }
+    ///
 
     $.ajax({
       type: "POST",

@@ -20,7 +20,7 @@
           <th>ORIGEN</th>
           <th>DESTINO</th>
           <th>ETAPAS</th>
-          <th>&nbsp;</th>
+          <!--<th>&nbsp;</th>-->
         </tr>
 
       <% 
@@ -31,14 +31,14 @@
           <tr class="navoff">
       <%  foreach (string key in viaje.Keys)
           {
-            if (key == "ACTUAL_ID")
+            if (new [] {"ACTUAL_ID","ESTADO", "RNUM" }.Contains(key) )
               continue;
             Response.Write("<td>" + viaje[key] + "</td>");
           } 
       %>
-            <td>
+            <!--<td>
               <a href="<%= Url.Content("~/Viaje/reactivar/" + viaje["ID"]) %>" onclick="reactivar($(this).attr('href'));return false;"> Reactivar</a>              
-            </td>
+            </td>-->
       </tr>
 <%
       }

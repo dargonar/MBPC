@@ -38,14 +38,24 @@ namespace mbpc_wsclient
 
     void rep_GetReportCompleted(object sender, mbpcws.GetReportCompletedEventArgs e)
     {
-      label1.Enabled = true;
-      btnGo.Enabled = true;
-      dtFecha.Enabled = true;
-      lblLoading.Visible = false;
-      pgLoading.Visible = false;
+      try
+      {
+        label1.Enabled = true;
+        btnGo.Enabled = true;
+        dtFecha.Enabled = true;
+        lblLoading.Visible = false;
+        pgLoading.Visible = false;
 
-      var ds = e.Result;
-      dataGrid.DataSource = ds.Tables[0];
+        var ds = e.Result;
+        dataGrid.DataSource = ds.Tables[0];
+      }
+      catch(Exception ex)
+      {
+        while(ex.InnerException != null)
+          ex = ex.InnerException;
+
+        MessageBox.Show("Error:" + ex.Message);
+      }
     }
 
     private void Form1_Load(object sender, EventArgs e)

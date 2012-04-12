@@ -30,6 +30,7 @@ CREATE OR REPLACE package mbpc as
   procedure login2( vid in varchar2, vpassword in varchar2, logged out number);
   procedure login_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
   procedure logout_usuario(vDummy in varchar2, usrid in number, vCursor out cur );
+  procedure login_usuario_ext(vUsuario in varchar2, vPassword in varchar2, usrid in number, vCursor out cur);
 
   procedure grupos_del_usuario( vId in varchar2, usrid in number, vCursor out cur);
   procedure zonas_del_grupo( vId in varchar2, usrid in number, vCursor out cur);
@@ -101,6 +102,7 @@ CREATE OR REPLACE package mbpc as
   procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_practicos(vQuery in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_barcazas(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
+  procedure autocomplete_barcazas_new(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
    procedure autocomplete_buques_disp( vQuery in varchar2, usrid in number, vCursor out cur);
@@ -137,6 +139,7 @@ CREATE OR REPLACE package mbpc as
   procedure reporte_eliminar_params(vReporteId in number, usrid in number, vCursor out cur);
   procedure reporte_actualizar(vReporteId in number, vNombre in varchar2, vDescripcion in varchar2, vCategoriaId in number, vConsultaSql in clob, vPostParams in clob, usrid in number, vCursor out cur);
   procedure reporte_metadata(vReporteId in number, usrid in number, vCursor out cur);
+  procedure obtener_reportes_para_usuario(vUsuario in varchar2, usrid in number, vCursor out cur);
   --auxiliares
   procedure posicion_viaje(vViajeId in number);
   
@@ -776,14 +779,24 @@ CREATE OR REPLACE package body mbpc as
   procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      select v.id, b.nombre, origen.puerto origen, destino.puerto destino,  v.etapa_actual ultima_etapa, e.actual_id
-        from tbl_viaje v
-        left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
-        join buques_new b on v.buque_id = b.ID_BUQUE
-        join tbl_kstm_puertos origen on v.origen_id = origen.cod
-        join tbl_kstm_puertos destino on v.destino_id = destino.cod
-        where ROWNUM <= 10 and v.estado = 1 and e.actual_id = vZona;
- end viajes_terminados;
+
+    SELECT * FROM (
+        SELECT /*+FIRST_ROWS(10)*/ a.*, ROWNUM rnum FROM (
+            select v.id, b.nombre, origen.puerto origen, destino.puerto destino, v.etapa_actual ultima_etapa, e.actual_id, v.estado
+              from tbl_viaje v
+              left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
+              left join buques_new b on v.buque_id = b.ID_BUQUE
+              left join tbl_kstm_puertos origen on v.origen_id = origen.cod
+              left join tbl_kstm_puertos destino on v.destino_id = destino.cod
+              order by updated_at DESC
+            ) a
+        where 
+        a.estado = 1 and 
+        a.actual_id = 255
+        )
+      WHERE rnum < 10;
+  
+  end viajes_terminados;
 
 
   -------------------------------------------------------------------------------------------------------------
@@ -1566,7 +1579,7 @@ CREATE OR REPLACE package body mbpc as
 
     -- Logueamos
     --nuevo log
-    posicion_viaje(evento.viaje_id);
+    posicion_viaje(etapa.viaje_id);
     insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, barcaza_id, fecha, rios_canales_km_id, latitud, longitud, latviaje, lonviaje, ptoviaje)
     VALUES (viaje.id, vEtapaId, usrid, 22, vBarcazaId, tempdate, vRioCanalKM, vLat, vLon, viajepos.lat, viajepos.lon, viajepos.pto);
 
@@ -1680,6 +1693,38 @@ CREATE OR REPLACE package body mbpc as
       ) and rownum < 12 order by nombre ;
   end autocomplete_barcazas;
 
+  procedure autocomplete_barcazas_new(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur) is
+  begin
+      open vCursor for
+      
+      --Todas las barcazas
+      select b.id_buque, b.nombre, b.bandera,
+
+        CASE 
+          WHEN v.estado = 100 then (
+            SELECT 'Fondeada/Amarrada en '||CASE WHEN rck.km <> 0 then rc.nombre||' '||rck.unidad||' '||rck.km ELSE rc.nombre||' '||rck.unidad END descripcion
+            FROM rios_canales_km rck
+            join rios_canales rc on rck.id_rio_canal = rc.id
+            WHERE rck.id = v.rios_canales_km_id)
+          WHEN v.estado = 0 THEN (
+            SELECT 'Usada por '||bv.nombre from buques_new bv WHERE bv.id_buque=v.buque_id
+          ) 
+          ELSE '0'
+        END info
+
+        from buques_new b 
+        
+          left join tbl_cargaetapa c on c.buque_id = b.id_buque
+          left join tbl_etapa e on c.etapa_id = e.id  and e.id != vEtapaId
+          left join tbl_viaje v ON v.id = e.viaje_id and ( v.estado = 0 OR v.estado = 100 ) AND v.etapa_actual = e.nro_etapa  
+
+          where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
+          and UPPER(nombre) like '%'||UPPER(vQuery)||'%'
+      
+       and rownum < 12 order by nombre ;
+  end autocomplete_barcazas_new;
+  
+  
   -------------------------------------------------------------------------------------------------------------
   --
 
@@ -2352,16 +2397,47 @@ CREATE OR REPLACE package body mbpc as
     
     open vCursor for
 
-    SELECT * FROM buques_new b WHERE 
+    SELECT * FROM (
+      SELECT a.*, ROWNUM rnum FROM (
+        SELECT /*+ FIRST_ROWS(10) */ b.nombre, b.bandera, b.nro_omi, b.matricula, b.sdist,
+          case when Upper(b.nombre) LIKE '%'||Upper(vNombre)||'%' then 1 else 0 end as glike,
+          case when soundex(b.nombre) = soundex(vNombre) then 1 else 0 end as gsound,
+          case when Upper(b.nombre) = Upper(vNombre) then 1 else 0 end as gequal
+          FROM buques_new b
+          ORDER BY gequal desc,glike desc,gsound DESC
+        ) a
+      )
+    WHERE 
     ( 
-      soundex(b.nombre)=SoundEx(vNombre) OR 
-      Upper(b.nombre) LIKE '%'||Upper(vNombre)||'%' 
-    ) 
-    AND ROWNUM < 6;
-  
+      Upper(nombre) = Upper(vNombre) OR
+      soundex(nombre)=SoundEx(vNombre) OR 
+      Upper(nombre) LIKE '%'||Upper(vNombre)||'%' 
+    )
+    AND
+      rnum < 10;
+
   end barcos_similares;
   
+  procedure obtener_reportes_para_usuario(vUsuario in varchar2, usrid in number, vCursor out cur) is
+  begin
+    
+    open vCursor for
+
+      SELECT r.* FROM tbl_reporte_usuario_ext ru 
+      LEFT JOIN tbl_reporte r ON ru.reporte_id=r.id
+      WHERE ru.usuario=vUsuario;
+
+  end obtener_reportes_para_usuario;
   
+  procedure login_usuario_ext(vUsuario in varchar2, vPassword in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for
+
+      SELECT ue.* FROM vw_int_usuarios_ext ue 
+      WHERE ue.nombredeusuario=vUsuario AND 
+      ue.password=vPassword;
+  
+  end login_usuario_ext;
   
 end;
 /

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,7 @@ namespace mbpc_wsreport
 {
   public class ReportParam
   {
-    public static string VERSION = "1.1";
+    public static string VERSION = "1.2";
 
     ReportParam()
     {
@@ -44,6 +45,37 @@ namespace mbpc_wsreport
     [WebMethod]
     public DataSet GetReport(string key, string report_name, List<ReportParam> report_params)
     {
+      return GetReport2("oldarmada", "passarmada", report_name, report_params);
+    }
+
+    [WebMethod]
+    public DataSet GetReport2(string username, string password, string report_name, List<ReportParam> report_params)
+    {
+      //HACK: hasta que este llena vw_int_usuarios_ext
+      if (ConfigurationManager.AppSettings["validate_users_ext"] == "yes")
+      {
+        var usr = DaoLib.login_usuario_ext(username, password);
+        if (usr.Count == 0)
+        {
+          throw new InvalidOperationException("Usuario/Password invalido, por favor contactese con el administrador.");
+        }
+      }
+      else
+      {
+        if (username != "oldarmada" || password != "passarmada")
+        {
+          throw new InvalidOperationException("Usuario/Password invalido, por favor contactese con el administrador.");
+        }
+      }
+
+      //Verificar que tiene permisos para ejecutar el reporte
+      var reportes = DaoLib.obtener_reportes_para_usuario(username);
+      var reporte = reportes.Find(o => (o as Dictionary<string, string>)["NOMBRE"] == report_name) as Dictionary<string, string>;
+      if (reporte == null)
+      {
+        throw new UnauthorizedAccessException(string.Format("No tiene permisos para ejecutar el reporte [{0}]", report_name));
+      }
+
       var rep = DaoLib.reporte_obtener_str(report_name) as Dictionary<string, string>;
       var _params = DaoLib.reporte_obtener_parametros_str(report_name);
 

@@ -56,12 +56,12 @@
     $("#nuevoBuque").submit(function () {
 
         $('.botonsubmitb').attr('disabled', 'disabled');
-        
+
         /*
         if ($("#bbandera").val() != 'PARAGUAY' && $("#bmatriculaN").val() == "") {
-            alert("Debe ingresar " + $('#bmatlabel').html());
-            $('.botonsubmitb').removeAttr('disabled');
-            return false;
+        alert("Debe ingresar " + $('#bmatlabel').html());
+        $('.botonsubmitb').removeAttr('disabled');
+        return false;
         }
         */
 
@@ -93,9 +93,45 @@
         $.ajax({
             type: "GET",
             cache: false,
-            url: '<%= Url.Content("~/Item/verNombre/") %>' + '?nombre='+$("#bnombreN").val(),
+            url: '<%= Url.Content("~/Viaje/barcos_similares/") %>' + '?nombre=' + $("#bnombreN").val(),
             success: (function (data) {
-               alert(data.length);
+                $('#dialogdiv5').html(data);
+                $('#dialogdiv5').dialog({
+                    title: 'Buques similares',
+                    height: 400,
+                    width: 550,
+                    modal: true,
+                    close: function (event, ui) {
+
+                        if ($("#dialogdiv").attr('resultd') != 'ok') {
+                            $('#dialogdiv3').dialog('close');
+                            return;
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: $("#nuevoBuque").attr('action'),
+                            data: $("#nuevoBuque").serialize(),
+                            success: (function (data) {
+                                $('#dialogdiv3').dialog('close');
+                                $('#buque_id').val(data[0].ID_BUQUE);
+                                $('#buquetext').val($('#bnombreN').val()).nextAll('.nexttab:eq(0)').focus();
+                            }),
+                            error: (function (data) {
+                                var titletag = /<title\b[^>]*>.*?<\/title>/
+                                if (titletag != "")
+                                    alert(unescape(titletag.exec(data.responseText)));
+                                else
+                                    alert(data);
+
+                                $('.botonsubmitb').removeAttr('disabled');
+                            })
+                        });
+
+
+                    }
+                });
             }),
             error: (function (data) {
                 var titletag = /<title\b[^>]*>.*?<\/title>/
@@ -107,30 +143,6 @@
             })
         });
 
-        /*
-        $.ajax({
-            type: "POST",
-            cache: false,
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: (function (data) {
-                $('#dialogdiv3').dialog('close');
-
-                $('#buque_id').val(data[0].ID_BUQUE);
-                $('#buquetext').val($('#bnombreN').val()).nextAll('.nexttab:eq(0)').focus();
-            }),
-            error: (function (data) {
-                var titletag = /<title\b[^>]*>.*?<\/title>/
-
-                if (titletag != "")
-                    alert(unescape(titletag.exec(data.responseText)));
-                else
-                    alert(data);
-
-                $('.botonsubmitb').removeAttr('disabled');
-            })
-        });
-        */
         return false;
     });
   

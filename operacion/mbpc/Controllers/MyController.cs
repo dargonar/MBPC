@@ -11,12 +11,38 @@ namespace mbpc.Controllers
   public class MyController : Controller
   {
     protected override void OnActionExecuting(ActionExecutingContext ctx) {
+
+      if (Session != null && Session["usuario"] != null)
+        DaoLib.userid = int.Parse(Session["usuario"].ToString());
+      
+      //get request and response 
+      var request = ctx.HttpContext.Request;
+      var response = ctx.HttpContext.Response;
+
+      //get requested encoding 
+      if (!string.IsNullOrEmpty(request.Headers["Accept-Encoding"]))
+      {
+        string enc = request.Headers["Accept-Encoding"].ToUpperInvariant();
+
+        //preferred: gzip or wildcard 
+        if (enc.Contains("GZIP") || enc.Contains("*"))
+        {
+          response.AppendHeader("Content-encoding", "gzip");
+          response.Filter = new mbpc.Models.WebCompressionFilter(response.Filter, Models.CompressionType.GZip);
+        }
+
+        //deflate 
+        else if (enc.Contains("DEFLATE"))
+        {
+          response.AppendHeader("Content-encoding", "deflate");
+          response.Filter = new mbpc.Models.WebCompressionFilter(response.Filter, Models.CompressionType.Deflate);
+        }
+      }
+      
       if (Session["should_profile"] != null)
         MvcMiniProfiler.MiniProfiler.Start();
 
       base.OnActionExecuting(ctx);
-        if (Session != null && Session["usuario"] != null)
-          DaoLib.userid = int.Parse(Session["usuario"].ToString());
     }
 
     public static string URLPara(string para, System.Web.HttpRequest req)

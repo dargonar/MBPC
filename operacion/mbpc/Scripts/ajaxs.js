@@ -390,8 +390,8 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: 600,
-            width: 400,
+            height: 300,
+            width: 800,
             modal: true,
             title: 'Viajes Terminados'
           });
@@ -808,8 +808,8 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: 610 ,
-            width: 370,
+            height: 650 ,
+            width: 350,
             modal: true,
             title: 'Nuevo Viaje',
           });

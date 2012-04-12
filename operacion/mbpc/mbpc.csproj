@@ -92,6 +92,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="jqUtil.cs" />
+    <Compile Include="Models\WebCompressionFilter.cs" />
     <Compile Include="Models\form.cs" />
     <Compile Include="Models\hlp.cs" />
     <Compile Include="Models\daolib.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Views\Viaje\barcos_similares.aspx" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

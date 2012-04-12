@@ -581,7 +581,7 @@ public static class DaoLib
         new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.crear_viaje", parameters);
+    return doCall("mbpc.crear_viaje_new", parameters);
   }
 
   public static List<object> editar_viaje(string viaje, string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
@@ -738,7 +738,7 @@ public static class DaoLib
         new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.terminar_viaje", parameters);
+    return doCall("mbpc.terminar_viaje_new", parameters);
   }
 
   public static List<object> descargar_barcaza(int etapa_id, int barcaza_id)
@@ -1206,7 +1206,7 @@ public static class DaoLib
       
     };
 
-    return doCall("mbpc.autocomplete_barcazas", parameters);
+    return doCall("mbpc.autocomplete_barcazas_new", parameters);
   }
 
   public static List<object> autocomplete_buques_disponibles(string query)
@@ -1569,6 +1569,29 @@ public static class DaoLib
 
     return doCall("mbpc.barcos_similares", parameters);
   }
+
+  public static List<object> obtener_reportes_para_usuario(string usuario)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vUsuario", OracleDbType.Varchar2, usuario, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.obtener_reportes_para_usuario", parameters);
+  }
+
+  public static List<object> login_usuario_ext(string usuario, string password)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vUsuario", OracleDbType.Varchar2, usuario, System.Data.ParameterDirection.Input),
+        new OracleParameter("vPassword", OracleDbType.Varchar2, password, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.login_usuario_ext", parameters);
+  }
+
+  
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {

@@ -74,7 +74,7 @@ namespace mbpc_admin.Controllers
         //[USUARIO NO EXISTE]
         if (result == 200)
         {
-          ViewData["error"] = "El usuario no existe.<br/>Solicite acceso al sistema o nuevo usuario a través de la intranet y/o comunicarse con el int 2940.";
+          ViewData["error"] = "El usuario no existe.<br/>Solicite acceso al sistema o nuevo usuario a través de la intranet y/o comunicarse con el int 2964.";
           return View("ShowForm");
         }
 
@@ -88,7 +88,7 @@ namespace mbpc_admin.Controllers
         //[DESTINO DISTINTO]]
         if (result == 1)
         {
-          ViewData["error"] = "Cambio de destino.<br/>Solicite reactivación de cuenta a través de la pagina inicial de intranet y/o comunicarse con el int 2940.";
+          ViewData["error"] = "Cambio de destino.<br/>Solicite reactivación de cuenta a través de la pagina inicial de intranet y/o comunicarse con el int 2964.";
           return View("ShowForm");
         }
 

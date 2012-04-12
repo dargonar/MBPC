@@ -34,6 +34,13 @@ namespace mbpc.Controllers
         return new SelectList(newList, "id", "nombre", selected);  
       }
 
+      public ActionResult barcos_similares(string nombre)
+      {
+        var datos = DaoLib.barcos_similares(nombre);
+        ViewData["similares"] = datos;
+        return View();
+      }
+
       public ActionResult practicos(string id)
       {
 
