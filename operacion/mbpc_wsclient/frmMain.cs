@@ -17,17 +17,42 @@ namespace mbpc_wsclient
 
     private void btnGo_Click(object sender, EventArgs e)
     {
+      label1.Enabled = false;
+      btnGo.Enabled = false;
+      dtFecha.Enabled = false;
+      lblLoading.Visible = true;
+      pgLoading.Visible = true;
+
       var rep = new mbpcws.reports();
 
       var _params = new List<mbpcws.ReportParam>();
 
-      //var p1 = new mbpcws.ReportParam();
-      //p1.nombre = "Identificador de viaje";
-      //p1.valor  = 662;
-      //_params.Add(p1);
+      var p1 = new mbpcws.ReportParam();
+      p1.nombre = "fecha";
+      p1.valor  = string.Format("{0:dd-MM-yy}",dtFecha.Value);
+      _params.Add(p1);
 
-      var ds = rep.GetReport("secret_password", "Viajes activos", _params.ToArray());
+      rep.GetReportCompleted += new mbpcws.GetReportCompletedEventHandler(rep_GetReportCompleted);
+      rep.GetReportAsync("", "Hidrovia", _params.ToArray());
+    }
+
+    void rep_GetReportCompleted(object sender, mbpcws.GetReportCompletedEventArgs e)
+    {
+      label1.Enabled = true;
+      btnGo.Enabled = true;
+      dtFecha.Enabled = true;
+      lblLoading.Visible = false;
+      pgLoading.Visible = false;
+
+      var ds = e.Result;
       dataGrid.DataSource = ds.Tables[0];
     }
+
+    private void Form1_Load(object sender, EventArgs e)
+    {
+      
+    }
+
+
   }
 }

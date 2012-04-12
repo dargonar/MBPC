@@ -25,11 +25,8 @@ namespace mbpc.Controllers
         {
           Session["grupos"] = null;
 
-          if (Session["logged"] == null || int.Parse(Session["logged"].ToString()) == 0)
+          if (Session["logged"] == null)
           {
-            if(Request.UrlReferrer == null)
-              Session["toreports"] = "true";
-
             return this.RedirectToAction("ShowForm", "Auth");
           }
           
@@ -872,7 +869,6 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
             string pname = ":p" + (i + 1).ToString();
             
             string tmp=rep["CONSULTA_SQL"];
-            
             int qcount = tmp.Select((c, j) => tmp.Substring(j)).Count(sub => sub.StartsWith(pname));
             for (int k = 0; k < qcount; k++)
             {

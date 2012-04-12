@@ -164,6 +164,7 @@ CREATE OR REPLACE package mbpc as
   procedure pbip_obtener_params(v_id in INTEGER, usrid in number, vCursor out cur);
   
   procedure obtener_opciones_malvinas(v_va_a_malvinas in INTEGER, usrid in number, vCursor out cur);
+  procedure barcos_similares(vNombre in VARCHAR2, usrid in number, vCursor out cur);
 end;
 
 
@@ -1676,7 +1677,7 @@ CREATE OR REPLACE package body mbpc as
 
         ---Ni barcazas fondeadas
         select v.buque_id from tbl_viaje v where estado=100
-      ) and rownum < 6 order by nombre ;
+      ) and rownum < 12 order by nombre ;
   end autocomplete_barcazas;
 
   -------------------------------------------------------------------------------------------------------------
@@ -1695,7 +1696,7 @@ CREATE OR REPLACE package body mbpc as
       select m.ID, m.DESCRIPCION
       from tbl_muelles m
       where upper(m.DESCRIPCION) like '%'||UPPER(vQuery)||'%'
-      and rownum < 6;
+      and rownum < 12;
   end autocomplete_muelles;
   -------------------------------------------------------------------------------------------------------------
   --
@@ -1715,7 +1716,7 @@ CREATE OR REPLACE package body mbpc as
         select tc.ID, tc.NOMBRE||' ('||tc.codigo||')' NOMBRE, tc.CODIGO, tc.UNIDAD_ID, un.NOMBRE UNOMBRE, case when upper(tc.codigo) like '%'||UPPER(vQuery)||'%' then 1 else 0 end as groovy
         from tbl_tipo_carga tc left join tbl_unidad un on tc.unidad_id=un.id order by groovy desc) a
       where ( upper(a.nombre) like '%'||UPPER(vQuery)||'%' or upper(a.codigo) like '%'||UPPER(vQuery)||'%'  ) )
-      where rnum < 6;
+      where rnum < 12;
   end autocomplete_cargas;
   -------------------------------------------------------------------------------------------------------------
   --
@@ -1732,7 +1733,7 @@ CREATE OR REPLACE package body mbpc as
         upper(p.NOMBRE) like '%'||UPPER(vQuery)||'%'
       and
         p.id not in (SELECT practico_id FROM tbl_practicoviaje WHERE viaje_id=etapa.viaje_id and fecha_bajada is null)
-      and rownum < 6;
+      and rownum < 12;
   end autocomplete_practicos;
 
   -------------------------------------------------------------------------------------------------------------
@@ -1748,7 +1749,7 @@ CREATE OR REPLACE package body mbpc as
                             upper(b.matricula) like upper(:vQuery) or
                             upper(b.nro_omi) like upper(:vQuery) or
                             upper(b.nro_ismm) like upper(:vQuery)) and
-                            rownum <= 6 ';
+                            rownum <= 12 ';
     open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery,vQuery;
   end autocompletebactivos;
 
@@ -1779,7 +1780,7 @@ CREATE OR REPLACE package body mbpc as
                     order by KM asc,NOMBRE asc';
 
 
-    mbpc.paginator(temp3, 10, 1, sql_stmt);
+    mbpc.paginator(temp3, 12, 1, sql_stmt);
     open vCursor for sql_stmt;
 
     --open vCursor for sql_stmt USING vQuery, vQuery, vQuery,' ',vQuery, strtemp1, strtemp3, strtemp1, strtemp3, strtemp1, strtemp2, strtemp3;
@@ -1819,7 +1820,7 @@ CREATE OR REPLACE package body mbpc as
       upper(b.nro_omi) like upper('%'||vQuery||'%') or
       upper(b.nro_ismm) like upper('%'||vQuery||'%')
       )
-    and b.bandera = 'ARGENTINA' and rownum <= 6;
+    and b.bandera = 'ARGENTINA' and rownum <= 12;
 
   end autocomplete_remolcadores;
 
@@ -1851,7 +1852,7 @@ CREATE OR REPLACE package body mbpc as
       ))
 
 
-      and rownum <= 6;
+      and rownum <= 12;
 
   end autocomplete_buques_disp;
 
@@ -1866,7 +1867,7 @@ CREATE OR REPLACE package body mbpc as
                   where upper(cod) like upper(:vQuery) or
                         upper(estado) like upper(:vQuery) or
                         upper(resumen) like upper(:vQuery) )
-                  where rnum <= 10';
+                  where rnum <= 12';
     open vCursor for sql_stmt using vQuery, vQuery, vQuery, vQuery;
   end autocompleterestados;
 
@@ -1897,7 +1898,7 @@ CREATE OR REPLACE package body mbpc as
                     where (upper(b.nombre) like upper(:vQuery) or
                     upper(b.bandera) like upper(:vQuery) or
                     upper(b.matricula) like
-                    upper(:vQuery) or upper(b.nro_omi) like upper(:vQuery)) and rownum <= 6';
+                    upper(:vQuery) or upper(b.nro_omi) like upper(:vQuery)) and rownum <= 12';
     open vCursor for sql_stmt USING vQuery,vQuery,vQuery,vQuery;
   end autocompleterbenzona;
 
@@ -1910,7 +1911,7 @@ CREATE OR REPLACE package body mbpc as
                     order by groovy desc  ) a
                   where upper(cod) like upper(:vQuery) or
                         upper(puerto) like upper(:vQuery) )
-                  where rnum <= 10';
+                  where rnum <= 12';
     open vCursor for sql_stmt using vQuery, vQuery, vQuery;
   end autocompleterm;
   -------------------------------------------------------------------------------------------------------------
@@ -2345,5 +2346,22 @@ CREATE OR REPLACE package body mbpc as
       order by tipo asc, descripcion asc, codigo asc;
   
   end obtener_opciones_malvinas;
+
+  procedure barcos_similares(vNombre in VARCHAR2, usrid in number, vCursor out cur) is
+  begin 
+    
+    open vCursor for
+
+    SELECT * FROM buques_new b WHERE 
+    ( 
+      soundex(b.nombre)=SoundEx(vNombre) OR 
+      Upper(b.nombre) LIKE '%'||Upper(vNombre)||'%' 
+    ) 
+    AND ROWNUM < 6;
+  
+  end barcos_similares;
+  
+  
+  
 end;
 /

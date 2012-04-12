@@ -88,7 +88,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\daolib2.cs" />
-    <Compile Include="Models\daolib.cs" />
     <Compile Include="Models\helpers.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\EntityHelper.cs" />
@@ -217,6 +216,10 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\operacion\mbpc\mbpc.csproj">
+      <Project>{DA743AC6-9789-44A5-91A2-A479DEC7D7F8}</Project>
+      <Name>mbpc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\libs\DynamicQuery\DynamicQuery.csproj">
       <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
       <Name>DynamicQuery</Name>

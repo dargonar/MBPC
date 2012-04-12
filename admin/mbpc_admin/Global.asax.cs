@@ -20,39 +20,45 @@ namespace mbpc_admin
       routes.MapRoute(
         "Home",                    // Route name
         "",                        // URL with parameters
-        new { controller = "Viaje", action = "List" }
+        new { controller = "Viaje", action = "List" },
+        new [] {"mbpc_admin.Controllers"}
       );
 
       routes.MapRoute(
           "listar", // Route name
           "usuarios", // URL with parameters
-          new { controller = "admin", action = "listar", pagina = 1, cantidad = 10, columna="usuario_id" } // Parameter defaults
+          new { controller = "admin", action = "listar", pagina = 1, cantidad = 10, columna="usuario_id" }, // Parameter defaults
+          new[] { "mbpc_admin.Controllers" }
       );
 
       routes.MapRoute(
           "GridData", // Route name
           "{controller}/{action}/{sidx}/{sord}/{page}/{rows}", // URL with parameters
-          new { controller = "viaje", action = "griddata", sidx = "id", page = 1, rows = 10 } // Parameter defaults
+          new { controller = "viaje", action = "griddata", sidx = "id", page = 1, rows = 10 }, // Parameter defaults
+          new[] { "mbpc_admin.Controllers" }
       );
 
 
       routes.MapRoute(
         "AuthShowForm",            // Route name
         "auth",                    // URL with parameters
-        new { controller = "Auth", action = "ShowForm" }
+        new { controller = "Auth", action = "ShowForm" },
+        new[] { "mbpc_admin.Controllers" }
       );
 
       routes.MapRoute(
         "Carga", // Route name
         "Carga/{action}", // URL with parameters
-        new { controller = "Carga", action = "Agregar" } // Parameter defaults
+        new { controller = "Carga", action = "Agregar" }, // Parameter defaults
+        new[] { "mbpc_admin.Controllers" }
       );
 
 
       routes.MapRoute(
           "Default", // Route name
           "{controller}/{action}/{id}", // URL with parameters
-          new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+          new { controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+          new[] { "mbpc_admin.Controllers" }
       );
 
     }

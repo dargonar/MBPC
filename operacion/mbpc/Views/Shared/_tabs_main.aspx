@@ -16,9 +16,10 @@
 
        <% } %>
 
-       <div class="btn-new-class" style="margin-left:10px;">
+<div class="btn-new-class" style="margin-left:10px;">
         <a id="a1" href="<%= Url.Content("~/Reporte/Index/") %>" target="_blank" class="agregarreportelink"> Reportes</a>
        </div>
+
 
        <div class="btn-new-class" style="margin-left:10px;">
         <a id="a2" href="<%= Url.Content("~/PBIP/Index/") %>" target="_blank" class="agregarreportelink"> PBIP</a>
@@ -37,10 +38,10 @@
         <a id="nuevo_viaje" href="<%= Url.Content("~/Viaje/nuevo/") %>" onclick="return nuevoviaje(this);"> Nuevo Viaje</a>
        </div>
 
-       <div class="btn-new-class">
+<%--       <div class="btn-new-class">
         <a id="agregar_reporte" href="<%= Url.Content("~/Viaje/agregarReporte/") %>" onclick="return agregarreporte(this);" class="agregarreportelink"> Agregar Reporte</a>
        </div>
-       
+--%>       
        <%Html.RenderPartial("_boton_edicion_cargas"); %>
 
       </ul>

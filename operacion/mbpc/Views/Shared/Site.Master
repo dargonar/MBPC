@@ -32,6 +32,8 @@
 
       <script src="<%= Url.Content("~/Scripts/jquery.numeric.js") %>" type="text/javascript" ></script>
 
+      <%: MvcMiniProfiler.MiniProfiler.RenderIncludes() %>
+
       <script type="text/javascript">
         function cambiar_grupo() {
           var grp = $("#grupoactual").val();

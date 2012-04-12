@@ -159,10 +159,7 @@ namespace mbpc.Controllers
         {
           if (Session["tipo_punto"].ToString() == "0")
           {
-            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
-            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(Session["zona"].ToString());
-            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(Session["zona"].ToString());
-            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
+            barcos_data(Session["zona"].ToString());
             return View("columnas");
           }
 

@@ -2,6 +2,9 @@
 
 SET /P NEWVER=Version to install:
 
+echo Downloading new version...
+xcopy /Y "\\tsclient\C\borrar\mbpc-%NEWVER%.zip" .
+
 echo Stoping IIS..
 iisreset /STOP
 
@@ -13,9 +16,6 @@ set _VER=%_VER: =%
 echo Backing up version %_VER%...
 
 xcopy /E /Q /Y /I C:\Inetpub\wwwroot\mbpc "C:\Inetpub\wwwroot\mbpc-%_VER%"
-
-echo Downloading new version...
-xcopy /Y "\\tsclient\C\borrar\mbpc-%NEWVER%.zip" .
 
 echo Unziping ...
 unzip -o -q "mbpc-%NEWVER%.zip" -d C:\Inetpub\wwwroot\mbpc

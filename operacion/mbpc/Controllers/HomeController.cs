@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
+using MvcMiniProfiler;
 
 namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.8";
+      public static string VERSION = "1.3.9";
       
         //
         // GET: /Home/
@@ -27,11 +30,19 @@ namespace mbpc.Controllers
           var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
           ViewData["datos_del_usuario"] = datos;
 
-          //HACK: Hasta que haya sistema de usuarios
-          if((datos[0] as Dictionary<string,string>)["APELLIDO"].Contains("*"))
+          //HACK: Hasta que ricardo actualice
+          if( ConfigurationManager.AppSettings["validate_access_level"]=="false")
+            (datos[0] as Dictionary<string, string>)["NIVACC"] = "6";
+
+          //Si es 1 (!=6 && !=9): solo reportes
+          if ((datos[0] as Dictionary<string, string>)["NIVACC"] != "6" && (datos[0] as Dictionary<string, string>)["NIVACC"] != "9")
           {
             return RedirectToAction("Index", "Reporte");
           }
+
+          //Debe profilear?
+          string[] profile_users = ConfigurationManager.AppSettings["profile_users"].Split(',');
+          Session["should_profile"] = profile_users.Contains(Session["usuario"].ToString()) ? "yes" : null;
 
           int grp = int.Parse(((Session["grupos"] as List<object>)[0] as Dictionary<string, string>)["GRUPO"]);
           Session["grupo"] = grp;
@@ -86,10 +97,7 @@ namespace mbpc.Controllers
           Session["tipo_punto"] = tipo;
           if (tipo == "0")
           {
-            ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(id);
-            ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id);
-            ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id);
-            ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id);
+            barcos_data(id);
           }
 
         }

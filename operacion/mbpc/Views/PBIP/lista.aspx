@@ -3,13 +3,14 @@
 <div id="linkos" style="display:none">
   <a id="l1" href="#" xhref="<%= Url.Content("~/PBIP/modificar/") + "?id=%PBIP_ID%"%>" onclick="return pbip(this, 'Modificar formulario PBIP');">Modificar</a>
   <a id="l2" href="#" xhref="<%= Url.Content("~/PBIP/borrar/") + "?id=%PBIP_ID%" %>" onclick="return borrarPBIP(this);" >Borrar</a>
-  <!--a id="l3" href="#" xhref="<% //= Url.Content("~/PBIP/nuevo_viaje_desdePBIP/") + "?id=%PBIP_ID%" %>" onclick="alert('Pronto!');return false;">Crear Viaje para este PBIP</a -->
+  <a id="l3" href="#" xhref="<%= Url.Content("~/PBIP/imprimir/") + "?id=%PBIP_ID%" %>" onclick="return imprimirPBIP(this);">Imprimir</a>
 </div>
 
 <div class="contextMenu" id="myMenu1" style="display:none">
   <ul style="width: 200px">
     <li id="m1"><span style="font-size:80%; font-family:Verdana">Modificar</span></li>
-    <li id="m2"><span style="font-size:80%; font-family:Verdana">Borrar</span></li>                
+    <li id="m2"><span style="font-size:80%; font-family:Verdana">Borrar</span></li>
+    <li id="m3"><span style="font-size:80%; font-family:Verdana">Imprimir</span></li>
     <!-- li id="m3"><span style="font-size:80%; font-family:Verdana">Crear Viaje para este PBIP</span></li -->                
   </ul>
 </div>
@@ -47,6 +48,12 @@
     var href = $(sender).attr('href');
     //document.location = href;
     window.location.href = href;
+    return true;
+  }
+
+  function imprimirPBIP(sender){
+    var href = $(sender).attr('href');
+    window.open(href,'poppoup','width=800, scrollbars=yes, location=no, menubar=no');
     return true;
   }
 
@@ -151,8 +158,8 @@ function initGrid() {
   jQuery(".jqgrow", "#list").contextMenu('myMenu1', {
     bindings: {
       'm1': function (t) { runlink('l1'); },
-      'm2': function (t) { runlink('l2'); }
-      /*'m3': function (t) { runlink('l3'); }*/
+      'm2': function (t) { runlink('l2'); },
+      'm3': function (t) { runlink('l3'); }
     },
     onContextMenu: function (event, menu) {
       var rowId = $(event.target).parent("tr").attr("id")

@@ -8,12 +8,14 @@ using mbpc.Models;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using System.Configuration;
+using System.Globalization;
 
 namespace mbpc_wsreport
 {
-
   public class ReportParam
   {
+    public static string VERSION = "1.1";
+
     ReportParam()
     {
 
@@ -52,18 +54,25 @@ namespace mbpc_wsreport
         var param = _params.Find(o => (o as Dictionary<string, string>)["NOMBRE"] == report_param.nombre) as Dictionary<string, string>;
 
         object value = report_param.valor;
+        var pname = ":p" + param["INDICE"].ToString();
 
-        if (param["TIPO_DATO"] == "0")
-          lparams.Add(new OracleParameter(":p" + param["INDICE"].ToString(), OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+        string tmp = rep["CONSULTA_SQL"];
+        int qcount = tmp.Select((c, j) => tmp.Substring(j)).Count(sub => sub.StartsWith(pname));
+        
+        for (int k = 0; k < qcount; k++)
+        {
+          if (param["TIPO_DATO"] == "0")
+            lparams.Add(new OracleParameter(pname, OracleDbType.Date, DateTime.ParseExact(value.ToString(), "dd-MM-yy", CultureInfo.InvariantCulture), System.Data.ParameterDirection.Input));
 
-        if (param["TIPO_DATO"] == "1")
-          lparams.Add(new OracleParameter(":p" + param["INDICE"].ToString(), OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+          if (param["TIPO_DATO"] == "1")
+            lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
 
-        if (param["TIPO_DATO"] == "2")
-          lparams.Add(new OracleParameter(":p" + param["INDICE"].ToString(), OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+          if (param["TIPO_DATO"] == "2")
+            lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
 
-        if (param["TIPO_DATO"] == "3")
-          lparams.Add(new OracleParameter(":p" + param["INDICE"].ToString(), OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+          if (param["TIPO_DATO"] == "3")
+            lparams.Add(new OracleParameter(pname, OracleDbType.Varchar2, value, System.Data.ParameterDirection.Input));
+        }
       }
 
       var cmd = new OracleCommand(rep["CONSULTA_SQL"]);

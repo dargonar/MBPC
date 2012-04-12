@@ -36,7 +36,7 @@ namespace mbpc.Controllers
       public ActionResult barcazas_fondeadas(int etapa_id)
       {
         ViewData["etapa_id"] = etapa_id;
-        ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString());
+        ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString(), null);
         return View();
       }
 
@@ -202,7 +202,7 @@ namespace mbpc.Controllers
         ViewData["etapa_id"] = etapa_id;
         ViewData["carga"]    = carga;
 
-        ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString());
+        ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString(), null);
         var i = 0;
         foreach (Dictionary<string, string> barco in (ViewData["barcos_en_zona"] as List<object>))
         {

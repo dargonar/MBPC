@@ -41,6 +41,15 @@ namespace mbpc_admin.Controllers
       var alone = Request.Params.Get("alone");
       ViewData["alone"] = String.IsNullOrEmpty(alone) ? null : alone;
 
+      if (String.IsNullOrEmpty(alone))
+      {
+        if (Session["logged"] == null)
+        {
+          filterContext.Result = RedirectToAction("ShowForm", "Auth");
+          return;
+        }
+      }
+
       base.OnActionExecuting(filterContext);
     }
 

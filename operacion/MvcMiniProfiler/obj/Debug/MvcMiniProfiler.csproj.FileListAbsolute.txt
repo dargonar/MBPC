@@ -1,0 +1,12 @@
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\obj\Debug\ResolveAssemblyReference.cache
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.XML
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.dll
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.pdb
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\obj\Debug\MvcMiniProfiler.dll
+C:\borrar\rbirkby-MiniProfiler-a3cfafe\rbirkby-MiniProfiler-a3cfafe\MvcMiniProfiler\obj\Debug\MvcMiniProfiler.pdb
+C:\wdir\MBPC\operacion\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.XML
+C:\wdir\MBPC\operacion\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.dll
+C:\wdir\MBPC\operacion\MvcMiniProfiler\bin\Debug\MvcMiniProfiler.pdb
+C:\wdir\MBPC\operacion\MvcMiniProfiler\obj\Debug\ResolveAssemblyReference.cache
+C:\wdir\MBPC\operacion\MvcMiniProfiler\obj\Debug\MvcMiniProfiler.dll
+C:\wdir\MBPC\operacion\MvcMiniProfiler\obj\Debug\MvcMiniProfiler.pdb

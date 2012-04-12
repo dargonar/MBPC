@@ -9,12 +9,15 @@
 </head>
 <body>
   <div id="header"></div>
-  <div id="login">
+  <div style="height:auto" id="login">
       <h1>Login</h1>
       <div class="content">
-          <form action="<%= Url.Action("login","Auth") %>" method="post" >
-            <label>Usuario: <input type="text" name="username" id="usuario" autocomplete="off" /></label>
-            <label>Password: <input type="password" name="password" id="password" /></label>
+          <form action="<%= Url.Action("login2","Auth") %>" method="post" >
+            <%if(ViewData["msg"] != null) { %>
+            <label style="float:left;margin-left:15px;"><span style="color:#000;"><strong><%=ViewData["msg"]%></strong></span></label><br /><br />
+            <%}%>
+            <label>DNI: <input type="text" name="username" id="usuario" autocomplete="off" /></label><br />
+            <label>Password: <input type="password" name="password" id="password" /></label><br />
             <div></div>
             <label><span><%= ViewData["Error"] %></span></label>
           <br />

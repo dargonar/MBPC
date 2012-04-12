@@ -32,6 +32,10 @@ namespace mbpc.Controllers
             usr = "0";
           }
 
+          //Hack: no pass? te pongo uno cualquiera
+          if (String.IsNullOrWhiteSpace(pass))
+            pass = "String.IsNullOrWhiteSpace(pass)";
+
           //  Validar usuario
           //-  200:  usr no existe                       [USUARIO NO EXISTE]
           //-  100:  pass invalido                       [INVALID PASS]
@@ -46,9 +50,16 @@ namespace mbpc.Controllers
           //[TODO OK]
           if (result == 0)
           {
+            var datos = DaoLib.datos_del_usuario(Request.Form["username"]);
+            var acceso = (datos[0] as Dictionary<string, string>)["NIVACC"];
+            
+            if (String.IsNullOrWhiteSpace(acceso))
+              acceso = "1";
+
             //Marcar sesion logeado
             Session["logged"] = 1;
             Session["usuario"] = Request.Form["username"];
+            Session["acceso"] = acceso;
             return Redirect(Url.Content("~/"));
           }
 
@@ -114,41 +125,8 @@ namespace mbpc.Controllers
           return Redirect(url);
         }
 
-      public ActionResult Login()
-      {
-          //Validar usuario
-
-          bool logok = DaoLib.loguser(Request.Form["username"], Request.Form["password"]);
-          if (logok == false)
-          {
-            if (!TempData.ContainsKey("error"))
-              ViewData["error"] = "Usuario / Password invalido";
-            else
-              ViewData["error"] = TempData["error"];
-            return View("ShowForm");
-          }
-
-          //Marcar sesion logeado
-          Session["logged"] = 1;
-          Session["usuario"] = Request.Form["username"];
-
-          //Agregar evento
-          DaoLib.userid = int.Parse(Session["usuario"].ToString());
-          DaoLib.login_usuario("dummy");
-
-          if (Session["toreports"] != null)
-          {
-            Session["toreports"] = null;
-            return RedirectToAction("Index", "Reporte");
-          }
-
-          return Redirect(Url.Content("~/"));
-        }
-
-
         public ActionResult Logout()
         {
-          
           DaoLib.logout_usuario("dummy");
 
           //Marcar sesion deslogeado

@@ -9,6 +9,11 @@ namespace mbpc.Controllers
 {
     public class ItemController : MyController
     {
+      public JsonResult verNombre(string nombre)
+      {
+        var datos = DaoLib.barcos_similares(nombre);
+        return Json(datos, JsonRequestBehavior.AllowGet);
+      }
 
       public JsonResult crearBarcaza(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio)
       {

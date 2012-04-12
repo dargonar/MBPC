@@ -123,6 +123,20 @@ namespace mbpc
         {
             AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);
+
+            var ignored = MvcMiniProfiler.MiniProfiler.Settings.IgnoredPaths.ToList();
+            ignored.Add("/img/");
+            MvcMiniProfiler.MiniProfiler.Settings.IgnoredPaths = ignored.ToArray();
+        }
+
+        protected void Application_BeginRequest()
+        {
+          
+        }
+
+        protected void Application_EndRequest()
+        {
+            MvcMiniProfiler.MiniProfiler.Stop();
         }
 
     }

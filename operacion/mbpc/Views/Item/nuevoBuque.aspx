@@ -89,6 +89,25 @@
             return false;
         }
 
+
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: '<%= Url.Content("~/Item/verNombre/") %>' + '?nombre='+$("#bnombreN").val(),
+            success: (function (data) {
+               alert(data.length);
+            }),
+            error: (function (data) {
+                var titletag = /<title\b[^>]*>.*?<\/title>/
+                if (titletag != "")
+                    alert(unescape(titletag.exec(data.responseText)));
+                else
+                    alert(data);
+                $('.botonsubmitb').removeAttr('disabled');
+            })
+        });
+
+        /*
         $.ajax({
             type: "POST",
             cache: false,
@@ -111,6 +130,7 @@
                 $('.botonsubmitb').removeAttr('disabled');
             })
         });
+        */
         return false;
     });
   

@@ -51,6 +51,19 @@ namespace mbpc.Controllers
         return View("nuevo");
       }
 
+      public ActionResult imprimir(string id)
+      {
+        int pbpip_id = Convert.ToInt32(id);
+        var pbip = DaoLib.pbip_obtener(pbpip_id) as Dictionary<string, string>;
+        ViewData["pbip"] = pbip;
+
+        ViewData["pbip_params"] = DaoLib.pbip_obtener_params(pbpip_id);
+        ViewData["id"] = id;
+        ViewData["print"] = "yes";
+
+        return View("imprimir");
+      }
+
       public ActionResult editar(string id)
       {
         var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());

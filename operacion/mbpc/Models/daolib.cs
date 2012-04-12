@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Threading;
 using mbpc.Models;
 using System.Web.Mvc;
+using MvcMiniProfiler;
 
 public static class DaoLib
 {
@@ -409,14 +410,14 @@ public static class DaoLib
     return doCall("mbpc.grupos_del_usuario", parameters);
   }
 
-  public static List<object> barcos_en_zona(string zona)
+  public static List<object> barcos_en_zona(string zona, MiniProfiler p)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vZonaId", OracleDbType.Varchar2, zona.ToString(), System.Data.ParameterDirection.Input),
     };
 
-    return doCall("mbpc.barcos_en_zona", parameters);
+    return doCall("mbpc.barcos_en_zona", parameters, p);
   }
 
   public static List<object> corregir_barcaza(int etapa_id, int buque_id, int barcaza_id)
@@ -432,14 +433,14 @@ public static class DaoLib
   }
 
   
-  public static List<object> barcazas_en_zona(string zona)
+  public static List<object> barcazas_en_zona(string zona, MiniProfiler p)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vZonaId", OracleDbType.Varchar2, zona.ToString(), System.Data.ParameterDirection.Input),
     };
 
-    return doCall("mbpc.barcazas_en_zona", parameters);
+    return doCall("mbpc.barcazas_en_zona", parameters, p);
   }
   
   public static List<object> adjuntar_barcazas(int[] etapas_id, int[] barcazas)
@@ -455,24 +456,24 @@ public static class DaoLib
 
 
 
-  public static List<object> barcos_entrantes(string zona)
+  public static List<object> barcos_entrantes(string zona, MiniProfiler p)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vZonaId", OracleDbType.Varchar2, zona.ToString(), System.Data.ParameterDirection.Input),
     };
 
-    return doCall("mbpc.barcos_entrantes", parameters);
+    return doCall("mbpc.barcos_entrantes", parameters, p);
   }
 
-  public static List<object> barcos_salientes(string zona)
+  public static List<object> barcos_salientes(string zona, MiniProfiler p)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vZonaId", OracleDbType.Varchar2, zona.ToString(), System.Data.ParameterDirection.Input),
     };
 
-    return doCall("mbpc.barcos_salientes", parameters);
+    return doCall("mbpc.barcos_salientes", parameters, p);
   }
 
   public static List<object> zonas_adyacentes(string zona)
@@ -1559,108 +1560,154 @@ public static class DaoLib
     return doCall("mbpc.obtener_opciones_malvinas", parameters);
   }
 
-  private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
+  public static List<object> barcos_similares(string nombre)
   {
-    string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-    List<object> retVal = new List<object>();
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input)
+    };
 
-    using (OracleConnection con = new OracleConnection(constr))
-    {
-      con.Open();
-
-      OracleCommand cmd = new OracleCommand();
-
-      cmd.Connection = con;
-      cmd.CommandText = functionName;
-      cmd.CommandType = CommandType.StoredProcedure;
-      foreach (OracleParameter param in parameters)
-      {
-        cmd.Parameters.Add(param);
-      }
-      
-      var userids = new List<string>();
-      for(int i=0; i<arraybindcount; i++)
-        userids.Add(DaoLib.userid.ToString());
-
-      cmd.Parameters.Add("usrid", OracleDbType.Decimal, userids.ToArray(), System.Data.ParameterDirection.Input);
-
-      cmd.ArrayBindCount = arraybindcount;
-
-      OracleDataReader reader = cmd.ExecuteReader();
-
-      while (reader.Read())
-      {
-        Dictionary<string, string> vv = new Dictionary<string, string>();
-        for (int i = 0; i < reader.FieldCount; i++)
-        {
-          vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
-        }
-        retVal.Add(vv);
-      }
-
-      cmd.Dispose();
-      con.Close();
-    }
-
-    return retVal;
+    return doCall("mbpc.barcos_similares", parameters);
   }
 
-  private static List<object> doCall(string functionName, OracleParameter[] parameters)
+  private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
-    string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-    List<object> retVal = new List<object>();
-
-    using (OracleConnection con = new OracleConnection(constr))
+    var profiler = MiniProfiler.Current;
+    using(profiler.Step(string.Format("SQL2:{0}", functionName)))
     {
-      con.Open();
-
-      OracleCommand cmd = new OracleCommand();
-
-      cmd.Connection = con;
-      cmd.CommandText = functionName;
-      cmd.CommandType = CommandType.StoredProcedure;
-      foreach (OracleParameter param in parameters)
+      string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+      List<object> retVal = new List<object>();
+    
+      using (OracleConnection con = new OracleConnection(constr))
       {
-        cmd.Parameters.Add(param);
-      }
-
-      cmd.Parameters.Add("usrid", OracleDbType.Decimal, userid, System.Data.ParameterDirection.Input);
-      cmd.Parameters.Add("vCursor", OracleDbType.RefCursor, DBNull.Value, System.Data.ParameterDirection.Output);
-
-      OracleDataReader reader = cmd.ExecuteReader();
-      
-      while (reader.Read())
-      {
-        
-        Dictionary<string, string> vv = new Dictionary<string, string>();
-        for (int i = 0; i < reader.FieldCount; i++)
+        using(profiler.Step("Connect"))
         {
-          var typetemp = reader.GetFieldType(i);
+          con.Open();
+        }
+        OracleDataReader reader = null;
+        OracleCommand cmd = null;
+        
+        using(profiler.Step("Execute"))
+        {
 
-          var val = reader.GetValue(i);
-          
-          if (typetemp == typeof(DateTime))
+          cmd = new OracleCommand();
+
+          cmd.Connection = con;
+          cmd.CommandText = functionName;
+          cmd.CommandType = CommandType.StoredProcedure;
+          foreach (OracleParameter param in parameters)
           {
-              if (val.GetType() == typeof(DBNull))
-              {
-                vv[reader.GetName(i).ToString()] = "";
-                vv[reader.GetName(i).ToString() + "_fmt"] = "";
-              }
-              else
-              {
-                vv[reader.GetName(i).ToString()] = DateTime.Parse(val.ToString()).ToString("u", DateTimeFormatInfo.InvariantInfo).Substring(0, 16);
-                vv[reader.GetName(i).ToString() + "_fmt"] = string.Format("{0:dd-MM-yy HH:mm}", (DateTime)val);
-              }
-            continue;
+            cmd.Parameters.Add(param);
           }
-          vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+      
+          var userids = new List<string>();
+          for(int i=0; i<arraybindcount; i++)
+            userids.Add(DaoLib.userid.ToString());
+
+          cmd.Parameters.Add("usrid", OracleDbType.Decimal, userids.ToArray(), System.Data.ParameterDirection.Input);
+
+          cmd.ArrayBindCount = arraybindcount;
+
+          reader = cmd.ExecuteReader();
+        }
+        
+        using (profiler.Step("Read"))
+        {
+          while (reader.Read())
+          {
+            Dictionary<string, string> vv = new Dictionary<string, string>();
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+              vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+            }
+            retVal.Add(vv);
+          }
         }
 
-        //Lat/Long de float a string
-        if (vv.ContainsKey("LATITUD") && vv.ContainsKey("LONGITUD"))
+        using (profiler.Step("Disconnect"))
         {
-            if (vv["LATITUD"] != "" || vv["LONGITUD"] != "")
+          cmd.Dispose();
+          con.Close();
+        }
+      }
+
+      return retVal;
+    }
+  }
+  private static List<object> doCall(string functionName, OracleParameter[] parameters)
+  {
+    return doCall(functionName, parameters, null);
+  }
+
+  private static List<object> doCall(string functionName, OracleParameter[] parameters, MiniProfiler p)
+  {
+    var profiler = p != null ? p : MiniProfiler.Current;
+    using (profiler.Step(string.Format("SQL:{0}",functionName)))
+    {
+      string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+      List<object> retVal = new List<object>();
+
+      using (OracleConnection con = new OracleConnection(constr))
+      {
+        using (profiler.Step("Connect"))
+        {
+          con.Open();
+        }
+
+        OracleDataReader reader = null;
+        OracleCommand cmd = null;
+
+        using (profiler.Step("Execute"))
+        {
+          cmd = new OracleCommand();
+
+          cmd.Connection = con;
+          cmd.CommandText = functionName;
+          cmd.CommandType = CommandType.StoredProcedure;
+          foreach (OracleParameter param in parameters)
+          {
+            cmd.Parameters.Add(param);
+          }
+
+          cmd.Parameters.Add("usrid", OracleDbType.Decimal, userid, System.Data.ParameterDirection.Input);
+          cmd.Parameters.Add("vCursor", OracleDbType.RefCursor, DBNull.Value, System.Data.ParameterDirection.Output);
+
+          reader = cmd.ExecuteReader();
+        }
+
+        using (profiler.Step("Read"))
+        {
+          while (reader.Read())
+          {
+            Dictionary<string, string> vv = new Dictionary<string, string>();
+            for (int i = 0; i < reader.FieldCount; i++)
             {
+              var typetemp = reader.GetFieldType(i);
+
+              var val = reader.GetValue(i);
+
+              if (typetemp == typeof(DateTime))
+              {
+                if (val.GetType() == typeof(DBNull))
+                {
+                  vv[reader.GetName(i).ToString()] = "";
+                  vv[reader.GetName(i).ToString() + "_fmt"] = "";
+                }
+                else
+                {
+                  vv[reader.GetName(i).ToString()] = DateTime.Parse(val.ToString()).ToString("u", DateTimeFormatInfo.InvariantInfo).Substring(0, 16);
+                  vv[reader.GetName(i).ToString() + "_fmt"] = string.Format("{0:dd-MM-yy HH:mm}", (DateTime)val);
+                }
+                continue;
+              }
+              vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+            }
+
+            //Lat/Long de float a string
+            if (vv.ContainsKey("LATITUD") && vv.ContainsKey("LONGITUD"))
+            {
+              if (vv["LATITUD"] != "" || vv["LONGITUD"] != "")
+              {
                 double lat = 0.0;
                 double lon = 0.0;
 
@@ -1672,86 +1719,109 @@ public static class DaoLib
                                         Math.Sign(lat) > 0 ? 'N' : 'S',
                                         Math.Abs((int)lon), Math.Abs((int)((lon - Math.Truncate(lon)) * 100.0f)),
                                         Math.Sign(lon) > 0 ? 'E' : 'W');
+              }
+              else vv["LATLONG_fmt"] = "";
             }
-            else vv["LATLONG_fmt"] = "";
+
+            retVal.Add(vv);
+          }
         }
 
-        retVal.Add(vv);
+        using (profiler.Step("Disconnect"))
+        {
+          cmd.Dispose();
+          con.Close();
+        }
       }
 
-      cmd.Dispose();
-      con.Close();
+      return retVal;
     }
-
-    return retVal;
   }
 
   public static List<object> doSQL(OracleCommand cmd)
   {
-    string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-    List<object> retVal = new List<object>();
-
-    using (OracleConnection con = new OracleConnection(constr))
+    var profiler = MiniProfiler.Current; // it's ok if this is null
+    using (profiler.Step("rawSQL"))
     {
-      con.Open();
+      string constr = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+      List<object> retVal = new List<object>();
 
-      cmd.Connection = con;
-      cmd.Prepare();
-      OracleDataReader reader = cmd.ExecuteReader();
-
-      while (reader.Read())
+      using (OracleConnection con = new OracleConnection(constr))
       {
-        Dictionary<string, string> vv = new Dictionary<string, string>();
-        for (int i = 0; i < reader.FieldCount; i++)
+        using (profiler.Step("Connect"))
         {
-          var typetemp = reader.GetFieldType(i);
-          var val = reader.GetValue(i);
-
-          if (typetemp == typeof(DateTime))
-          {
-            if (val.GetType() == typeof(DBNull))
-            {
-              vv[reader.GetName(i).ToString()] = "";
-              vv[reader.GetName(i).ToString() + "_fmt"] = "";
-            }
-            else
-            {
-              vv[reader.GetName(i).ToString()] = DateTime.Parse(val.ToString()).ToString("u", DateTimeFormatInfo.InvariantInfo).Substring(0, 16);
-              vv[reader.GetName(i).ToString() + "_fmt"] = string.Format("{0:dd-MM-yy HH:mm}", (DateTime)val);
-            }
-            continue;
-          }
-          vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+          con.Open();
         }
 
-        //Lat/Long de float a string
-        if (vv.ContainsKey("LATITUD") && vv.ContainsKey("LONGITUD"))
+        OracleDataReader reader = null;
+        
+        using (profiler.Step("Execute"))
         {
-          if (vv["LATITUD"] != "" || vv["LONGITUD"] != "")
-          {
-            double lat = 0.0;
-            double lon = 0.0;
-
-            double.TryParse(vv["LATITUD"], out lat);
-            double.TryParse(vv["LONGITUD"], out lon);
-
-            vv["LATLONG_fmt"] = string.Format("{0:00}{1:00}{2}{3:000}{4:00}{5}",
-                                    Math.Abs((int)lat), Math.Abs((int)((lat - Math.Truncate(lat)) * 100.0f)),
-                                    Math.Sign(lat) > 0 ? 'N' : 'S',
-                                    Math.Abs((int)lon), Math.Abs((int)((lon - Math.Truncate(lon)) * 100.0f)),
-                                    Math.Sign(lon) > 0 ? 'E' : 'W');
-          }
-          else vv["LATLONG_fmt"] = "";
+          cmd.Connection = con;
+          cmd.Prepare();
+          reader = cmd.ExecuteReader();
         }
 
-        retVal.Add(vv);
+        using (profiler.Step("Read"))
+        {
+          while (reader.Read())
+          {
+            Dictionary<string, string> vv = new Dictionary<string, string>();
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+              var typetemp = reader.GetFieldType(i);
+              var val = reader.GetValue(i);
+
+              if (typetemp == typeof(DateTime))
+              {
+                if (val.GetType() == typeof(DBNull))
+                {
+                  vv[reader.GetName(i).ToString()] = "";
+                  vv[reader.GetName(i).ToString() + "_fmt"] = "";
+                }
+                else
+                {
+                  vv[reader.GetName(i).ToString()] = DateTime.Parse(val.ToString()).ToString("u", DateTimeFormatInfo.InvariantInfo).Substring(0, 16);
+                  vv[reader.GetName(i).ToString() + "_fmt"] = string.Format("{0:dd-MM-yy HH:mm}", (DateTime)val);
+                }
+                continue;
+              }
+              vv[reader.GetName(i).ToString()] = reader.GetValue(i).ToString();
+            }
+
+            //Lat/Long de float a string
+            if (vv.ContainsKey("LATITUD") && vv.ContainsKey("LONGITUD"))
+            {
+              if (vv["LATITUD"] != "" || vv["LONGITUD"] != "")
+              {
+                double lat = 0.0;
+                double lon = 0.0;
+
+                double.TryParse(vv["LATITUD"], out lat);
+                double.TryParse(vv["LONGITUD"], out lon);
+
+                vv["LATLONG_fmt"] = string.Format("{0:00}{1:00}{2}{3:000}{4:00}{5}",
+                                        Math.Abs((int)lat), Math.Abs((int)((lat - Math.Truncate(lat)) * 100.0f)),
+                                        Math.Sign(lat) > 0 ? 'N' : 'S',
+                                        Math.Abs((int)lon), Math.Abs((int)((lon - Math.Truncate(lon)) * 100.0f)),
+                                        Math.Sign(lon) > 0 ? 'E' : 'W');
+              }
+              else vv["LATLONG_fmt"] = "";
+            }
+
+            retVal.Add(vv);
+          }
+        }
+        
+        using (profiler.Step("Disconnect"))
+        {
+          cmd.Dispose();
+          con.Close();
+        }
       }
 
-      cmd.Dispose();
-      con.Close();
+      return retVal;
     }
-
-    return retVal;
   }
 
 

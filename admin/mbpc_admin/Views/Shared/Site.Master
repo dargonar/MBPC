@@ -63,9 +63,9 @@
     <div id="leftside">
       <div class="user">
         <img src="<%= Url.Content("~/img/avatar.png") %>" width="44" height="44" class="hoverimg" alt="Avatar" />
-          <p>Logged in as:</p>
+          <p><%=Session["usuario"]%></p>
           <p class="username"><%//datos_del_usuario["APELLIDO"] + ", " + datos_del_usuario["NOMBRES"] %></p>
-          <p class="userbtn"><a href="<%= Url.Action("Logout","Auth") %>" title="">Log out</a></p>
+          <p class="userbtn"><a href="<%= Url.Action("Logout","Auth") %>" title="">Salir</a></p>
         </div>
 
       <ul id="nav">
