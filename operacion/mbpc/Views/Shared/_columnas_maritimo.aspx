@@ -40,6 +40,7 @@
   </ul>
 </div>
 
+<%ViewData["boton_reporte"]="yes";%>
 <%Html.RenderPartial("_tabs_main");%>
 
 <table id="list"></table> 

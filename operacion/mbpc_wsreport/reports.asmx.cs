@@ -8,7 +8,6 @@ using System.Data;
 using mbpc.Models;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
-using System.Configuration;
 using System.Globalization;
 
 namespace mbpc_wsreport
@@ -83,7 +82,7 @@ namespace mbpc_wsreport
 
       foreach(var report_param in report_params)
       {
-        var param = _params.Find(o => (o as Dictionary<string, string>)["NOMBRE"] == report_param.nombre) as Dictionary<string, string>;
+        var param = _params.Find(o => (o as Dictionary<string, string>)["NOMBRE"].ToLower() == report_param.nombre.ToLower()) as Dictionary<string, string>;
 
         object value = report_param.valor;
         var pname = ":p" + param["INDICE"].ToString();

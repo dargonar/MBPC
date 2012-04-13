@@ -22,7 +22,7 @@
     //"ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"
     $(function () {
       var mygrid = $("#list").jqGrid({
-        url: '/viaje/ListJSON',
+        url: '/viaje/ListJSON?dummy=1222&<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%><%}%>',
         datatype: 'json',
         mtype: 'GET',
         colNames: ["ID", "PID", "ACTUAL", "NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA", "ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"],  

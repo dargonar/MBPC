@@ -38,10 +38,11 @@
         <a id="nuevo_viaje" href="<%= Url.Content("~/Viaje/nuevo/") %>" onclick="return nuevoviaje(this);"> Nuevo Viaje</a>
        </div>
 
-<%--       <div class="btn-new-class">
+	<% if ( ViewData["boton_reporte"] != null ) { %>
+	<div class="btn-new-class">
         <a id="agregar_reporte" href="<%= Url.Content("~/Viaje/agregarReporte/") %>" onclick="return agregarreporte(this);" class="agregarreportelink"> Agregar Reporte</a>
-       </div>
---%>       
+        </div>
+	<% } %>
        <%Html.RenderPartial("_boton_edicion_cargas"); %>
 
       </ul>

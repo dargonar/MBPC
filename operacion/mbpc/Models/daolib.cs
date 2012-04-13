@@ -581,7 +581,7 @@ public static class DaoLib
         new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.crear_viaje_new", parameters);
+    return doCall("mbpc.crear_viaje", parameters);
   }
 
   public static List<object> editar_viaje(string viaje, string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
@@ -738,7 +738,7 @@ public static class DaoLib
         new OracleParameter("vCodigoMalvinas", OracleDbType.Decimal, codigo_malvinas, System.Data.ParameterDirection.Input)
     };
 
-    return doCall("mbpc.terminar_viaje_new", parameters);
+    return doCall("mbpc.terminar_viaje", parameters);
   }
 
   public static List<object> descargar_barcaza(int etapa_id, int barcaza_id)

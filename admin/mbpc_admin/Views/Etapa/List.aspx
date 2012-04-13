@@ -32,7 +32,7 @@
 
     $(function () {
       var mygrid = $("#list").jqGrid({
-        url: '/etapa/ListJSON',
+        url: '/etapa/ListJSON?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%><%}%>',
         datatype: 'json',
         mtype: 'GET',
         colNames: ["ID", "Viaje ID", "Etapa Nro:", "Origen", "Actual", "Destino", "HRP", "ETA", "Fecha de salida",	"Fecha de llegada", "Creado"],  
