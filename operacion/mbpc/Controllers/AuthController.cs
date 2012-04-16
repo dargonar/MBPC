@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace mbpc.Controllers
 {
@@ -10,6 +12,27 @@ namespace mbpc.Controllers
     {
         public ActionResult ShowForm(string msg)
         {
+          Task[] tasks = new Task[]
+          {
+            Task.Factory.StartNew(() => { 
+                try { 
+                  ViewData["novedades"] = new WebClient().DownloadString("http://192.168.10.231/dico/mbpc/novedades.txt"); 
+                } 
+                catch { 
+                  ViewData["novedades"]="-er-"; 
+                } 
+            }),
+            Task.Factory.StartNew(() => { 
+              try { 
+                ViewData["recomendaciones"] = new WebClient().DownloadString("http://192.168.10.231/dico/mbpc/recomendaciones.txt"); 
+              } catch { 
+                ViewData["recomendaciones"] ="-er-"; 
+              }})
+          };
+
+          //Block until all tasks complete.
+          Task.WaitAll(tasks);
+
           ViewData["msg"] = msg;
           return View();
         }

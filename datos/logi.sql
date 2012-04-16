@@ -102,7 +102,6 @@ CREATE OR REPLACE package mbpc as
   procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_practicos(vQuery in varchar2, vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_barcazas(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
-  procedure autocomplete_barcazas_new(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleter( vVista in varchar2, vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocompleterm( vQuery in varchar2, usrid in number, vCursor out cur);
    procedure autocomplete_buques_disp( vQuery in varchar2, usrid in number, vCursor out cur);
@@ -1694,54 +1693,20 @@ CREATE OR REPLACE package body mbpc as
   procedure autocomplete_barcazas(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-      --Todas las barcazas
-      select id_buque, nombre, bandera, '0' info from buques_new b where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
-                                              and   UPPER(nombre) like '%'||UPPER(vQuery)||'%'
-      --Que no sean las ...
-      and UPPER(id_buque) not in (
-
-        ---Barcazas usadas en la ultima etapa por los otros viajes
-        select c.buque_id
-          from tbl_viaje v
-            join tbl_etapa e on v.id = e.viaje_id and v.estado = 0 and v.etapa_actual = e.nro_etapa and e.id != vEtapaId
-            join tbl_cargaetapa c on e.id = c.etapa_id and c.buque_id is not null
-        union
-
-        ---Ni barcazas fondeadas
-        select v.buque_id from tbl_viaje v where estado=100
-      ) and rownum < 12 order by nombre ;
+            select b.id_buque, b.nombre, b.bandera, bi.viaje_fondeada, Nvl(bi.info,'0') info, bi.etapa_id-vEtapaId etapa
+      
+      FROM buques_new b
+      LEFT JOIN VW_BARCAZAS_EN_VIAJE bi ON b.id_buque = bi.buque_id  
+      
+      
+      where ( UPPER(b.TIPO_BUQUE) like 'BARCAZA%' 
+           or UPPER(b.TIPO_BUQUE) like 'BALSA%' 
+           or UPPER(b.TIPO_SERVICIO) like 'BARCAZA%' 
+           or UPPER(TIPO_SERVICIO) like 'BALSA%' )
+      and   UPPER(nombre) like '%'||UPPER(vQuery)||'%'
+      
+      and rownum < 12 order by nombre ;
   end autocomplete_barcazas;
-
-  procedure autocomplete_barcazas_new(vEtapaId in varchar2, vQuery in varchar2, usrid in number, vCursor out cur) is
-  begin
-      open vCursor for
-      
-      --Todas las barcazas
-      select b.id_buque, b.nombre, b.bandera,
-
-        CASE 
-          WHEN v.estado = 100 then (
-            SELECT 'Fondeada/Amarrada en '||CASE WHEN rck.km <> 0 then rc.nombre||' '||rck.unidad||' '||rck.km ELSE rc.nombre||' '||rck.unidad END descripcion
-            FROM rios_canales_km rck
-            join rios_canales rc on rck.id_rio_canal = rc.id
-            WHERE rck.id = v.rios_canales_km_id)
-          WHEN v.estado = 0 THEN (
-            SELECT 'Usada por '||bv.nombre from buques_new bv WHERE bv.id_buque=v.buque_id
-          ) 
-          ELSE '0'
-        END info
-
-        from buques_new b 
-        
-          left join tbl_cargaetapa c on c.buque_id = b.id_buque
-          left join tbl_etapa e on c.etapa_id = e.id  and e.id != vEtapaId
-          left join tbl_viaje v ON v.id = e.viaje_id and ( v.estado = 0 OR v.estado = 100 ) AND v.etapa_actual = e.nro_etapa  
-
-          where ( UPPER(TIPO_BUQUE) like 'BARCAZA%' or UPPER(TIPO_BUQUE) like 'BALSA%' or UPPER(TIPO_SERVICIO) like 'BARCAZA%' or UPPER(TIPO_SERVICIO) like 'BALSA%' )
-          and UPPER(nombre) like '%'||UPPER(vQuery)||'%'
-      
-       and rownum < 12 order by nombre ;
-  end autocomplete_barcazas_new;
   
   
   -------------------------------------------------------------------------------------------------------------
