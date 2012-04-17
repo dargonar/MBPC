@@ -135,29 +135,41 @@
             $('#id2').val($('#listadezonas').val());
 
             if ($('#eta').length != 0)
-                if (validarfechas()) return false;
+                if (validarfechas()) 
+                { 
+                  $('.botonsubmit').removeAttr('disabled'); 
+                  return false;
+                }
             
-              $.ajax({
-                  type: "POST",
-                  cache: false,
-                  url: $(this).attr('action'),
-                  data: $(this).serialize(),
-                  success: (function (data) {
+            <% if (pasar)  { %>
+              if (jQuery.trim($('#velocidad').val())=="")
+              { 
+                alert("Debe ingresar una velocidad.");
+                $('.botonsubmit').removeAttr('disabled'); 
+                return false;
+              }
+            <% } %>
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: (function (data) {
                       
-                      if(data=="nop")
-                        $('#list').trigger( 'reloadGrid' );
-                      else
-                        $("#columnas").html(data);
+                    if(data=="nop")
+                      $('#list').trigger( 'reloadGrid' );
+                    else
+                      $("#columnas").html(data);
 
-                      $('#dialogdiv').dialog('close');
-                  }),
-                  error: (function (data) {
-                      var titletag = /<title\b[^>]*>.*?<\/title>/
-                      alert(titletag.exec(data.responseText));
-                      $('.botonsubmit').removeAttr('disabled');
-                  })
-              });
-              return false;
+                    $('#dialogdiv').dialog('close');
+                }),
+                error: (function (data) {
+                    var titletag = /<title\b[^>]*>.*?<\/title>/
+                    alert(titletag.exec(data.responseText));
+                    $('.botonsubmit').removeAttr('disabled');
+                })
+            });
+            return false;
 
         });
     </script>

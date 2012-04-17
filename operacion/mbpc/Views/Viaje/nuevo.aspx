@@ -178,8 +178,8 @@
             success: function (data) {
               response($.map(data, function (item) {
                 return {
-                  label: '(' + item.COD + ') ' + item.PUERTO,
-                  value: '(' + item.COD + ') ' + item.PUERTO,
+                  label: '(' + item.COD + ') ' + item.PUERTO + ' (' + item.PAIS + ')',
+                  value: '(' + item.COD + ') ' + item.PUERTO + ' (' + item.PAIS + ')',
                   id: item.COD
                 }
               }));
@@ -245,18 +245,20 @@
              $('.botonsubmit').removeAttr('disabled');
              return false;
          }
-         if ($("#desdetext").val() == "") {
+         if ($("#desdetext").val() == "" || $("#desde_id").val() == "") {
              alert("Debe seleccionar muelle de origen");
              $("#desdetext").focus();
              $('.botonsubmit').removeAttr('disabled');
              return false;
          }
-         if ($("#hastatext").val() == "") {
+         
+         if ($("#hastatext").val() == "" || $("#hasta_id").val() == "") {
              alert("Debe seleccionar muelle de destino");
              $("#hastatext").focus();
              $('.botonsubmit').removeAttr('disabled');
              return false;
          }
+
          if ($("#partida").val() == "") {
              alert("Debe indicar fecha de partida");
              $("#partida").focus();

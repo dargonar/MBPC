@@ -771,3 +771,6 @@ min-height:80px;
 		background-image:url('/img/bg/arrow_bottom_alpha_white.png');
 	
 }
+
+#list .state_reporte_major_8_red , #list .state_reporte_major_8_red td {background-color:#FF3333;}
+#list .state_reporte_major_6_yellow , #list .state_reporte_major_6_yellow td{background-color:#FFFF33;}

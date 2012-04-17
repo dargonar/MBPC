@@ -51,26 +51,39 @@
 
 
 <script type="text/javascript">
+  var redRows = [];
+  var yellowRows = [];
   function myformatter ( totaldelay, options, rowObject )
   {
     newval = 'n/a';
     if( totaldelay < 0)
     {
-        alert(totaldelay);
+        //alert(totaldelay);
         return newval;
     }
 
     var d;
+    //alert(options.rowId);
+    if(totaldelay>(8*60))
+    {
+      redRows.push(options.rowId);
+    }
+    else if(totaldelay>(6*60)){
+      yellowRows.push(options.rowId);
+    }
+    
     if(d=Math.floor(totaldelay/86400))
     {
         totaldelay = totaldelay % 86400;
         return d + ' dias';
     }
+    
     if(d=Math.floor(totaldelay/3600))
     {
         totaldelay = totaldelay % 3600;
         return d + ' horas';
     }
+    
     if(d=Math.floor(totaldelay/60))
     {
         totaldelay = totaldelay % 60;
@@ -79,6 +92,9 @@
 
     d=Math.floor(totaldelay/1);
     totaldelay = totaldelay % 1;
+
+   
+
     return d + ' segundos';
 
   }
@@ -208,6 +224,13 @@ function initGrid() {
 
     }
   });
+
+  for (var i = 0; i < yellowRows.length; i++) {
+    jQuery("#"+ yellowRows[i]).removeClass('ui-widget-content').addClass('state_reporte_major_6_yellow');
+  }
+  for (var i = 0; i < redRows.length; i++) {
+    jQuery("#"+ redRows[i]).removeClass('ui-widget-content').addClass('state_reporte_major_8_red');
+  }
 }
 
 

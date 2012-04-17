@@ -407,8 +407,8 @@
           response($.map(data, function (item) {
             
             return {
-              label: '(' + item.COD + ') ' + item.PUERTO,
-              value: '(' + item.COD + ') ' + item.PUERTO,
+              label: '(' + item.COD + ') ' + item.PUERTO + ' (' + item.PAIS + ')',
+              value: '(' + item.COD + ') ' + item.PUERTO + ' (' + item.PAIS + ')',
               id: item.COD
             }
           }));
