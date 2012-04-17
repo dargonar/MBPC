@@ -6,7 +6,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>MBPC</title>
   <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/Content/layout.css") %>" />
-
   <style>
     .tabla_content-body-wrapper { 
       display:table; 
@@ -57,11 +56,10 @@ Para consultas comunicarse al interno 2979 de 7 a 19 hs., a la cuenta de correo:
 
     <div class="tabla_content-body-wrapper"> 
       <div class="tabla_content-body"> 
-        <div class="tabla_td">hahahaha</div> 
-        <div class="tabla_td">hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho hohoho </div> 
+        <div id="novedades" class="tabla_td"><h1>Novedades</h1><br /><%=ViewData["novedades"]%></div> 
+        <div id="recomendaciones" class="tabla_td"><h1>Recomendaciones</h1><br /><%=ViewData["recomendaciones"]%></div> 
       </div>
     </div>
   </div><!-- login -->
-  
 </body>
 </html>

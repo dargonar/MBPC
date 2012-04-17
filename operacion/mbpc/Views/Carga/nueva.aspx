@@ -155,7 +155,9 @@
               id     : item.ID_BUQUE,
               nombre : item.NOMBRE,
               bandera: item.BANDERA,
-              info   : item.INFO
+              info   : item.INFO,
+              vf     : item.VIAJE_FONDEADA,
+              etapa  : item.ETAPA
             }
           }));
         }
@@ -164,9 +166,8 @@
     minLength: 2,
     select: function (event, ui) {
 
-        if( ui.item.info != '0' )
+        if( ui.item.info != '0' && ui.item.etapa != '0')
         {
-            alert('por b');
             $("#buque_id").val('');
             $("#barcaza_text").val('');
             event.preventDefault();
@@ -182,10 +183,21 @@
     var bg = '';
     var mr = '';
 
-    if( item.info != '0' )
+    if( item.info != '0' && item.etapa != '0')
     {
-        bg = 'style="background:#B99"';
-        mr = item.info;
+        if(item.vf == 'v')
+        {
+            mr = 'Viajando en ';
+            bg = 'style="background:#B99"';
+        }
+        else
+        {
+            mr = 'Fondeada en ';
+            bg = 'style="background:#099"';
+        }
+
+        
+        mr += item.info;
     }
 
     return $( "<li "+ bg + "></li>" )

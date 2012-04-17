@@ -81,9 +81,12 @@ $("#barcaza_text").autocomplete({
         success: function (data) {
           response($.map(data, function (item) {
             return {
-              id:    item.ID_BUQUE,
-              label: item.NOMBRE + ' (' + item.BANDERA + ')',
-              value: item.NOMBRE + ' (' + item.BANDERA + ')'
+              id     : item.ID_BUQUE,
+              nombre : item.NOMBRE,
+              bandera: item.BANDERA,
+              info   : item.INFO,
+              vf     : item.VIAJE_FONDEADA,
+              etapa  : item.ETAPA
             }
           }));
         }
@@ -91,8 +94,49 @@ $("#barcaza_text").autocomplete({
     },
     minLength: 2,
     select: function (event, ui) {
+
+        if( ui.item.info != '0' && ui.item.etapa != '0')
+        {
+            $("#buque_id").val('');
+            $("#barcaza_text").val('');
+            event.preventDefault();
+            return false;
+        }
+
       $("#buque_id").val(ui.item.id);
+      $("#barcaza_text").val(ui.item.nombre);
+      return false;
     }
-  });
+  }).data( "autocomplete" )._renderItem = function( ul, item ) {
+			      
+    var bg = '';
+    var mr = '';
+
+    if( item.info != '0' && item.etapa != '0')
+    {
+        if(item.vf == 'v')
+        {
+            mr = 'Viajando en ';
+            bg = 'style="background:#B99"';
+        }
+        else
+        {
+            mr = 'Fondeada en ';
+            bg = 'style="background:#099"';
+        }
+
+        
+        mr += item.info;
+    }
+
+    return $( "<li "+ bg + "></li>" )
+			    .data( "item.autocomplete", item )
+			    .append( "<a>" + item.nombre + " (" + item.bandera + ") " 
+                        + mr
+                        + "</a>" )
+			    .appendTo( ul );
+  };
+
+
   
   </script>
