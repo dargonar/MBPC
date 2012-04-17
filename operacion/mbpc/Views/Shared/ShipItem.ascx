@@ -13,32 +13,31 @@
   
     <% if (ViewData["showlinks"].ToString() != "0")
      { %>
-            <div class="shipmenu">
+            <div class="shipmenu shipmenu_<%=ship["ID"]%>">
                 <div class="dropdown">
                     <button class="rerun">Acciones</button>
                     <button class="select" onclick="toggle_menu(this, '<%=ship["ID"]%>'); " id="select_<%=ship["ID"]%>" >Elija una accion</button>
                 </div><!-- dropdown -->
                 <div class="items" id="Item<%=ship["ID"]%>" style="z-index:5; top:0px">
                     <ul>
-                      <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] + "/false"%>" onclick="return dialogozonas(this,'Proximo Destino');">   Proximo Destino </a></li>
-                      <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] %>"        
-                             onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="<%= ship["DESTINO_ID"] %>"   class="pasarbarcolink" >                              Pasar Barco</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/terminarviaje" %>"                                 onclick="return preguntarfecha(this,2);">                            Terminar Viaje</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/editarEtapa/") +  ship["ID"] + "/" + ship["ETAPA_ID"] %>"    onclick="return editaretapa(this);" class="editaretapalink">Editar Etapa/Viaje</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/Acompanantes/") + ship["ETAPA_ID"] %>" onclick="return elegiracompanante(this);return false;">Acompañantes</a></li>
+                      <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] + "/false"%>" onclick="hideMaskAndMenu();return dialogozonas(this,'Proximo Destino');">   Proximo Destino </a></li>
+                      <li><a href="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/" + ship["ID"] %>" onclick="hideMaskAndMenu();fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="<%= ship["DESTINO_ID"] %>"   class="pasarbarcolink" >                              Pasar Barco</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/terminarviaje" %>" onclick="hideMaskAndMenu();return preguntarfecha(this,2);">                            Terminar Viaje</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/editarEtapa/") +  ship["ID"] + "/" + ship["ETAPA_ID"] %>"    onclick="hideMaskAndMenu();return editaretapa(this);" class="editaretapalink">Editar Etapa/Viaje</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/Acompanantes/") + ship["ETAPA_ID"] %>" onclick="hideMaskAndMenu();return elegiracompanante(this);return false;">Acompañantes</a></li>
                       <% if (ship["ACOMPANANTE"] != "" || ship["ACOMPANANTE2"] != "" || ship["ACOMPANANTE3"] != "" || ship["ACOMPANANTE4"] != "")
                          {  %>
-                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="return preguntarfecha(this,1);return false;">Separar Convoy</a></li>
+                             <li><a href="<%= Url.Content("~/Viaje/preguntarFecha/") + ship["ID"] + "/separarconvoy" %>"     onclick="hideMaskAndMenu();return preguntarfecha(this,1);return false;">Separar Convoy</a></li>
                       <% } %>
-                      <li><a href="<%= Url.Content("~/Carga/ver/") +  ship["ETAPA_ID"] %>"              onclick="return editarcargas(this);">                              Editar Cargas </a></li>
-                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>"          onclick="return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
-                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>&carga=1"          onclick="return transferirbarcazas(this);">                  Transferir Carga </a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>"                                   onclick="return editarnotas(this);return false;">            Editar Notas</a></li>
+                      <li><a href="<%= Url.Content("~/Carga/ver/") +  ship["ETAPA_ID"] %>"              onclick="hideMaskAndMenu();return editarcargas(this);">                              Editar Cargas </a></li>
+                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>"          onclick="hideMaskAndMenu();return transferirbarcazas(this);">                  Transferir Barcazas </a></li>
+                      <li><a href="<%= Url.Content("~/Carga/barcoenzona/") + ship["ETAPA_ID"] + "?viaje_id=" + ship["ID"] %>&carga=1"          onclick="hideMaskAndMenu();return transferirbarcazas(this);">                  Transferir Carga </a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/editarNotas/") + ship["ID"] %>"                                   onclick="hideMaskAndMenu();return editarnotas(this);return false;">            Editar Notas</a></li>
                       <!--li><a href="<%= Url.Content("~/Viaje/editarPbip/") + ship["ID"] %>"                                    onclick="return pbip(this);">PBIP (beta)</a></li -->
-                      <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="return detallestecnicos(this);">                    Detalles Técnicos</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>?etapa_id=<%=ship["ETAPA_ID"]%>" onclick="return histrvp(this);">                                                                   Historial R/V/P</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/cambiarEstado/") + ship["ETAPA_ID"] %>" onclick="return agregarevento(this);" class="agregareventolink">Actualizar/Cambiar Estado</a></li>
-                      <li><a href="<%= Url.Content("~/Viaje/practicos/") + ship["ETAPA_ID"] %>" onclick="return practico(this);" class="agregareventolink">Practico/Baqueano</a></li>
+                      <li><a href="<%= Url.Content("~/Home/detallesTecnicos/") + ship["BUQUE_ID"] %>"                        onclick="hideMaskAndMenu();return detallestecnicos(this);">                    Detalles Técnicos</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/histRVP/") + ship["ID"] %>?etapa_id=<%=ship["ETAPA_ID"]%>" onclick="hideMaskAndMenu();return histrvp(this);">                                                                   Historial R/V/P</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/cambiarEstado/") + ship["ETAPA_ID"] %>" onclick="hideMaskAndMenu();return agregarevento(this);" class="agregareventolink">Actualizar/Cambiar Estado</a></li>
+                      <li><a href="<%= Url.Content("~/Viaje/practicos/") + ship["ETAPA_ID"] %>" onclick="hideMaskAndMenu();return practico(this);" class="agregareventolink">Practico/Baqueano</a></li>
                      </ul>
                 </div><!-- items -->
             </div><!-- menu -->

@@ -291,8 +291,8 @@ label {
 table td, table th 
 {
     border:1px solid #e6e6e6;
-	padding:4px;
-	margin:0px;
+	  padding:4px;
+	  margin:0px;
     position:relative;
     z-index:-1;
 
@@ -628,13 +628,14 @@ label span {
 .shipmenu .items 
 {
   display: none;
-	position:absolute;
+	position: absolute;
 	width:180px;
 	margin-top:6px;
 	padding:5px 10px 5px 10px;
 	border:#b4b4b4 solid 1px;
 	background-color:#fff;
-	z-index:4;
+	/*z-index:4;*/
+	z-index:10000;
 }
 
 #menu .items ul {
@@ -784,3 +785,9 @@ min-height:80px;
 #editaretapaformcontainer .columna{ 
   display:table-cell;  padding:0px;  width:215px;  margin:0px 5px 0px 5px; float:left;  overflow-y:hidden; overflow-x:hidden;}
   
+
+/* Z-index of #mask must lower than #boxes .window */
+body div#modal_mask {
+  position:absolute;  z-index:9000;  background-color:#E8EEF7;  display:none;
+}
+   

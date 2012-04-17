@@ -88,7 +88,56 @@
         <%if(Session["grupos"] != null){ %>
         setTimeout(check_restart, 3000);
         <%}%>
+      
+        $(document).ready(function () {
+          //if mask is clicked
+          $('#modal_mask').click(function () {
+              hideMaskAndMenu();
+          });         
+        });
+        function showMask(sender_id){
+            hideVisibleMenues(sender_id);
+
+            //Get the screen height and width
+            var maskHeight = $(document).height();
+            var maskWidth = $(window).width();
+            
+            //Set height and width to mask to fill up the whole screen
+            $('#modal_mask').css({'width':maskWidth,'height':maskHeight});
+         
+            //transition effect     
+            //$('#modal_mask').fadeIn(1000);    
+            $('#modal_mask').fadeTo("slow",0.8);  
+
+            $('.shipmenu_'+sender_id+' .dropdown').css('z-index',9999);
+            $('.shipmenu_'+sender_id+' .items').css('z-index',9999);
+            console.log('ship menu: '+sender_id);
+        }  
+        
+        function hideVisibleMenues(except_id){
+          $.each($('.items:visible'), function(index, value) { 
+              
+              var ship = $(value).attr('id').replace('Item','');
+              if(ship==except_id)
+                return true;
+              $(value).hide();
+              $('.shipmenu_'+ship+' .dropdown').css('z-index',4);
+              $('.shipmenu_'+ship+' .items').css('z-index',4);
+              $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-s"});
+            });
+        }
+        
+        function hideMask(){
+            $('#modal_mask').hide();
+        }
+
+        function hideMaskAndMenu(){
+          hideVisibleMenues('');
+          hideMask();
+        }
+          
       </script>
+
       <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
       <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 
@@ -132,7 +181,7 @@
 <div id="dialogdiv4" title="el titulo"></div>
 <div id="dialogdiv5" title="el titulo"></div>
 <div id="fullscreen" style="position:absolute; z-index:8"  > <img alt="loading" id="loader" src="<%= Url.Content("~/img/ajax-loader.gif") %>" /></div>
-
+<div id="modal_mask"></div>
   </body>
 
 </html>

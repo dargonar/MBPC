@@ -564,9 +564,16 @@
       $('#Item'+ship).toggle(200,
         function() {
         if($('#Item'+ship).is(":visible"))
+        {  
+          showMask(ship);
           $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-n"});
+          
+        }
         else 
+        {
           $('#select_'+ship).button("option", "icons",{primary: "ui-icon-triangle-1-s"});
+          hideMask();
+        }
         });
 
     }
