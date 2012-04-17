@@ -584,7 +584,7 @@ public static class DaoLib
     return doCall("mbpc.crear_viaje", parameters);
   }
 
-  public static List<object> editar_viaje(string viaje, string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
+  /*public static List<object> editar_viaje(string viaje, string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
   {
     var parameters = new OracleParameter[]
     { 
@@ -592,6 +592,25 @@ public static class DaoLib
         new OracleParameter("vBuque", OracleDbType.Varchar2, buque, System.Data.ParameterDirection.Input),
         new OracleParameter("vOrigen", OracleDbType.Varchar2, origen, System.Data.ParameterDirection.Input),
         new OracleParameter("vDestino", OracleDbType.Varchar2, destino, System.Data.ParameterDirection.Input),
+        new OracleParameter("vInicio", OracleDbType.Varchar2, inicio, System.Data.ParameterDirection.Input),
+        new OracleParameter("vEta", OracleDbType.Varchar2, eta, System.Data.ParameterDirection.Input),
+        new OracleParameter("vZoe", OracleDbType.Varchar2, zoe, System.Data.ParameterDirection.Input),
+        new OracleParameter("vZona", OracleDbType.Varchar2, zona, System.Data.ParameterDirection.Input),
+        new OracleParameter("vProx", OracleDbType.Varchar2, proximo_punto, System.Data.ParameterDirection.Input),
+        new OracleParameter("vInternacional", OracleDbType.Varchar2, decimal.Parse(intl), System.Data.ParameterDirection.Input),
+        new OracleParameter("vLat", OracleDbType.Decimal, lat, System.Data.ParameterDirection.Input),
+        new OracleParameter("vLon", OracleDbType.Decimal, lon, System.Data.ParameterDirection.Input),
+        new OracleParameter("vRiocanal", OracleDbType.Varchar2, riocanal, System.Data.ParameterDirection.Input)       
+    };
+
+    return doCall("mbpc.editar_viaje", parameters);
+  }*/
+  public static List<object> editar_viaje(string viaje, string buque, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
+  {
+    var parameters = new OracleParameter[]
+    { 
+        new OracleParameter("vViaje", OracleDbType.Varchar2, viaje, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBuque", OracleDbType.Varchar2, buque, System.Data.ParameterDirection.Input),
         new OracleParameter("vInicio", OracleDbType.Varchar2, inicio, System.Data.ParameterDirection.Input),
         new OracleParameter("vEta", OracleDbType.Varchar2, eta, System.Data.ParameterDirection.Input),
         new OracleParameter("vZoe", OracleDbType.Varchar2, zoe, System.Data.ParameterDirection.Input),
@@ -693,7 +712,7 @@ public static class DaoLib
     return doCall("mbpc.modificar_pbip", parameters);
   }
 
-  public static List<object> editar_etapa(string etapa, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
+  public static List<object> editar_etapa(string etapa, string origen, string destino, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
   {
     decimal d_velocidad = Hlp.toDecimal(velocidad);
     decimal d_rumbo = Hlp.toDecimal(rumbo);
@@ -701,6 +720,8 @@ public static class DaoLib
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa, System.Data.ParameterDirection.Input),
+        new OracleParameter("vOrigen", OracleDbType.Varchar2, origen, System.Data.ParameterDirection.Input),
+        new OracleParameter("vDestino", OracleDbType.Varchar2, destino, System.Data.ParameterDirection.Input),
         new OracleParameter("vCaladoProa", OracleDbType.Varchar2, calado_proa, System.Data.ParameterDirection.Input),
         new OracleParameter("vCaladoPopa", OracleDbType.Varchar2, calado_popa, System.Data.ParameterDirection.Input),
         new OracleParameter("vCaladoInformado", OracleDbType.Varchar2, calado_informado, System.Data.ParameterDirection.Input),

@@ -8,7 +8,7 @@
 
 
 <div id="editaretapaformcontainer">
-<ul id="tabs" style="float:left">
+<ul id="tabs" style="float:left;height:100%;">
   <li id="botonetapa" style="float:none;" class="megaestiloselectedb"><a href="#" onclick="return mostraretapaform();">Editar etapa</a></li><br />
   <li id="botonviaje" style="float:none;" ><a href="#" onclick="return mostrarviajeform();">Editar Viaje</a></li>
 </ul>
@@ -21,16 +21,6 @@
   <input autocomplete="off" type="text" style="width:200px;float:left;" id="buquetext" readonly="readonly"  value="<%= viaje["NOMBRE"] %>" /><br />
   <input id="buque_id" name="buque_id" type="hidden" value="<%= viaje["ID_BUQUE"] %>"/>
   <input id="internacional" name="internacional" type="hidden" value="<%=  viaje["TIPO"] == "nacional" ? 0 : 1 %>"/>
-
-  <label>Desde</label><br />
-  <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= viaje["ORIGEN"] %>"/>
-  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',2);"/>--> <br />
-  <input id="desde_id" name="desde_id" type="hidden" value="<%= viaje["ORIGEN_ID"] %>"/>
-
-  <label>Hasta</label><br />
-  <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= viaje["DESTINO"] %>" />
-  <input id="hasta_id" name="hasta_id" type="hidden" value="<%= viaje["DESTINO_ID"] %>"/>
-  <!--<input type="button" value="..." onclick="nuevoMuelle('<%=Url.Content("~/Item/nuevoMuelle") %>',3);"/>--> <br />
 
   <label>Fecha de partida</label><br />
   <input autocomplete="off" type="text" id="partidav" name="partida" class="editaretapatext" value="<%= viaje["FECHA_SALIDA_fmt"] %>" /><br />
@@ -73,67 +63,76 @@
   <input type="hidden" id="viaje_id" name="viaje_id" value="<%= ViewData["viaje_id"] %>"/>
   <input type="hidden" id="etapa_id_editaretapa" name="etapa_id" value="<%= etapa["ETAPA_ID"] %>"/>
 
-
-
+  <div class="tabla_content-body-wrapper">
+    <div class="tabla_content-body">
+      <div class="columna">
+        <label>Desde</label><br />
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= viaje["ORIGEN"] %>"/>
+        <input id="desde_id" name="desde_id" type="hidden" value="<%= viaje["ORIGEN_ID"] %>"/>
+      </div>
+      <div class="columna">
+        <label>Hasta</label><br />
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= viaje["DESTINO"] %>" />
+        <input id="hasta_id" name="hasta_id" type="hidden" value="<%= viaje["DESTINO_ID"] %>"/>
+      </div>
+    </div>
+    <div class="tabla_content-body">
+      <div class="columna">    
+        <label>Calado Proa</label><br />
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa" name="calado_proa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa_ft" name="calado_proa_ft"/>&nbsp;ft
+        <br />
+      </div>
+      <div class="columna">
+        <label>Calado Informado</label><br />
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado" name="calado_informado"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado_ft" name="calado_informado_ft"/>&nbsp;ft
+        <br />
+      </div>
+    </div>
+    <div class="tabla_content-body">  
+      <div class="columna">
+        <label>HRP</label><br />
+        <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
+        <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+      </div>
   
-  <div class="columna">
-    <label>Calado Proa</label><br />
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa" name="calado_proa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoproa_ft" name="calado_proa_ft"/>&nbsp;ft
-    <br />
-
-    <label>Calado Informado</label><br />
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado" name="calado_informado"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladoinformado_ft" name="calado_informado_ft"/>&nbsp;ft
-    <br />
-
-    <label>HRP</label><br />
-    <input autocomplete="off" type="text" id="hrpe" name="hrp" class="editaretapatext"  value="<%= etapa["HRP_fmt"] %>" /><br />
-    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
-
-    <!--<label>Fecha de salida</label><br />
-    <input autocomplete="off" type="text" id="fecha_salidae" name="fecha_salida" class="editaretapatext" value="" /><br />
-    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />-->
-
-    <label>Cantidad de tripulantes</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
-    <br />
-  </div>
-
-  <div class="columna">
-    <label>Calado Popa</label><br />
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa" name="calado_popa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
-    <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa_ft" name="calado_popa_ft"/>&nbsp;ft
-    <br />
-
-    <label>ETA a <%= ViewData["punto_control_desc"] %></label><br />
-    <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
-    <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
-    <!--
-    <label>&nbsp;</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" value="" style="opacity:0;" /><br />
-    <label class="desc">&nbsp;</label><br /><br />
-    -->
-    <!--
-    <label>Cantidad de pasajeros</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="pasajerostext" name="cantidad_pasajeros" value="<%= etapa["CANTIDAD_PASAJEROS"] %>"/><br />
-    -->
-
-    <!--
-    <label>Capitan</label><br />
-    <input type="text" class="editaretapatext" id="capitantext" name="capitan" value="<%= etapa["CAPITAN"] %>" autocomplete="off"  /><br />
-    -->
+      <div class="columna">
+        <label>Cantidad de tripulantes</label><br />
+        <input autocomplete="off" type="text" class="editaretapatext" id="tripulantestext" name="cantidad_tripulantes" value="<%= etapa["CANTIDAD_TRIPULANTES"] %>"/><br />
+        <br />
+      </div>
+    </div>
+    <div class="tabla_content-body">
+      <div class="columna">
+        <label>Calado Popa</label><br />
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa" name="calado_popa"/>&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;
+        <input autocomplete="off" style="width:80px" type="text" class="editaretapatext" id="caladopopa_ft" name="calado_popa_ft"/>&nbsp;ft
+      </div>
   
-    <label>Velocidad</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />
-
-    <label>Rumbo</label><br />
-    <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value=""/><br />
-
-
-    <input type="hidden" id="capitanh" name="capitan_id" value="<%= etapa["CAPITAN_ID"] %>" />
-    <div class="latabla" style="position:absolute;z-index:5;width: 250px;"> </div>
+      <div class="columna">
+        <label>ETA a <%= ViewData["punto_control_desc"] %></label><br />
+        <input autocomplete="off" type="text" id="etae" name="eta" class="editaretapatext" value="<%= etapa["ETA_fmt"] %>" /><br />
+        <label class="desc">Formato: dd-mm-aa hh:mm</label><br /><br />
+      </div>
+    </div>
+    <div class="tabla_content-body">
+      <div class="columna">
+        <label>Velocidad</label><br />
+        <input autocomplete="off" type="text" class="editaretapatext" id="velocidad" name="velocidad" value=""/><br />
+      </div>
   
+      <div class="columna">
+        <label>Rumbo</label><br />
+        <input autocomplete="off" type="text" class="editaretapatext" id="rumbo" name="rumbo" value=""/><br />
+      </div>
+    </div>
+    <div class="tabla_content-body">
+      <div class="columna">
+        <input type="hidden" id="capitanh" name="capitan_id" value="<%= etapa["CAPITAN_ID"] %>" />
+        <div class="latabla" style="position:absolute;z-index:5;width: 250px;"> </div>
+      </div>
+    </div>
   </div>
 
   <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa" />
@@ -232,6 +231,19 @@
       }
     }
 
+    if ($("#desdetext").val() == "" || $("#desde_id").val()=="") {
+      alert("Debe seleccionar muelle de origen");
+      $("#desdetext").focus();
+      $('.botonsubmit').removeAttr('disabled');
+      return false;
+    }
+
+    if ($("#hastatext").val() == "" || $("#hasta_id").val()=="") {
+      alert("Debe seleccionar muelle de destino");
+      $("#desdetext").focus();
+      $('.botonsubmit').removeAttr('disabled');
+      return false;
+    }
 
     /*if ($("#fecha_salidae").val() != "") {
       if (isDate($("#fecha_salidae").val())) {
@@ -449,12 +461,7 @@
       $('.botonsubmit').removeAttr('disabled');
       return false;
     }
-    if ($("#desdetext").val() == "") {
-      alert("Debe seleccionar muelle de origen");
-      $("#desdetext").focus();
-      $('.botonsubmit').removeAttr('disabled');
-      return false;
-    }
+    
     if ($("#partidav").val() == "") {
       alert("Debe indicar fecha de partida");
       $("#partidav").focus();
@@ -545,11 +552,6 @@
 
 
 <style type="text/css">
-#editaretapaformcontainer .columna
-{
-    float: left;
-    margin: 5px;
-}
 
 #nuevoViaje
 {

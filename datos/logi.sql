@@ -43,7 +43,7 @@ CREATE OR REPLACE package mbpc as
   procedure todos_los_pdc(usrid in number, vCursor out cur);
   --Viaje
   procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
-  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
+  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
   procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
   procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur);
@@ -71,7 +71,7 @@ CREATE OR REPLACE package mbpc as
   procedure zonas_adyacentes(vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure descripcion_punto_control( vPuntoControlId in varchar2, usrid in number, vCursor out cur);
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
+  procedure editar_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur);
   procedure traer_buque_de_etapa(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure traer_practicos(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
@@ -723,7 +723,7 @@ CREATE OR REPLACE package body mbpc as
   --Edita el viaje, se verifica si el buque seleccionado es internacional,
   --registra el evento (TODO)
 
-  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2,usrid in number, vCursor out cur) is
+  procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2,usrid in number, vCursor out cur) is
   begin
     
     update tbl_viaje SET  
@@ -738,6 +738,7 @@ CREATE OR REPLACE package body mbpc as
       rios_canales_km_id = vRiocanal 
     where id = vViaje;
     
+    /*
     UPDATE (
       SELECT e.puerto_origen, e.puerto_destino
       FROM tbl_viaje v
@@ -745,7 +746,7 @@ CREATE OR REPLACE package body mbpc as
       WHERE e.viaje_id=vViaje
     ) t
     SET t.puerto_origen=vOrigen, t.puerto_destino=vDestino;
-
+    */
     
   end editar_viaje;
 
@@ -1105,27 +1106,43 @@ CREATE OR REPLACE package body mbpc as
   --Edita la informacion etapa
   --Registra el evento
 
-  procedure editar_etapa(vEtapa in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur) is
+  procedure editar_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2, vCaladoProa in varchar2, vCaladoPopa in varchar2, vCaladoInformado in varchar2, vHPR in varchar2, vETA in varchar2, vFechaSalida in varchar2, vCantidadTripulantes in varchar2, vCantidadPasajeros in varchar2, vCapitan in varchar2, vVelocidad in number, vRumbo in number, usrid in number, vCursor out cur) is
   begin
 
       -- CAMBIAR ACA EN PREFECTURA CAST( REPLACE(____,'.',',') AS NUMBER);
       update tbl_etapa SET
-        calado_proa          = CAST( REPLACE(vCaladoProa,'.',',') AS NUMBER),
-        calado_popa          = CAST( REPLACE(vCaladoPopa,'.',',') AS NUMBER),
-        calado_informado     = CAST( REPLACE(vCaladoInformado,'.',',') AS NUMBER),
+        calado_proa          = CAST( REPLACE(vCaladoProa,'.',',') AS NUMBER),       --CAST(vCaladoProa AS NUMBER)
+        calado_popa          = CAST( REPLACE(vCaladoPopa,'.',',') AS NUMBER),       --CAST(vCaladoPopa AS NUMBER)
+        calado_informado     = CAST( REPLACE(vCaladoInformado,'.',',') AS NUMBER),  --CAST(vCaladoInformado AS NUMBER)
         hrp                  = TO_DATE(vHPR, 'DD-MM-yy HH24:mi'),
         eta                  = TO_DATE(vETA, 'DD-MM-yy HH24:mi'),
-        fecha_salida         = TO_DATE(vFechaSalida, 'DD-MM-yy HH24:mi'),
+        --fecha_salida         = TO_DATE(vFechaSalida, 'DD-MM-yy HH24:mi'),
         cantidad_tripulantes = vCantidadTripulantes,
         cantidad_pasajeros = vCantidadPasajeros,
         --practico_id = vPractico,
         capitan_id = vCapitan,
         rumbo = vRumbo,
-        velocidad = vVelocidad
+        velocidad = vVelocidad,
+        puerto_origen = vOrigen, 
+        puerto_destino = vDestino
+        --origen_id        = vOrigen, 
+        --destino_id       = vDestino
       where id = vEtapa;
+      
+      -- update
+      /*
+      UPDATE (
+        SELECT e.puerto_origen, e.puerto_destino
+        FROM tbl_viaje v
+        LEFT JOIN tbl_etapa e ON v.id=e.viaje_id and v.etapa_actual=e.nro_etapa
+        WHERE e.viaje_id=vViaje
+      ) t
+      SET t.puerto_origen=vOrigen, t.puerto_destino=vDestino;
+      */
+      --
       select * into etapa from tbl_etapa where id=vEtapa;
       
-      --nuevo log
+    --nuevo log
       posicion_viaje(etapa.viaje_id);
       insert into tbl_evento ( viaje_id, usuario_id , etapa_id, tipo_id, fecha, rumbo, velocidad, latviaje, lonviaje, ptoviaje ) 
       VALUES ( etapa.viaje_id, usrid, vEtapa , 8, SYSDATE, vRumbo, vVelocidad, viajepos.lat, viajepos.lon, viajepos.pto);

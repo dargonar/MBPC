@@ -774,3 +774,13 @@ min-height:80px;
 
 #list .state_reporte_major_8_red , #list .state_reporte_major_8_red td {background-color:#FF3333;}
 #list .state_reporte_major_6_yellow , #list .state_reporte_major_6_yellow td{background-color:#FFFF33;}
+
+#editaretapaformcontainer .tabla_content-body-wrapper { 
+  display:table;   border-collapse:collapse;   width:450px; } 
+ 
+#editaretapaformcontainer .tabla_content-body { 
+  display:table-row; } 
+ 
+#editaretapaformcontainer .columna{ 
+  display:table-cell;  padding:0px;  width:215px;  margin:0px 5px 0px 5px; float:left;  overflow-y:hidden; overflow-x:hidden;}
+  
