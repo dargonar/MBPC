@@ -465,9 +465,12 @@ CREATE OR REPLACE package body dev_mbpc as
       left join tbl_zonas z on p.zona_id = z.id
       left join rios_canales_km rck on rck.id = p.rios_canales_km_id
       left join rios_canales rc on rck.id_rio_canal = rc.id
-      left join tbl_grupopunto gp on gp.punto=p.id and gp.grupo = vGrupo
+      
       where to_char(e.hrp, 'dd-mm-yyyy')= to_char(sysdate, 'dd-mm-yyyy')
-      order BY e.hrp;
+      AND e.actual_id IN (SELECT punto FROM tbl_grupopunto g WHERE g.grupo = vGrupo)
+
+      order BY v.id, e.hrp;
+
 
   end reporte_diario;
 
@@ -713,7 +716,7 @@ CREATE OR REPLACE package body dev_mbpc as
 
       --nuevo log
       insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, puntodecontrol1_id, puntodecontrol2_id, latviaje, lonviaje, ptoviaje)
-      VALUES ( usrid, temp , temp2 , 1 , tempdate, vZona, vProx, lat, lon, vZona);
+      VALUES ( usrid, temp , temp2 , 1 , TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), vZona, vProx, lat, lon, vZona);
     END;
 
     open vCursor for select * from tbl_etapa where id = temp2;
@@ -1145,7 +1148,7 @@ CREATE OR REPLACE package body dev_mbpc as
     --nuevo log
       posicion_viaje(etapa.viaje_id);
       insert into tbl_evento ( viaje_id, usuario_id , etapa_id, tipo_id, fecha, rumbo, velocidad, latviaje, lonviaje, ptoviaje ) 
-      VALUES ( etapa.viaje_id, usrid, vEtapa , 8, SYSDATE, vRumbo, vVelocidad, viajepos.lat, viajepos.lon, viajepos.pto);
+      VALUES ( etapa.viaje_id, usrid, vEtapa , 8, TO_DATE(vHPR, 'DD-MM-yy HH24:mi'), vRumbo, vVelocidad, viajepos.lat, viajepos.lon, viajepos.pto);
   end editar_etapa;
 
   ---------------------------------------------------------------------------------------------------------------

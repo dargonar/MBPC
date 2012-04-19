@@ -14,7 +14,7 @@ namespace mbpc_wsreport
 {
   public class ReportParam
   {
-    public static string VERSION = "1.2";
+    public static string VERSION = "1.3";
 
     ReportParam()
     {

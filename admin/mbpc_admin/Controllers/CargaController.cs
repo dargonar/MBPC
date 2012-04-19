@@ -109,7 +109,6 @@ namespace mbpc_admin.Controllers
         ViewData["UNIDAD_ID"] = new SelectList(context.TBL_UNIDAD, "ID", "NOMBRE", cargaetapa.UNIDAD_ID.ToString());
 
 
-        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA//QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
         //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
         //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
         //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
@@ -118,15 +117,20 @@ namespace mbpc_admin.Controllers
         var yyy = context.BUQUES_NEW.Where(bz => bz.TIPO_BUQUE.ToUpper().StartsWith("BARCAZA") ||
                           bz.TIPO_SERVICIO.ToUpper().StartsWith("BARCAZA") ||
                           bz.TIPO_BUQUE.ToUpper().StartsWith("BALSA") ||
-                          bz.TIPO_SERVICIO.ToUpper().StartsWith("BALSA")).Select(bz => new { @id = bz.ID_BUQUE.ToString(), @value = bz.NOMBRE + "(" + bz.BANDERA + ")" })
-                          .Concat( new [] { new {@id="",@value=null } } )
-                          
+                          bz.TIPO_SERVICIO.ToUpper().StartsWith("BALSA"))
+                          .Select(bz => new { @id = bz.ID_BUQUE, @value = bz.NOMBRE + " (" + bz.BANDERA + ")" })
                           .ToArray();
 
-        var x = new[] { new SelectListItem { Value = null, Text = "---" } };
-        yyy.Concat(x);
+        
+        //var x = new[] { new { id = "", value = "---" } };
+        //yyy.Concat( new[] { x } );
+        //cargaetapa.b
+        //yyy.Concat(x);
 
-        ViewData["BUQUE_ID"] = new SelectList(yyy, "ID", "NOMBRE", cargaetapa.BUQUE_ID.ToString());
+        var ooo = new SelectList(yyy, "id", "value", cargaetapa.BUQUE_ID == null ? "" : cargaetapa.BUQUE_ID.ToString());
+        var zzz = ooo.Concat(new[] { new SelectListItem { Text = "---", Value = "", Selected=cargaetapa.BUQUE_ID==null?true:false } });
+        ViewData["BUQUE_ID"] = zzz;
+
       }
 
       public ActionResult Create(TBL_CARGAETAPA cargaetapa)
@@ -144,7 +148,7 @@ namespace mbpc_admin.Controllers
           else
           {
             var updatedCargaEtapa = context.TBL_CARGAETAPA.Where(c => c.ID == cargaetapa.ID).SingleOrDefault();
-            updatedCargaEtapa.SimpleCopyFrom(cargaetapa, new string[] { "TIPOCARGA_ID", "CANTIDAD_INICIAL", "CANTIDAD_ENTRADA", "CANTIDAD_SALIDA", "EN_TRANSITO", "UNIDAD_ID" });
+            updatedCargaEtapa.SimpleCopyFrom(cargaetapa, new string[] { "BUQUE_ID", "TIPOCARGA_ID", "CANTIDAD_INICIAL", "CANTIDAD_ENTRADA", "CANTIDAD_SALIDA", "EN_TRANSITO", "UNIDAD_ID" });
             FlashOK("La carga se modifico con exito");
           }
           context.SaveChanges();

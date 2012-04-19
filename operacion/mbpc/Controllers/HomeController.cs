@@ -11,7 +11,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.11";
+      public static string VERSION = "1.3.12";
       
         //
         // GET: /Home/
@@ -166,7 +166,7 @@ namespace mbpc.Controllers
 
         private void obtenerZonas()
         {
-          var tmp = DaoLib.reporte_diario(Session["grupo"] as string);
+          var tmp = DaoLib.reporte_diario(Session["grupo"].ToString());
 
           var reporte_arriba = new Dictionary<string, Dictionary<string,string>>();
           var reporte_abajo  = new Dictionary<string, Dictionary<string, string>>();
