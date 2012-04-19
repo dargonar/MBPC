@@ -10,7 +10,7 @@
         </div>
 
 		<div class="date">
-            FECHA: <label><%= DateTime.Now.ToString("dd/MM/yyyy") %></label>
+            FECHA: <label><%= ViewData["fecha"] %></label>
         </div>
 
         <table>

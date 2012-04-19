@@ -38,7 +38,7 @@ CREATE OR REPLACE package dev_mbpc as
   procedure barcos_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure barcos_entrantes( vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure barcos_salientes( vZonaId in varchar2, usrid in number, vCursor out cur);
-  procedure reporte_diario (vGrupo in varchar2, usrid in number, vCursor out cur);
+  procedure reporte_diario (vGrupo in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur );
   procedure todos_los_pdc(usrid in number, vCursor out cur);
   --Viaje
@@ -450,7 +450,7 @@ CREATE OR REPLACE package body dev_mbpc as
       WHERE e.origen_id = vZonaId and v.estado = 0;
   end barcos_salientes;
 
-  procedure reporte_diario (vGrupo in varchar2, usrid in number, vCursor out cur) is
+  procedure reporte_diario (vGrupo in varchar2, vFecha in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
       select p.id pdc, b.nombre, b.sdist, b.bandera band, origen.puerto fm, destino.puerto tox,
@@ -466,7 +466,7 @@ CREATE OR REPLACE package body dev_mbpc as
       left join rios_canales_km rck on rck.id = p.rios_canales_km_id
       left join rios_canales rc on rck.id_rio_canal = rc.id
       
-      where to_char(e.hrp, 'dd-mm-yyyy')= to_char(sysdate, 'dd-mm-yyyy')
+      where to_char(e.hrp, 'yyyy-mm-dd') = vFecha
       AND e.actual_id IN (SELECT punto FROM tbl_grupopunto g WHERE g.grupo = vGrupo)
 
       order BY v.id, e.hrp;

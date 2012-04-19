@@ -26,8 +26,31 @@
        </div>
        
        <div class="btn-new-class">
-        <a href="<%= Url.Content("~/Home/reporteDiario/") %>" onclick="return reportediario(this);"> Reporte Diario</a>
+        <a id="repdia" href="#"> Reporte Diario</a>
+        <!--<a id="repdia" href="<%= Url.Content("~/Home/reporteDiario/") %>" onclick="return reportediario(this);"> Reporte Diario</a>-->
        </div>
+
+       <script type="text/javascript">
+           $(document).ready(function () {
+               $("<input id='datepi' type='text' />").hide().datepicker({
+                   dateFormat: 'yy-mm-dd',
+                   onSelect: function (dateText, inst) {
+                       $("#datepi").datepicker("hide");
+                       reportediario('<%= Url.Content("~/Home/reporteDiario/") %>' + '?fecha=' + dateText );
+                   }
+               }).appendTo('body');
+
+               $("#repdia").click(function (e) {
+                    $("#datepi").datepicker("show");
+                    $("#datepi").datepicker("widget").position({
+                        my: "left top",
+                        at: "right top",
+                        of: this
+                    });
+                    e.preventDefault();
+               });
+           });
+       </script>
 
        <div class="btn-new-class">
        <a href="<%= Url.Content("~/Viaje/terminados/") %>" onclick="return viajesterminados(this);"> Viajes Terminados</a>

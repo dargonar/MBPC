@@ -11,7 +11,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.12";
+      public static string VERSION = "1.3.13";
       
         //
         // GET: /Home/
@@ -152,21 +152,23 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult reporteDiario()
+        public ActionResult reporteDiario(string fecha)
         {
-          obtenerZonas();
+          ViewData["fecha"] = fecha;
+          obtenerZonas(fecha);
           return View();
         }
 
-        public ActionResult reporteDiarioPrint()
+        public ActionResult reporteDiarioPrint(string fecha)
         {
-          obtenerZonas();
+          ViewData["fecha"] = fecha;
+          obtenerZonas(fecha);
           return View();
         }
 
-        private void obtenerZonas()
+        private void obtenerZonas(string fecha)
         {
-          var tmp = DaoLib.reporte_diario(Session["grupo"].ToString());
+          var tmp = DaoLib.reporte_diario(Session["grupo"].ToString(), fecha);
 
           var reporte_arriba = new Dictionary<string, Dictionary<string,string>>();
           var reporte_abajo  = new Dictionary<string, Dictionary<string, string>>();

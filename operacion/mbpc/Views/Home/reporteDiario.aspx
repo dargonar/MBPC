@@ -5,9 +5,9 @@
     	<div class="title">
             PREFECTURA NAVAL ARGENTINA<br />
         </div>
-        <a id="printver" target="_blank" href="<%= Url.Content("~/Home/reporteDiarioPrint/") %>" style="float:right;margin-right: 17px;position:relative" > Version para imprimir</a>
+        <a id="printver" target="_blank" href="<%= Url.Content("~/Home/reporteDiarioPrint/") %>?fecha=<%= ViewData["fecha"] %>" style="float:right;margin-right: 17px;position:relative" > Version para imprimir</a>
 		<div class="date">
-            FECHA: <label><%= DateTime.Now.ToString("dd/MM/yyyy") %> </label>
+            FECHA: <label><%= ViewData["fecha"] %> </label>
         </div>
 
         <table>

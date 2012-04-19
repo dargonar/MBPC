@@ -409,14 +409,14 @@
 
 
 
-    function reportediario(aelement) {
+    function reportediario(URL) {
 
       $("#fullscreen").css("display", "block");
 
       $.ajax({
         type: "GET",
         cache: false,
-        url: $(aelement).attr("href"),
+        url: URL,
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({

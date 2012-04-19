@@ -346,11 +346,12 @@ public static class DaoLib
     return doCall("mbpc.datos_del_usuario", parameters);
   }
 
-  public static List<object> reporte_diario(string grupo)
+  public static List<object> reporte_diario(string grupo, string fecha)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vGrupo", OracleDbType.Varchar2, grupo, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
     };
 
     return doCall("mbpc.reporte_diario", parameters);
