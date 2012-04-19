@@ -26,9 +26,9 @@ namespace mbpc_admin.Controllers
         public ActionResult ListJSON(string sidx, string sord, int page, int rows)
         {
           var columns = new string[] { 
-            "ID", "PID", "ACTUAL",
-            "NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA",
-            "ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"
+            "ACTUAL", "ID", "NOMBRE", "NRO_OMI", "MATRICULA", 
+            "SDIST", "BANDERA", "ORIGEN", "DESTINO", "FECHA_SALIDA", 
+            "FECHA_LLEGADA", "NOTAS", "ESTADO"
           };
 
           var tmp = JQGrid.Helper.PaginageS1<VW_VIAJES_MARITIMOS>(Request.Params, columns, page, rows, sidx, sord);

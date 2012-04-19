@@ -69,12 +69,12 @@
             </p>
             
             
-            <%//<p> Html.Label("BARCAZA") %>
-            <%// Html.DropDownList("BUQUE_ID") %>
-            <%//</p> Html.ValidationMessageFor(model => model.BUQUE_ID) %>
+            <%=Html.Label("BARCAZA") %>
+            <%=Html.DropDownList("BUQUE_ID") %>
+            <%= Html.ValidationMessageFor(model => model.BUQUE_ID) %>
             
             <input type="hidden" name="alone" value="<%=ViewData["alone"]%>"
-
+            <br />
             <p>
                 <input type="submit" value="<%= ViewData["titulo"] %>" class="btn" />
             </p>

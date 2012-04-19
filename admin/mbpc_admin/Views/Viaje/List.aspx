@@ -17,28 +17,28 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    //"ID", "PID", "ACTUAL",
-    //"NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA"
-    //"ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"
     $(function () {
       var mygrid = $("#list").jqGrid({
         url: '/viaje/ListJSON?dummy=1222&<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%><%}%>',
         datatype: 'json',
         mtype: 'GET',
-        colNames: ["ID", "PID", "ACTUAL", "NOMBRE", "NRO_OMI", "MATRICULA", "BANDERA", "ORIGEN", "DESTINO", "ESTADO", "FECHA_SALIDA", "ETA"],  
+        colNames: ["Actual", "Viaje", "Nombre", "OMI", "Matricula", "Señal Dist.",
+                   "Bandera", "Origen", "Destino", "Fecha Salida", "Fecha Llegada",
+                   "Notas", "Estado"],  
         colModel: [
-      { name: 'ID', index: 'ID', width: 90, hidden: true },
-      { name: 'PID', index: 'PID', width: 80 },
       { name: 'ACTUAL', index: 'ACTUAL', width: 80 },
+      { name: 'ID', index: 'ID', width: 90},
       { name: 'NOMBRE', index: 'NOMBRE', width: 80 },
       { name: 'NRO_OMI', index: 'NRO_OMI', width: 80 },
       { name: 'MATRICULA', index: 'MATRICULA', width: 80 },
+      { name: 'SDIST', index: 'SDIST', width: 80 },
       { name: 'BANDERA', index: 'BANDERA', width: 80 },
       { name: 'ORIGEN', index: 'ORIGEN', width: 80 },
       { name: 'DESTINO', index: 'DESTINO', width: 80 },
-      { name: 'ESTADO', index: 'ESTADO', width: 80 },
       { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 80 },
-      { name: 'ETA', index: 'ETA', width: 80 }
+      { name: 'FECHA_LLEGADA', index: 'FECHA_LLEGADA', width: 80 },
+      { name: 'NOTAS', index: 'NOTAS', width: 80 },
+      { name: 'ESTADO', index: 'ESTADO', width: 80 }
     ],
         pager: '#pager',
         rowNum: 20,

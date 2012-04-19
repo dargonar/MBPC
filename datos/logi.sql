@@ -1,5 +1,5 @@
-PROMPT CREATE OR REPLACE PACKAGE mbpc
-CREATE OR REPLACE package mbpc as
+PROMPT CREATE OR REPLACE PACKAGE dev_mbpc
+CREATE OR REPLACE package dev_mbpc as
   type cur is ref cursor;
   type posdepdc is record (lat number, lon number, uso number, riokm number);
   type viaje_pos_t is record (lat number, lon number, pto number);
@@ -226,8 +226,8 @@ end;
 
 /
 
-PROMPT CREATE OR REPLACE PACKAGE BODY mbpc
-CREATE OR REPLACE package body mbpc as
+PROMPT CREATE OR REPLACE PACKAGE BODY dev_mbpc
+CREATE OR REPLACE package body dev_mbpc as
 
 ---------------------------------------------------------------------------------------------------------------
 -----------------------------------------Login/Home------------------------------------------------------------
@@ -812,7 +812,7 @@ CREATE OR REPLACE package body mbpc as
             ) a
         where 
         a.estado = 1 and 
-        a.actual_id = 255
+        a.actual_id = vZona
         )
       WHERE rnum < 10;
   
@@ -1826,7 +1826,7 @@ CREATE OR REPLACE package body mbpc as
                     order by KM asc,NOMBRE asc';
 
 
-    mbpc.paginator(temp3, 12, 1, sql_stmt);
+    paginator(temp3, 12, 1, sql_stmt);
     open vCursor for sql_stmt;
 
     --open vCursor for sql_stmt USING vQuery, vQuery, vQuery,' ',vQuery, strtemp1, strtemp3, strtemp1, strtemp3, strtemp1, strtemp2, strtemp3;

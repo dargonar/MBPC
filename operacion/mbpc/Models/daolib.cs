@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using System.Collections.Generic;
 using Oracle.DataAccess.Client;
@@ -1616,6 +1617,9 @@ public static class DaoLib
 
   private static List<object> doCall2(string functionName, OracleParameter[] parameters, int arraybindcount)
   {
+    if (System.Configuration.ConfigurationManager.AppSettings["dev_server"] == "true")
+      functionName = "dev_" + functionName;
+
     var profiler = MiniProfiler.Current;
     using(profiler.Step(string.Format("SQL2:{0}", functionName)))
     {
@@ -1685,6 +1689,9 @@ public static class DaoLib
 
   private static List<object> doCall(string functionName, OracleParameter[] parameters, MiniProfiler p)
   {
+    if (System.Configuration.ConfigurationManager.AppSettings["dev_server"] == "true")
+      functionName = "dev_" + functionName;
+
     var profiler = p != null ? p : MiniProfiler.Current;
     using (profiler.Step(string.Format("SQL:{0}",functionName)))
     {

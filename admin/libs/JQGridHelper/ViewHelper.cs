@@ -57,7 +57,7 @@ namespace JQGridHelper
       }
       
       sb.AppendLine("}");
-      sb.AppendLine(string.Format("return \"{0}\";", en ? "Unknown" : "Desconocido"));
+      sb.AppendLine(string.Format("return \"{0}\";", en ? "--" : "--"));
       sb.AppendLine("}");
 
       sb.AppendLine(string.Format("\n var {0}_edit = '{1}';",name, dplist.Substring(0, dplist.Length-1)));

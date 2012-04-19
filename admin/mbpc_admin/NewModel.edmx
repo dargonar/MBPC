@@ -142,30 +142,32 @@
       FROM "MBPC"."VW_PERS_DESTI" "VW_PERS_DESTI"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VW_VIAJES_MARITIMOS" EntityType="Model.Store.VW_VIAJES_MARITIMOS" store:Type="Views" store:Schema="MBPC" store:Name="VW_VIAJES_MARITIMOS">
-            <DefiningQuery>SELECT 
-      "VW_VIAJES_MARITIMOS"."PID" AS "PID", 
-      "VW_VIAJES_MARITIMOS"."ACTUAL" AS "ACTUAL", 
-      "VW_VIAJES_MARITIMOS"."ID" AS "ID", 
-      "VW_VIAJES_MARITIMOS"."ETAPA" AS "ETAPA", 
-      "VW_VIAJES_MARITIMOS"."PROXDEST" AS "PROXDEST", 
-      "VW_VIAJES_MARITIMOS"."ID_BUQUE" AS "ID_BUQUE", 
-      "VW_VIAJES_MARITIMOS"."NOMBRE" AS "NOMBRE", 
-      "VW_VIAJES_MARITIMOS"."NRO_OMI" AS "NRO_OMI", 
-      "VW_VIAJES_MARITIMOS"."MATRICULA" AS "MATRICULA", 
-      "VW_VIAJES_MARITIMOS"."SDIST" AS "SDIST", 
-      "VW_VIAJES_MARITIMOS"."BANDERA" AS "BANDERA", 
-      "VW_VIAJES_MARITIMOS"."LATITUD" AS "LATITUD", 
-      "VW_VIAJES_MARITIMOS"."LONGITUD" AS "LONGITUD", 
-      "VW_VIAJES_MARITIMOS"."ORIGEN" AS "ORIGEN", 
-      "VW_VIAJES_MARITIMOS"."DESTINO" AS "DESTINO", 
-      "VW_VIAJES_MARITIMOS"."ESTADO" AS "ESTADO", 
-      "VW_VIAJES_MARITIMOS"."ULTIMO" AS "ULTIMO", 
-      "VW_VIAJES_MARITIMOS"."COSTERA" AS "COSTERA", 
-      "VW_VIAJES_MARITIMOS"."FECHA_SALIDA" AS "FECHA_SALIDA", 
-      "VW_VIAJES_MARITIMOS"."ETA" AS "ETA", 
-      "VW_VIAJES_MARITIMOS"."NOTAS" AS "NOTAS", 
-      "VW_VIAJES_MARITIMOS"."VESTADO" AS "VESTADO"
-      FROM "MBPC"."VW_VIAJES_MARITIMOS" "VW_VIAJES_MARITIMOS"</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              "VW_VIAJES_MARITIMOS"."PID" AS "PID",
+              "VW_VIAJES_MARITIMOS"."ACTUAL" AS "ACTUAL",
+              "VW_VIAJES_MARITIMOS"."ID" AS "ID",
+              "VW_VIAJES_MARITIMOS"."ETAPA" AS "ETAPA",
+              "VW_VIAJES_MARITIMOS"."PROXDEST" AS "PROXDEST",
+              "VW_VIAJES_MARITIMOS"."ID_BUQUE" AS "ID_BUQUE",
+              "VW_VIAJES_MARITIMOS"."NOMBRE" AS "NOMBRE",
+              "VW_VIAJES_MARITIMOS"."NRO_OMI" AS "NRO_OMI",
+              "VW_VIAJES_MARITIMOS"."MATRICULA" AS "MATRICULA",
+              "VW_VIAJES_MARITIMOS"."SDIST" AS "SDIST",
+              "VW_VIAJES_MARITIMOS"."BANDERA" AS "BANDERA",
+              "VW_VIAJES_MARITIMOS"."LATITUD" AS "LATITUD",
+              "VW_VIAJES_MARITIMOS"."LONGITUD" AS "LONGITUD",
+              "VW_VIAJES_MARITIMOS"."ORIGEN" AS "ORIGEN",
+              "VW_VIAJES_MARITIMOS"."DESTINO" AS "DESTINO",
+              "VW_VIAJES_MARITIMOS"."ESTADO" AS "ESTADO",
+              "VW_VIAJES_MARITIMOS"."ULTIMO" AS "ULTIMO",
+              "VW_VIAJES_MARITIMOS"."COSTERA" AS "COSTERA",
+              "VW_VIAJES_MARITIMOS"."FECHA_SALIDA" AS "FECHA_SALIDA",
+              "VW_VIAJES_MARITIMOS"."FECHA_LLEGADA" AS "FECHA_LLEGADA",
+              "VW_VIAJES_MARITIMOS"."ETA" AS "ETA",
+              "VW_VIAJES_MARITIMOS"."NOTAS" AS "NOTAS",
+              "VW_VIAJES_MARITIMOS"."VESTADO" AS "VESTADO"
+              FROM "MBPC"."VW_VIAJES_MARITIMOS" "VW_VIAJES_MARITIMOS"</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_PUNTODECONTROL1" Association="Model.Store.FK_PUNTODECONTROL1">
             <End Role="TBL_PUNTODECONTROL" EntitySet="TBL_PUNTODECONTROL" />
@@ -908,6 +910,7 @@
           <Property Name="ULTIMO" Type="number" />
           <Property Name="COSTERA" Type="varchar2" MaxLength="4" />
           <Property Name="FECHA_SALIDA" Type="date" />
+          <Property Name="FECHA_LLEGADA" Type="date" />
           <Property Name="ETA" Type="date" />
           <Property Name="NOTAS" Type="varchar2" MaxLength="2048" />
           <Property Name="VESTADO" Type="number" />
@@ -2054,6 +2057,7 @@
           <Property Name="COSTERA" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
           <Property Type="String" Name="ACTUAL" MaxLength="152" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="FECHA_SALIDA" />
+          <Property Type="DateTime" Name="FECHA_LLEGADA" />
           <Property Type="DateTime" Name="ETA" />
           <Property Type="String" Name="NOTAS" MaxLength="2048" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="VESTADO" Precision="38" Scale="0" />
@@ -2880,6 +2884,7 @@
                 <ScalarProperty Name="NOTAS" ColumnName="NOTAS" />
                 <ScalarProperty Name="ETA" ColumnName="ETA" />
                 <ScalarProperty Name="FECHA_SALIDA" ColumnName="FECHA_SALIDA" />
+                <ScalarProperty Name="FECHA_LLEGADA" ColumnName="FECHA_LLEGADA" />
                 <ScalarProperty Name="ACTUAL" ColumnName="ACTUAL" />
                 <ScalarProperty Name="PID" ColumnName="PID" />
             <ScalarProperty Name="ID" ColumnName="ID" />

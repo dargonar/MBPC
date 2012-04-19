@@ -13721,6 +13721,30 @@ namespace mbpc_admin
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FECHA_LLEGADA
+        {
+            get
+            {
+                return _FECHA_LLEGADA;
+            }
+            set
+            {
+                OnFECHA_LLEGADAChanging(value);
+                ReportPropertyChanging("FECHA_LLEGADA");
+                _FECHA_LLEGADA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FECHA_LLEGADA");
+                OnFECHA_LLEGADAChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FECHA_LLEGADA;
+        partial void OnFECHA_LLEGADAChanging(Nullable<global::System.DateTime> value);
+        partial void OnFECHA_LLEGADAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> ETA
         {
             get

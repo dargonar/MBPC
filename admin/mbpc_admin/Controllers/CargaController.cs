@@ -12,8 +12,7 @@ namespace mbpc_admin.Controllers
     {
       public ActionResult List(string id)
       {
-        ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
-        ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
+        CreateCombos();
 
         var decid = decimal.Parse(id);
         var etapa_temp = (from d in context.TBL_ETAPA where d.ID == decid select d).ToArray();
@@ -27,6 +26,28 @@ namespace mbpc_admin.Controllers
         return View();
       }
 
+      private void CreateCombos()
+      {
+        ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
+        ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
+        
+        //var xxx = context.TBL_TIPO_CARGA.OrderBy(tc => tc.CODIGO).Select( c => new { @NOMBRE = "(" + c.CODIGO + ") " + c.NOMBRE, @ID = c.ID } );
+
+        ViewData["barcazas"] = context.BUQUES_NEW.Where(bz => bz.TIPO_BUQUE.ToUpper().StartsWith("BARCAZA") ||
+                                  bz.TIPO_SERVICIO.ToUpper().StartsWith("BARCAZA") ||
+                                  bz.TIPO_BUQUE.ToUpper().StartsWith("BALSA") ||
+                                  bz.TIPO_SERVICIO.ToUpper().StartsWith("BALSA") ).Select( bz => new {@id=bz.ID_BUQUE, @value=bz.NOMBRE + "(" + bz.BANDERA +")"}).ToArray();
+
+           //     where ( UPPER(b.TIPO_BUQUE) like 'BARCAZA%' 
+           //or UPPER(b.TIPO_BUQUE) like 'BALSA%' 
+           //or UPPER(b.TIPO_SERVICIO) like 'BARCAZA%' 
+           //or UPPER(TIPO_SERVICIO) like 'BALSA%' )
+
+
+        //context.BUQUES_NEW.Select( bz => bz.ID_BUQUE, 
+        //ViewData["barcazas"] = (from bz in context.BUQUES_NEW select new { id=bz.ID_BUQUE, value=bz.NOMBRE 
+      }
+
 
       public ActionResult Remove(int id)
       {
@@ -38,9 +59,9 @@ namespace mbpc_admin.Controllers
           eid = contract.ETAPA_ID;
           context.TBL_CARGAETAPA.DeleteObject(contract);
           context.SaveChanges();
-          ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
-          ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
 
+
+          CreateCombos();
           return RedirectToAction("List", new { @alone = ViewData["alone"], @id = contract.ETAPA_ID });
         }
         catch (Exception ex)
@@ -48,9 +69,7 @@ namespace mbpc_admin.Controllers
           FlashError("No se pudo eliminar la carga, intente nuevamente");
         }
 
-        ViewData["tipodecargas"] = (from c in context.TBL_TIPO_CARGA select new { id = c.ID, value = c.NOMBRE.Replace("\"", " ") }).ToArray();
-        ViewData["unidades"] = (from d in context.TBL_UNIDAD select new { id = d.ID, value = d.NOMBRE }).ToArray();
-
+        CreateCombos();
 
         return RedirectToAction("List", new { @id = eid });
       }
@@ -88,6 +107,26 @@ namespace mbpc_admin.Controllers
         ViewData["TIPOCARGA_ID_SELECTED"] = cargaetapa.TIPOCARGA_ID.ToString();
 
         ViewData["UNIDAD_ID"] = new SelectList(context.TBL_UNIDAD, "ID", "NOMBRE", cargaetapa.UNIDAD_ID.ToString());
+
+
+        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA//QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
+        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
+        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
+        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
+        //QUERIA PONER UN ITEM MAS PARA SELECCIONAR DEFAULT NO BARCAZAAA
+
+        var yyy = context.BUQUES_NEW.Where(bz => bz.TIPO_BUQUE.ToUpper().StartsWith("BARCAZA") ||
+                          bz.TIPO_SERVICIO.ToUpper().StartsWith("BARCAZA") ||
+                          bz.TIPO_BUQUE.ToUpper().StartsWith("BALSA") ||
+                          bz.TIPO_SERVICIO.ToUpper().StartsWith("BALSA")).Select(bz => new { @id = bz.ID_BUQUE.ToString(), @value = bz.NOMBRE + "(" + bz.BANDERA + ")" })
+                          .Concat( new [] { new {@id="",@value=null } } )
+                          
+                          .ToArray();
+
+        var x = new[] { new SelectListItem { Value = null, Text = "---" } };
+        yyy.Concat(x);
+
+        ViewData["BUQUE_ID"] = new SelectList(yyy, "ID", "NOMBRE", cargaetapa.BUQUE_ID.ToString());
       }
 
       public ActionResult Create(TBL_CARGAETAPA cargaetapa)

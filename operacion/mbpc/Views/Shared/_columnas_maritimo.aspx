@@ -53,6 +53,7 @@
 <script type="text/javascript">
   var redRows = [];
   var yellowRows = [];
+  var greenRows = [];
   function myformatter ( totaldelay, options, rowObject )
   {
     newval = 'n/a';
@@ -63,13 +64,17 @@
     }
 
     var d;
-    //alert(options.rowId);
-    if(totaldelay>(8*60))
+    
+    if(Math.floor(totaldelay/3600) > 8)
     {
+      //alert(totaldelay/3600);
       redRows.push(options.rowId);
     }
-    else if(totaldelay>(6*60)){
+    else if(Math.floor(totaldelay/3600) > 6){
       yellowRows.push(options.rowId);
+    }
+    else {
+      greenRows.push(options.rowId);
     }
     
     if(d=Math.floor(totaldelay/86400))
@@ -149,7 +154,13 @@
       caption: 'Viajes',
       search: true,
       gridComplete: initGrid,
-      hoverrows: false
+      hoverrows: false,
+      beforeRequest: function() {
+          //alert('limpio');
+          redRows = [];
+          yellowRows = [];
+          greenRows = [];        
+      }
     });
 
     mygrid.filterToolbar({
@@ -226,10 +237,27 @@ function initGrid() {
   });
 
   for (var i = 0; i < yellowRows.length; i++) {
-    jQuery("#"+ yellowRows[i]).removeClass('ui-widget-content').addClass('state_reporte_major_6_yellow');
+    $("#"+ yellowRows[i])
+        .removeClass('state_reporte_major_8_red')
+        .removeClass('state_reporte_major_6_yellow')
+        .removeClass('state_reporte_major_6_green')
+        .addClass('state_reporte_major_6_yellow');
   }
+  
   for (var i = 0; i < redRows.length; i++) {
-    jQuery("#"+ redRows[i]).removeClass('ui-widget-content').addClass('state_reporte_major_8_red');
+    $("#"+ redRows[i])
+        .removeClass('state_reporte_major_8_red')
+        .removeClass('state_reporte_major_6_yellow')
+        .removeClass('state_reporte_major_6_green')
+        .addClass('state_reporte_major_8_red');
+  }
+
+  for (var i = 0; i < greenRows.length; i++) {
+    $("#"+ greenRows[i])
+        .removeClass('state_reporte_major_8_red')
+        .removeClass('state_reporte_major_6_yellow')
+        .removeClass('state_reporte_major_6_green');
+        //.addClass('state_reporte_major_8_green');
   }
 }
 

@@ -42,7 +42,7 @@
       { name: 'NRO_ETAPA', index: 'NRO_ETAPA', width: 90 },
       { name: 'ORIGEN_ID', index: 'ORIGEN_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit}},
       { name: 'ACTUAL_ID', index: 'ACTUAL_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit} },
-	    { name: 'DESTINO_ID', index: 'DESTINO_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit} },
+	  { name: 'DESTINO_ID', index: 'DESTINO_ID', width: 80, formatter: pdcs, stype: 'select', editoptions: { value: pdcs_edit} },
       { name: 'HRP', index: 'HRP', width: 80,
 	      searchoptions: {
 	        dataInit: function (el) {
@@ -54,7 +54,7 @@
 	        }
 	      }
 	    },
-      { name: 'ETA', index: 'ETA', width: 80,
+      { name: 'ETA', hidden: true, index: 'ETA', width: 80, 
 	      searchoptions: {
 	        dataInit: function (el) {
 	          $(el).daterangepicker({
@@ -87,7 +87,7 @@
 	        }
 	      }
 	    },
-      { name: 'CREATED_AT', index: 'CREATED_AT', width: 80 }
+      { name: 'CREATED_AT', hidden: true, index: 'CREATED_AT', width: 80 }
     ],
         pager: '#pager',
         rowNum: 20,

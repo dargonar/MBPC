@@ -64,7 +64,7 @@ namespace JQGrid
     {
       if ( o != null && (o.GetType() == typeof(DateTime) || o.GetType() == typeof(Nullable<DateTime>)))
       {
-        return string.Format("{0:yyyy-MM-dd}", o);
+        return string.Format("{0:yyyy-MM-dd HH:MM}", o);
       }
 
       if (o != null && (o.GetType() == typeof(Boolean) || o.GetType() == typeof(Nullable<Boolean>)))
