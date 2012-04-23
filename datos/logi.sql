@@ -77,6 +77,8 @@ CREATE OR REPLACE package dev_mbpc as
   procedure agregar_practico(vEtapa in varchar2, vPractico in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure activar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure bajar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
+  procedure traer_etapa_viaje(vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur);
   --Cargas
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
   procedure descargar_barcaza_batch(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number);
@@ -1087,11 +1089,18 @@ CREATE OR REPLACE package body dev_mbpc as
   procedure traer_etapa(vViaje in varchar2, usrid in number, vCursor out cur) is
   begin
     open vCursor for
-    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id destino_id, e.calado_proa, e.calado_popa, e.calado_maximo, e.calado_informado, e.hrp, e.eta, e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad
+    select v.id viaje_id, e.id etapa_id, e.nro_etapa, e.origen_id, e.actual_id, e.destino_id destino_id, e.calado_proa, e.calado_popa, e.calado_maximo, e.calado_informado, e.hrp, e.eta, 
+      e.fecha_salida, e.fecha_llegada, e.cantidad_tripulantes, e.cantidad_pasajeros,  c.nombre capitan, c.id capitan_id, e.rumbo, e.velocidad, m.puerto origen, u.puerto destino 
     from tbl_viaje v
     left join tbl_etapa e on (v.id = e.viaje_id and e.nro_etapa = v.etapa_actual)
     left join tbl_capitan c on (e.capitan_id = c.id)
+    left join tbl_kstm_puertos m on e.puerto_origen = m.cod
+    left join tbl_kstm_puertos u on e.puerto_destino = u.cod
     WHERE v.id = vViaje;
+    
+    
+        
+    
   end traer_etapa;
 
   ---------------------------------------------------------------------------------------------------------------
@@ -1242,6 +1251,26 @@ CREATE OR REPLACE package body dev_mbpc as
 
   end bajar_practico;
 
+  procedure traer_etapa_viaje(vEtapa in varchar2, usrid in number, vCursor out cur)is
+  begin
+    open vCursor for
+      SELECT DISTINCT id, nro_etapa, viaje_id, origen_id, actual_id, destino_id, hrp, eta, fecha_salida, fecha_llegada, cantidad_tripulantes, cantidad_pasajeros, capitan_id,
+        calado_proa, calado_popa, calado_maximo, calado_informado, km, created_at, acompanante_id, sentido, velocidad, rumbo, created_by, acompanante2_id, acompanante3_id,
+        acompanante4_id, puerto_origen, puerto_destino , u.destino, m.puerto origen_desc, u.puerto destino_desc
+      from
+        tbl_etapa 
+        LEFT JOIN vw_int_usuarios u on created_by=u.ndoc
+        left join tbl_kstm_puertos m on puerto_origen = m.cod
+        left join tbl_kstm_puertos u on puerto_destino = u.cod
+      where id = vEtapa;
+  end traer_etapa_viaje;
+  
+  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur)is
+  begin
+    update tbl_etapa set puerto_destino = vDestino, puerto_origen = vOrigen
+    where id = vEtapa;
+    
+  end modificar_extremos_etapa;
   ---------------------------------------------------------------------------------------------------------------
   ---------------------------------------------Cargas------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------

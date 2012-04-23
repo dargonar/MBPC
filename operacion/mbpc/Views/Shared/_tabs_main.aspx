@@ -16,10 +16,13 @@
 
        <% } %>
 
-<div class="btn-new-class" style="margin-left:10px;">
+       <div class="btn-new-class" style="margin-left:10px;">
         <a id="a1" href="<%= Url.Content("~/Reporte/Index/") %>" target="_blank" class="agregarreportelink"> Reportes</a>
        </div>
 
+       <div class="btn-new-class" style="margin-left:10px;">
+        <a id="a3" href="<%= Url.Content("~/ViajeCerrado/Index/") %>" target="_blank" class="agregarreportelink"> Viajes</a>
+       </div>
 
        <div class="btn-new-class" style="margin-left:10px;">
         <a id="a2" href="<%= Url.Content("~/PBIP/Index/") %>" target="_blank" class="agregarreportelink"> PBIP</a>

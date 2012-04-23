@@ -146,7 +146,7 @@
   <body>
     <div style="height:100%;width:100%;">
       <div id="header">
-
+        <a style="position:fixed;height:40px;width:160px;" href="<%= Url.Content("~/") %>" title="Inicio">&nbsp;</a>
         <div class="user">
           <img style="display:none" id="chkver" src="../../img/ajax-loader2.gif"/>
           <label><strong> <%= datos_del_usuario["APELLIDO"].Replace('*',' ') + ", " + datos_del_usuario["NOMBRES"] %></strong></label>

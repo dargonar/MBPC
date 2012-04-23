@@ -87,6 +87,7 @@
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PBIPController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\ViajeCerradoController.cs" />
     <Compile Include="Controllers\ViajeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -174,6 +175,7 @@
     <Content Include="Views\Shared\_tablareporte.aspx" />
     <Content Include="Views\Carga\barcoenzona.aspx" />
     <Content Include="Views\Shared\_tabs_main.aspx" />
+    <Content Include="Views\ViajeCerrado\Index.aspx" />
     <Content Include="Views\Viaje\agregarReporte.aspx" />
     <Content Include="Views\Home\detallesTecnicos.aspx" />
     <Content Include="Views\Home\Index.aspx" />
