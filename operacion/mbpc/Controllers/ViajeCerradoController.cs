@@ -72,7 +72,7 @@ namespace mbpc.Controllers
           if (msg == "ADD")
             message = "Etapa creada satisfactoriamente!";*/
           if (msg == "MOD")
-            message = "Etapa modificada satisfactoriamente!";
+            message = "La etapa fue modificada satisfactoriamente.";
           if (msg == "COST")
             message = "No se puede borrar un PBIP creado por otra costera.";
 

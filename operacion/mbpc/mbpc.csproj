@@ -175,7 +175,10 @@
     <Content Include="Views\Shared\_tablareporte.aspx" />
     <Content Include="Views\Carga\barcoenzona.aspx" />
     <Content Include="Views\Shared\_tabs_main.aspx" />
+    <Content Include="Views\ViajeCerrado\editarEtapa.aspx" />
     <Content Include="Views\ViajeCerrado\Index.aspx" />
+    <Content Include="Views\ViajeCerrado\lista.aspx" />
+    <Content Include="Views\ViajeCerrado\lista_etapas.aspx" />
     <Content Include="Views\Viaje\agregarReporte.aspx" />
     <Content Include="Views\Home\detallesTecnicos.aspx" />
     <Content Include="Views\Home\Index.aspx" />

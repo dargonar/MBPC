@@ -26,7 +26,9 @@
    { %>
     <div class="msg_info msg_<%=ViewData["result_type"]%>"><%=ViewData["result_message"]%></div>
     
-<% } %>
+<% } else{%>
+    <div class="msg_info msg_success" style="display:none;">La etapa fue modificada satisfactoriamente.</div>
+<% }%>
 
 <table id="list"></table> 
 <div id="pager"></div>
@@ -83,8 +85,8 @@
         "ID", "VIAJE ID", "NRO ETAPA", "ORIGEN", "DESTINO", "HRP", "ETA", "FECHA SALIDA", "FECHA LLEGADA"
       ],
       colModel: [
+          { name: 'ID',      index:'ID', width: 50 /*, hidden: true*/ },
           { name: 'VIAJE_ID', index: 'VIAJE_ID', width: 0, hidden: true },
-          { name: 'ID',      index:'ID', width: 0, hidden: true },
           { name: 'NRO_ETAPA',  index:'NRO_ETAPA', width: 90},
           { name: 'ORIGEN_DESC',   index:'ORIGEN_DESC', width: 90},
           { name: 'DESTINO_ID',   index:'DESTINO_DESC', width: 90},

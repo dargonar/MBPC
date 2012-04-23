@@ -91,9 +91,16 @@
           url: $(this).attr('action'),
           data: $(this).serialize(),
           success: (function (data) {
-            alert('antes de reload lista');
             $('#list').trigger('reloadGrid');
             $('#dialogdiv').dialog('close');
+            $('div.msg_info.msg_success').show();
+            setTimeout(function () {
+              $('div.msg_info.msg_success').fadeOut('slow', function () {
+                $('div.msg_info.msg_success').hide();
+              });
+              
+            }, 5000);
+
           }),
           error: (function (data) {
             var titletag = /<title\b[^>]*>.*?<\/title>/
