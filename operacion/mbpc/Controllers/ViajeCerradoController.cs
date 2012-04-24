@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using System.Configuration;
 using System.Globalization;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
@@ -161,16 +162,21 @@ namespace mbpc.Controllers
 
       private Dictionary<string, string> isValidEdition(int etapa_id)
       {
+
+        string[] power_users = ConfigurationManager.AppSettings["power_users"].Split(',');
+
         var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
         var destino = (datos[0] as Dictionary<string, string>)["DESTINO"];
 
         var etapa = DaoLib.traer_etapa_viaje(etapa_id) as Dictionary<string, string>;
 
-        if (etapa["DESTINO"] != destino) // puerto_destino
+        bool skip_validation = power_users.Contains(Session["usuario"].ToString());
+
+        if (etapa["DESTINO"] == destino || skip_validation) 
         {
-          return null;//throw new Exception("No puede editar un PBIP creado por otra costera.");
+          return etapa; 
         }
-        return etapa;
+        return null; //throw new Exception("No puede editar un PBIP creado por otra costera.");
       }
     }
 }
