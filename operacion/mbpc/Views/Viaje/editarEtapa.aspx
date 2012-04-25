@@ -67,13 +67,13 @@
     <div class="tabla_content-body">
       <div class="columna">
         <label>Desde</label><br />
-        <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= viaje["ORIGEN"] %>"/>
-        <input id="desde_id" name="desde_id" type="hidden" value="<%= viaje["ORIGEN_ID"] %>"/>
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= etapa["ORIGEN"] %>"/>
+        <input id="desde_id" name="desde_id" type="hidden" value="<%= etapa["ORIGEN_ID"] %>"/>
       </div>
       <div class="columna">
         <label>Hasta</label><br />
-        <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= viaje["DESTINO"] %>" />
-        <input id="hasta_id" name="hasta_id" type="hidden" value="<%= viaje["DESTINO_ID"] %>"/>
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= etapa["DESTINO"] %>" />
+        <input id="hasta_id" name="hasta_id" type="hidden" value="<%= etapa["DESTINO_ID"] %>"/>
       </div>
     </div>
     <div class="tabla_content-body">
@@ -274,7 +274,6 @@
           $('#list').trigger( 'reloadGrid' );
         else
           $("#columnas").html(data);
-
         $('#dialogdiv').dialog('close');
       }),
       error: (function (data) {

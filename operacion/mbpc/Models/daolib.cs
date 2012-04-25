@@ -1059,6 +1059,29 @@ public static class DaoLib
     return doCall("mbpc.bajar_practico", parameters);
   }
 
+  public static object traer_etapa_viaje(int etapa_id)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+    };
+
+    return doCall("mbpc.traer_etapa_viaje", parameters)[0];
+  }
+
+  public static List<object> modificar_extremos_etapa(int etapa_id, string origen_id, string destino_id)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vOrigen", OracleDbType.Varchar2, origen_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vDestino", OracleDbType.Varchar2, destino_id, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.modificar_extremos_etapa", parameters);
+  }
+
+
   public static List<object> activar_practico(string practico_id, string etapa_id, string fecha)
   {
     OracleParameter[] parameters = new OracleParameter[] 
