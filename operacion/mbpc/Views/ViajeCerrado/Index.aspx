@@ -34,14 +34,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 <div id="columnas">
-  
-  <% if (ViewData["viajeId"]!=null)
-     { %>
-    <% Html.RenderPartial("lista_etapas"); %>
-  <% }else
-     { %>
     <% Html.RenderPartial("lista"); %>
-  <% } %>
 </div>
 
 <div id="sueltos" style="display: none;">

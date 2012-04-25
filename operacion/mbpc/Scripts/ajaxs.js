@@ -497,35 +497,6 @@
     
     }
 
-    function modificarEtapaPopUp(href, title) {
-      
-      $("#fullscreen").css("display", "block");
-
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: href,
-        success: (function (data) {
-          $('#dialogdiv').html(data);
-          $('#dialogdiv').dialog({
-            height: 210,
-            width: 400,
-            modal: true,
-            title: title/*'Formulario PBIP'*/,
-          });
-          $("#fullscreen").css("display", "none");
-        }),
-        error: (function (data) {
-          $("#fullscreen").css("display", "none");
-          var titletag = /<title\b[^>]*>.*?<\/title>/
-          alert(titletag.exec(data.responseText));
-        })
-      });
-      return false;
-    
-    }
-
-
     function editarnotas(aelement) {
 
       $("#fullscreen").css("display", "block");

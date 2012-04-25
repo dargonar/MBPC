@@ -8,12 +8,15 @@
   <input id="etapa_id" name="etapa_id" type="hidden" value="<%=ViewData["ETAPA_ID"] %>" />
   
   <label>Desde</label><br />
-  <input autocomplete="off" type="text" style="width:350px;float:left;" id="desdetext"  value="<%= etapa["ORIGEN_DESC"] %>"/>
+  <input autocomplete="off" type="text" style="width:350px;float:left;" id="desdetext"  value="<%= etapa["ORIGEN_DESC"] %>"/><br /><br />
   <input id="desde_id" name="desde_id" type="hidden" value="<%= etapa["PUERTO_ORIGEN"] %>"/>
 
   <label>Hasta</label><br />
-  <input autocomplete="off" type="text" style="width:350px;float:left;" id="hastatext"  value="<%= etapa["DESTINO_DESC"] %>" />
+  <input autocomplete="off" type="text" style="width:350px;float:left;" id="hastatext"  value="<%= etapa["DESTINO_DESC"] %>" /><br /><br />
   <input id="hasta_id" name="hasta_id" type="hidden" value="<%= etapa["PUERTO_DESTINO"] %>"/>
+
+  <br />
+  <input type="checkbox" name="en_adelante" >Modificar esta etapa y las siguientes<br /><br /><br />
 
   <input type="submit" class="botonsubmit" style="margin-left: 250px" value="Modificar Etapa" />
 
@@ -63,53 +66,52 @@
         }
       });
 
-
-
-
-
       $("#modificar_etapa").submit(function () {
 
-        $('.botonsubmit').attr('disabled', 'disabled');
+          $('.botonsubmit').attr('disabled', 'disabled');
 
-        if ($("#desdetext").val() == "" || $("#desde_id").val() == "") {
-          alert("Debe seleccionar muelle de origen");
-          $("#desdetext").focus();
-          $('.botonsubmit').removeAttr('disabled');
+          if ($("#desdetext").val() == "" || $("#desde_id").val() == "") {
+              alert("Debe seleccionar muelle de origen");
+              $("#desdetext").focus();
+              $('.botonsubmit').removeAttr('disabled');
+              return false;
+          }
+
+          if ($("#hastatext").val() == "" || $("#hasta_id").val() == "") {
+              alert("Debe seleccionar muelle de destino");
+              $("#hastatext").focus();
+              $('.botonsubmit').removeAttr('disabled');
+              return false;
+          }
+
+          $.ajax({
+              type: "POST",
+              cache: false,
+              url: $(this).attr('action'),
+              data: $(this).serialize(),
+              success: (function (data) {
+                  var grilla = $('#dialogdiv').attr('grilla');
+                  alert(grilla);
+                  $(grilla).trigger('reloadGrid');
+                  $('#dialogdiv').dialog('close');
+
+                  //$('div.msg_info.msg_success').show();
+                  //setTimeout(function () {
+                  //  $('div.msg_info.msg_success').fadeOut('slow', function () {
+                  //    $('div.msg_info.msg_success').hide();
+                  //  });
+                  //  
+                  //}, 5000);
+
+              }),
+              error: (function (data) {
+                  var titletag = /<title\b[^>]*>.*?<\/title>/
+                  alert(titletag.exec(data.responseText));
+                  $('.botonsubmit').removeAttr('disabled');
+              })
+          });
+
+
           return false;
-        }
-
-        if ($("#hastatext").val() == "" || $("#hasta_id").val() == "") {
-          alert("Debe seleccionar muelle de destino");
-          $("#hastatext").focus();
-          $('.botonsubmit').removeAttr('disabled');
-          return false;
-        }
-
-        $.ajax({
-          type: "POST",
-          cache: false,
-          url: $(this).attr('action'),
-          data: $(this).serialize(),
-          success: (function (data) {
-            $('#list').trigger('reloadGrid');
-            $('#dialogdiv').dialog('close');
-            $('div.msg_info.msg_success').show();
-            setTimeout(function () {
-              $('div.msg_info.msg_success').fadeOut('slow', function () {
-                $('div.msg_info.msg_success').hide();
-              });
-              
-            }, 5000);
-
-          }),
-          error: (function (data) {
-            var titletag = /<title\b[^>]*>.*?<\/title>/
-            alert(titletag.exec(data.responseText));
-            $('.botonsubmit').removeAttr('disabled');
-          })
-        });
-
-
-        return false;
       });
 </script>

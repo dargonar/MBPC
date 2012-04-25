@@ -1,8 +1,7 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 <%@ Import Namespace="mbpc.Models" %>
 
-<% List<object> etapalist = ViewData["etapa"] as List<object>; %>
-<% Dictionary<string, string> etapa = etapalist[0] as Dictionary<string, string>; %>
+<% Dictionary<string, string> etapa = ViewData["etapa"] as Dictionary<string, string>; %>
 <% List<object> viajelist = ViewData["viajedata"] as List<object>; %>
 <% Dictionary<string, string> viaje = viajelist[0] as Dictionary<string, string>; %>
 
@@ -61,19 +60,19 @@
 <form id="editarEtapaForm" action="<%= Url.Content("~/Viaje/modificarEtapa") %>" method="post">
 
   <input type="hidden" id="viaje_id" name="viaje_id" value="<%= ViewData["viaje_id"] %>"/>
-  <input type="hidden" id="etapa_id_editaretapa" name="etapa_id" value="<%= etapa["ETAPA_ID"] %>"/>
+  <input type="hidden" id="etapa_id_editaretapa" name="etapa_id" value="<%= etapa["ID"] %>"/>
 
   <div class="tabla_content-body-wrapper">
     <div class="tabla_content-body">
       <div class="columna">
         <label>Desde</label><br />
-        <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= etapa["ORIGEN"] %>"/>
-        <input id="desde_id" name="desde_id" type="hidden" value="<%= etapa["ORIGEN_ID"] %>"/>
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="desdetext"  value="<%= etapa["ORIGEN_DESC"] %>"/>
+        <input id="desde_id" name="desde_id" type="hidden" value="<%= etapa["PUERTO_ORIGEN"] %>"/>
       </div>
       <div class="columna">
         <label>Hasta</label><br />
-        <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= etapa["DESTINO"] %>" />
-        <input id="hasta_id" name="hasta_id" type="hidden" value="<%= etapa["DESTINO_ID"] %>"/>
+        <input autocomplete="off" type="text" style="width:200px;float:left;" id="hastatext"  value="<%= etapa["DESTINO_DESC"] %>" />
+        <input id="hasta_id" name="hasta_id" type="hidden" value="<%= etapa["PUERTO_DESTINO"] %>"/>
       </div>
     </div>
     <div class="tabla_content-body">

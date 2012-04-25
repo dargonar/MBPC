@@ -80,6 +80,7 @@ CREATE OR REPLACE package dev_mbpc as
   procedure bajar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure traer_etapa_viaje(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur);
+  procedure modificar_extremos_etapa_ex(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur);
   --Cargas
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
   procedure descargar_barcaza_batch(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number);
@@ -1272,6 +1273,16 @@ CREATE OR REPLACE package body dev_mbpc as
     where id = vEtapa;
     
   end modificar_extremos_etapa;
+
+  procedure modificar_extremos_etapa_ex(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur)is
+  begin
+    
+    select * into etapa from tbl_etapa where id=vEtapa;
+    
+    update tbl_etapa set puerto_destino = vDestino, puerto_origen = vOrigen
+    where viaje_id=etapa.viaje_id and nro_etapa >= etapa.nro_etapa;
+    
+  end modificar_extremos_etapa_ex;
   ---------------------------------------------------------------------------------------------------------------
   ---------------------------------------------Cargas------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------

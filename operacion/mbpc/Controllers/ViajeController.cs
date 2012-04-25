@@ -274,10 +274,10 @@ namespace mbpc.Controllers
           ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
           ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
 
-          ViewData["etapa"] = DaoLib.traer_etapa(viaje_id);
+          ViewData["etapa"] = DaoLib.traer_etapa_viaje(int.Parse(id2));
           ViewData["viaje_id"] = viaje_id;
 
-          string pto_control_id = ((ViewData["etapa"] as List<object>)[0] as Dictionary<string, string>)["DESTINO_ID"];
+          string pto_control_id = (ViewData["etapa"] as Dictionary<string, string>)["DESTINO_ID"];
           //ViewData["DESTINO_ID"] = pto_control_id; 
 
           if (!String.IsNullOrEmpty(pto_control_id))

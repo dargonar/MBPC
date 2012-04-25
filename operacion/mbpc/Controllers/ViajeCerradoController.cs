@@ -14,9 +14,10 @@ namespace mbpc.Controllers
     public class ViajeCerradoController : MyController
     {
 
-      public ActionResult modificar(/*int etapa_id, int desde_id, int hasta_id*/)
+      public ActionResult modificar(string en_adelante)
       {
         int etapa_id = Convert.ToInt32(Request.Form["etapa_id"]);
+        
         Dictionary<string, string> etapa = isValidEdition(etapa_id);
         if (etapa==null)
         {
@@ -25,14 +26,13 @@ namespace mbpc.Controllers
 
         string desde_id = Request.Form["desde_id"];
         string hasta_id = Request.Form["hasta_id"];
-        List<object> res = DaoLib.modificar_extremos_etapa(etapa_id, desde_id, hasta_id);
+        
+        if( en_adelante == null )
+          DaoLib.modificar_extremos_etapa(etapa_id, desde_id, hasta_id);
+        else
+          DaoLib.modificar_extremos_etapa_ex(etapa_id, desde_id, hasta_id);
 
-        ViewData["result_message"] = "Los cambios se efectuaron satisfactoriamente.";
-        ViewData["result_type"] = "success";
-        //ViewData["etapa"] = etapa;
-        //ViewData["etapa_id"] = id;
-
-        return this.RedirectToAction("Index", "ViajeCerrado", new { msg = "MOD" });
+        return Content("ok");
       }
 
       public ActionResult editarEtapa(string id)
@@ -100,9 +100,6 @@ namespace mbpc.Controllers
           {"ID","i"},
           { "VIAJE_ID","i"},
           { "NRO_ETAPA","i"},
-          /*{ "ORIGEN_ID","i"},
-          { "ACTUAL_ID","i"},
-          { "DESTINO_ID","i"},*/
           { "ORIGEN_DESC","s"},
           { "DESTINO_DESC","s"},
           { "HRP","d"},
@@ -162,21 +159,21 @@ namespace mbpc.Controllers
 
       private Dictionary<string, string> isValidEdition(int etapa_id)
       {
+        var etapa = DaoLib.traer_etapa_viaje(etapa_id) as Dictionary<string, string>;
 
+        //Super user?
         string[] power_users = ConfigurationManager.AppSettings["power_users"].Split(',');
+        if (power_users.Contains(Session["usuario"].ToString()))
+          return etapa;
 
+        //CERATED_BY de la etapa es de un usuario con el mismo destino mio?
         var datos = DaoLib.datos_del_usuario(Session["usuario"].ToString());
         var destino = (datos[0] as Dictionary<string, string>)["DESTINO"];
 
-        var etapa = DaoLib.traer_etapa_viaje(etapa_id) as Dictionary<string, string>;
-
-        bool skip_validation = power_users.Contains(Session["usuario"].ToString());
-
-        if (etapa["DESTINO"] == destino || skip_validation) 
-        {
+        if (etapa["DESTINO"] == destino) 
           return etapa; 
-        }
-        return null; //throw new Exception("No puede editar un PBIP creado por otra costera.");
+
+        return null;
       }
     }
 }
