@@ -7,6 +7,7 @@
 	<div class="header">
     	<div class="title">
             PREFECTURA NAVAL ARGENTINA<br />
+            <%=ViewData["nombre_grupo"]%>
         </div>
 
 		<div class="date">

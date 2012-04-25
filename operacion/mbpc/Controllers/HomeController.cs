@@ -170,6 +170,9 @@ namespace mbpc.Controllers
         {
           var tmp = DaoLib.reporte_diario(Session["grupo"].ToString(), fecha);
 
+          var grp = (Session["grupos"] as List<object>).Find(gs => (gs as Dictionary<string, string>)["GRUPO"] == Session["grupo"].ToString());
+          ViewData["nombre_grupo"] = (grp as Dictionary<string, string>)["NOMBRE"];
+
           var reporte_arriba = new Dictionary<string, Dictionary<string,string>>();
           var reporte_abajo  = new Dictionary<string, Dictionary<string, string>>();
 
@@ -177,14 +180,24 @@ namespace mbpc.Controllers
 
           foreach (Dictionary<string, string> d in tmp)
           {
-            //Elijo el repote en fincion del sentido del row (aguas arriba/aguas abajo)
-            handler = reporte_arriba;
-            if (d["SENTIDO"] == "0")
+            if ( reporte_arriba.ContainsKey(d["NOMBRE"]) )
+            {
+              handler = reporte_arriba;
+            }
+            else if (reporte_abajo.ContainsKey(d["NOMBRE"]))
+            {
               handler = reporte_abajo;
-
-            //Si no esta este barco para este sentido, lo creo y le asigno el row completo de la data
-            if (!handler.ContainsKey(d["NOMBRE"]))
+            }
+            else
+            {
+              //Elijo el repote en fincion del sentido del row (aguas arriba/aguas abajo)
+              handler = reporte_arriba;
+              if (d["SENTIDO"] == "0")
+                handler = reporte_abajo;
+              
+              //Como no esta este barco para este sentido, lo creo y le asigno el row completo de la data
               handler[d["NOMBRE"]] = d;
+            }
 
             //Luego le creo una key con el ETA y HRP de esa etapa
             handler[d["NOMBRE"]]["ETA" + d["PDC"]] = d["ETA"];

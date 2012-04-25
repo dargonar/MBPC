@@ -21,6 +21,7 @@ CREATE OR REPLACE package dev_mbpc as
   temp2 number;
   temp3 varchar2(1000);
   temp4 number;
+  
   strtemp1 varchar(50);
   strtemp2 varchar(50);
   strtemp3 varchar(50);
@@ -454,8 +455,8 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     open vCursor for
       select p.id pdc, b.nombre, b.sdist, b.bandera band, origen.puerto fm, destino.puerto tox,
-             e.calado_proa cal, v.zoe, z.cuatrigrama, rc.nombre CANAL, rck.km KM, rck.unidad,
-             to_char(e.eta,'HH:MM') eta, to_char(e.hrp,'HH:MM') hrp, e.sentido
+             e.calado_informado cal, e.velocidad vel, v.zoe, z.cuatrigrama, rc.nombre CANAL, rck.km KM, rck.unidad,
+             to_char(e.eta,'HH24:MI') eta, to_char(e.hrp,'HH24:MI') hrp, e.sentido
       from tbl_etapa e
       left join tbl_viaje v on e.viaje_id = v.id
       left join buques_new b on v.buque_id = b.ID_BUQUE
@@ -469,11 +470,11 @@ CREATE OR REPLACE package body dev_mbpc as
       where to_char(e.hrp, 'yyyy-mm-dd') = vFecha
       AND e.actual_id IN (SELECT punto FROM tbl_grupopunto g WHERE g.grupo = vGrupo)
 
-      order BY v.id, e.hrp;
+      order BY v.id, e.nro_etapa;
 
 
   end reporte_diario;
-
+  
   procedure todos_los_pdc(usrid in number, vCursor out cur) is
   begin
     open vCursor for

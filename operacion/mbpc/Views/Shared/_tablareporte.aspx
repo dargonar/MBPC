@@ -8,12 +8,12 @@
 
       if (ViewData["sentido"] == "1")
       {
-        tabletitle = "BUQUES DE SUBIDA";
+        tabletitle = "BUQUES DE SUBIDA/ENTRADA";
         reporte = ViewData["reporte_arriba"] as Dictionary<string, Dictionary<string,string>>;
       }
       else
       {
-        tabletitle = "BUQUES DE BAJADA";
+        tabletitle = "BUQUES DE BAJADA/SALIDA";
         reporte = ViewData["reporte_abajo"] as Dictionary<string, Dictionary<string, string>>;
       }
       

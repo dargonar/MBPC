@@ -8,7 +8,7 @@
     <td><%= row["FM"]%></td>
     <td><%= row["TOX"]%></td>
     <td><%= row["CAL"]%></td>
-    <td>---</td>
+    <td><%= row["VEL"]%></td>
     <td><%= row["ZOE"]%></td>
 
     <% foreach (Dictionary<string, string> zona in (ViewData["zonas"] as List<object>)) { %>

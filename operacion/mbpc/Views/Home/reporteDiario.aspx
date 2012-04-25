@@ -4,6 +4,7 @@
 	<div class="header">
     	<div class="title">
             PREFECTURA NAVAL ARGENTINA<br />
+            <%=ViewData["nombre_grupo"]%>
         </div>
         <a id="printver" target="_blank" href="<%= Url.Content("~/Home/reporteDiarioPrint/") %>?fecha=<%= ViewData["fecha"] %>" style="float:right;margin-right: 17px;position:relative" > Version para imprimir</a>
 		<div class="date">
