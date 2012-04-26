@@ -463,20 +463,21 @@ CREATE OR REPLACE package body dev_mbpc as
       from tbl_etapa e
       left join tbl_viaje v on e.viaje_id = v.id
       left join buques_new b on v.buque_id = b.ID_BUQUE
-      left join tbl_kstm_puertos origen on v.origen_id = origen.cod
-      left join tbl_kstm_puertos destino on v.destino_id = destino.cod
+      left join tbl_kstm_puertos origen on e.puerto_origen = origen.cod
+      left join tbl_kstm_puertos destino on e.puerto_destino = destino.cod
       left join tbl_puntodecontrol p on e.actual_id = p.id
       left join tbl_zonas z on p.zona_id = z.id
       left join rios_canales_km rck on rck.id = p.rios_canales_km_id
       left join rios_canales rc on rck.id_rio_canal = rc.id
-      
+
       where to_char(e.hrp, 'yyyy-mm-dd') = vFecha
       AND e.actual_id IN (SELECT punto FROM tbl_grupopunto g WHERE g.grupo = vGrupo)
 
-      order BY v.id, e.nro_etapa;
+      order BY v.id, e.nro_etapa desc;
 
 
   end reporte_diario;
+
   
   procedure todos_los_pdc(usrid in number, vCursor out cur) is
   begin
