@@ -177,6 +177,7 @@
     <Content Include="Views\Shared\_tabs_main.aspx" />
     <Content Include="Views\ViajeCerrado\editarEtapa.aspx" />
     <Content Include="Views\ViajeCerrado\editarEtapaFecha.aspx" />
+    <Content Include="Views\ViajeCerrado\editarViajeFecha.aspx" />
     <Content Include="Views\ViajeCerrado\Index.aspx" />
     <Content Include="Views\ViajeCerrado\lista.aspx" />
     <Content Include="Views\ViajeCerrado\_etapas_subgrid.aspx" />
