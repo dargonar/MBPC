@@ -14,6 +14,7 @@ namespace mbpc.Controllers
 {
     public class ViajeController : MyController
     {
+
       static public SelectList MalvinasOptions(bool to_malvinas)
       {
         int va_a_malvinas = to_malvinas ? 1 : 0;

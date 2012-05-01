@@ -1,12 +1,21 @@
 ﻿<%@ Page Title="" Language="C#"  Inherits="System.Web.Mvc.ViewPage" %>
 
 <div id="linkos" style="display:none">
-  <a id="l1" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarEtapa/") + "?id=%ETAPA_ID%"%>" onclick="return editarEtapa(this);">Editar etapa</a>
+  <a id="l1" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarEtapa/") + "?id=%ETAPA_ID%"%>" onclick="return editarEtapa(this);">Editar puntos</a>
+  <a id="l2" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarEtapaFecha/") + "?id=%ETAPA_ID%"%>" onclick="return editarFechaEtapa(this);">Editar fecha</a>
+  <a id="l3" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarViajeFecha/") + "?viaje_id=%VIAJE_ID%"%>" onclick="return editarFechaViaje(this);">Editar fecha</a>
 </div>
 
 <div class="contextMenu" id="myMenu1" style="display:none">
   <ul style="width: 200px">
     <li id="m1"><span style="font-size:80%; font-family:Verdana">Editar Etapa</span></li>
+    <li id="m2"><span style="font-size:80%; font-family:Verdana">Editar Fecha Partida</span></li>
+  </ul>
+</div>
+
+<div class="contextMenu" id="myMenu2" style="display:none">
+  <ul style="width: 200px">
+    <li id="m3"><span style="font-size:80%; font-family:Verdana">Editar Fecha Partida</span></li>
   </ul>
 </div>
 
@@ -69,6 +78,19 @@
           caption: 'Viajes',
           search: true,
           hoverrows: false,
+          gridComplete: function(){
+            jQuery(".jqgrow", "#list").contextMenu('myMenu2', {
+                bindings: {
+                  'm3': function (t) { runlink("#list", 'l3'); }
+                },
+                onContextMenu: function (event, menu) {
+                  var rowId = $(event.target).parent("tr").attr("id")
+                  var grid = $("#list");
+                  $("#list"+ ' ' + '#'+rowId).click();
+                  return true;
+                }
+              });
+          },
           <% Html.RenderPartial("_etapas_subgrid"); %>
       });
 
@@ -97,9 +119,11 @@ function runlink(id, linkname)
   }
 
   var _ID = $(id).getRowData(gsr)['ID'];
+  //var _VIAJE_ID = $(id).getRowData(gsr)[''];
   
   var href = $('#'+linkname).attr('xhref');
   href = href.replace('%ETAPA_ID%', _ID);
+  href = href.replace('%VIAJE_ID%', _ID);
 
   $('#'+linkname).attr('href', href).click();
   
@@ -107,11 +131,23 @@ function runlink(id, linkname)
 
 function editarEtapa(sender){
     var href = $(sender).attr('href');
-    modificarEtapaPopUp(href, 'Editar Etapa');
+    modificarEtapaPopUp(href, 'Editar Etapa', 330, 395);
     return true;
 }
 
-function modificarEtapaPopUp(href, title) {
+function editarFechaEtapa(sender){
+    var href = $(sender).attr('href');
+    modificarEtapaPopUp(href, 'Editar Fecha Etapa', 250, 395);
+    return true;
+}
+
+function editarFechaViaje(sender){
+    var href = $(sender).attr('href');
+    modificarEtapaPopUp(href, 'Editar Fecha Viaje', 250, 395);
+    return true;
+}
+
+function modificarEtapaPopUp(href, title, _height, _width) {
       
     $("#fullscreen").css("display", "block");
 
@@ -123,8 +159,8 @@ function modificarEtapaPopUp(href, title) {
         $('#dialogdiv').attr('grilla', grillon);
         $('#dialogdiv').html(data);
         $('#dialogdiv').dialog({
-        height: 210,
-        width: 400,
+        height: _height,
+        width: _width,
         modal: true,
         title: title,
         });

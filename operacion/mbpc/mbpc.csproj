@@ -176,6 +176,7 @@
     <Content Include="Views\Carga\barcoenzona.aspx" />
     <Content Include="Views\Shared\_tabs_main.aspx" />
     <Content Include="Views\ViajeCerrado\editarEtapa.aspx" />
+    <Content Include="Views\ViajeCerrado\editarEtapaFecha.aspx" />
     <Content Include="Views\ViajeCerrado\Index.aspx" />
     <Content Include="Views\ViajeCerrado\lista.aspx" />
     <Content Include="Views\ViajeCerrado\_etapas_subgrid.aspx" />
@@ -184,6 +185,7 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Auth\ShowForm.aspx" />
     <Content Include="Views\Viaje\cambiarEstado.aspx" />
+    <Content Include="Views\Viaje\editarViajeFecha.aspx" />
     <Content Include="Views\Viaje\practico_fecha.aspx" />
     <Content Include="Views\Viaje\nuevo_practico.aspx" />
     <Content Include="Views\Viaje\practicos.aspx" />

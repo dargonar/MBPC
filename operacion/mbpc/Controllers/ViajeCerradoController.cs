@@ -14,6 +14,25 @@ namespace mbpc.Controllers
     public class ViajeCerradoController : MyController
     {
 
+      public ActionResult modificarFechaViaje()
+      {
+        int viaje_id = Convert.ToInt32(Request.Form["viaje_id"]);
+
+        DaoLib.modificar_fecha_viaje(viaje_id, Request.Form["fecha_salida"]);
+
+        return Content("ok");
+      }
+
+      public ActionResult editarViajeFecha(string viaje_id)
+      {
+        //ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+        ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
+
+        ViewData["viaje_id"] = viaje_id;
+
+        return View();
+      }
+
       public ActionResult modificar(string en_adelante)
       {
         int etapa_id = Convert.ToInt32(Request.Form["etapa_id"]);
@@ -35,6 +54,22 @@ namespace mbpc.Controllers
         return Content("ok");
       }
 
+      public ActionResult modificarFecha(string en_adelante)
+      {
+        int etapa_id = Convert.ToInt32(Request.Form["etapa_id"]);
+
+        Dictionary<string, string> etapa = isValidEdition(etapa_id);
+        if (etapa == null)
+        {
+          throw new Exception("No puede editar una Etapa creada por otra costera.");
+        }
+
+        
+        DaoLib.modificar_fecha_etapa(etapa_id, Request.Form["fecha_salida"]);
+        
+        return Content("ok");
+      }
+
       public ActionResult editarEtapa(string id)
       {
         int etapa_id = Convert.ToInt32(id);
@@ -49,7 +84,22 @@ namespace mbpc.Controllers
 
         return View();
       }
-      
+
+      public ActionResult editarEtapaFecha(string id)
+      {
+        int etapa_id = Convert.ToInt32(id);
+        Dictionary<string, string> etapa = isValidEdition(etapa_id);
+        if (etapa == null)
+        {
+          throw new Exception("No puede editar una Etapa creada por otra costera.");
+        }
+
+        ViewData["etapa"] = etapa;
+        ViewData["etapa_id"] = id;
+
+        return View();
+      }
+
       public ActionResult Index(string msg)
       {
         Session["grupos"] = null;

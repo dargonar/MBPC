@@ -16,7 +16,7 @@
   <input id="hasta_id" name="hasta_id" type="hidden" value="<%= etapa["PUERTO_DESTINO"] %>"/>
 
   <br />
-  <input type="checkbox" name="en_adelante" >Modificar esta etapa y las siguientes<br /><br /><br />
+  <input type="checkbox" name="en_adelante" id="en_adelante" >Modificar esta etapa y las siguientes<br /><br /><br />
 
   <input type="submit" class="botonsubmit" style="margin-left: 250px" value="Modificar Etapa" />
 
@@ -25,7 +25,13 @@
 
 <script type="text/javascript">
 
-    //$('#btnSeleccionarBarco').click();
+    
+//  $("#en_adelante").change(function () {
+//    $("#fecha_salida").attr('disabled', !$("#fecha_salida").attr('disabled'));
+//    return false;
+//  });
+    
+//    $("#fecha_salida").mask("99-99-99 99:99");
 
     $('#hastatext, #desdetext').bind('keydown', 'ctrl+s', function () {
         $(this).next().click();
@@ -83,6 +89,13 @@
               $('.botonsubmit').removeAttr('disabled');
               return false;
           }
+
+//            if ($("#fecha_salida").val() == "") {
+//              alert("Debe indicar fecha de partida");
+//              $("#fecha_salida").focus();
+//              $('.botonsubmit').removeAttr('disabled');
+//              return false;
+//            }
 
           $.ajax({
               type: "POST",

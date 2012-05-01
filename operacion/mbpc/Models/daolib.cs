@@ -714,6 +714,17 @@ public static class DaoLib
     return doCall("mbpc.modificar_pbip", parameters);
   }
 
+  public static List<object> modificar_fecha_viaje(int viaje_id, string fecha_salida)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vViaje", OracleDbType.Varchar2, viaje_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha_salida, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.modificar_fecha_viaje", parameters);
+  }
+
   public static List<object> editar_etapa(string etapa, string origen, string destino, string calado_proa, string calado_popa, string calado_informado, string hrp, string eta, string fecha_salida, string cantidad_tripulantes, string cantidad_pasajeros, string capitan, string rumbo, string velocidad)
   {
     decimal d_velocidad = Hlp.toDecimal(velocidad);
@@ -1079,6 +1090,17 @@ public static class DaoLib
     };
 
     return doCall("mbpc.modificar_extremos_etapa", parameters);
+  }
+
+  public static List<object> modificar_fecha_etapa(int etapa_id, string fecha_salida)
+  {
+    OracleParameter[] parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha_salida, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.modificar_fecha_etapa", parameters);
   }
 
   public static List<object> modificar_extremos_etapa_ex(int etapa_id, string origen_id, string destino_id)

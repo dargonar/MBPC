@@ -39,7 +39,8 @@
                   gridComplete: function() {
                       jQuery(".jqgrow", "#" + subgrid_table_id).contextMenu('myMenu1', {
                         bindings: {
-                          'm1': function (t) { runlink("#" + subgrid_table_id, 'l1'); }
+                          'm1': function (t) { runlink("#" + subgrid_table_id, 'l1'); },
+                          'm2': function (t) { runlink("#" + subgrid_table_id, 'l2'); }
                         },
                         onContextMenu: function (event, menu) {
                           var rowId = $(event.target).parent("tr").attr("id")
