@@ -138,7 +138,7 @@ namespace mbpc_admin.Controllers
         try
         {
           //HACK
-          cargaetapa.EN_TRANSITO = Request.Params["EN TRANSITO"] != "false" ? 1 : 0;
+          cargaetapa.EN_TRANSITO = Request.Params["EN_TRANSITO"] != "false" ? 1 : 0;
 
           if (cargaetapa.ID == 0)
           {
@@ -153,10 +153,6 @@ namespace mbpc_admin.Controllers
           }
           context.SaveChanges();
           
-          //HACK- Cambiar cuando el connector de Oracle funcione bien
-          var nuevacargaetapa = context.TBL_CARGAETAPA.OrderByDescending(c => c.ID).First();
-          //HACK------------------------------------------------------
-
           return RedirectToAction("List", new { alone = ViewData["alone"], @id = cargaetapa.ETAPA_ID });
         }
         catch (Exception ex)

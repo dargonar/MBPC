@@ -36,7 +36,7 @@
 
     $(function () {
       var mygrid = $("#list").jqGrid({
-        url: '/carga/ListJson',
+        url: '/carga/ListJson?<%if(ViewData["alone"]!=null){%>alone=<%=ViewData["alone"]%>&<%}%>',
         datatype: 'json',
         mtype: 'GET',
         colNames: ["ID",	"TIPOCARGA_ID" , "CANTIDAD_INICIAL" , "CANTIDAD_ENTRADA", "CANTIDAD_SALIDA", "EN_TRANSITO", "UNIDAD_ID", "ETAPA_ID", "BUQUE_ID"],  
