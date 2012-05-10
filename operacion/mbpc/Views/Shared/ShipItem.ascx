@@ -42,6 +42,22 @@
                 </div><!-- items -->
             </div><!-- menu -->
     <% } %>
+    <% else{  %>
+      <% if (ViewData["recientemente_liberado"]=="1")
+         {  %>
+         <div class="shipmenu shipmenu_<%=ship["ID"]%>">
+                <div class="dropdown">
+                    <button class="rerun">Acciones</button>
+                    <button class="select" onclick="toggle_menu(this, '<%=ship["ID"]%>'); " id="Button1" >Elija una accion</button>
+                </div><!-- dropdown -->
+                <div class="items <%= ViewData["menu_class"] %>" id="Item<%=ship["ID"]%>" style="z-index:5; top:0px">
+                    <ul>
+                      <li><a href="<%= Url.Content("~/Viaje/traerBarcoRecienLiberado/") + ship["ID"] %>" onclick="hideMaskAndMenu();return traer_barco_recien_liberado(this);">   Traer Barco</a></li>
+                     </ul>
+                </div><!-- items -->
+            </div><!-- menu -->
+      <% } %>
+    <% } %>
 
 <div class="prox-dest">Prox. Dest.: <%= ship["DESTINO_ID"] == "" ? "N/D" : ship["CUATRIGRAMA"] + " - Km" + ship["KM"]%></div>
 

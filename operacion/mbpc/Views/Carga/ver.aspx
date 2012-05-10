@@ -78,7 +78,11 @@
             
           </td>
           <td><%=carga["UNIDAD"]%></td>
-          <td><%=carga["CODIGO"]%></td>
+          <td>
+            <%=carga["CODIGO"]%>
+            <br/>
+            <a href="<%= Url.Content("~/Carga/editarTipo/?carga_id="+carga["CARGA_ID"] ) %>" id="modify_t_button<%=carga["CARGA_ID"]%>" onclick="return editar_tipo_carga(this);" >Modificar</a>
+          </td>
           <% } %>
         </tr>
     <% 
@@ -265,6 +269,33 @@
     return false;
   }
 
+  //HACK
+  function editar_tipo_carga(aelement){
+    
+    $("#fullscreen").css("display", "block");
+		  $.ajax({
+		    type: "GET",
+		    cache: false,
+		    url: $(aelement).attr("href"),
+		    success: (function (data) {
+		      $('#dialogdiv3').html(data);
+          $('#dialogdiv3').dialog({
+            title: 'Modificar Tipo de carga',
+            height: 550,
+            width: 300,
+            modal: true
+          });
+          $("#fullscreen").css("display", "none");
+		    }),
+		    error: (function (data) {
+		      $("#fullscreen").css("display", "none");
+          var titletag = /<title\b[^>]*>.*?<\/title>/
+          alert(titletag.exec(data.responseText));
+		    })
+		  });
+
+      return false;
+  }
 
   function editar_carga(carga_id) {
     //$("#q" + carga_id).hide();

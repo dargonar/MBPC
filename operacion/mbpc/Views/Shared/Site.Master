@@ -35,6 +35,30 @@
       <%: MvcMiniProfiler.MiniProfiler.RenderIncludes() %>
 
       <script type="text/javascript">
+
+        function traer_barcos_perimetrales(obj) {
+          $("#fullscreen").css("display", "block");
+          $.ajax({
+            type: "GET",
+            cache: false,
+            url: $(obj).attr('href'),
+            success: (function (data) {
+              if (data == "nop")
+                $('#list').trigger('reloadGrid');
+              else
+                $("#columnas").html(data);
+
+              $("#fullscreen").css("display", "none");
+            }),
+            error: (function (data) {
+              $("#fullscreen").css("display", "none");
+              var titletag = /<title\b[^>]*>.*?<\/title>/
+              alert(titletag.exec(data.responseText));
+            })
+          });
+          return false;
+        }
+
         function cambiar_grupo() {
           var grp = $("#grupoactual").val();
           $("#fullscreen").css("display", "block");
@@ -111,7 +135,7 @@
 
             $('.shipmenu_'+sender_id+' .dropdown').css('z-index',9999);
             $('.shipmenu_'+sender_id+' .items').css('z-index',9999);
-            console.log('ship menu: '+sender_id);
+            //console.log('ship menu: '+sender_id);
         }  
         
         function hideVisibleMenues(except_id){

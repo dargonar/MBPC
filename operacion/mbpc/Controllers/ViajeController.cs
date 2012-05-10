@@ -12,22 +12,35 @@ using Oracle.DataAccess.Types;
 
 namespace mbpc.Controllers
 {
+    public enum BarcosDataView
+    {
+      FULL,
+      EN_ZONA,
+      EN_LIMITES
+    }
+
     public class ViajeController : MyController
     {
+      
 
       static public SelectList MalvinasOptions(bool to_malvinas)
+      {
+        return MalvinasOptions2(to_malvinas, "");
+      }
+
+      static public SelectList MalvinasOptions2(bool to_malvinas, string selected)
       {
         int va_a_malvinas = to_malvinas ? 1 : 0;
         List<object> malvinas= DaoLib.obtener_opciones_malvinas(va_a_malvinas);
         List<object> newList = new List<object>();
-        string selected = "";
+        
         foreach (object obj in malvinas)
         {
           Dictionary<string, string> option = (Dictionary<string, string>)obj;
           newList.Add(new
             {
               id = Convert.ToString(option["ID"]),
-              nombre = Convert.ToString(option["DESCRIPCION"])
+              nombre = Convert.ToString(option["DESCRIPCION"]) + " (" + Convert.ToString(option["CODIGO"]) + ")"
             });
           if (selected == "")
             selected = Convert.ToString(option["ID"]);
@@ -156,10 +169,21 @@ namespace mbpc.Controllers
           DaoLib.quitar_acompanante(id);
           return BuildResponse();
         }
+        
+        public ActionResult traerBarcoRecienLiberado(string id){
+          DaoLib.traer_barco_recien_liberado(id);
+          return BuildResponse();
+        }
 
         public ActionResult indicarProximo(string viaje_id, string id2)
         {
           DaoLib.indicar_proximo(viaje_id, id2);
+          return BuildResponse();
+        }
+
+        public ActionResult traerBarcosEnLimites()
+        {
+          Session["barcos_data"] = BarcosDataView.FULL;
           return BuildResponse();
         }
 
@@ -168,6 +192,7 @@ namespace mbpc.Controllers
           if (Session["tipo_punto"].ToString() == "0")
           {
             barcos_data(Session["zona"].ToString());
+
             return View("columnas");
           }
 
@@ -225,7 +250,7 @@ namespace mbpc.Controllers
         }
 
         //public ActionResult modificar(string viaje_id, string buque_id, string desde_id, string hasta_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal, string rumbo, string velocidad)
-        public ActionResult modificar(string viaje_id, string buque_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal, string rumbo, string velocidad)
+        public ActionResult modificar(string viaje_id, string buque_id, string partida, string eta, string zoe, string proximo_punto, string internacional, string pos, string riocanal, string rumbo, string velocidad, string codigo_malvinas_inicio)
         {
             decimal?[] latlon = {null, null};
             if (pos != "")
@@ -234,7 +259,7 @@ namespace mbpc.Controllers
             }
 
             //DaoLib.editar_viaje(viaje_id, buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
-            DaoLib.editar_viaje(viaje_id, buque_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
+            DaoLib.editar_viaje(viaje_id, buque_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, codigo_malvinas_inicio);
             return BuildResponse();
         }
 

@@ -176,7 +176,6 @@ namespace mbpc.Controllers
       public ActionResult ListJSON(string sidx, string sord, int page, int rows)
       {
         var columns = new Dictionary<string, string> { 
-          {"ACTUAL","i"},
           {"ID","i" },
           {"NOMBRE","s" },
           {"NRO_OMI","s" },
@@ -186,7 +185,7 @@ namespace mbpc.Controllers
           {"ORIGEN","s" },
           {"DESTINO","S" },
           {"FECHA_SALIDA","d" },
-          {"ETA","d" },
+          {"ACTUAL","s" },
           {"NOTAS","s" },
           {"ESTADO","s" }
         };

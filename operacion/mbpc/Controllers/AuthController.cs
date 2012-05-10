@@ -83,6 +83,10 @@ namespace mbpc.Controllers
             Session["logged"] = 1;
             Session["usuario"] = Request.Form["username"];
             Session["acceso"] = acceso;
+            
+            //Nuevo
+            Session["barcos_data"] = BarcosDataView.EN_ZONA;
+
             return Redirect(Url.Content("~/"));
           }
 

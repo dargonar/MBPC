@@ -9,30 +9,39 @@
 	<h1>Viajes próximos a ingresar</h1>
     <!-- top -->
     <div class="container">
+      <% var listEntrantes = (ViewData["barcos_entrantes"] as List<object>); %>
+      <% if (ViewData["barcos_entrantes"]!=null){ %>
+        <% if (listEntrantes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
+           { %>
 
-    <% var listEntrantes = (ViewData["barcos_entrantes"] as List<object>); %>
-    <% if (listEntrantes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
-       { %>
+            <div class="box">
+			        <div class="empty">
+				        <p class="box-S">Sin barcos en zona</p>
+              </div>
+            </div><!-- box -->
+        <% } %>
 
-        <div class="box">
-			<div class="empty">
-				<p class="box-S">Sin barcos en zona</p>
-            </div>
-        </div><!-- box -->
-    <% } %>
-
-      <% foreach (Dictionary<string, string> barco in listEntrantes)
-         {
-           if (barco["SENTIDO"] != "1")
-           {
-             ViewData["showlinks"] = 0;
-             
-             //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
-             Html.RenderPartial("ShipItem", barco);
-           }
-           //else continue;
-         }
-      %>
+          <% foreach (Dictionary<string, string> barco in listEntrantes)
+             {
+               if (barco["SENTIDO"] != "1")
+               {
+                 ViewData["showlinks"] = 0;
+                 ViewData["recientemente_liberado"] = "0";
+                 //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
+                 Html.RenderPartial("ShipItem", barco);
+               }
+               //else continue;
+             }
+          %>
+          <% }else{ %>
+              <div class="box">
+			        <div class="empty">
+				        <p class="box-S">
+                  <a href="<%= Url.Content("~/Viaje/traerBarcosEnLimites/")%>" onclick="return traer_barcos_perimetrales(this);" title="Ver barcos en zonas perimetrales">Ver barcos en zonas perimetrales</a>
+                </p>
+              </div>
+            </div><!-- box -->
+          <% } %>
     </div>
 	<div class="split-bar"></div>
 	<h1>Viaje en mi zona de responsabilidad <span id="sbox" style="display:none"><input id="searchbox" type="text" /><div class="searchlabel"> Buscar Barco:&nbsp;</div></span></h1>
@@ -75,28 +84,43 @@
     <div class="container">
         
     <% var listSalientes = (ViewData["barcos_salientes"] as List<object>); %>
-    <% if (listSalientes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
-       { %>
+    <% if (ViewData["barcos_salientes"]!=null){ %>
+      <% if (listSalientes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "1" ) == null )
+         { %>
 
-        <div class="box">
-			<div class="empty">
-				<p class="box-S">Sin barcos en zona</p>
-            </div>
-        </div><!-- box -->
-    <% } %>
+          <div class="box">
+			  <div class="empty">
+				  <p class="box-S">Sin barcos en zona</p>
+              </div>
+          </div><!-- box -->
+      <% } %>
 
-      <% foreach (Dictionary<string, string> barco in listSalientes)
-         {
-           ViewData["showlinks"] = 0;
-           if (barco["SENTIDO"] != "1")
+        <% 
+          ViewData["showlinks"] = 0;
+          ViewData["recientemente_liberado"] = "1";
+          ViewData["menu_class"] = "bottom_"; 
+         
+          foreach (Dictionary<string, string> barco in listSalientes)
            {
-             //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
-             Html.RenderPartial("ShipItem", barco);
+             if (barco["SENTIDO"] != "1")
+             {
+               //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
+               Html.RenderPartial("ShipItem", barco);
+             }
+             //else continue;
            }
-           //else continue;
-         }
-      %>
-
+           // reseteo la clase del menu.
+           ViewData["menu_class"] = "";
+        %>
+      <% }else{ %>
+            <div class="box">
+			      <div class="empty">
+				      <p class="box-S">
+                <a href="<%= Url.Content("~/Viaje/traerBarcosEnLimites/")%>" onclick="return traer_barcos_perimetrales(this);" title="Ver barcos en zonas perimetrales">Ver barcos en zonas perimetrales</a>
+              </p>
+            </div>
+          </div><!-- box -->
+      <% } %>
     </div>
 </div>
 
@@ -107,28 +131,39 @@
 
     <!-- top -->
     <div class="container">
+    <% if (ViewData["barcos_salientes"]!=null){ %>
+      <% if (listSalientes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "0" ) == null )
+         { %>
 
-   <% if (listSalientes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "0" ) == null )
-       { %>
+          <div class="box">
+			  <div class="empty">
+				  <p class="box-S">Sin barcos en zona</p>
+              </div>
+          </div><!-- box -->
+      <% } %>
 
-        <div class="box">
-			<div class="empty">
-				<p class="box-S">Sin barcos en zona</p>
-            </div>
-        </div><!-- box -->
-    <% } %>
-
-      <% foreach (Dictionary<string, string> barco in listSalientes)
-         {
-           ViewData["showlinks"] = 0;
-           if (barco["SENTIDO"] != "0")
+        <% foreach (Dictionary<string, string> barco in listSalientes)
            {
-             //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
-             Html.RenderPartial("ShipItem", barco);
+             ViewData["showlinks"] = 0;
+             ViewData["recientemente_liberado"] = "1";
+             ViewData["menu_class"] = ""; 
+             if (barco["SENTIDO"] != "0")
+             {
+               //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
+               Html.RenderPartial("ShipItem", barco);
+             }
+             //else continue;
            }
-           //else continue;
-         }
-      %>
+        %>
+       <% }else{ %>
+            <div class="box">
+			      <div class="empty">
+				      <p class="box-S">
+                <a href="<%= Url.Content("~/Viaje/traerBarcosEnLimites/")%>" onclick="return traer_barcos_perimetrales(this);" title="Ver barcos en zonas perimetrales">Ver barcos en zonas perimetrales</a>
+              </p>
+            </div>
+          </div><!-- box -->
+      <% } %>
     </div>
 	<div class="split-bar"></div>
 	<h1>Viaje en mi zona de responsabilidad</h1>
@@ -159,28 +194,37 @@
 	<h1>Viajes próximos a ingresar</h1>
   	
     <div class="container" >
+      <% if (ViewData["barcos_salientes"]!=null){ %>
+        <% if (listEntrantes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "0" ) == null )
+         { %>
+            <div class="box">
+			        <div class="empty">
+				        <p class="box-S">Sin barcos en zona</p>
+              </div>
+            </div><!-- box -->
+        <% } %>
 
-    <% if (listEntrantes.Find( c => ((Dictionary<string, string>)c)["SENTIDO"] != "0" ) == null )
-       { %>
-
-        <div class="box">
-			<div class="empty">
-				<p class="box-S">Sin barcos en zona</p>
-            </div>
-        </div><!-- box -->
-    <% } %>
-
-      <% foreach (Dictionary<string, string> barco in listEntrantes)
-         {
-           ViewData["showlinks"] = 0;
-           if (barco["SENTIDO"] != "0")
-           {
-             //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
-             Html.RenderPartial("ShipItem", barco);
+          <% foreach (Dictionary<string, string> barco in listEntrantes)
+          {
+             ViewData["showlinks"] = 0;
+            if (barco["SENTIDO"] != "0")
+             {
+               ViewData["recientemente_liberado"] = "0";
+               //var yyy = new { @name = barco["NOMBRE"], @ominum = barco["NRO_OMI"], @mmsi = barco["NRO_ISMM"], @status = "", @eta = barco["ETA"] };
+               Html.RenderPartial("ShipItem", barco);
+             }
+             //else continue;
            }
-           //else continue;
-         }
-      %>
+          %>
+       <% }else{ %>
+            <div class="box">
+			      <div class="empty">
+				      <p class="box-S">
+                <a href="<%= Url.Content("~/Viaje/traerBarcosEnLimites/")%>" onclick="return traer_barcos_perimetrales(this);" title="Ver barcos en zonas perimetrales">Ver barcos en zonas perimetrales</a>
+              </p>
+            </div>
+          </div><!-- box -->
+      <% } %>
     </div>
 </div>
 
@@ -195,7 +239,29 @@
 <script type="text/javascript">
 
   //$("#ecuatrigrama").html('Costera <%=ViewData["cuatrigrama"]%>');
-  
+  function traer_barco_recien_liberado(obj) { 
+    $("#fullscreen").css("display", "block");
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: $(obj).attr('href'),
+      success: (function (data) {
+        if (data == "nop")
+          $('#list').trigger('reloadGrid');
+        else
+          $("#columnas").html(data);
+
+        $("#fullscreen").css("display", "none");
+      }),
+      error: (function (data) {
+        $("#fullscreen").css("display", "none");
+        var titletag = /<title\b[^>]*>.*?<\/title>/
+        alert(titletag.exec(data.responseText));
+      })
+    });
+    return false;
+  }
+
   buildButtons();
   $('.info').hoverbox();
   $('.estados').hoverbox();

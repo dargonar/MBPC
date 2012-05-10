@@ -51,9 +51,8 @@
           url: '/ViajeCerrado/ListJson',
           datatype: 'json',
           mtype: 'GET',
-          colNames: ["ACTUAL", "VIAJE", "NOMBRE", "NRO_OMI", "MATRICULA", "SDIST", "BANDERA", "ORIGEN", "DESTINO", "FECHA_SALIDA", "FECHA_LLEGADA", "NOTAS", "ESTADO"],
+          colNames: ["VIAJE", "NOMBRE", "NRO_OMI", "MATRICULA", "SDIST", "BANDERA", "ORIGEN", "DESTINO", "FECHA_SALIDA", "Pto. CONTROL ACTUAL", "NOTAS", "ESTADO"],
           colModel: [
-          { name: 'ACTUAL', index: 'ACTUAL', width: 0, hidden: true },
           { name: 'ID', index: 'ID', width: 90},
           { name: 'NOMBRE', index: 'NOMBRE', width: 90 },
           { name: 'NRO_OMI', index: 'NRO_OMI', width: 90 },
@@ -63,7 +62,8 @@
           { name: 'ORIGEN', index: 'ORIGEN', width: 90 },
           { name: 'DESTINO', index: 'DESTINO', width: 90 },
           { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 90 },
-          { name: 'FECHA_LLEGADA', index: 'ETA', width: 90 },
+          /*{ name: 'FECHA_LLEGADA', index: 'ETA', width: 90 },*/
+          { name: 'Pto. CONTROL ACTUAL', index: 'ACTUAL', width: 90 },
           { name: 'NOTAS', index: 'NOTAS', width: 90 },
           { name: 'ESTADO', index: 'ESTADO', width: 90}],
           pager: '#pager',

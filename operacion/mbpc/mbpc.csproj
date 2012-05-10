@@ -133,6 +133,7 @@
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Auth\SelectNewPass.aspx" />
     <Content Include="Views\Carga\barcazas_fondeadas.aspx" />
+    <Content Include="Views\Carga\editarTipo.aspx" />
     <Content Include="Views\Carga\pasarCargas.aspx" />
     <Content Include="Views\Carga\noHayCargas.aspx" />
     <Content Include="Views\Carga\seleccionar_nueva_barcaza.aspx" />

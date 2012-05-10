@@ -1,0 +1,1 @@
+INSERT INTO tbl_tipoevento(id, descripcion, tipo) VALUES (28, 'Trae barco de vuelta a zona de responsabilidad', 0);

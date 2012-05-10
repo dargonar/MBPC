@@ -113,6 +113,7 @@ namespace mbpc.Controllers
         public ActionResult cambiarZona(string id)
         {
           Session["zona"] = id;
+          Session["barcos_data"] = BarcosDataView.EN_ZONA;
           recalcular_barcos_para_punto(id);
 
           return View("columnas");
