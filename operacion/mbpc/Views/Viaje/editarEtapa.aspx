@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 <%@ Import Namespace="mbpc.Models" %>
+<%@ Import Namespace="mbpc.Controllers" %>
 
 <% Dictionary<string, string> etapa = ViewData["etapa"] as Dictionary<string, string>; %>
 <% List<object> viajelist = ViewData["viajedata"] as List<object>; %>
@@ -31,7 +32,7 @@
 
   </div>
 
-  <div class="columna">
+  <div class="columna" style="width:280px;">
 
 
   <label>ZOE</label><br />
@@ -41,7 +42,15 @@
   <br />
     <label>Posicion</label><br />
     <input autocomplete="off" type="text" id="pos" name="pos" class="editaretapatext" value="<%= viaje["LATLONG_fmt"] %>" /><br />
-    <label class="desc">Formato: 9000S18000W </label><br /><br/><br/><br/><br/><br/>
+    <label class="desc">Formato: 9000S18000W </label><br />
+  
+  <br />
+  <label>¿Va a o viene de  Malvinas?</label><br />
+  <%= Html.DropDownList("codigo_malvinas_inicio"
+                          , ViajeController.MalvinasOptions2(true, viaje["CODIGO_MALVINAS_INICIO"])
+                          , new Dictionary<string, object> { { "style", "width:270px;" } })%>
+  <br />  
+  <br/>
 
   <label>Rio/Canal Km/Par</label><br />
   <input autocomplete="off" type="text" id="riocanal" class="editaretapatext" value="<%= viaje["RIOCANAL"] %>" style="width:270px" /><br />
@@ -134,7 +143,7 @@
     </div>
   </div>
 
-  <input type="submit" class="botonsubmit" style="margin-left: 170px" value="Modificar Etapa" />
+  <input type="submit" class="botonsubmit" style="margin-left: 430px" value="Modificar Etapa" />
 </form>
 
 </div>

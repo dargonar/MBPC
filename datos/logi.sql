@@ -45,6 +45,7 @@ CREATE OR REPLACE package dev_mbpc as
   --Viaje
   procedure crear_viaje(vBuque in varchar2, vOrigen in varchar2, vDestino in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
   procedure editar_viaje(vViaje in varchar2, vBuque in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, usrid in number, vCursor out cur);
+  procedure editar_viaje2(vViaje in varchar2, vBuque in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinasInicio in varchar2, usrid in number, vCursor out cur);
   procedure traer_viaje(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure terminar_viaje(vViajeId in number, vFecha in varchar2, vEscalas in varchar2, vCodigoMalvinas in INTEGER, usrid in number, vCursor out cur);
   procedure viajes_terminados(vZona in number, usrid in number, vCursor out cur);
@@ -65,6 +66,8 @@ CREATE OR REPLACE package dev_mbpc as
   procedure eventos_usuario(usrid in number, vCursor out cur);
   procedure insertar_cambioestado(vEtapa in varchar2, vNotas in varchar2,  vLat in number, vLon in number, vFecha in varchar2, vEstado in varchar2, vRiocanal in varchar2, vPuerto in varchar2, usrid in number, vCursor out cur);
   procedure actualizar_listado_de_barcazas(  vEtapa in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_fecha_viaje(vViaje in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
+  procedure traer_barco_recien_liberado(vViaje in varchar2, usrid in number, vCursor out cur);
   --Etapas
   procedure id_ultima_etapa(vViaje in number, usrid in number, vCursor out cur);
   procedure indicar_proximo(vViajeId in number, vZonaId in number, usrid in number, vCursor out cur);
@@ -79,20 +82,24 @@ CREATE OR REPLACE package dev_mbpc as
   procedure activar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure bajar_practico(vPractico in varchar2, vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure traer_etapa_viaje(vEtapa in varchar2, usrid in number, vCursor out cur);
-  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur);
+  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2, usrid in number, vCursor out cur);
   procedure modificar_extremos_etapa_ex(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur);
+  procedure modificar_fecha_etapa(vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   --Cargas
   procedure descargar_barcaza(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number, vCursor out cur);
   procedure descargar_barcaza_batch(vEtapaId in varchar2, vBarcazaId in varchar2, usrid in number);
   procedure corregir_barcaza(vEtapa in varchar2, vBuque in varchar2, vBarcaza in varchar2, usrid in number, vCursor out cur);
   procedure barcazas_utilizadas(usrid in number, vCursor out cur);
   procedure traer_cargas( vEtapaId in varchar2, usrid in number, vCursor out cur);
+  procedure traer_carga( vCargaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_cargas_nobarcazas( vEtapaId in varchar2, usrid in number, vCursor out cur);
   procedure traer_carga_por_codigo(vCodigo in varchar2, usrid in number, vCursor out cur);
   procedure traer_barcazas_de_buque(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure traer_unidades(usrid in number, vCursor out cur);
   procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2, vEnTransito in varchar2, usrid in number, vCursor out cur);
   procedure modificar_carga(vCarga in varchar2, vCantidadEntrada in varchar2, vCantidadSalida in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_carga_actual(vCarga in varchar2, vCantidadActual in varchar2, usrid in number, vCursor out cur);
+  procedure modificar_tipo_carga(vCargaId in varchar2, vUnidadId in varchar2, vTipoCargaId in varchar2, usrid in number, vCursor out cur);
   procedure eliminar_carga(vCarga in varchar2, checkempty in number, usrid in number, vCursor out cur);
   procedure eliminar_carga_sin_cursor(vCarga in varchar2, checkempty in number, usrid in number);
   procedure check_empty(vEtapaId in number, vBuqueId in number);
@@ -404,7 +411,7 @@ CREATE OR REPLACE package body dev_mbpc as
     open vCursor for
       select v.id, v.buque_id, v.notas, v.latitud, v.longitud, v.barcazas_listado, capitan.nombre capitan, acomp.nombre acompanante,
       acomp2.nombre acompanante2, acomp3.nombre acompanante3, acomp4.nombre acompanante4,
-      e.calado_maximo, e.calado_informado,  e.origen_id, e.destino_id, e.sentido, e.eta, 'INSC.PROV.', b.matricula,
+      e.calado_maximo, e.calado_informado,  e.origen_id, e.destino_id, e.sentido2 sentido, e.eta, 'INSC.PROV.', b.matricula,
       b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total, b.tipo, z.cuatrigrama, rck.km,
       st.estado estado_text,v.estado_buque
       from tbl_viaje v
@@ -435,7 +442,7 @@ CREATE OR REPLACE package body dev_mbpc as
     open vCursor for
       select v.id, v.buque_id, v.latitud, v.longitud, v.notas, v.barcazas_listado ,capitan.nombre capitan, acomp.nombre acompanante,
       acomp2.nombre acompanante2, acomp3.nombre acompanante3, acomp4.nombre acompanante4,
-      e.calado_maximo, e.calado_informado, e.origen_id, e.destino_id, e.sentido, e.eta, 'INSCR.PROV.', b.matricula,
+      e.calado_maximo, e.calado_informado, e.origen_id, e.destino_id, e.sentido3 sentido, e.eta, 'INSCR.PROV.', b.matricula,
       b.sdist, b.bandera, b.nombre, b.nro_omi, b.nro_ismm,b.arqueo_neto, b.arqueo_total,b.tipo, z.cuatrigrama, rck.km,
       st.estado estado_text,v.estado_buque
       from tbl_viaje v
@@ -669,7 +676,44 @@ CREATE OR REPLACE package body dev_mbpc as
 
   end actualizar_listado_de_barcazas;
 
+  
+  procedure modificar_fecha_viaje(vViaje in varchar2, vFecha in varchar2, usrid in number, vCursor out cur)is
+  begin
+        
+        update tbl_viaje set fecha_salida = TO_DATE(vFecha , 'DD-MM-yy HH24:mi')
+        where id = vViaje;
+    
+        -- log
+        UPDATE tbl_evento SET fecha = TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), updated_by = usrid, updated_at = SYSDATE
+        WHERE viaje_id = vViaje
+              and tipo_id=1;
+  end modificar_fecha_viaje;
+  
+  procedure traer_barco_recien_liberado(vViaje in varchar2, usrid in number, vCursor out cur)is
+    temp_etapa_actual INTEGER;
+    temp_etapa_id INTEGER;
+    temp_etapa_actual_id INTEGER;
+  begin
+    tempdate := SYSDATE;
 
+    --traemos la etapa actual del viaje    
+    select etapa_actual into temp_etapa_actual from tbl_viaje where id = vViaje;
+    select id into temp_etapa_id from tbl_etapa where viaje_id = vViaje and nro_etapa = temp_etapa_actual ;
+    
+    --borramos todos los datos de esa etapa y la etapa en si
+    delete from tbl_practicoviaje where etapa_bajada = temp_etapa_id or etapa_subida = temp_etapa_id;
+    delete from tbl_cargaetapa where etapa_id = temp_etapa_id;
+    delete from tbl_evento where etapa_id = temp_etapa_id;
+    delete from tbl_etapa where id = temp_etapa_id;
+
+    --actualizamos el viaje 
+    update tbl_viaje set etapa_actual = (temp_etapa_actual-1) WHERE id = vViaje;
+    select id into temp_etapa_actual_id from tbl_etapa where viaje_id = vViaje and nro_etapa = (temp_etapa_actual-1);
+    
+    insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha)
+      VALUES ( usrid, vViaje , temp_etapa_actual_id , 28 , TO_DATE(tempdate, 'DD-MM-yy HH24:mi'));
+      
+  end traer_barco_recien_liberado;
   -------------------------------------------------------------------------------------------------------------
   --Crea un viaje, se verifica si el buque seleccionado es internacional,
   --se crea la etapa inicial,
@@ -757,7 +801,24 @@ CREATE OR REPLACE package body dev_mbpc as
     */
     
   end editar_viaje;
-
+  
+  procedure editar_viaje2(vViaje in varchar2, vBuque in varchar2, vInicio in varchar2, vEta in varchar2, vZoe in varchar2, vZona in varchar, vProx in varchar, vInternacional in number, vLat in number, vLon in number, vRiocanal in varchar2, vCodigoMalvinasInicio in varchar2, usrid in number, vCursor out cur) is
+  begin
+    
+    update tbl_viaje SET  
+      buque_id           = vBuque, 
+      --origen_id        = vOrigen, 
+      --destino_id       = vDestino, 
+      fecha_salida       = TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), 
+      eta                = TO_DATE(vEta, 'DD-MM-yy HH24:mi'), 
+      zoe                = TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), 
+      latitud            = vLat, 
+      longitud           = vLon, 
+      rios_canales_km_id = vRiocanal,
+      codigo_malvinas_inicio = vCodigoMalvinasInicio
+    where id = vViaje;
+    
+  end editar_viaje2;
   ---------------------------------------------------------------------------------------------------------------
   --Edita el viaje, la verificacion de si el buque es internacional o internacional esta incluida en la vista,
   --registra el evento (TODO)
@@ -767,7 +828,8 @@ CREATE OR REPLACE package body dev_mbpc as
       open vCursor for 
         select v.id, b.ID_BUQUE, b.nombre, b.matricula, b.tipo, 
         m.cod origen_id, m.puerto origen, u.cod destino_id, u.puerto destino, 
-        v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal
+        v.fecha_salida, v.eta, v.zoe, v.notas, v.latitud, v.longitud, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal, 
+        v.codigo_malvinas_inicio
         from tbl_viaje v
         left join tbl_etapa e ON v.id=e.viaje_id and v.etapa_actual=e.nro_etapa
         left join buques_new b on v.buque_id = b.ID_BUQUE
@@ -1016,21 +1078,18 @@ CREATE OR REPLACE package body dev_mbpc as
     --casa
     insert into tbl_etapa ( VIAJE_ID, ORIGEN_ID, ACTUAL_ID, HRP, ETA,
                            FECHA_SALIDA, CANTIDAD_TRIPULANTES, CANTIDAD_PASAJEROS,
-                           CAPITAN_ID, SENTIDO, CALADO_PROA, CALADO_POPA, CALADO_MAXIMO,
+                           CAPITAN_ID, SENTIDO, SENTIDO2, SENTIDO3, CALADO_PROA, CALADO_POPA, CALADO_MAXIMO,
                            CALADO_INFORMADO, KM, CREATED_AT, acompanante_id, acompanante2_id,
                            acompanante3_id, acompanante4_id, VELOCIDAD, RUMBO, CREATED_BY, PUERTO_ORIGEN, PUERTO_DESTINO )
 
     VALUES ( etapa.viaje_id, etapa.actual_id, vZonaId, etapa.fecha_llegada, TO_DATE(vEta, 'DD-MM-yy HH24:mi'),
             etapa.fecha_llegada, etapa.cantidad_tripulantes, etapa.cantidad_pasajeros,
-            etapa.capitan_id, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo,
+            etapa.capitan_id, null, null, null, etapa.calado_proa, etapa.calado_popa, etapa.calado_maximo,
             etapa.calado_informado, etapa.km, tempdate, etapa.acompanante_id, etapa.acompanante2_id,
             etapa.acompanante3_id, etapa.acompanante4_id, vVelocidad, vRumbo, usrid, etapa.PUERTO_ORIGEN, etapa.PUERTO_DESTINO )
 
-    returning ID,NRO_ETAPA,VIAJE_ID,ORIGEN_ID,ACTUAL_ID,DESTINO_ID,HRP,ETA,FECHA_SALIDA,
-              FECHA_LLEGADA,CANTIDAD_TRIPULANTES,CANTIDAD_PASAJEROS,CAPITAN_ID,CALADO_PROA,
-              CALADO_POPA,CALADO_MAXIMO,CALADO_INFORMADO,KM,CREATED_AT,ACOMPANANTE_ID,
-              ACOMPANANTE2_ID, ACOMPANANTE3_ID, ACOMPANANTE4_ID, SENTIDO,VELOCIDAD,RUMBO, CREATED_BY, PUERTO_ORIGEN, PUERTO_DESTINO
-    into etapa;
+    returning id into temp;
+    select * into etapa from tbl_etapa where id = temp;
 
     --hack--
     --Si es la etapa 1 le pongo a la etapa 0 el sentido que tiene la 1
@@ -1268,13 +1327,14 @@ CREATE OR REPLACE package body dev_mbpc as
       where id = vEtapa;
   end traer_etapa_viaje;
   
-  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur)is
+  procedure modificar_extremos_etapa(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2, usrid in number, vCursor out cur)is
   begin
-    update tbl_etapa set puerto_destino = vDestino, puerto_origen = vOrigen
-    where id = vEtapa;
+  
+   update tbl_etapa set puerto_destino = vDestino, puerto_origen = vOrigen
+      where id = vEtapa;
     
   end modificar_extremos_etapa;
-
+  
   procedure modificar_extremos_etapa_ex(vEtapa in varchar2, vOrigen in varchar2, vDestino in varchar2,usrid in number, vCursor out cur)is
   begin
     
@@ -1284,6 +1344,39 @@ CREATE OR REPLACE package body dev_mbpc as
     where viaje_id=etapa.viaje_id and nro_etapa >= etapa.nro_etapa;
     
   end modificar_extremos_etapa_ex;
+  
+  procedure modificar_fecha_etapa(vEtapa in varchar2, vFecha in varchar2, usrid in number, vCursor out cur)is
+  begin
+    -- Etapa anterior
+    declare
+        etapa_anterior number;
+      begin
+        
+        update tbl_etapa set 
+            fecha_salida = TO_DATE(vFecha , 'DD-MM-yy HH24:mi'),
+            hrp          = TO_DATE(vFecha , 'DD-MM-yy HH24:mi')
+        where id = vEtapa;
+    
+        --Etapa actual del viaje duen/o de la barcaza
+        select MAX(id) into etapa_anterior
+          from tbl_etapa 
+          where id<vEtapa
+            and viaje_id = (select viaje_id from tbl_etapa where id = vEtapa);
+        
+        --Ya estaba en mi viaje esta barcaza?
+        IF etapa_anterior is not null THEN
+          update tbl_etapa set fecha_llegada = TO_DATE(vFecha , 'DD-MM-yy HH24:mi') where id = etapa_anterior;
+        END IF;
+      
+        -- log
+        UPDATE tbl_evento SET fecha = TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), updated_by = usrid, updated_at = SYSDATE
+        WHERE etapa_id = vEtapa
+              /*and fecha = TO_DATE(vFechaOriginal , 'DD-MM-yy HH24:mi')*/
+              and tipo_id=7 and puntodecontrol2_id = (select actual_id from tbl_etapa where id = vEtapa);
+      END;
+    
+  end modificar_fecha_etapa;
+
   ---------------------------------------------------------------------------------------------------------------
   ---------------------------------------------Cargas------------------------------------------------------------
   ---------------------------------------------------------------------------------------------------------------
@@ -1382,6 +1475,20 @@ CREATE OR REPLACE package body dev_mbpc as
     where c.etapa_id = vEtapaId order by barcaza;
   end traer_cargas;
 
+  procedure traer_carga( vCargaId in varchar2, usrid in number, vCursor out cur) is
+  begin 
+    open vCursor for
+    select c.etapa_id, tc.nombre, c.cantidad, c.cantidad_inicial, c.cantidad_entrada, c.cantidad_salida,
+           u.nombre unidad, c.unidad_id, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE
+           from tbl_cargaetapa c
+    join tbl_tipo_carga tc on c.tipocarga_id = tc.id
+    join tbl_unidad u on c.unidad_id = u.id
+    left join buques_new b on b.ID_BUQUE = c.buque_id
+    where c.id = vCargaId order by barcaza;
+  end traer_carga;
+
+  
+  
   -------------------------------------------------------------------------------------------------------------
   --
 
@@ -1588,6 +1695,45 @@ CREATE OR REPLACE package body dev_mbpc as
     VALUES (etapa.viaje_id, etapa.id, usrid, 5, temp, SYSDATE, viajepos.lat, viajepos.lon, viajepos.pto);
   end modificar_carga;
 
+  -------------------------------------------------------------------------------------------------------------
+  --
+
+  procedure modificar_carga_actual(vCarga in varchar2, vCantidadActual in varchar2, usrid in number, vCursor out cur) is
+  begin
+
+    -- CAMBIAR ACA EN PREFECTURA CAST(REPLACE(____,'.',',') AS NUMBER);
+    temp  := CAST(REPLACE(vCantidadActual,'.',',') AS NUMBER);
+
+    select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCarga);
+    select * into cetapa from tbl_cargaetapa where id=vCarga;
+    update tbl_cargaetapa set
+      cantidad  = temp,
+      cantidad_inicial = temp,
+      cantidad_entrada = 0,
+      cantidad_salida  = 0      
+    where id = vCarga returning id into temp;
+
+    --nuevo log
+    posicion_viaje(etapa.viaje_id);
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha, latviaje, lonviaje, ptoviaje)
+    VALUES (etapa.viaje_id, etapa.id, usrid, 29, temp, SYSDATE, viajepos.lat, viajepos.lon, viajepos.pto);
+  end modificar_carga_actual;
+
+
+  procedure modificar_tipo_carga(vCargaId in varchar2, vUnidadId in varchar2, vTipoCargaId in varchar2, usrid in number, vCursor out cur) is
+  begin
+  
+    update tbl_cargaetapa set unidad_id = vUnidadId, tipocarga_id = vTipoCargaId
+      where id = vCargaId ;
+    
+    select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCargaId);
+    
+    posicion_viaje(etapa.viaje_id);
+    
+    insert into tbl_evento (viaje_id, etapa_id, usuario_id, tipo_id, carga_id, fecha, latviaje, lonviaje, ptoviaje)
+    VALUES (etapa.viaje_id, etapa.id, usrid, 5, vCargaId, SYSDATE, viajepos.lat, viajepos.lon, viajepos.pto);
+  
+  end modificar_tipo_carga;
   -------------------------------------------------------------------------------------------------------------
   --
 

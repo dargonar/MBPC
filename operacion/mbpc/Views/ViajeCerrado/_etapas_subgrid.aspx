@@ -15,19 +15,19 @@
 		      jQuery("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
 
               var lastSel;
-              jQuery("#" + subgrid_table_id).jqGrid({
+              mygride = jQuery("#" + subgrid_table_id).jqGrid({
                   url: "/ViajeCerrado/ListEtapasJSON?VIAJE_ID=" + viaje_id,
                   datatype: "json",
-                  colNames: ["ID", "VIAJE ID", "NRO ETAPA", "ORIGEN", "DESTINO", "HRP", "ETA", "FECHA SALIDA", "FECHA LLEGADA"],
+                  colNames: ["ID", "PUNTO", "VIAJE ID", "NRO ETAPA", "ORIGEN", "DESTINO", "HRP", "FECHA SALIDA", "FECHA LLEGADA"],
                   colModel: [
-                            { name: 'ID', index: 'ID', width: 50 /*, hidden: true*/ },
+                            { name: 'ID', index: 'ID', width: 50 , hidden: true},
+                              { name: 'DESCRIPCION', index: 'DESCRIPCION', width: 90 },
                               { name: 'VIAJE_ID', index: 'VIAJE_ID', width: 0, hidden: true },
                               { name: 'NRO_ETAPA', index: 'NRO_ETAPA', width: 90 },
                               { name: 'ORIGEN_DESC', index: 'ORIGEN_DESC', width: 90 },
                               { name: 'DESTINO_ID', index: 'DESTINO_DESC', width: 90 },
                               { name: 'HRP', index: 'HRP', width: 90 },
-                              { name: 'ETA', index: 'ETA', width: 90 },
-                              { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 90 },
+                              { name: 'FECHA_SALIDA', index: 'FECHA_SALIDA', width: 90, hidden: true },
                               { name: 'ETA', index: 'ETA', width: 90 }
                   ],
                   height: '100%',
@@ -39,7 +39,8 @@
                   gridComplete: function() {
                       jQuery(".jqgrow", "#" + subgrid_table_id).contextMenu('myMenu1', {
                         bindings: {
-                          'm1': function (t) { runlink("#" + subgrid_table_id, 'l1'); }
+                          'm1': function (t) { runlink("#" + subgrid_table_id, 'l1'); },
+                          'm2': function (t) { runlink("#" + subgrid_table_id, 'l2'); }
                         },
                         onContextMenu: function (event, menu) {
                           var rowId = $(event.target).parent("tr").attr("id")
@@ -49,6 +50,7 @@
                         }
                       });
                   },
+                  <% Html.RenderPartial("_cargas_subgrid"); %>
               });
 
 

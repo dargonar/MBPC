@@ -14,6 +14,25 @@ namespace mbpc.Controllers
     public class ViajeCerradoController : MyController
     {
 
+      public ActionResult modificarFechaViaje()
+      {
+        int viaje_id = Convert.ToInt32(Request.Form["viaje_id"]);
+
+        DaoLib.modificar_fecha_viaje(viaje_id, Request.Form["fecha_salida"]);
+
+        return Content("ok");
+      }
+
+      public ActionResult editarViajeFecha(string viaje_id)
+      {
+        //ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+        ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
+
+        ViewData["viaje_id"] = viaje_id;
+
+        return View();
+      }
+
       public ActionResult modificar(string en_adelante)
       {
         int etapa_id = Convert.ToInt32(Request.Form["etapa_id"]);
@@ -35,6 +54,22 @@ namespace mbpc.Controllers
         return Content("ok");
       }
 
+      public ActionResult modificarFecha(string en_adelante)
+      {
+        int etapa_id = Convert.ToInt32(Request.Form["etapa_id"]);
+
+        Dictionary<string, string> etapa = isValidEdition(etapa_id);
+        if (etapa == null)
+        {
+          throw new Exception("No puede editar una Etapa creada por otra costera.");
+        }
+
+        
+        DaoLib.modificar_fecha_etapa(etapa_id, Request.Form["fecha_salida"]);
+        
+        return Content("ok");
+      }
+
       public ActionResult editarEtapa(string id)
       {
         int etapa_id = Convert.ToInt32(id);
@@ -49,7 +84,22 @@ namespace mbpc.Controllers
 
         return View();
       }
-      
+
+      public ActionResult editarEtapaFecha(string id)
+      {
+        int etapa_id = Convert.ToInt32(id);
+        Dictionary<string, string> etapa = isValidEdition(etapa_id);
+        if (etapa == null)
+        {
+          throw new Exception("No puede editar una Etapa creada por otra costera.");
+        }
+
+        ViewData["etapa"] = etapa;
+        ViewData["etapa_id"] = id;
+
+        return View();
+      }
+
       public ActionResult Index(string msg)
       {
         Session["grupos"] = null;
@@ -94,16 +144,46 @@ namespace mbpc.Controllers
         return View("Index");
       }
 
+
+      public ActionResult ListCargasJSON(string sidx, string sord, int page, int rows)
+      {
+        var columns = new Dictionary<string, string> { 
+          {"ID","i"},
+          { "NOMBRE","s"},
+          { "CANTIDAD","i"},
+          { "CANTIDAD_INICIAL","i"},
+          { "CANTIDAD_ENTRADA","i"},
+          { "CANTIDAD_SALIDA","i"},
+          { "UNIDAD","s"},
+          { "CODIGO","s"},
+          { "BARCAZA","s"},
+          { "ETAPA_ID", "i"}
+        };
+
+        var tmp = JQGrid.JQGridUtils.PaginageS1("VW_CARGA_ETAPA", Request.Params, columns, page, rows, sidx, sord);
+
+        var cmdcount = new OracleCommand((string)tmp[2]);
+        int cnt = int.Parse(((Dictionary<string, string>)DaoLib.doSQL(cmdcount)[0])["TOTAL"]);
+
+        var cmd = new OracleCommand((string)tmp[0]);
+        cmd.Parameters.AddRange((OracleParameter[])tmp[1]);
+        var items = DaoLib.doSQL(cmd);
+
+        var coso = JQGrid.JQGridUtils.PaginateS2(items, columns, cnt, page, rows);
+
+        return Json(coso, JsonRequestBehavior.AllowGet);
+      }
+
       public ActionResult ListEtapasJSON(string sidx, string sord, int page, int rows)
       {
         var columns = new Dictionary<string, string> { 
           {"ID","i"},
+          { "DESCRIPCION","s"},
           { "VIAJE_ID","i"},
           { "NRO_ETAPA","i"},
           { "ORIGEN_DESC","s"},
           { "DESTINO_DESC","s"},
           { "HRP","d"},
-          { "ETA","d"},
           { "FECHA_SALIDA","d"},
           { "FECHA_LLEGADA","d"},
           { "CREATED_AT","d"}
@@ -126,7 +206,6 @@ namespace mbpc.Controllers
       public ActionResult ListJSON(string sidx, string sord, int page, int rows)
       {
         var columns = new Dictionary<string, string> { 
-          {"ACTUAL","i"},
           {"ID","i" },
           {"NOMBRE","s" },
           {"NRO_OMI","s" },
@@ -136,7 +215,7 @@ namespace mbpc.Controllers
           {"ORIGEN","s" },
           {"DESTINO","S" },
           {"FECHA_SALIDA","d" },
-          {"ETA","d" },
+          {"ACTUAL","s" },
           {"NOTAS","s" },
           {"ESTADO","s" }
         };

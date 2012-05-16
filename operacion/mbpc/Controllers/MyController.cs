@@ -60,11 +60,33 @@ namespace mbpc.Controllers
 
     public void barcos_data(string id)
     {
+
+
+      if (Session["barcos_data"] != null)
+      {
+        BarcosDataView mView = (BarcosDataView)Session["barcos_data"];
+
+        switch (mView)
+        {
+          case BarcosDataView.FULL:
+            //barcos_data(Session["zona"].ToString());
+            break;
+          case BarcosDataView.EN_LIMITES:
+            barcos_data_en_limites(Session["zona"].ToString());
+            return;
+            break;
+          case BarcosDataView.EN_ZONA:
+            barcos_data_en_zona(Session["zona"].ToString());
+            return;
+            break;
+        }
+      }
+
       var newProfiler = new MiniProfiler[]{
               new MiniProfiler("-task1 (tiempo invalido=>)", ProfileLevel.Verbose),
               new MiniProfiler("-task2 (tiempo invalido=>)", ProfileLevel.Verbose),
               new MiniProfiler("-task3 (tiempo invalido=>)", ProfileLevel.Verbose),
-              new MiniProfiler("-task4 (tiempo invalido=>)", ProfileLevel.Verbose),
+              new MiniProfiler("-task4 (tiempo invalido=>)", ProfileLevel.Verbose)
             };
 
       Task[] tasks = new Task[4]
@@ -85,5 +107,46 @@ namespace mbpc.Controllers
 
     }
 
+    public void barcos_data_en_zona(string id)
+    {
+      var newProfiler = new MiniProfiler[]{
+              new MiniProfiler("-task1 (tiempo invalido=>)", ProfileLevel.Verbose),
+              new MiniProfiler("-task2 (tiempo invalido=>)", ProfileLevel.Verbose)
+            };
+
+      Task[] tasks = new Task[2]
+            {
+                Task.Factory.StartNew(() => ViewData["barcos_en_zona"]   = DaoLib.barcos_en_zona(id, newProfiler[0]) ),
+                Task.Factory.StartNew(() => ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(id, newProfiler[1]) )
+            };
+
+      //Block until all tasks complete.
+      Task.WaitAll(tasks);
+
+      MiniProfiler.Current.AddProfilerResults(newProfiler[0]);
+      MiniProfiler.Current.AddProfilerResults(newProfiler[1]);
+      ViewData["barcos_salientes"] = null;
+      ViewData["barcos_entrantes"] = null;
+
+    }
+
+    public void barcos_data_en_limites(string id)
+    {
+      var newProfiler = new MiniProfiler[]{
+        new MiniProfiler("-task1 (tiempo invalido=>)", ProfileLevel.Verbose),
+        new MiniProfiler("-task2 (tiempo invalido=>)", ProfileLevel.Verbose)
+      };
+
+      Task[] tasks = new Task[2]
+      {
+        Task.Factory.StartNew(() => ViewData["barcos_salientes"] = DaoLib.barcos_salientes(id, newProfiler[0]) ),
+        Task.Factory.StartNew(() => ViewData["barcos_entrantes"] = DaoLib.barcos_entrantes(id, newProfiler[1]) )
+      };
+
+      Task.WaitAll(tasks);
+
+      MiniProfiler.Current.AddProfilerResults(newProfiler[0]);
+      MiniProfiler.Current.AddProfilerResults(newProfiler[1]);
+    }
   }
 }

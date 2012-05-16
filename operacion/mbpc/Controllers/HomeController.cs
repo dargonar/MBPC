@@ -11,7 +11,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.14";
+      public static string VERSION = "1.3.16";
       
         //
         // GET: /Home/
@@ -113,6 +113,7 @@ namespace mbpc.Controllers
         public ActionResult cambiarZona(string id)
         {
           Session["zona"] = id;
+          Session["barcos_data"] = BarcosDataView.EN_ZONA;
           recalcular_barcos_para_punto(id);
 
           return View("columnas");
@@ -170,7 +171,8 @@ namespace mbpc.Controllers
         {
           var tmp = DaoLib.reporte_diario(Session["grupo"].ToString(), fecha);
 
-          var grp = (Session["grupos"] as List<object>).Find(gs => (gs as Dictionary<string, string>)["GRUPO"] == Session["grupo"].ToString());
+          var lo = Session["grupos"] as List<object>;
+          var grp = lo.Find(gs => (gs as Dictionary<string, string>)["GRUPO"] == Session["grupo"].ToString());
           ViewData["nombre_grupo"] = (grp as Dictionary<string, string>)["NOMBRE"];
 
           var reporte_arriba = new Dictionary<string, Dictionary<string,string>>();
@@ -208,7 +210,8 @@ namespace mbpc.Controllers
           ViewData["reporte_arriba"] = reporte_arriba;
           ViewData["reporte_abajo"] = reporte_abajo;
 
-          ViewData["zonas"] = Session["zonas"];
+          ViewData["zonas"] = DaoLib.zonas_del_grupo( int.Parse((grp as Dictionary<string, string>)["GRUPO"]) );
+          //ViewData["zonas"] = Session["zonas"];
         }
 
         private static int dictsort(Object aa, Object bb) 

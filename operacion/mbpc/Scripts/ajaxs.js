@@ -552,13 +552,16 @@
 
     function toggle_menu(el, ship)
     {
-        var pos = $(el).offset();
+      var pos = $(el).offset();
 
-//      pos.left -= 100;
-//      pos.top  += 20;
+      if($('#Item'+ship).hasClass('bottom_'))
+      {
+        $('#Item'+ship).css('top',pos.top-$('#Item'+ship).outerHeight()-7);
+      }
+      else{
         $('#Item'+ship).css('top',pos.top+20);
-//      
-//      .toggle();
+      }
+        
 
       $('#Item'+ship).toggle(200,
         function() {
@@ -1152,17 +1155,17 @@ function isDate(datestring) /* is NOT date*/
 
 function validpos(pos) {
 
-    console.log( pos.substring(0, 2) + "." + pos.substring(2, 4));
-    console.log(pos.substring(5, 8) + "." + pos.substring(8, 10));
+    //console.log( pos.substring(0, 2) + "." + pos.substring(2, 4));
+    //console.log(pos.substring(5, 8) + "." + pos.substring(8, 10));
     lat = parseFloat(pos.substring(0, 2) + "." +pos.substring(2, 4));
     lon = parseFloat(pos.substring(5, 8) + "." +pos.substring(8, 10));
 
     if (lat > 90 || lon > 180) {
-        console.log('no ok');
+        //console.log('no ok');
         return false;
     }
     else {
-    console.log('ok');
+    //console.log('ok');
     return true;
     }
 }

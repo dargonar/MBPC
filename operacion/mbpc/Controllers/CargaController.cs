@@ -8,6 +8,20 @@ namespace mbpc.Controllers
 {
     public class CargaController : MyController
     {
+
+      public ActionResult editarTipo(string carga_id)
+      {
+        var carga = DaoLib.traer_carga(carga_id) as Dictionary<string, string>;
+        ViewData["carga"] = carga;
+        return View();
+      }
+
+      public ActionResult modificarTipo(string ETAPA_ID, string CARGA_ID, string UNIDAD_ID, string TIPOCARGA_ID)
+      {
+        DaoLib.modificar_tipo_carga(CARGA_ID, UNIDAD_ID, TIPOCARGA_ID);
+        return RedirectToAction("ver", "Carga", new { etapa_id = Int32.Parse(ETAPA_ID), refresh_viajes = "1" });
+      }
+
       public ActionResult adjuntar_barcazas(int etapa_id, int[] barcazas)
       {
         int[] etapas_ids = new int[barcazas.Length];
@@ -169,13 +183,20 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public ActionResult modificar(int carga_id, string cantidad_entrada, string cantidad_salida, int etapa_id)
+      public ActionResult modificar(int carga_id, string tipo_modif, string cantidad_actual, string cantidad_entrada, string cantidad_salida, int etapa_id)
       {
-        cantidad_entrada = cantidad_entrada.Replace(',','.');
-        cantidad_salida = cantidad_salida.Replace(',', '.');
-
-        DaoLib.modificar_carga(carga_id, cantidad_entrada, cantidad_salida);
-        //return Content("ok");
+        if (tipo_modif == null)
+        {
+          cantidad_entrada = cantidad_entrada.Replace(',', '.');
+          cantidad_salida = cantidad_salida.Replace(',', '.');
+          DaoLib.modificar_carga(carga_id, cantidad_entrada, cantidad_salida);
+        }
+        else
+        {
+          cantidad_actual = cantidad_actual.Replace(',', '.');
+          DaoLib.modificar_carga_actual(carga_id, cantidad_actual);
+        }
+        
         return RedirectToAction("ver", "Carga", new { etapa_id = etapa_id });
       }
 

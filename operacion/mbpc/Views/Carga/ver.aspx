@@ -58,18 +58,27 @@
                   <input type="hidden" name="etapa_id" value="<%= ViewData["etapa_id"]%>" />
                   <table>
                     <tr>
+                      <td>Actual: </td>
+                      <td>
+                        <input id="ccaa<%=carga["CARGA_ID"]%>" type="text"  name="cantidad_actual" autocomplete="off" value="<%=carga["CANTIDAD"]%>" style="width:40px;" title="Cantidad actual" disabled="disabled"/><br />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><input id="sm<%=carga["CARGA_ID"]%>" type="checkbox" name="tipo_modif" onclick="return seleccion_modif('<%=carga["CARGA_ID"]%>')" />actual</td>
+                    </tr>
+                    <tr>
                       <td>Carga: </td>
                       <td>
-                        <input type="text" name="cantidad_entrada" autocomplete="off" value="<%=carga["CANTIDAD_ENTRADA"]%>" style="width:40px;" title="Cantidad de entrada"/><br />
+                        <input id="ccee<%=carga["CARGA_ID"]%>" type="text" name="cantidad_entrada" autocomplete="off" value="<%=carga["CANTIDAD_ENTRADA"]%>" style="width:40px;" title="Cantidad de entrada"/><br />
                       </td>
                     </tr>
                     <tr>
                       <td>Descarga: </td>
-                      <td><input type="text" name="cantidad_salida" autocomplete="off" value="<%=carga["CANTIDAD_SALIDA"]%>" style="width:40px;" title="Cantidad de salida" /> <br />
+                      <td><input id="ccss<%=carga["CARGA_ID"]%>" type="text" name="cantidad_salida" autocomplete="off" value="<%=carga["CANTIDAD_SALIDA"]%>" style="width:40px;" title="Cantidad de salida" /> <br />
                       </td>
                     </tr>
                   </table>
-                  <input type="submit" value="OK" style="width: 40px" />
+                  <input type="submit" value="OK" style="width: 40px" />&nbsp;<input onclick="return cancelar_edicion_carga(<%= carga["CARGA_ID"]%>)" type="button" value="Cerrar"/>
                 </div>
                 </form>
               </span>
@@ -78,7 +87,11 @@
             
           </td>
           <td><%=carga["UNIDAD"]%></td>
-          <td><%=carga["CODIGO"]%></td>
+          <td>
+            <%=carga["CODIGO"]%>
+            <br/>
+            <a href="<%= Url.Content("~/Carga/editarTipo/?carga_id="+carga["CARGA_ID"] ) %>" id="modify_t_button<%=carga["CARGA_ID"]%>" onclick="return editar_tipo_carga(this);" >Modificar</a>
+          </td>
           <% } %>
         </tr>
     <% 
@@ -265,6 +278,51 @@
     return false;
   }
 
+  //HACK
+  function editar_tipo_carga(aelement){
+    
+    $("#fullscreen").css("display", "block");
+		  $.ajax({
+		    type: "GET",
+		    cache: false,
+		    url: $(aelement).attr("href"),
+		    success: (function (data) {
+		      $('#dialogdiv3').html(data);
+          $('#dialogdiv3').dialog({
+            title: 'Modificar Tipo de carga',
+            height: 550,
+            width: 300,
+            modal: true
+          });
+          $("#fullscreen").css("display", "none");
+		    }),
+		    error: (function (data) {
+		      $("#fullscreen").css("display", "none");
+          var titletag = /<title\b[^>]*>.*?<\/title>/
+          alert(titletag.exec(data.responseText));
+		    })
+		  });
+
+      return false;
+  }
+  
+  function seleccion_modif(carga_id) {
+    
+    //alert($('#sm'+carga_id).is(':checked'));
+
+    if( $('#sm'+carga_id).is(':checked') )
+    {
+        $('#ccaa'+carga_id).attr('disabled',false);
+        $('#ccee'+carga_id).attr('disabled','disabled');
+        $('#ccss'+carga_id).attr('disabled','disabled');
+    }
+    else
+    {
+        $('#ccaa'+carga_id).attr('disabled','disabled');
+        $('#ccee'+carga_id).attr('disabled',false);
+        $('#ccss'+carga_id).attr('disabled',false);
+    }
+  }
 
   function editar_carga(carga_id) {
     //$("#q" + carga_id).hide();
@@ -276,11 +334,10 @@
   }
 
   function cancelar_edicion_carga(carga_id) {
-    //$("#q" + carga_id).show();
     $("#modify_q_button" + carga_id).show();
     $("#e" + carga_id).hide();
   }
-  
+
   function nueva_carga(obj) {
     $.ajax({
       type: "GET",
@@ -345,9 +402,7 @@
     $.ajax({
       type: "GET",
       cache: false,
-      url: '<%= Url.Content("~/Home/RefrescarColumnas") %>',
-      success: function (data) {
-      if (data == "nop")
+      url: '<%= Url.Content("~/Home/RefrescarColumnas") %>',hide
         $('#list').trigger('reloadGrid');
       else
         $("#columnas").html(data);
