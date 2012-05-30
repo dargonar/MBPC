@@ -25,12 +25,40 @@ namespace mbpc.Controllers
 
       public ActionResult editarViajeFecha(string viaje_id)
       {
-        //ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
         ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
-
         ViewData["viaje_id"] = viaje_id;
-
         return View();
+      }
+
+      public ActionResult nuevaCarga(string etapa_id)
+      {
+        ViewData["isNew"] = true;
+        ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", 0);
+        ViewData["etapa_id"] = etapa_id;
+        return View("editarCarga");
+      }
+
+      public ActionResult editarCarga(string carga_id)
+      {
+        var tmp = DaoLib.traer_carga(carga_id);
+
+        ViewData["carga"]    = tmp;
+        ViewData["carga_id"] = carga_id;
+
+        ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", ((Dictionary<string, string>)tmp)["UNIDAD_ID"] );
+        
+        return View();
+      }
+
+      private System.Collections.IEnumerable to_array( List<object> list )
+      {
+        return list.Select(f => new { @ID = ((Dictionary<string, string>)f)["ID"], @NOMBRE = ((Dictionary<string, string>)f)["NOMBRE"] }).ToList();
+      }
+
+      public ActionResult eliminarCarga(string carga_id)
+      {
+        DaoLib.eliminar_carga(int.Parse(carga_id), 0);
+        return Content("ok");
       }
 
       public ActionResult modificar(string en_adelante)
@@ -50,6 +78,29 @@ namespace mbpc.Controllers
           DaoLib.modificar_extremos_etapa(etapa_id, desde_id, hasta_id);
         else
           DaoLib.modificar_extremos_etapa_ex(etapa_id, desde_id, hasta_id);
+
+        return Content("ok");
+      }
+
+      public ActionResult modificarCarga(
+        string carga_id,
+        string tipocarga_id,
+        string cantidad_inicial,
+        string cantidad_entrada,
+        string cantidad_salida,
+        string unidad_id,
+        string en_barcaza,
+        string barcaza_id,
+        string en_transito,
+        string isnew,
+        string etapa_id
+        )
+      {
+        if (en_barcaza == "false")
+          barcaza_id = null;
+
+        en_transito = en_transito != "false" ? "1" : "0";
+        DaoLib.crear_editar_carga(isnew, etapa_id, carga_id, tipocarga_id, cantidad_inicial, cantidad_entrada, cantidad_salida, unidad_id, barcaza_id, en_transito);
 
         return Content("ok");
       }

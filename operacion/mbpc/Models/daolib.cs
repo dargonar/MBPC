@@ -595,6 +595,18 @@ public static class DaoLib
     return doCall("mbpc.crear_viaje", parameters);
   }
 
+  public static List<object> confirma_viaje(string viaje, string confirma)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+      new OracleParameter("vViaje", OracleDbType.Varchar2, viaje, System.Data.ParameterDirection.Input),  
+      new OracleParameter("vConfirma", OracleDbType.Varchar2, confirma, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.confirma_viaje", parameters);
+  }
+  
+
   /*public static List<object> editar_viaje(string viaje, string buque, string origen, string destino, string inicio, string eta, string zoe, string zona, string proximo_punto, string intl, decimal? lat, decimal? lon, string riocanal)
   {
     var parameters = new OracleParameter[]
@@ -911,15 +923,21 @@ public static class DaoLib
 
   public static List<object> eliminar_carga(int carga)
   {
+    return eliminar_carga(carga, 1);
+  }
+
+  public static List<object> eliminar_carga(int carga, int checkempty)
+  {
 
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vCarga", OracleDbType.Varchar2, carga, System.Data.ParameterDirection.Input),
-        new OracleParameter("checkempty", OracleDbType.Varchar2, 1, System.Data.ParameterDirection.Input),
+        new OracleParameter("checkempty", OracleDbType.Varchar2, checkempty, System.Data.ParameterDirection.Input),
     };
 
     return doCall("mbpc.eliminar_carga", parameters);
   }
+
 
   public static List<object> traer_por_codigo(string codigo)
   {
@@ -945,6 +963,28 @@ public static class DaoLib
     };
 
     return doCall("mbpc.insertar_carga", parameters);
+  }
+
+  public static List<object> crear_editar_carga(string isnew, string etapa_id, string carga_id, string tipocarga_id, string cantidad_inicial, string cantidad_entrada, string cantidad_salida, string unidad_id, string barcaza_id, string en_transito)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vNew", OracleDbType.Varchar2, isnew, System.Data.ParameterDirection.Input),  
+        new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),  
+        
+        new OracleParameter("vCargaId", OracleDbType.Varchar2, carga_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vTipo", OracleDbType.Varchar2, tipocarga_id, System.Data.ParameterDirection.Input),
+
+        new OracleParameter("vCantidadIni", OracleDbType.Varchar2, cantidad_inicial, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCantidadEnt", OracleDbType.Varchar2, cantidad_entrada, System.Data.ParameterDirection.Input),
+        new OracleParameter("vCantidadSal", OracleDbType.Varchar2, cantidad_salida, System.Data.ParameterDirection.Input),
+        
+        new OracleParameter("vUnidad", OracleDbType.Varchar2, unidad_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vBuque", OracleDbType.Varchar2, barcaza_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vEnTransito", OracleDbType.Varchar2, en_transito, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.crear_editar_carga", parameters);
   }
 
 
@@ -1253,6 +1293,17 @@ public static class DaoLib
     };
 
     return doCall("mbpc.autocomplete_remolcadores", parameters);
+  }
+
+  public static List<object> autocomplete_viajes_grp(string query, string grupo)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input),
+        new OracleParameter("vGrupo", OracleDbType.Varchar2, grupo, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.autocomplete_viajes_grp", parameters);
   }
 
   public static List<object> autocomplete_cargas(string query)
@@ -1694,6 +1745,27 @@ public static class DaoLib
     return doCall("mbpc.barcos_similares", parameters);
   }
 
+  public static List<object> barcazas_similares(string nombre)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vNombre", OracleDbType.Varchar2, nombre, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.barcazas_similares", parameters);
+  }
+
+  public static Dictionary<string,string> info_viaje(string viaje)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vViaje", OracleDbType.Varchar2, viaje, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.info_viaje", parameters)[0] as Dictionary<string,string>;
+  }
+
+  
   public static List<object> obtener_reportes_para_usuario(string usuario)
   {
     var parameters = new OracleParameter[] 
@@ -1983,6 +2055,5 @@ public static class DaoLib
       return retVal;
     }
   }
-
 
 }

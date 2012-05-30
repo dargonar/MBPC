@@ -11,7 +11,7 @@ namespace mbpc.Controllers
 {
     public class HomeController : MyController
     {
-      public static string VERSION = "1.3.16";
+      public static string VERSION = "1.3.18";
       
         //
         // GET: /Home/
@@ -49,7 +49,7 @@ namespace mbpc.Controllers
           Session["zonas"] = DaoLib.zonas_del_grupo(grp);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
-          Session["zona"] = id;
+          Session["punto"] = id;
 
           recalcular_barcos_para_punto(id);
 
@@ -68,34 +68,20 @@ namespace mbpc.Controllers
           return "";
         }
 
-        public string tipo_zona(string id)
-        {
-          string tipo = "0";
-          
-          foreach (var x in Session["zonas"] as List<object>)
-          {
-            var t = x as Dictionary<string, string>;
-            if (t["ID"] == id)
-            {
-              
-              if( t.Keys.Contains("USO") )
-                tipo = t["USO"];
 
-              break;
-            }
-          }
-
-          return tipo;
-        }
 
         public void recalcular_barcos_para_punto(string id)
         {
           //0 - fluvial
           //1 - maritimo
-          
-          var tipo = tipo_zona(id);
-          Session["tipo_punto"] = tipo;
-          if (tipo == "0")
+
+          var uso = uso_punto(id);
+          Session["uso_punto"] = uso;
+
+          var tipo = tipo_punto(id);
+          Session["tipo_punto"] = uso;
+
+          if (uso == "0")
           {
             barcos_data(id);
           }
@@ -104,17 +90,25 @@ namespace mbpc.Controllers
 
         public ActionResult RefrescarColumnas()
         {
-          if (Session["tipo_punto"].ToString() == "0")
-            return cambiarZona(Session["zona"].ToString());
+          if (Session["uso_punto"].ToString() == "0")
+            return cambiarZona(Session["punto"].ToString(), null);
 
           return Content("nop");
         }
-        
-        public ActionResult cambiarZona(string id)
+
+        public ActionResult cambiarZona(string id, string auto_select)
         {
-          Session["zona"] = id;
+          Session["punto"] = id;
           Session["barcos_data"] = BarcosDataView.EN_ZONA;
           recalcular_barcos_para_punto(id);
+          
+          //1 - maritimo
+          //0 - fluvial
+
+          if( Session["uso_punto"].ToString() == "0" ) 
+            ViewData["auto_select_fluvial"] = "B" + auto_select;
+          else
+            ViewData["auto_select_maritimo"] = auto_select;
 
           return View("columnas");
         }
@@ -125,7 +119,7 @@ namespace mbpc.Controllers
           Session["zonas"] = DaoLib.zonas_del_grupo(grupo);
 
           string id = ((Session["zonas"] as List<object>)[0] as Dictionary<string, string>)["ID"];
-          return cambiarZona(id);
+          return cambiarZona(id, null);
         }
 
         public ActionResult zonasAdyacentes(string zona, string viaje, string pasar)

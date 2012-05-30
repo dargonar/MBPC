@@ -55,6 +55,21 @@ namespace mbpc.Controllers
         return View();
       }
 
+      public ActionResult barcazas_similares(string nombre)
+      {
+        var datos = DaoLib.barcazas_similares(nombre);
+        ViewData["similares"] = datos;
+        ViewData["barcaza"] = true;
+        return View("barcos_similares");
+      }
+
+      public ActionResult Tooltip(string viaje_id)
+      {
+        //System.Threading.Thread.Sleep(2000);
+        var datos = DaoLib.info_viaje(viaje_id);
+        return View("_info_viaje", datos);
+      }
+
       public ActionResult practicos(string id)
       {
 
@@ -189,13 +204,13 @@ namespace mbpc.Controllers
 
         private ActionResult BuildResponse()
         {
-          if (Session["tipo_punto"].ToString() == "0")
+          if (Session["uso_punto"].ToString() == "0")
           {
-            barcos_data(Session["zona"].ToString());
+            barcos_data(Session["punto"].ToString());
 
             return View("columnas");
           }
-
+          
           return Content("nop");
         }
 
@@ -207,7 +222,7 @@ namespace mbpc.Controllers
 
         public ActionResult nuevo()
         {
-          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["punto"].ToString());
           return View();
         }
 
@@ -236,14 +251,28 @@ namespace mbpc.Controllers
           {
             latlon = DaoLib.parsePos(pos);
           }
-          List<object> autoeditaretapa = DaoLib.crear_viaje(buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, Convert.ToInt32(codigo_malvinas));
+          List<object> autoeditaretapa = DaoLib.crear_viaje(buque_id, desde_id, hasta_id, partida, eta, zoe, Session["punto"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, Convert.ToInt32(codigo_malvinas));
           ViewData["AutoEditarEtapa"] = autoeditaretapa;
+
+          //---------------en caso de vista maritima--------------
+          if (Session["uso_punto"].ToString() != "0")
+          {
+            var tmp = autoeditaretapa[0] as Dictionary<string,string>;
+            return Content( "nop," + tmp["ID"] +","+ tmp["VIAJE_ID"]);
+          }
+
           return BuildResponse();
+        }
+
+        public ActionResult confirmaViaje(string viaje, string confirma)
+        {
+          DaoLib.confirma_viaje(viaje, confirma);
+          return Content("ok");
         }
 
         public ActionResult editar(string id)
         {
-          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["punto"].ToString());
           ViewData["viajedata"] = DaoLib.traer_viaje(id);
 
           return View();
@@ -258,8 +287,8 @@ namespace mbpc.Controllers
               latlon = DaoLib.parsePos(pos);
             }
 
-            //DaoLib.editar_viaje(viaje_id, buque_id, desde_id, hasta_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
-            DaoLib.editar_viaje(viaje_id, buque_id, partida, eta, zoe, Session["zona"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, codigo_malvinas_inicio);
+            //DaoLib.editar_viaje(viaje_id, buque_id, desde_id, hasta_id, partida, eta, zoe, Session["punto"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal);
+            DaoLib.editar_viaje(viaje_id, buque_id, partida, eta, zoe, Session["punto"].ToString(), proximo_punto, internacional, latlon[0], latlon[1], riocanal, codigo_malvinas_inicio);
             return BuildResponse();
         }
 
@@ -274,18 +303,35 @@ namespace mbpc.Controllers
           ViewData["etapa_id"] = etapa_id["ID"];
           ViewData["viaje_id"] = viaje_id;
           ViewData["action"] = id2;
+
+          if( id2 == "terminarviaje")
+          {
+            var tmp = DaoLib.traer_cargas(int.Parse(etapa_id["ID"]));
+            if (tmp.Count != 0)
+            {
+              ViewData["tiene_carga"] = true;
+            }
+          }
+
           return View();
         }
 
         public ActionResult terminar(string viaje_id, string fecha, string escalas, string codigo_malvinas)
         {
+
+          var tipo = tipo_punto(Session["punto"].ToString());
+          var viaje = DaoLib.traer_viaje(viaje_id)[0] as Dictionary<string,string>;
+
+          if ((tipo == "1" || tipo == "6") && viaje["ESTADO_BUQUE"] != "PU")
+            throw new Exception("Para finalizar el viaje en este punto debe tener estado PU");
+
           DaoLib.terminar_viaje(viaje_id, fecha, escalas, Convert.ToInt32(codigo_malvinas));
           return BuildResponse();
         }
 
         public ActionResult terminados()
         {
-          ViewData["viajes"] = DaoLib.viajes_terminados(Session["zona"].ToString());
+          ViewData["viajes"] = DaoLib.viajes_terminados(Session["punto"].ToString());
           return View();
         }
 
@@ -295,9 +341,9 @@ namespace mbpc.Controllers
           return BuildResponse();
         }
 
-        public ActionResult editarEtapa(string viaje_id, string id2)
+        public ActionResult editarEtapa(string viaje_id, string id2, string refresh_viajes)
         {
-          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["zona"].ToString());
+          ViewData["zonas"] = DaoLib.zonas_adyacentes(Session["punto"].ToString());
           ViewData["viajedata"] = DaoLib.traer_viaje(viaje_id);
 
           ViewData["etapa"] = DaoLib.traer_etapa_viaje(int.Parse(id2));
@@ -316,6 +362,7 @@ namespace mbpc.Controllers
             ViewData["punto_control_desc"] = "N/D";
           }
 
+          ViewData["refresh_viajes"] = refresh_viajes;
           return View();
         }
 

@@ -50,7 +50,7 @@ namespace mbpc.Controllers
       public ActionResult barcazas_fondeadas(int etapa_id)
       {
         ViewData["etapa_id"] = etapa_id;
-        ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["zona"].ToString(), null);
+        ViewData["barcazas_en_zona"] = DaoLib.barcazas_en_zona(Session["punto"].ToString(), null);
         return View();
       }
 
@@ -187,6 +187,15 @@ namespace mbpc.Controllers
       {
         if (tipo_modif == null)
         {
+          
+          var etapa = (Dictionary<string,string>)DaoLib.traer_etapa_viaje(etapa_id);
+          var estado = etapa["ESTADO_BUQUE"];
+
+          var tipo = tipo_punto(Session["punto"].ToString());
+          
+          if ( tipo != "1" && tipo != "6" && estado != "PU")
+            throw new Exception("No se puede cargar/descargar fuera de puerto o muelle o en estado distinto a PU");
+          
           cantidad_entrada = cantidad_entrada.Replace(',', '.');
           cantidad_salida = cantidad_salida.Replace(',', '.');
           DaoLib.modificar_carga(carga_id, cantidad_entrada, cantidad_salida);
@@ -223,7 +232,7 @@ namespace mbpc.Controllers
         ViewData["etapa_id"] = etapa_id;
         ViewData["carga"]    = carga;
 
-        ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["zona"].ToString(), null);
+        ViewData["barcos_en_zona"] = DaoLib.barcos_en_zona(Session["punto"].ToString(), null);
         var i = 0;
         foreach (Dictionary<string, string> barco in (ViewData["barcos_en_zona"] as List<object>))
         {
@@ -376,7 +385,7 @@ namespace mbpc.Controllers
           unidad_id.ToArray(), tipo_id.ToArray(), modo.ToArray(), original.ToArray(), recibeemite.ToArray());
 
 
-        return null;
+        return Content("nop");
       }
 
       public ActionResult transferirBarcazas(string[] barcazas_origen, string[] barcazas_destino, string etapa_origen, string etapa_destino)

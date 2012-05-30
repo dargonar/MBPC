@@ -8,6 +8,14 @@ namespace mbpc.Controllers
 {
   public class AutoCompleteController : MyController
   {
+    public JsonResult autocomplete_viajes_grp(string query)
+    {
+      var grupo = Session["grupo"].ToString();
+
+      var barcazas = DaoLib.autocomplete_viajes_grp(query, grupo);
+      return Json(barcazas, JsonRequestBehavior.AllowGet);
+    }
+    
     public JsonResult barcazas(string etapa_id, string query)
     {
       var barcazas = DaoLib.autocomplete_barcazas(etapa_id, query.ToUpper());

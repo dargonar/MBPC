@@ -50,57 +50,109 @@
       $('#bandera').attr('disabled', false);
       return false;
     }
-    
+
     $("#nuevoBarcaza").submit(function () {
 
-      $('.botonsubmitb').attr('disabled', 'disabled');
+        $('.botonsubmitb').attr('disabled', 'disabled');
 
-      if ($("#matriculaN").val() == "") {
-        alert("Debe ingresar Matricula");
-        $('.botonsubmitb').removeAttr('disabled');
+        if ($("#matriculaN").val() == "") {
+            alert("Debe ingresar Matricula");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#nombreN").val() == "") {
+            alert("Debe ingresar un nombre");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#sdist").val() == "") {
+            alert("Debe ingresar la señal distintiva");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+        if ($("#inter").val() != 0 && $("#bandera").val() == null) {
+            alert("Seleccione la bandera");
+            $('.botonsubmitb').removeAttr('disabled');
+            return false;
+        }
+
+
+
+
+        /*********************************************************************************/
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: '<%= Url.Content("~/Viaje/barcazas_similares/") %>' + '?nombre=' + $("#nombreN").val(),
+            success: (function (data) {
+                $('#dialogdiv5').html(data);
+                $('#dialogdiv5').dialog({
+                    title: 'Barcaza similares',
+                    height: 400,
+                    width: 550,
+                    modal: true,
+                    close: function (event, ui) {
+                        alert($("#dialogdiv").attr('resultd'));
+
+                        if ($("#dialogdiv").attr('resultd') != 'ok') {
+                            $('#dialogdiv4').dialog('close');
+                            return;
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: $("#nuevoBarcaza").attr('action'),
+                            data: $("#nuevoBarcaza").serialize(),
+                            success: (function (data) {
+                                $('#buque_id').val(data[0].ID_BUQUE);
+                                $('#barcaza_text').val(data[0].NOMBRE);
+                                $('#dialogdiv4').dialog('close');
+                            }),
+                            error: (function (data) {
+                                var titletag = /<title\b[^>]*>.*?<\/title>/
+
+                                if (titletag != "")
+                                    alert(unescape(titletag.exec(data.responseText)));
+                                else
+                                    alert(data);
+
+                                $('.botonsubmitb').removeAttr('disabled');
+                            })
+                        });
+
+                    }
+                });
+            }),
+            error: (function (data) {
+                var titletag = /<title\b[^>]*>.*?<\/title>/
+                if (titletag != "")
+                    alert(unescape(titletag.exec(data.responseText)));
+                else
+                    alert(data);
+                $('.botonsubmitb').removeAttr('disabled');
+            })
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return false;
-      }
-
-      if ($("#nombreN").val() == "") {
-        alert("Debe ingresar un nombre");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      if ($("#sdist").val() == "") {
-        alert("Debe ingresar la señal distintiva");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      if ($("#inter").val() != 0 && $("#bandera").val() == null) {
-        alert("Seleccione la bandera");
-        $('.botonsubmitb').removeAttr('disabled');
-        return false;
-      }
-
-      $.ajax({
-        type: "POST",
-        cache: false,
-        url: $(this).attr('action'),
-        data: $(this).serialize(),
-        success: (function (data) {
-          $('#buque_id').val(data[0].ID_BUQUE);
-          $('#barcaza_text').val(data[0].NOMBRE);
-          $('#dialogdiv4').dialog('close');
-        }),
-        error: (function (data) {
-          var titletag = /<title\b[^>]*>.*?<\/title>/
-
-          if (titletag != "")
-            alert(unescape(titletag.exec(data.responseText)));
-          else
-            alert(data);
-
-          $('.botonsubmitb').removeAttr('disabled');
-        })
-      });
-      return false;
     });
   
   

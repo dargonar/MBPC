@@ -69,16 +69,14 @@ namespace mbpc.Controllers
         switch (mView)
         {
           case BarcosDataView.FULL:
-            //barcos_data(Session["zona"].ToString());
+            //barcos_data(Session["punto"].ToString());
             break;
           case BarcosDataView.EN_LIMITES:
-            barcos_data_en_limites(Session["zona"].ToString());
+            barcos_data_en_limites(Session["punto"].ToString());
             return;
-            break;
           case BarcosDataView.EN_ZONA:
-            barcos_data_en_zona(Session["zona"].ToString());
+            barcos_data_en_zona(Session["punto"].ToString());
             return;
-            break;
         }
       }
 
@@ -148,5 +146,36 @@ namespace mbpc.Controllers
       MiniProfiler.Current.AddProfilerResults(newProfiler[0]);
       MiniProfiler.Current.AddProfilerResults(newProfiler[1]);
     }
+
+    public string uso_punto(string id)
+    {
+      return datos_puntos(id, "0", "USO");
+    }
+
+    public string tipo_punto(string id)
+    {
+      return datos_puntos(id, "0", "TIPO");
+    }
+
+    private string datos_puntos(string id, string defa, string prop)
+    {
+      string tipo = defa;
+
+      foreach (var x in Session["zonas"] as List<object>)
+      {
+        var t = x as Dictionary<string, string>;
+        if (t["ID"] == id)
+        {
+
+          if (t.Keys.Contains(prop))
+            tipo = t[prop];
+
+          break;
+        }
+      }
+
+      return tipo;
+    }
+
   }
 }

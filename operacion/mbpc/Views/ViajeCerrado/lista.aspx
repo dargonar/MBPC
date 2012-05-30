@@ -3,7 +3,12 @@
 <div id="linkos" style="display:none">
   <a id="l1" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarEtapa/") + "?id=%ETAPA_ID%"%>" onclick="return editarEtapa(this);">Editar puntos</a>
   <a id="l2" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarEtapaFecha/") + "?id=%ETAPA_ID%"%>" onclick="return editarFechaEtapa(this);">Editar fecha</a>
+  
   <a id="l3" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarViajeFecha/") + "?viaje_id=%VIAJE_ID%"%>" onclick="return editarFechaViaje(this);">Editar fecha</a>
+
+  <a id="l4" href="#" xhref="<%= Url.Content("~/ViajeCerrado/nuevaCarga/") + "?etapa_id=%PETO_ID%"%>" onclick="return nuevaCarga(this);">Nueva Carga</a>
+  <a id="l5" href="#" xhref="<%= Url.Content("~/ViajeCerrado/editarCarga/") + "?carga_id=%CARGA_ID%"%>" onclick="return editarCarga(this);">Editar Carga</a>
+  <a id="l6" href="#" xhref="<%= Url.Content("~/ViajeCerrado/eliminarCarga/") + "?carga_id=%CARGA_ID%"%>" onclick="return eliminarCarga(this);">Eliminar Carga</a>
 </div>
 
 <div class="contextMenu" id="myMenu1" style="display:none">
@@ -19,6 +24,13 @@
   </ul>
 </div>
 
+<div class="contextMenu" id="myMenu3" style="display:none">
+  <ul style="width: 200px">
+    <li id="m4"><span style="font-size:80%; font-family:Verdana">Nueva Carga</span></li>
+    <li id="m5"><span style="font-size:80%; font-family:Verdana">Editar Carga</span></li>
+    <li id="m6"><span style="font-size:80%; font-family:Verdana">Eliminar Carga</span></li>
+  </ul>
+</div>
 
 <div id="area" style="padding-bottom:0px;">
   <div class="split"></div>	
@@ -124,6 +136,9 @@ function runlink(id, linkname)
   var href = $('#'+linkname).attr('xhref');
   href = href.replace('%ETAPA_ID%', _ID);
   href = href.replace('%VIAJE_ID%', _ID);
+  href = href.replace('%CARGA_ID%', _ID);
+
+  href = href.replace('%PETO_ID%', $(id).getRowData(gsr)['ETAPA_ID']);
 
   $('#'+linkname).attr('href', href).click();
   
@@ -144,6 +159,50 @@ function editarFechaEtapa(sender){
 function editarFechaViaje(sender){
     var href = $(sender).attr('href');
     modificarEtapaPopUp(href, 'Editar Fecha Viaje', 250, 395);
+    return true;
+}
+
+function editarCarga(sender){
+    var href = $(sender).attr('href');
+    modificarEtapaPopUp(href, 'Editar Carga', 512, 395);
+    return false;
+}
+
+function nuevaCarga(sender, grilla){
+    
+    if( grilla )
+        grillon = grilla;
+    
+    var href = $(sender).attr('href');
+    modificarEtapaPopUp(href, 'Nueva Carga', 512, 395);
+    return false;
+}
+
+
+
+function eliminarCarga(sender){
+
+    if(!confirm('Esta seguro que desea eliminar esta carga?'))
+        return false;
+
+    var href = $(sender).attr('href');
+
+    $("#fullscreen").css("display", "block");
+
+    $.ajax({
+        type: "GET",
+        cache: false,
+        url: href,
+        success: (function (data) {
+            $("#fullscreen").css("display", "none");
+            $(grillon).trigger('reloadGrid');
+        }),
+        error: (function (data) {
+            $("#fullscreen").css("display", "none");
+            var titletag = /<title\b[^>]*>.*?<\/title>/
+            alert(titletag.exec(data.responseText));
+        })
+    });
     return true;
 }
 

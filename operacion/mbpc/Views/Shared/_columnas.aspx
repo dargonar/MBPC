@@ -44,7 +44,7 @@
           <% } %>
     </div>
 	<div class="split-bar"></div>
-	<h1>Viaje en mi zona de responsabilidad <span id="sbox" style="display:none"><input id="searchbox" type="text" /><div class="searchlabel"> Buscar Barco:&nbsp;</div></span></h1>
+	<h1>Viaje en mi zona de responsabilidad&nbsp;<span id="sbox" style="display:none"><input id="searchbox" type="text" /><div class="searchlabel"> Buscar Barco:&nbsp;</div></span></h1>
 	  
     <!-- center -->
     <div id="leftcol" class="container" style="height: 351px;">
@@ -230,12 +230,6 @@
 
 <select size="6" id="searchlist"></select>
 
-
-<% if (ViewData.ContainsKey("AutoEditarEtapa")) { 
-   Dictionary<string,string> AutoEditarEtapa = (ViewData["AutoEditarEtapa"] as List<object>)[0] as Dictionary<string, string>;
-   Response.Write("<script type=\"text/javascript\">$('#B" + AutoEditarEtapa["VIAJE_ID"] + " .editaretapalink').click()</script>");
-} %>
-
 <script type="text/javascript">
 
   //$("#ecuatrigrama").html('Costera <%=ViewData["cuatrigrama"]%>');
@@ -263,7 +257,9 @@
   }
 
   buildButtons();
-  $('.info').hoverbox();
+  
+  $('a.info').cluetip({showTitle: false});
+  $('span.info').hoverbox();
   $('.estados').hoverbox();
 
   $('#searchbox').bind('keydown', 'return', function () {
@@ -310,4 +306,9 @@
 
       return false;
   });
+
+  <% if ( ViewData["auto_select_fluvial"] != null ) { %>
+  var el = '#' + '<%=ViewData["auto_select_fluvial"]%>';
+  $(el).parent().scrollTo(el);
+  <% } %> 
 </script>

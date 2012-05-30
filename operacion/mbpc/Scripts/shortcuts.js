@@ -17,10 +17,12 @@ $(document).ready(function () {
         return false;
     });
 
+    /*
     $(this).bind('keydown', 'ctrl+m', function () {
         $('.selectedbox .editaretapalink').click();
         return false;
     });
+    */
 
     $(this).bind('keydown', 'ctrl+i', function () {
         $('.selectedbox .editarviajelink').click();
@@ -28,7 +30,7 @@ $(document).ready(function () {
     });
 
     $(this).bind('keydown', 'ctrl+d', function () {
-      $('.agregarreportelink').click();
+        $('.agregarreportelink').click();
         return false;
     });
 
@@ -83,7 +85,49 @@ $(document).ready(function () {
         $('#sbox').show();
         $('#searchbox').val('');
         $('#searchbox').focus();
+
+        $('#sbox2').hide();
         return false;
+    });
+
+    $(this).bind('keydown', 'ctrl+m', function () {
+        $('#sbox2').show();
+        $('#searchbox2').val('');
+        $('#searchbox2').focus();
+
+        $('#sbox').hide();
+        return false;
+    });
+
+    $('#searchbox2').bind('keydown', 'esc', function () {
+        $('#sbox2').hide();
+    });
+
+    $("#searchbox2").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                url: '/Autocomplete/autocomplete_viajes_grp',
+                dataType: "json",
+                data: { query: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            value: item.DESCRIPCION,
+                            label: item.DESCRIPCION,
+                            id: item.ID,
+                            viaje: item.VIAJE
+                        }
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            $('#sbox2').hide();
+            cambiarZona('/Home/cambiarZona?id=' + ui.item.id + '&auto_select=' + ui.item.viaje);
+            return false;
+        }
     });
 
 

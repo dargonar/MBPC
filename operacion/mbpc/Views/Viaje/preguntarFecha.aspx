@@ -21,12 +21,20 @@
   <form id="soloFecha" action="<%= url %>">
     <input type="hidden" id="viaje" name="viaje_id" value="<%= ViewData["viaje_id"] %>"/>
     <input type="hidden" id="etapa_id" name="id2" value="<%= ViewData["etapa_id"] %>"/>
-    <label><%= titulo %></label>
-    <input style="float:left; width: 300px" autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/>
+    
+    <% if (ViewData["tiene_carga"] != null) { %>
+    
+        <div style="width:100%;height:40px; vertical-align:middle; text-align:center;background:#ff0000;color:#ffffff">Este viaje contiene cargas aún.<br />Descargue antes de terminar el viaje.</div>
+        <div style="clear:both"></div>
+        <br />
+    <% } %>
+    
+    <label><%= titulo %></label><br />
+    <input style="float:left; width: 300px" autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/><br />
     <div style="clear:both"></div>
     <% if (ViewData["action"].ToString() == "terminarviaje") { %>
-    <label>Escalas</label>
-    <input style="float:left; width: 300px" autocomplete="off"  name="escalas" id="escalas" type="text" value=""/>
+    <label>Escalas</label><br />
+    <input style="float:left; width: 300px" autocomplete="off"  name="escalas" id="escalas" type="text" value=""/><br />
     <div style="clear:both"></div>
     <label>¿Va a o viene de  Malvinas?</label><br />
     <%= Html.DropDownList("codigo_malvinas"

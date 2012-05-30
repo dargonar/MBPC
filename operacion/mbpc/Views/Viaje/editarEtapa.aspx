@@ -555,6 +555,22 @@
     return false;
   });
 
+
+  <% if( ViewData["refresh_viajes"] != null && ViewData["refresh_viajes"].ToString() == "1" ) { %>
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: '<%= Url.Content("~/Home/RefrescarColumnas") %>',
+      success: function (data) {
+        if (data == "nop")
+        $('#list').trigger('reloadGrid');
+      else
+        $("#columnas").html(data);
+      },
+      error: showTitle
+    });
+  <% } %>
+
 </script>
 
 

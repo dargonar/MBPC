@@ -306,7 +306,7 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: vv == 1 ? 150 : 250,
+            height: vv == 1 ? 150 : 302,
             width: 333,
             modal: true,
             title: 'Ingrese Fecha'
@@ -866,31 +866,29 @@
     
     //element, url  como parametro, llena diaglogdiv
     function editaretapa(aelement) {
-
+    
       $("#fullscreen").css("display", "block");
-
       $.ajax({
         type: "GET",
         cache: false,
         //url: url,
-        url: $(aelement).attr("href"),
+        url: typeof(aelement) == 'string' ? aelement : $(aelement).attr("href"),
         success: (function (data) {
-          $('#dialogdiv').html(data);
-          $("#fullscreen").css("display", "none");
-          $('#dialogdiv').dialog({
+            $('#dialogdiv').html(data);
+            $("#fullscreen").css("display", "none");
+            $('#dialogdiv').dialog({
             height: 415,
             width: 690,
             modal: true,
             title: 'Editar Etapa/Viaje'
-          });
-          $("#caladoproa").focus();
-
-
+            });
+    
+            $("#caladoproa").focus();
         }),
         error: (function (data) {
-          $("#fullscreen").css("display", "none");
-          var titletag = /<title\b[^>]*>.*?<\/title>/
-          alert(titletag.exec(data.responseText));
+            $("#fullscreen").css("display", "none");
+            var titletag = /<title\b[^>]*>.*?<\/title>/
+            alert(titletag.exec(data.responseText));
         })
       });
 
@@ -898,22 +896,62 @@
     }
 
     //element como parametro, llena diaglogdiv
-    function editarcargas(aelement) {
+     
+     function editarcargas(aelement) {
+        return editarcargas_ex(aelement, false, 0);
+     }
+     
+     function editarcargas_ex(aelement, check_at_least_one, viaje, etapa_id) {
 
       $("#fullscreen").css("display", "block");
+
+      var catmp;
 
       $.ajax({
         type: "GET",
         cache: false,
-        url: $(aelement).attr("href"),
+        url: typeof(aelement) == 'string' ? aelement : $(aelement).attr("href"),
         success: (function (data) {
-          $('#dialogdiv').html(data);
+          
           $("#fullscreen").css("display", "none");
+
+          $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
             height: 400,
             width: 580,
             modal: true,
-            title: 'Editar Cargas'
+            title: 'Editar Cargas',
+            closeOnEscape: false,
+            beforeClose: function(event, ui) {
+                
+                if(!check_at_least_one)
+                    return;
+
+                var confirma = '1';
+                
+                if( $(".trcarga").length == 0 )
+                {
+                    if( confirm("El viaje no sera dado de alta ya que no posee cargas. Esta seguro que desea cancelar?") )
+                        confirma = '0';
+                    else
+                        return false;
+                }
+
+                $.ajax({
+                    type : "GET",
+                    cache: false,
+                    url  : '/Viaje/confirmaViaje' + '?confirma=' + confirma + '&viaje=' + viaje
+                });
+
+                catmp = confirma;
+                return true;
+            },
+            close: function(event, ui) {
+                $(this).dialog( "destroy" );
+                if( catmp == '1' ) {
+                    editaretapa('/Viaje/editarEtapa/?id2='+etapa_id+'&viaje_id='+viaje+'&refresh_viajes=1');
+                }
+            }
           });
 
         }),
@@ -1107,7 +1145,7 @@
         $.ajax({
           type: "GET",
           cache: false,
-          url: $(aelement).attr("href"),
+          url: typeof(aelement) == 'string' ? aelement : $(aelement).attr("href"),
           success: (function (data) {
             $("#columnas").html(data);
             $("#fullscreen").css("display", "none");

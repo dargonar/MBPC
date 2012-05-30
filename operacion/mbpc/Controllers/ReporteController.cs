@@ -897,41 +897,44 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
           //Print?
           if (print_me != null)
           {
-            StringWriter sw = new StringWriter();
+            //StringWriter sw = new StringWriter();
 
-            //First line for column names
-            var first = true;
+            ////First line for column names
+            //var first = true;
             
-            foreach(Dictionary<string, string> item in rs) 
-            {
-              if (first) 
-              {
-                string tmp = string.Empty;
-                foreach(var kv in item) 
-                {
-                  if(kv.Key.EndsWith("_fmt")) continue;
-                  tmp = tmp + "\"" + kv.Key + "\",";
-                }
+            //foreach(Dictionary<string, string> item in rs) 
+            //{
+            //  if (first) 
+            //  {
+            //    string tmp = string.Empty;
+            //    foreach(var kv in item) 
+            //    {
+            //      if(kv.Key.EndsWith("_fmt")) continue;
+            //      tmp = tmp + "\"" + kv.Key + "\",";
+            //    }
 
-                first = false;
-                sw.WriteLine(tmp.Substring(0,tmp.Length-1));
-              }
+            //    first = false;
+            //    sw.WriteLine(tmp.Substring(0,tmp.Length-1));
+            //  }
 
-              string tmp2 = string.Empty;
-              foreach(var kv in item) 
-              {
-                if(kv.Key.EndsWith("_fmt")) continue;
-                tmp2 = tmp2 + "\"" + kv.Value + "\",";
-              }
+            //  string tmp2 = string.Empty;
+            //  foreach(var kv in item) 
+            //  {
+            //    if(kv.Key.EndsWith("_fmt")) continue;
+            //    tmp2 = tmp2 + "\"" + kv.Value + "\",";
+            //  }
               
-              sw.WriteLine(tmp2.Substring(0,tmp2.Length-1));
-            }
+            //  sw.WriteLine(tmp2.Substring(0,tmp2.Length-1));
+            //}
 
-            Response.AddHeader("Content-Disposition", "attachment; filename=test.csv");
-            Response.ContentType = "text/csv";
-            Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
-            Response.Write(sw);
-            Response.End();
+            //Response.AddHeader("Content-Disposition", "attachment; filename=test.csv");
+            //Response.ContentType = "text/csv";
+            //Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
+            //Response.Write(sw);
+            //Response.End();
+
+            var ew = new mbpc.Models.ExcellWriter();
+            ew.Proccess(rep["NOMBRE"] + ".xls", rs, Response);
 
             return null;
           }

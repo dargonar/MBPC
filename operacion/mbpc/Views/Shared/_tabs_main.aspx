@@ -4,7 +4,7 @@
         <% foreach (Dictionary<string, string> zona in (Session["zonas"] as List<object>))
        {
          string classstr = string.Empty;
-         if ( Session["zona"].ToString() == zona["ID"].ToString() ) classstr = "class=\"megaestiloselected\"";
+         if ( Session["punto"].ToString() == zona["ID"].ToString() ) classstr = "class=\"megaestiloselected\"";
          string nombre = string.Empty;
          
         if( zona["KM"] == "0" )

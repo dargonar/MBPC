@@ -254,6 +254,14 @@
       return false;
     }
 
+    var q = parseInt($('#cantidad').val());
+    if( q == 0 && $("#codigo").val() != 'BAL' && $("#codigo").val() != 'PND' )
+    {
+      alert("La cantidad ingresada no puede ser cero.");
+      $('.botonsubmit').removeAttr('disabled');
+      return false;
+    }
+
     if ( $("#enbarcaza").is(":checked") && $("#buque_id").val()=='' ) {
       alert("Debe ingresar la barcaza");
       $('.botonsubmit').removeAttr('disabled');

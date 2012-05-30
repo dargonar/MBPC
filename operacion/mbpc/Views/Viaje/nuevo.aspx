@@ -130,6 +130,7 @@
          minLength: 2,
          select: function (event, ui) {
            
+
            if( ui.item.costera != '' )
            {
             $("#buque_id").val('');
@@ -137,9 +138,10 @@
             event.preventDefault();
             return false;
            }
-           
+
            $("#buque_id").val(ui.item.id_buque);
            $('#internacional').val( (ui.item.tipo == "nacional") ? "0" : "1");
+           return true;
          },
          open: function () {
            $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
@@ -317,14 +319,25 @@
                }
          }         
 
+         //alert('mando=>'+$('#buque_id').val());
+
+         //HACK!!!!???
+         //alert( $('#nuevoViaje').serialize() );
+         datatmp = $(this).serialize();
+         datatmp = datatmp.replace('buque_id=&','buque_id='+$('#buque_id').val()+'&');
+
          $.ajax({
              type: "POST",
              cache: false,
              url: $(this).attr('action'),
-             data: $(this).serialize(),
+             data: datatmp,
              success: (function (data) {
-                if (data == "nop")
-                  $('#list').trigger('reloadGrid');
+                if ( data.substring(0,3) == "nop" )
+                {
+                    var parts = data.split(',');
+                    editarcargas_ex('/Carga/ver/'+parts[1], true, parts[2], parts[1]);
+                    //$('#list').trigger('reloadGrid');
+                }
                 else
                   $("#columnas").html(data);
 

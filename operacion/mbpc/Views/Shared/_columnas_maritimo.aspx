@@ -2,8 +2,8 @@
 
 <div id="linkos" style="display:none">
 <a id="l0" href="#" xhref="<%= Url.Content("~/Viaje/agregarReporte/") + "?id=%SHIPID%&nombre=%NOMBRE%"%>" onclick="return agregarreporte(this);">Agregar Reporte</a>
-<a id="l1" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/%SHIPID%/false"%>" onclick="return dialogozonas(this,'Proximo Destino');">Proximo Destino</a>
-<a id="l2" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["zona"] + "/%SHIPID%" %>" onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="#" class="pasarbarcolink" >Pasar Barco</a>
+<a id="l1" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["punto"] + "/%SHIPID%/false"%>" onclick="return dialogozonas(this,'Proximo Destino');">Proximo Destino</a>
+<a id="l2" href="#" xhref="<%= Url.Content("~/Home/zonasAdyacentes/") + Session["punto"] + "/%SHIPID%" %>" onclick="fx(this);return dialogozonas(this,'Pasar Barco',true);" nextdest="#" class="pasarbarcolink" >Pasar Barco</a>
 <a id="l3" href="#" xhref="<%= Url.Content("~/Viaje/preguntarFecha/") + "%SHIPID%/terminarviaje" %>" onclick="return preguntarfecha(this,2);">Terminar Viaje</a>
 <a id="l4" href="#" xhref="<%= Url.Content("~/Viaje/editarEtapa/") +  "%SHIPID%/%ETAPAID%" %>" onclick="return editaretapa(this);" class="editaretapalink">Editar Etapa/Viaje</a>
 <a id="l5" href="#" xhref="<%= Url.Content("~/Viaje/Acompanantes/") + "%ETAPAID%" %>" onclick="return elegiracompanante(this);return false;">Acompañantes</a>
@@ -119,7 +119,7 @@
   var mygrid;
   $(function () {
     mygrid = $("#list").jqGrid({
-      url: '/Viaje/ListJson?VESTADO=0&PID=<%=Session["zona"].ToString()%>',
+      url: '/Viaje/ListJson?VESTADO=0&PID=<%=Session["punto"].ToString()%>',
       datatype: 'json',
       mtype: 'GET',
       colNames: ["PID", "ID", "COSTERA", "ETAPA", "PROXDEST", "ID_BUQUE", "Buque", "OMI", "Matricula", "Señal Dist.", "Bandera", "Lat", "Lon", "Origen", "Destino", "Estado", "Ultimo Reporte"],

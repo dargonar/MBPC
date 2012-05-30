@@ -16,7 +16,7 @@ namespace mbpc.Controllers
           bandera = "ARGENTINA";
         }
 
-        if (DaoLib.row_count(string.Format("buques where matricula='{0}' and bandera='{1}' and (Upper(TIPO_BUQUE) LIKE 'BARCAZA%' OR Upper(TIPO_BUQUE) LIKE 'BALSA%')", matricula, bandera)) != 0)
+        if (DaoLib.row_count(string.Format("buques_new where matricula='{0}' and bandera='{1}' and (Upper(TIPO_BUQUE) LIKE 'BARCAZA%' OR Upper(TIPO_BUQUE) LIKE 'BALSA%')", matricula, bandera)) != 0)
         {
           throw new Exception("Ya existe una barcaza con esa matricula");
         }        
@@ -40,7 +40,7 @@ namespace mbpc.Controllers
 
       public JsonResult crearBuque(string nombre, string matricula, string sdist, string bandera, string internacional, string servicio, string mmsi)
       {
-        if (DaoLib.row_count(string.Format("buques where sdist='{0}'",sdist)) != 0)
+        if (DaoLib.row_count(string.Format("buques_new where sdist='{0}'", sdist)) != 0)
         {
           throw new Exception("Ya existe un buque con esa senal distintiva");
         }
@@ -48,7 +48,7 @@ namespace mbpc.Controllers
         if (internacional != "1")
         {
           bandera = "ARGENTINA";
-          if (DaoLib.row_count(string.Format("buques where matricula='{0}' and bandera='{1}'", matricula, bandera)) != 0)
+          if (DaoLib.row_count(string.Format("buques_new where matricula='{0}' and bandera='{1}'", matricula, bandera)) != 0)
           {
             throw new Exception("Ya existe un buque nacional con esa matricula");
           }
@@ -57,8 +57,8 @@ namespace mbpc.Controllers
         }
         else
         {
-          
-          if (DaoLib.row_count(string.Format("buques where nro_omi='{0}'", matricula)) != 0)
+
+          if (DaoLib.row_count(string.Format("buques_new where nro_omi='{0}'", matricula)) != 0)
           {
             throw new Exception("Ya existe un buque internacional con ese numero OMI");
           }

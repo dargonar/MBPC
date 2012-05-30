@@ -51,6 +51,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI">
+      <HintPath>Lib\NPOI.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.2.30, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\app\Computer\product\11.2.0\client_1\odp.net\bin\4\Oracle.DataAccess.dll</HintPath>
@@ -93,6 +96,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="jqUtil.cs" />
+    <Compile Include="Models\ExcellWriter.cs" />
     <Compile Include="Models\WebCompressionFilter.cs" />
     <Compile Include="Models\form.cs" />
     <Compile Include="Models\hlp.cs" />
@@ -164,6 +168,8 @@
     <Content Include="Views\Reporte\_result.aspx" />
     <Content Include="Views\Reporte\_params.aspx" />
     <Content Include="Views\Shared\BarcazaItem.ascx" />
+    <Content Include="Views\Shared\_info_viaje.aspx" />
+    <Content Include="Views\Shared\_auto_edit_carga.aspx" />
     <Content Include="Views\Shared\_boton_edicion_cargas.aspx" />
     <Content Include="Views\Shared\_columnas_maritimo.aspx" />
     <Content Include="Views\Shared\_buques.aspx" />
@@ -176,6 +182,7 @@
     <Content Include="Views\Shared\_tablareporte.aspx" />
     <Content Include="Views\Carga\barcoenzona.aspx" />
     <Content Include="Views\Shared\_tabs_main.aspx" />
+    <Content Include="Views\ViajeCerrado\editarCarga.aspx" />
     <Content Include="Views\ViajeCerrado\_cargas_subgrid.aspx" />
     <Content Include="Views\ViajeCerrado\editarEtapa.aspx" />
     <Content Include="Views\ViajeCerrado\editarEtapaFecha.aspx" />
