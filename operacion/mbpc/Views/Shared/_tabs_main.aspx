@@ -69,7 +69,7 @@
         <a id="agregar_reporte" href="<%= Url.Content("~/Viaje/agregarReporte/") %>" onclick="return agregarreporte(this);" class="agregarreportelink"> Agregar Reporte</a>
         </div>
 	<% } %>
-       <%Html.RenderPartial("_boton_edicion_cargas"); %>
+       <%//Html.RenderPartial("_boton_edicion_cargas"); %>
 
       </ul>
   <div class="split"></div>	
