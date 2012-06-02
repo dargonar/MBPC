@@ -47,7 +47,7 @@ CREATE OR REPLACE package dev_mbpc as
 
   procedure info_viaje( vViaje in varchar2, usrid in number, vCursor out cur);
 
-  
+
   procedure reporte_diario (vGrupo in varchar2, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure datos_del_usuario(vid in varchar2, usrid in number, vCursor out cur );
   procedure todos_los_pdc(usrid in number, vCursor out cur);
@@ -194,7 +194,6 @@ CREATE OR REPLACE package dev_mbpc as
   procedure obtener_opciones_malvinas(v_va_a_malvinas in INTEGER, usrid in number, vCursor out cur);
 
 end;
-
 
 
 
@@ -433,7 +432,7 @@ CREATE OR REPLACE package body dev_mbpc as
       select v.ID, v.BUQUE_ID, v.ESTADO_BUQUE, v.BARCAZAS_LISTADO,
              b.NOMBRE, b.NRO_ISMM, b.MATRICULA, b.SDIST, b.NRO_OMI,
              e.DESTINO_ID, e.ID ETAPA_ID, e.sentido,
-             st.ESTADO ESTADO_TEXT, 
+             st.ESTADO ESTADO_TEXT,
              CASE WHEN v.NOTAS is not null THEN 1 ELSE 0 END tiene_notas
 
       from tbl_viaje v
@@ -460,7 +459,7 @@ CREATE OR REPLACE package body dev_mbpc as
       select v.ID, v.BUQUE_ID, v.ESTADO_BUQUE, v.BARCAZAS_LISTADO,
              b.NOMBRE, b.NRO_ISMM, b.MATRICULA, b.SDIST, b.NRO_OMI,
              e.DESTINO_ID, e.ID ETAPA_ID, e.sentido2 sentido,
-             st.ESTADO ESTADO_TEXT, 
+             st.ESTADO ESTADO_TEXT,
              CASE WHEN v.NOTAS is not null THEN 1 ELSE 0 END tiene_notas
 
       from tbl_viaje v
@@ -484,7 +483,7 @@ CREATE OR REPLACE package body dev_mbpc as
       select v.ID, v.BUQUE_ID, v.ESTADO_BUQUE, v.BARCAZAS_LISTADO,
              b.NOMBRE, b.NRO_ISMM, b.MATRICULA, b.SDIST, b.NRO_OMI,
              e.DESTINO_ID, e.ID ETAPA_ID, e.sentido3 sentido,
-             st.ESTADO ESTADO_TEXT, 
+             st.ESTADO ESTADO_TEXT,
              CASE WHEN v.NOTAS is not null THEN 1 ELSE 0 END tiene_notas
 
       from tbl_viaje v
@@ -670,7 +669,8 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
-      select rc.nombre canal, rck.km km, nro_etapa, to_char(created_at ,'YYDD-MM-yy HH:MI:SS') created_at, e.id from tbl_etapa e
+      select rc.nombre canal, rck.km km, nro_etapa, to_char(e.created_at ,'YYDD-MM-yy HH:MI:SS') created_at, e.id 
+      from tbl_etapa e
         left join tbl_puntodecontrol pdc on actual_id = pdc.id
         left join rios_canales_km rck on rck.id = pdc.rios_canales_km_id
         left join rios_canales rc on rck.id_rio_canal = rc.id
@@ -734,7 +734,7 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     select * into etapa from tbl_etapa where id=vEtapa;
     open vCursor for
-      select p.id, p.created_at, p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal
+      select p.id, p.fecha, p.etapa_id, p.latitud, p.longitud, p.rumbo, p.velocidad, p.comentario, e.descripcion, p.tipo_id, p.estado, rc.nombre || ' - ' || rck.unidad || ' ' || rck.km riocanal
       from tbl_evento p
       left join tbl_tipoevento e on p.tipo_id = e.id
       left join rios_canales_km rck on p.rios_canales_km_id = rck.id
@@ -820,7 +820,7 @@ CREATE OR REPLACE package body dev_mbpc as
 
       FOR barcaza in ( select distinct( c.buque_id ), b.nombre from tbl_cargaetapa c
                       join tbl_tipo_carga tc on c.tipocarga_id = tc.id
-                      join tbl_unidad u on c.unidad_id = u.id
+                      join tbl_unidad u on tc.unidad_id = u.id
                       left join buques_new b on b.ID_BUQUE = c.buque_id
                       where c.etapa_id = vEtapa and c.buque_id IS NOT NULL)
       LOOP
@@ -916,11 +916,11 @@ CREATE OR REPLACE package body dev_mbpc as
              ','||Trim(b.nombre)||','||Trim(b.bandera)||','||Trim(b.nro_ismm)||','||Trim(b.sdist)||','||b.tipo
              into temp3 FROM buques_new b where b.id_buque=vBuque;
 
-      INSERT INTO tbl_viaje ( id, buque_id, origen_id, destino_id, fecha_salida, eta,
+      INSERT INTO tbl_viaje (buque_id, origen_id, destino_id, fecha_salida, eta,
                               zoe, latitud, longitud, created_at, rios_canales_km_id, riokm_actual,
                                created_by, updated_at, updated_by, buque_info, codigo_malvinas_inicio, estado )
 
-      VALUES ( id_cargas.nextval, vBuque, vOrigen, vDestino, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vEta, 'DD-MM-yy HH24:mi'),
+      VALUES (vBuque, vOrigen, vDestino, TO_DATE(vInicio, 'DD-MM-yy HH24:mi'), TO_DATE(vEta, 'DD-MM-yy HH24:mi'),
               TO_DATE(vZoe, 'DD-MM-yy HH24:mi'), lat, lon, tempdate, riokm, posicion.riokm,
               usrid, tempdate, usrid, temp3, vCodigoMalvinas, 1000 ) returning id into temp;
 
@@ -938,6 +938,7 @@ CREATE OR REPLACE package body dev_mbpc as
   ---------------------------------------------------------------------------------------------------------------
   -- Confirma la creacion del viaje
   procedure confirma_viaje(vViaje in varchar2, vConfirma in varchar2, usrid in number, vCursor out cur) is
+    tmp_var_punto tbl_puntodecontrol%ROWTYPE;
   begin
 
       IF vConfirma = '0' THEN
@@ -950,11 +951,26 @@ CREATE OR REPLACE package body dev_mbpc as
         delete from tbl_viaje WHERE id = vViaje;
 
       ELSE
+
+        --Pasamos el viaje a estado activo
         update tbl_viaje
           set
-            estado = 0,
-            estado_buque='ZR'
+            estado        = 0
           where id=vViaje;
+        
+        --Si fue creado en un punto de control 1 o 6, estado = ZR
+        select pdc.* into tmp_var_punto 
+        from tbl_puntodecontrol pdc 
+        left join tbl_etapa e on pdc.id=e.actual_id 
+        WHERE e.viaje_id=vViaje;
+
+        IF tmp_var_punto.tipo = 1 or tmp_var_punto.tipo = 6 THEN
+          update tbl_viaje
+            set
+              estado_buque  = 'ZR'
+            where id=vViaje;
+        END IF;
+
       END IF;
 
   end confirma_viaje;
@@ -1292,8 +1308,8 @@ CREATE OR REPLACE package body dev_mbpc as
     --END IF;
     --end hack--
 
-    insert into tbl_cargaetapa ( id, tipocarga_id, CANTIDAD_ENTRADA, CANTIDAD_SALIDA, CANTIDAD_INICIAL, CANTIDAD, unidad_id, etapa_id, buque_id )
-    ( select carga_seq.nextval, tipocarga_id, 0, 0, cantidad, cantidad, unidad_id, replace(etapa_id, etapa_id, etapa.id), buque_id
+    insert into tbl_cargaetapa ( id, tipocarga_id, CANTIDAD_ENTRADA, CANTIDAD_SALIDA, CANTIDAD_INICIAL, CANTIDAD, etapa_id, buque_id )
+    ( select carga_seq.nextval, tipocarga_id, 0, 0, cantidad, cantidad, replace(etapa_id, etapa_id, etapa.id), buque_id
     from tbl_cargaetapa where etapa_id = temp );
 
     --if posicion.uso = 0 THEN
@@ -1615,8 +1631,8 @@ CREATE OR REPLACE package body dev_mbpc as
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
     --  [412]
     select * into etapa from tbl_etapa where id = vEtapaId;
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, UNIDAD_ID, ETAPA_ID, BUQUE_ID )
-      VALUES ( carga_seq.nextval, 412, 0, 0, 0, vEtapaId, vBarcazaId) returning id into temp;
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, ETAPA_ID, BUQUE_ID )
+      VALUES ( carga_seq.nextval, 412, 0, 0, vEtapaId, vBarcazaId) returning id into temp;
 
     --nuevo log
     posicion_viaje(etapa.viaje_id);
@@ -1642,8 +1658,8 @@ CREATE OR REPLACE package body dev_mbpc as
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
     --  [412]
     select * into etapa from tbl_etapa where id = vEtapaId;
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, UNIDAD_ID, ETAPA_ID, BUQUE_ID )
-      VALUES ( carga_seq.nextval, 412, 0, 0, 0, vEtapaId, vBarcazaId) returning id into temp;
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, ETAPA_ID, BUQUE_ID )
+      VALUES ( carga_seq.nextval, 412, 0, 0, vEtapaId, vBarcazaId) returning id into temp;
 
     --nuevo log
     posicion_viaje(etapa.viaje_id);
@@ -1663,7 +1679,7 @@ CREATE OR REPLACE package body dev_mbpc as
            u.nombre unidad, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE
            from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
-    join tbl_unidad u on c.unidad_id = u.id
+    join tbl_unidad u on tc.unidad_id = u.id
     left join buques_new b on b.ID_BUQUE = c.buque_id
     where c.etapa_id = vEtapaId order by barcaza;
   end traer_cargas;
@@ -1672,10 +1688,10 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     open vCursor for
     select c.etapa_id, tc.nombre, c.cantidad, c.cantidad_inicial, c.cantidad_entrada, c.cantidad_salida,
-           u.nombre unidad, c.unidad_id, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE, c.en_transito
+           u.nombre unidad, tc.unidad_id, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE, c.en_transito
            from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
-    join tbl_unidad u on c.unidad_id = u.id
+    join tbl_unidad u on tc.unidad_id = u.id
     left join buques_new b on b.ID_BUQUE = c.buque_id
     where c.id = vCargaId order by barcaza;
   end traer_carga;
@@ -1693,7 +1709,7 @@ CREATE OR REPLACE package body dev_mbpc as
     c.en_transito
     from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
-    join tbl_unidad u on c.unidad_id = u.id
+    join tbl_unidad u on tc.unidad_id = u.id
     where c.etapa_id = vEtapaId and c.buque_id is null and c.en_transito = 0;
   end traer_cargas_nobarcazas;
 
@@ -1713,7 +1729,7 @@ CREATE OR REPLACE package body dev_mbpc as
     open vCursor for
     select distinct( c.buque_id ), b.nombre from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
-    join tbl_unidad u on c.unidad_id = u.id
+    join tbl_unidad u on tc.unidad_id = u.id
     left join buques_new b on b.ID_BUQUE = c.buque_id
     where c.etapa_id = vEtapa and c.buque_id IS NOT NULL;
   end traer_barcazas_de_buque;
@@ -1786,8 +1802,8 @@ CREATE OR REPLACE package body dev_mbpc as
         select * into etapa from tbl_etapa where id=vEtapa;
 
         IF vModo = 'add' THEN
-          insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, EN_TRANSITO, CANTIDAD_INICIAL )
-          VALUES ( carga_seq.nextval, vTipo, vCantidad, vUnidad, vEtapa, 0, vCantidad) returning id into temp;
+          insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, ETAPA_ID, EN_TRANSITO, CANTIDAD_INICIAL )
+          VALUES ( carga_seq.nextval, vTipo, vCantidad, vEtapa, 0, vCantidad) returning id into temp;
 
           -- log usrid id in number
           --nuevo log
@@ -1856,13 +1872,13 @@ CREATE OR REPLACE package body dev_mbpc as
             CANTIDAD_INICIAL = cantidad_ini,
             CANTIDAD_ENTRADA = cantidad_ent,
             CANTIDAD_SALIDA  = cantidad_sal,
-            UNIDAD_ID        = vUnidad,
+            --UNIDAD_ID        = vUnidad,
             BUQUE_ID         = vBuque,
             EN_TRANSITO      = vEnTransito
         where ID=vCargaId;
     ELSE
 
-      insert into tbl_cargaetapa (ID, ETAPA_ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, CANTIDAD_ENTRADA, CANTIDAD_SALIDA, UNIDAD_ID, BUQUE_ID, EN_TRANSITO)
+      insert into tbl_cargaetapa (ID, ETAPA_ID, TIPOCARGA_ID, CANTIDAD, CANTIDAD_INICIAL, CANTIDAD_ENTRADA, CANTIDAD_SALIDA, BUQUE_ID, EN_TRANSITO)
         VALUES (carga_seq.nextval,
                 vEtapa,
                 vTipo,
@@ -1870,7 +1886,7 @@ CREATE OR REPLACE package body dev_mbpc as
                 cantidad_ini,
                 cantidad_ent,
                 cantidad_sal,
-                vUnidad,
+                --vUnidad,
                 vBuque,
                 vEnTransito);
     END IF;
@@ -1881,6 +1897,7 @@ CREATE OR REPLACE package body dev_mbpc as
   --
 
   procedure insertar_carga( vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vBuque in varchar2,  vEnTransito in varchar2, usrid in number, vCursor out cur) is
+    temp_cantidad number;
   begin
 
     --  ACA VA EL ID DEL TIPO DE CARGA LASTRE
@@ -1892,11 +1909,19 @@ CREATE OR REPLACE package body dev_mbpc as
     END IF;
 
     -- CAMBIAR ACA EN PREFECTURA CAST(REPLACE(____,'.',',') AS NUMBER);
+    temp_cantidad := CAST(REPLACE(vCantidad,'.',',') AS NUMBER);
 
     select * into etapa from tbl_etapa where id = vEtapa;
+    --select * into viaje from tbl_viaje where id = etapa.viaje_id;
 
-    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL )
-    VALUES ( carga_seq.nextval, vCarga, CAST(REPLACE(vCantidad,'.',',') AS NUMBER), vUnidad, vEtapa, vBuque, vEnTransito, CAST(REPLACE(vCantidad,'.',',') AS NUMBER)) returning id into temp;
+    -- Si es la primera carga va en cantidad entrada
+    --IF viaje.estado = 1000 THEN
+    insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_ENTRADA )
+    VALUES ( carga_seq.nextval, vCarga, temp_cantidad, vEtapa, vBuque, vEnTransito, temp_cantidad) returning id into temp;
+    --ELSE
+    --  insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD, ETAPA_ID, BUQUE_ID, EN_TRANSITO, CANTIDAD_INICIAL )
+    --  VALUES ( carga_seq.nextval, vCarga, temp_cantidad, vEtapa, vBuque, vEnTransito, temp_cantidad) returning id into temp;
+    --END IF;
 
     --nuevo log
     posicion_viaje(etapa.viaje_id);
@@ -1957,7 +1982,7 @@ CREATE OR REPLACE package body dev_mbpc as
   procedure modificar_tipo_carga(vCargaId in varchar2, vUnidadId in varchar2, vTipoCargaId in varchar2, usrid in number, vCursor out cur) is
   begin
 
-    update tbl_cargaetapa set unidad_id = vUnidadId, tipocarga_id = vTipoCargaId
+    update tbl_cargaetapa set tipocarga_id = vTipoCargaId
       where id = vCargaId ;
 
     select * into etapa from tbl_etapa where id = (select etapa_id from tbl_cargaetapa where id=vCargaId);
@@ -1975,8 +2000,8 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     select count(*) into temp from tbl_cargaetapa where etapa_id = vEtapaId and buque_id=vBuqueId;
     IF temp = 0 THEN
-      insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD_INICIAL, CANTIDAD, UNIDAD_ID, ETAPA_ID, BUQUE_ID )
-      VALUES ( carga_seq.nextval, 412, 0, 0, 0, cetapa.etapa_id, cetapa.buque_id) returning id into temp;
+      insert into tbl_cargaetapa ( ID, TIPOCARGA_ID, CANTIDAD_INICIAL, CANTIDAD, ETAPA_ID, BUQUE_ID )
+      VALUES ( carga_seq.nextval, 412, 0, 0, cetapa.etapa_id, cetapa.buque_id) returning id into temp;
     END IF;
   end check_empty;
 

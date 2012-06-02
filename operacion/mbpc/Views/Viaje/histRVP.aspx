@@ -32,7 +32,7 @@
            %>
            <% hayReportes = true; %>
             <tr>
-                <td><%= evt["CREATED_AT"]%>&nbsp;</td>
+                <td><%= evt["FECHA"]%>&nbsp;</td>
                 <td><%= decimal.Parse(evt["LATITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= decimal.Parse(evt["LONGITUD"]).ToString("0.00")%>&nbsp;</td>
                 <td><%= evt["RUMBO"]%></td>
@@ -68,7 +68,7 @@
            %>
            <% hayEventos = true; %>
             <tr id="evt<%=evt["ID"]%>" >
-                <td><%= evt["CREATED_AT"] %></td>
+                <td><%= evt["FECHA"] %></td>
                 <td><% if (!decimal.TryParse(evt["LATITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00")); %>&nbsp;</td>
                 <td><% if (!decimal.TryParse(evt["LONGITUD"].ToString(), out temp)) Response.Write("sin dato"); else Response.Write(temp.ToString("0.00"));%>&nbsp;</td>
                 <td><%= evt["COMENTARIO"] %></td>

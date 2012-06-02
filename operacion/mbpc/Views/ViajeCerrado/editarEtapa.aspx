@@ -104,7 +104,7 @@
               data: $(this).serialize(),
               success: (function (data) {
                   var grilla = $('#dialogdiv').attr('grilla');
-                  alert(grilla);
+                  //alert(grilla);
                   $(grilla).trigger('reloadGrid');
                   $('#dialogdiv').dialog('close');
 

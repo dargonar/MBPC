@@ -32,20 +32,33 @@ namespace mbpc.Controllers
 
       public ActionResult nuevaCarga(string etapa_id)
       {
+        var etapa = isValidEdition(int.Parse(etapa_id));
+        if (etapa == null)
+        {
+          throw new Exception("No puede crear una carga en una etapa creada por otra costera.");
+        }
+
         ViewData["isNew"] = true;
-        ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", 0);
+        //ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", 0);
         ViewData["etapa_id"] = etapa_id;
         return View("editarCarga");
       }
 
       public ActionResult editarCarga(string carga_id)
       {
-        var tmp = DaoLib.traer_carga(carga_id);
+        var tmp = (Dictionary<string,string>)DaoLib.traer_carga(carga_id);
+
+        var etapa = isValidEdition(int.Parse(tmp["ETAPA_ID"]));
+        if (etapa == null)
+        {
+          throw new Exception("No puede editar la carga de una etapa creada por otra costera.");
+        }
 
         ViewData["carga"]    = tmp;
         ViewData["carga_id"] = carga_id;
-
-        ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", ((Dictionary<string, string>)tmp)["UNIDAD_ID"] );
+        ViewData["unidad_id"] = tmp["UNIDAD_ID"];
+        ViewData["unidad"] = ((Dictionary<string, string>)tmp)["UNIDAD"];
+        //ViewData["unidad_id"] = new SelectList(to_array(DaoLib.traer_unidades()), "ID", "NOMBRE", ((Dictionary<string, string>)tmp)["UNIDAD_ID"] );
         
         return View();
       }
@@ -98,6 +111,20 @@ namespace mbpc.Controllers
       {
         if (en_barcaza == "false")
           barcaza_id = null;
+
+        //Checkear unidades
+        //HACK : Unidad id = 3
+        if( unidad_id == "3" )
+        {
+          cantidad_inicial = cantidad_inicial.Replace(",", ".");
+          cantidad_inicial = cantidad_inicial.Substring(0,cantidad_inicial.IndexOf('.'));
+
+          cantidad_entrada = cantidad_entrada.Replace(",", ".");
+          cantidad_entrada = cantidad_entrada.Substring(0,cantidad_entrada.IndexOf('.'));
+
+          cantidad_salida = cantidad_salida.Replace(",", ".");
+          cantidad_salida = cantidad_salida.Substring(0,cantidad_salida.IndexOf('.'));
+        }
 
         en_transito = en_transito != "false" ? "1" : "0";
         DaoLib.crear_editar_carga(isnew, etapa_id, carga_id, tipocarga_id, cantidad_inicial, cantidad_entrada, cantidad_salida, unidad_id, barcaza_id, en_transito);

@@ -18,16 +18,13 @@
   <%=Html.Hidden("tipocarga_id", isNew ? "" : carga["TIPOCARGA_ID"])%>
 
   <label>Cantidad Inicial</label><br />
-  <%=Html.TextBox("cantidad_inicial", isNew ? "" : carga["CANTIDAD_INICIAL"], new { @autocomplete = "off" })%><br /><br />
+  <%=Html.TextBox("cantidad_inicial", isNew ? "" : carga["CANTIDAD_INICIAL"], new { @autocomplete = "off" })%>&nbsp;<span class="unom"><%=isNew ? "N/A" : ViewData["unidad"] %></span> <br /><br />
 
   <label>Cantidad Cargada</label><br />
-  <%=Html.TextBox("cantidad_entrada", isNew ? "" : carga["CANTIDAD_ENTRADA"], new { @autocomplete = "off" })%><br /><br />
+  <%=Html.TextBox("cantidad_entrada", isNew ? "" : carga["CANTIDAD_ENTRADA"], new { @autocomplete = "off" })%>&nbsp;<span class="unom"><%=isNew ? "N/A" : ViewData["unidad"] %></span> <br /><br />
 
   <label>Cantidad Descargada</label><br />
-  <%=Html.TextBox("cantidad_salida", isNew ? "" : carga["CANTIDAD_SALIDA"], new { @autocomplete = "off" })%><br /><br />
-
-  <label>Unidad</label><br />
-  <%=Html.DropDownList("unidad_id") %><br /><br />
+  <%=Html.TextBox("cantidad_salida", isNew ? "" : carga["CANTIDAD_SALIDA"], new { @autocomplete = "off" })%>&nbsp;<span class="unom"><%=isNew ? "N/A" : ViewData["unidad"] %></span> <br /><br />
 
   <%=Html.CheckBox("en_barcaza", isNew ? false : carga["BARCAZA"] != "")%>En Barcaza<br />
   
@@ -43,6 +40,7 @@
 
   <!-- is new? -->
   <%=Html.Hidden("etapa_id", ViewData["etapa_id"])%>
+  <%=Html.Hidden("unidad_id", isNew ? "" : ViewData["unidad_id"])%>
   <%=Html.Hidden("isnew"   , isNew)%>
 
   <br />
@@ -126,9 +124,6 @@
             return false;
         }
 
-        //        if ($("#tipocarga_id").val() == "") {
-        //            return false;
-        //        }
 
         $.ajax({
             type: "POST",
@@ -137,7 +132,7 @@
             data: $("#carga_form").serialize(),
             success: (function (data) {
                 var grilla = $('#dialogdiv').attr('grilla');
-                alert(grilla);
+                //alert(grilla);
                 $(grilla).trigger('reloadGrid');
                 $('#dialogdiv').dialog('close');
             }),
@@ -166,10 +161,10 @@
                         return {
                             label: item.NOMBRE,
                             value: item.NOMBRE,
-                            id   : item.ID,
-                            cod  : item.CODIGO,
-                            unom : item.UNOMBRE,
-                            uid  : item.UNIDAD_ID
+                            id: item.ID,
+                            cod: item.CODIGO,
+                            unom: item.UNOMBRE,
+                            uid: item.UNIDAD_ID
                         }
                     }));
                 }
@@ -178,6 +173,8 @@
         minLength: 2,
         select: function (event, ui) {
             $("#tipocarga_id").val(ui.item.id);
+            $(".unom").html(ui.item.unom);
+            $('#unidad_id').val(ui.item.uid);
         }
     });
 
