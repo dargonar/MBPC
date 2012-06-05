@@ -279,7 +279,7 @@
         success: (function (data) {
           $('#dialogdiv').html(data);
           $('#dialogdiv').dialog({
-            height: 325,
+            height: 380,
             width: 337,
             modal: true,
             title: 'Editar Acompañantes'
@@ -1072,7 +1072,7 @@
               $('#selector').dialog({
                 title: "Transferencia de Barcazas",
                 width: 524,
-                height: 370,
+                height: 420,
                 modal: true
               });
 		        }),

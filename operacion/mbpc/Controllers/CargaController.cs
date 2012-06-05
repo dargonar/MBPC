@@ -251,6 +251,7 @@ namespace mbpc.Controllers
       public ActionResult editarBarcazas(string shipfrom, string shipto)
       {
         //seleccion barcazas
+        ViewData["fecha"] = DateTime.Now.ToString("dd-MM-yy HH:mm");
 
         ViewData["buque_origen"] = DaoLib.traer_buque_de_etapa(shipfrom);
         ViewData["buque_destino"] = DaoLib.traer_buque_de_etapa(shipto);
@@ -269,6 +270,8 @@ namespace mbpc.Controllers
 
       public ActionResult pasarCargas(string shipfrom, string shipto)
       {
+        ViewData["fecha"] = DateTime.Now.ToString("dd-MM-yy HH:mm");
+
         ViewData["buque_origen"] = DaoLib.traer_buque_de_etapa(shipfrom);
         ViewData["buque_destino"] = DaoLib.traer_buque_de_etapa(shipto);
 
@@ -318,7 +321,7 @@ namespace mbpc.Controllers
       }
 
        
-      public ActionResult transferirCargas()
+      public ActionResult transferirCargas(string fecha)
       {
 
         var etapa_id = new List<string>();
@@ -329,10 +332,13 @@ namespace mbpc.Controllers
         var modo = new List<string>();
         var original = new List<string>();
         var recibeemite = new List<string>();
+        var fechas = new List<string>();
+
 
         var total = int.Parse(Request.Params["cargas"]);
         for (int i = 0; i < total; i++)
         {
+          fechas.Add(fecha);
 
           var eid = Request[string.Format("carga{0}[eid]",i+1)];
           var cid = Request[string.Format("carga{0}[cid]",i+1)];
@@ -381,17 +387,18 @@ namespace mbpc.Controllers
 
         }
 
-        DaoLib.transferir_cargas(etapa_id.ToArray(), carga_id.ToArray(), cantidad.ToArray(),
+        DaoLib.transferir_cargas(fechas.ToArray(), etapa_id.ToArray(), carga_id.ToArray(), cantidad.ToArray(),
           unidad_id.ToArray(), tipo_id.ToArray(), modo.ToArray(), original.ToArray(), recibeemite.ToArray());
 
 
         return Content("nop");
       }
 
-      public ActionResult transferirBarcazas(string[] barcazas_origen, string[] barcazas_destino, string etapa_origen, string etapa_destino)
+      public ActionResult transferirBarcazas(string fecha, string[] barcazas_origen, string[] barcazas_destino, string etapa_origen, string etapa_destino)
       {
 
         List<string> xxxx = new List<string>();
+        List<string> fechas = new List<string>();
 
         if (barcazas_origen == null)
           barcazas_origen = new string[0];
@@ -403,18 +410,20 @@ namespace mbpc.Controllers
         for (i = 0; i < barcazas_origen.Length; i++)
         {
           xxxx.Add(etapa_origen);
+          fechas.Add(fecha);
         }
 
         int j;
         for (j = 0; j < barcazas_destino.Length; j++)
         {
           xxxx.Add(etapa_destino);
+          fechas.Add(fecha);
         }
 
         string[] etapas = xxxx.ToArray();
         string[] barcazas = barcazas_origen.Concat(barcazas_destino).ToArray();
 
-        DaoLib.transferir_barcazas(barcazas, etapas);
+        DaoLib.transferir_barcazas(fechas.ToArray(), barcazas, etapas);
 
         // Para actualizar listado de barcazas de viaje. HACK
         DaoLib.actualizar_listado_de_barcazas(etapa_origen);

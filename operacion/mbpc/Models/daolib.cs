@@ -357,10 +357,11 @@ public static class DaoLib
     return doCall("mbpc.reporte_diario", parameters);
   }
 
-  public static List<object> editar_acompanante(string vEtapa, string vBuque, string vBuque2, string vBuque3, string vBuque4)
+  public static List<object> editar_acompanante(string vFecha, string vEtapa, string vBuque, string vBuque2, string vBuque3, string vBuque4)
   {
     var parameters = new OracleParameter[] 
     { 
+        new OracleParameter("vFecha", OracleDbType.Varchar2, vFecha, System.Data.ParameterDirection.Input),  
         new OracleParameter("vEtapa", OracleDbType.Varchar2, vEtapa, System.Data.ParameterDirection.Input),
         new OracleParameter("vBuque", OracleDbType.Varchar2, vBuque, System.Data.ParameterDirection.Input),
         new OracleParameter("vBuque2", OracleDbType.Varchar2, vBuque2, System.Data.ParameterDirection.Input),
@@ -1098,10 +1099,11 @@ public static class DaoLib
     return doCall("mbpc.actualizar_listado_de_barcazas", parameters);
   }
 
-  public static List<object> transferir_barcazas(string[] barcazas, string[] etapas)
+  public static List<object> transferir_barcazas(string[] fechas, string[] barcazas, string[] etapas)
   {
     OracleParameter[] parameters = new OracleParameter[] 
     { 
+        new OracleParameter("vFechas", OracleDbType.Varchar2, fechas, System.Data.ParameterDirection.Input),
         new OracleParameter("vBarcazas", OracleDbType.Varchar2, barcazas, System.Data.ParameterDirection.Input),
         new OracleParameter("vEtapas", OracleDbType.Varchar2, etapas, System.Data.ParameterDirection.Input),
     };
@@ -1111,10 +1113,11 @@ public static class DaoLib
     return doCall2("mbpc.transferir_barcazas", parameters, arraybindcount);
   }
 
-  public static List<object> transferir_cargas(string[] etapa_id, string[] carga_id, string[] cantidad, string[] unidad_id, string[] tipo_id, string[] modo, string[] original, string[] recibeemite)
+  public static List<object> transferir_cargas(string[] fecha, string[] etapa_id, string[] carga_id, string[] cantidad, string[] unidad_id, string[] tipo_id, string[] modo, string[] original, string[] recibeemite)
   {
     OracleParameter[] parameters = new OracleParameter[] 
     { 
+        new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
         new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vCarga", OracleDbType.Varchar2, carga_id, System.Data.ParameterDirection.Input),
         new OracleParameter("vCantidad", OracleDbType.Varchar2, cantidad, System.Data.ParameterDirection.Input),

@@ -156,6 +156,8 @@ namespace mbpc.Controllers
 
         public ActionResult Acompanantes(string id)
         {
+          ViewData["fecha"] = DateTime.Now.ToString("dd-MM-yy HH:mm");
+
           var acomps = ((Dictionary<string, string>)DaoLib.traer_acompanantes(id)[0]);
 
           ViewData["ACOMPANANTE_ID"] = acomps["ACOMPANANTE_ID"];
@@ -172,9 +174,9 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult editarAcompanantes(string etapa_id, string buque_id, string buque2_id, string buque3_id, string buque4_id)
+        public ActionResult editarAcompanantes(string fecha, string etapa_id, string buque_id, string buque2_id, string buque3_id, string buque4_id)
         {
-          DaoLib.editar_acompanante(etapa_id, buque_id, buque2_id, buque3_id, buque4_id);
+          DaoLib.editar_acompanante(fecha, etapa_id, buque_id, buque2_id, buque3_id, buque4_id);
           return BuildResponse();
         }
 

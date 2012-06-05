@@ -361,7 +361,10 @@
    
   function eliminar_carga(carga_id) {
 
-    if ( confirm("¿Esta seguro que desea quitar esta carga?") == false )
+    if ( confirm("Al quitar la carga se perdera registro de la misma.\n Si desea descargar utilize la funcion modificar en la columna cantidad.\n ¿Esta seguro que desea quitar esta carga?") == false )
+        return false;
+    
+    if ( confirm("Ultima advertencia ¿Esta seguro que desea quitar esta carga?") == false )
       return false;
 
     var form = $("#f" + carga_id);

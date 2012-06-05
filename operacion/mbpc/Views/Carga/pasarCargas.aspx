@@ -46,6 +46,13 @@
       </tr>
       <% cnt = cnt + 1; %>
       <% } %>
+    
+    <tr>
+      <td colspan="4">
+        <label>Fecha</label><br/>
+        <input style="float:left; width: 300px" autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/><br />
+      </td>
+    </tr>
     <tr>
       <td colspan="4" align="right">
         <input type="submit" class="botonsubmit" value="Transferir" />
@@ -56,6 +63,7 @@
 
 
 <script type="text/javascript">
+    $("#fecha").mask("99-99-99 99:99");
 
       function reset(nro) {
         var forg = $('#f' + nro).attr('org');
@@ -120,61 +128,69 @@
 
       $("#editarCargasForm").submit(function () {
 
-        $('.botonsubmit').attr('disabled', 'disabled');
+          $('.botonsubmit').attr('disabled', 'disabled');
 
-        var data = {};
-
-        //Recorrer
-        //<input eid="778" cid="916" style="width:40px" total="61" id="f1" class="cgo" cty="from" type="text" org="6" value="6">&nbsp;TN
-
-        var count = 0;
-        $("input.cgo").each(function (i, e) {
-
-          if ( $(e).attr('org') == $(e).val() ) {
-            return;
+          if ($("#fecha").val() == "") {
+              alert("Debe indicar fecha");
+              $("#fecha").focus();
+              $('.botonsubmit').removeAttr('disabled');
+              return false;
           }
 
-          data['carga' + (count+1) ] = {  'eid': $(e).attr('eid'),
-                                          'cid': $(e).attr('cid'),
-                                          'org': $(e).attr('org'),
-                                          'uid': $(e).attr('unid'),
-                                          'tci': $(e).attr('tcid'),
-                                          'oci': $(e).attr('ocid'),
-                                          'val': $(e).val()
-                                        };
-          count = count + 1;
-        });
+          var data = {};
 
-        data['cargas'] = count;
+          //Recorrer
+          //<input eid="778" cid="916" style="width:40px" total="61" id="f1" class="cgo" cty="from" type="text" org="6" value="6">&nbsp;TN
 
-        //console.log(data);
-        //$('.botonsubmit').attr('disabled','');
-        //return false;
+          var count = 0;
+          $("input.cgo").each(function (i, e) {
+
+              if ($(e).attr('org') == $(e).val()) {
+                  return;
+              }
+
+              data['carga' + (count + 1)] = { 'eid': $(e).attr('eid'),
+                  'cid': $(e).attr('cid'),
+                  'org': $(e).attr('org'),
+                  'uid': $(e).attr('unid'),
+                  'tci': $(e).attr('tcid'),
+                  'oci': $(e).attr('ocid'),
+                  'val': $(e).val()
+              };
+              count = count + 1;
+          });
+
+          data['cargas'] = count;
+          data['fecha'] = $('#fecha').val();
+
+          //console.log(data);
+          //$('.botonsubmit').attr('disabled','');
+          //return false;
 
 
-        $.ajax({
-          type: "POST",
-          cache: false,
-          url: $(this).attr("action"),
-          data: data,
-          success: (function (data) {
-            $('#dialogdiv3').html(data);
-            $('#dialogdiv3').dialog({
-              height: 50,
-              width: 100,
-              modal: true,
-              title: 'Transferencia OK'
-            });
-            $('#selector').dialog('close');
-            $('#dialogdiv').dialog('close');
-          }),
-          error: (function (data) {
-            var titletag = /<title\b[^>]*>.*?<\/title>/
-            alert(titletag.exec(data.responseText));
-            $('.botonsubmit').removeAttr('disabled');
-          })
-        });
-        return false;
+          $.ajax({
+              type: "POST",
+              cache: false,
+              url: $(this).attr("action"),
+              data: data,
+              success: (function (data) {
+                  $('#dialogdiv3').html(data);
+                  $('#dialogdiv3').dialog({
+                      height: 50,
+                      width: 100,
+                      modal: true,
+                      title: 'Transferencia OK'
+                  });
+                  $('#selector').dialog('close');
+                  $('#dialogdiv').dialog('close');
+              }),
+              error: (function (data) {
+                  var titletag = /<title\b[^>]*>.*?<\/title>/
+                  alert(titletag.exec(data.responseText));
+                  $('.botonsubmit').removeAttr('disabled');
+              })
+          });
+          return false;
 
       });
 

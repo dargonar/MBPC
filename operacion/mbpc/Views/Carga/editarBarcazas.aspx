@@ -35,8 +35,16 @@
         </select>
       </td>
     </tr>
+    
     <tr>
-      <td colspan="3" align="right">
+      <td colspan="4">
+        <label>Fecha</label><br/>
+        <input autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/><br />
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
         <input type="submit" class="botonsubmit" value="Transferir" />
       </td>
     </tr>
@@ -45,7 +53,9 @@
 
 
 <script type="text/javascript">
-        
+    
+       $("#fecha").mask("99-99-99 99:99");
+
       function move(tbFrom, tbTo)   
       {   
         var arrFrom = new Array(); 
@@ -102,6 +112,13 @@
 
           $('option').attr('selected', 'selected');
           $('.botonsubmit').attr('disabled', 'disabled');
+
+          if ($("#fecha").val() == "") {
+              alert("Debe indicar fecha");
+              $("#fecha").focus();
+              $('.botonsubmit').removeAttr('disabled');
+              return false;
+          }
 
         $.ajax({
           type: "POST",

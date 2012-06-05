@@ -23,9 +23,13 @@
     <input type="hidden" id="buque4_id" name="buque4_id" value="<%=ViewData["ACOMPANANTE4_ID"] %>"/>
     <br/><br/>
 
+    <label>Fecha</label><br/>
+    <input style="float:left; width: 300px" autocomplete="off"  name="fecha" id="fecha" type="text" value="<%= ViewData["fecha"] %>"/><br />
+    <br/><br/>
+
     <!--<div style="clear:both"></div>-->
     
-    <input style="float:right;width:100px" type="submit" class="botonsubmit" value="Aceptar" />
+    <input style="float:right;width:100px" type="submit" value="Aceptar" />
   </form>
 
 
@@ -33,6 +37,8 @@
 
 
 <script type="text/javascript">
+
+  $("#fecha").mask("99-99-99 99:99");
 
   url1 = '<%= Url.Content("~/Autocomplete/remolcadores/") %>';
 
@@ -93,6 +99,14 @@
     $("#elegirAcompanante").submit(function () {
 
         $('.botonsubmit').attr('disabled', 'disabled');
+
+        if ($("#fecha").val() == "") {
+            alert("Debe indicar fecha");
+            $("#fecha").focus();
+            $('.botonsubmit').removeAttr('disabled');
+            return false;
+        }
+
 
     $.ajax({
       type: "POST",

@@ -64,7 +64,7 @@ CREATE OR REPLACE package dev_mbpc as
   procedure modificar_pbip(vViaje in varchar2, vPuertoDeMatricula in varchar2, vNroInmarsat in varchar2, vArqueoBruto in varchar2, vCompania in varchar2, vContactoOCPM in varchar2, vObjetivo in varchar2, usrid in number, vCursor out cur);
   procedure traer_notas(vViaje in varchar2, usrid in number, vCursor out cur);
   procedure guardar_notas(vViaje in varchar2, vNotas in varchar2, usrid in number, vCursor out cur);
-  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, vBuque2 in varchar2, vBuque3 in varchar2, vBuque4 in varchar2, usrid in number, vCursor out cur);
+  procedure editar_acompanante(vFecha in varchar2, vEtapa in varchar2, vBuque in varchar2, vBuque2 in varchar2, vBuque3 in varchar2, vBuque4 in varchar2, usrid in number, vCursor out cur);
   procedure traer_acompanantes(vEtapa in varchar2, usrid in number, vCursor out cur);
   procedure separar_convoy(vViaje in varchar2, vPartida in varchar2, usrid in number, vCursor out cur);
   procedure eliminar_evento(vEvento in number, vEtapa in number, usrid in number, vCursor out cur);
@@ -119,8 +119,8 @@ CREATE OR REPLACE package dev_mbpc as
   procedure adjuntar_barcazas(vEtapaId in number, vViajeId in number, usrid in number);
   procedure fondear_barcaza(vEtapaId in number, vBarcazaId in number, vRioCanalKM in varchar2, vLat in number, vLon in number, vFecha in varchar2, usrid in number, vCursor out cur);
   procedure fondear_barcaza_batch(vEtapaId in number, vBarcazaId in number, vRioCanalKM in varchar2, vLat in number, vLon in number, vFecha in varchar2, usrid in number);
-  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number);
-  procedure transferir_barcazas(vBarcaza in varchar2, vEtapa in varchar2, usrid in number);
+  procedure transferir_cargas(vFecha in varchar2, vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number);
+  procedure transferir_barcazas(vFecha in varchar2, vBarcaza in varchar2, vEtapa in varchar2, usrid in number);
   ---autocompletes
   procedure autocomplete_muelles(vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_cargas(vQuery in varchar2, usrid in number, vCursor out cur);
@@ -1143,7 +1143,7 @@ CREATE OR REPLACE package body dev_mbpc as
       select notas from tbl_viaje where id = vViaje;
   end traer_notas;
 
-  procedure editar_acompanante(vEtapa in varchar2, vBuque in varchar2, vBuque2 in varchar2, vBuque3 in varchar2, vBuque4 in varchar2, usrid in number, vCursor out cur) is
+  procedure editar_acompanante(vFecha in varchar2, vEtapa in varchar2, vBuque in varchar2, vBuque2 in varchar2, vBuque3 in varchar2, vBuque4 in varchar2, usrid in number, vCursor out cur) is
     begin
       UPDATE tbl_etapa e SET
         e.acompanante_id  = vBuque,
@@ -1155,7 +1155,7 @@ CREATE OR REPLACE package body dev_mbpc as
       --nuevo log
       posicion_viaje(temp);
       insert into tbl_evento ( usuario_id , viaje_id, etapa_id, tipo_id, fecha, acompanante_id, acompanante2_id, acompanante3_id, acompanante4_id, latviaje, lonviaje, ptoviaje )
-      VALUES ( usrid , temp, vEtapa , 13 , SYSDATE, vBuque, vBuque2, vBuque3, vBuque4, viajepos.lat, viajepos.lon, viajepos.pto);
+      VALUES ( usrid , temp, vEtapa , 13 , TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vBuque, vBuque2, vBuque3, vBuque4, viajepos.lat, viajepos.lon, viajepos.pto);
   end editar_acompanante;
 
   procedure traer_acompanantes(vEtapa in varchar2, usrid in number, vCursor out cur) is
@@ -1183,12 +1183,8 @@ CREATE OR REPLACE package body dev_mbpc as
     begin
       select * into viaje from tbl_viaje where id = vViaje;
       select * into etapa from tbl_etapa e where (viaje.id = e.viaje_id and e.nro_etapa = viaje.etapa_actual);
-      update tbl_etapa set
-        acompanante_id = null,
-        acompanante2_id = null,
-        acompanante3_id = null,
-        acompanante4_id = null
-        where id = etapa.id;
+      
+      temp2 := -1;
 
       -- Intentamos crear con el 1
       IF etapa.acompanante_id IS NOT NULL THEN
@@ -1225,6 +1221,21 @@ CREATE OR REPLACE package body dev_mbpc as
         insert into tbl_etapa ( nro_etapa, viaje_id, actual_id, sentido, created_at, created_by )
         VALUES ( 0, temp, etapa.actual_id, etapa.sentido, sysdate, usrid) returning id into temp2;
       END IF;
+
+      IF temp2 = -1 THEN
+        open vCursor for
+          select id from tbl_etapa where id = temp2;
+
+        return;
+      END IF;
+
+      -- Modificamos la
+      update tbl_etapa set
+        acompanante_id = null,
+        acompanante2_id = null,
+        acompanante3_id = null,
+        acompanante4_id = null
+        where id = etapa.id;
 
       --nuevo log
       posicion_viaje(viaje.id);
@@ -1681,7 +1692,11 @@ CREATE OR REPLACE package body dev_mbpc as
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on tc.unidad_id = u.id
     left join buques_new b on b.ID_BUQUE = c.buque_id
-    where c.etapa_id = vEtapaId order by barcaza;
+    where c.etapa_id = vEtapaId 
+
+    and ( c.cantidad <> 0 or ( tc.codigo = 'BAL' or tc.codigo = 'PND' ) )
+
+    order by barcaza;
   end traer_cargas;
 
   procedure traer_carga( vCargaId in varchar2, usrid in number, vCursor out cur) is
@@ -1710,7 +1725,8 @@ CREATE OR REPLACE package body dev_mbpc as
     from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on tc.unidad_id = u.id
-    where c.etapa_id = vEtapaId and c.buque_id is null and c.en_transito = 0;
+    where c.etapa_id = vEtapaId and c.buque_id is null and c.en_transito = 0
+    and ( c.cantidad <> 0 and tc.codigo <> 'BAL' and tc.codigo <> 'PND' );
   end traer_cargas_nobarcazas;
 
   -------------------------------------------------------------------------------------------------------------
@@ -1737,7 +1753,7 @@ CREATE OR REPLACE package body dev_mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure transferir_barcazas(vBarcaza in varchar2, vEtapa in varchar2, usrid in number) is
+  procedure transferir_barcazas(vFecha in varchar2, vBarcaza in varchar2, vEtapa in varchar2, usrid in number) is
   begin
       declare
         eorig number;
@@ -1766,12 +1782,12 @@ CREATE OR REPLACE package body dev_mbpc as
             --nuevo log
             posicion_viaje(etapa.viaje_id);
             insert into tbl_evento (viaje_id, viaje2_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha, latviaje, lonviaje, ptoviaje)
-            VALUES (etapa.viaje_id, etapa2.viaje_id, etapa.id, usrid, 11, vBarcaza, carga.id, SYSDATE, viajepos.lat, viajepos.lon, viajepos.pto);
+            VALUES (etapa.viaje_id, etapa2.viaje_id, etapa.id, usrid, 11, vBarcaza, carga.id, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), viajepos.lat, viajepos.lon, viajepos.pto);
 
             --nuevo log
             posicion_viaje(etapa2.viaje_id);
             insert into tbl_evento (viaje_id, viaje2_id, etapa_id, usuario_id, tipo_id, barcaza_id, carga_id, fecha, latviaje, lonviaje, ptoviaje)
-            VALUES (etapa2.viaje_id, etapa.viaje_id, etapa2.id, usrid, 10, vBarcaza, carga.id, SYSDATE, viajepos.lat, viajepos.lon, viajepos.pto);
+            VALUES (etapa2.viaje_id, etapa.viaje_id, etapa2.id, usrid, 10, vBarcaza, carga.id, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), viajepos.lat, viajepos.lon, viajepos.pto);
 
             EXIT;
 
@@ -1793,7 +1809,7 @@ CREATE OR REPLACE package body dev_mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
-  procedure transferir_cargas(vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number) is
+  procedure transferir_cargas(vFecha in varchar2, vEtapa in varchar2, vCarga in varchar2, vCantidad in varchar2, vUnidad in varchar2, vTipo in varchar2, vModo in varchar2, vOriginal in varchar2, vRecEmi in varchar2, usrid in number) is
   begin
       DECLARE
 
@@ -1809,7 +1825,7 @@ CREATE OR REPLACE package body dev_mbpc as
           --nuevo log
           posicion_viaje(etapa.viaje_id);
           insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id, latviaje, lonviaje, ptoviaje )
-          VALUES ( usrid, etapa.viaje_id , etapa.id , 26, SYSDATE, temp, viajepos.lat, viajepos.lon, viajepos.pto );
+          VALUES ( usrid, etapa.viaje_id , etapa.id , 26, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), temp, viajepos.lat, viajepos.lon, viajepos.pto );
 
         END IF;
         IF vModo = 'upd' THEN
@@ -1820,13 +1836,13 @@ CREATE OR REPLACE package body dev_mbpc as
             --nuevo log
             posicion_viaje(etapa.viaje_id);
             insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id, latviaje, lonviaje, ptoviaje )
-            VALUES ( usrid, etapa.viaje_id , etapa.id , 26, SYSDATE, vCarga, viajepos.lat, viajepos.lon, viajepos.pto );
+            VALUES ( usrid, etapa.viaje_id , etapa.id , 26, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vCarga, viajepos.lat, viajepos.lon, viajepos.pto );
           ELSE
             -- log usrid vCarga in number
             --nuevo log
             posicion_viaje(etapa.viaje_id);
             insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id, latviaje, lonviaje, ptoviaje )
-            VALUES ( usrid, etapa.viaje_id , etapa.id , 27, SYSDATE, vCarga, viajepos.lat, viajepos.lon, viajepos.pto );
+            VALUES ( usrid, etapa.viaje_id , etapa.id , 27, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vCarga, viajepos.lat, viajepos.lon, viajepos.pto );
           END IF;
 
         END IF;
@@ -1836,7 +1852,7 @@ CREATE OR REPLACE package body dev_mbpc as
           --nuevo log
           posicion_viaje(etapa.viaje_id);
           insert into tbl_evento ( usuario_id , viaje_id , etapa_id , tipo_id , fecha, carga_id, latviaje, lonviaje, ptoviaje )
-          VALUES ( usrid, etapa.viaje_id , etapa.id , 27, SYSDATE, vCarga, viajepos.lat, viajepos.lon, viajepos.pto);
+          VALUES ( usrid, etapa.viaje_id , etapa.id , 27, TO_DATE(vFecha, 'DD-MM-yy HH24:mi'), vCarga, viajepos.lat, viajepos.lon, viajepos.pto);
 
         END IF;
       END;
