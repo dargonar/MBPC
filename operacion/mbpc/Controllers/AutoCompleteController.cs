@@ -12,7 +12,8 @@ namespace mbpc.Controllers
     {
       var grupo = Session["grupo"].ToString();
 
-      var barcazas = DaoLib.autocomplete_viajes_grp(query, grupo);
+      //var barcazas = DaoLib.autocomplete_viajes_grp(query, grupo);
+      var barcazas = DaoLib.autocomplete_viajes_usr(query);
       return Json(barcazas, JsonRequestBehavior.AllowGet);
     }
     

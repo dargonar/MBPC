@@ -35,7 +35,8 @@ CREATE OR REPLACE package dev_mbpc as
 
   procedure grupos_del_usuario( vId in varchar2, usrid in number, vCursor out cur);
   procedure zonas_del_grupo( vId in varchar2, usrid in number, vCursor out cur);
-
+  procedure grupo_de_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
+  
   procedure barcazas_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure barcos_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure barcos_entrantes( vZonaId in varchar2, usrid in number, vCursor out cur);
@@ -135,7 +136,7 @@ CREATE OR REPLACE package dev_mbpc as
   procedure autocompleterbenzona( vQuery in varchar2, vZonaId in varchar2, usrid in number, vCursor out cur);
   procedure autocompletebactivos( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure autocomplete_viajes_grp( vQuery in varchar2, vGrupo in varchar2, usrid in number, vCursor out cur);
-
+  procedure autocomplete_viajes_usr( vQuery in varchar2, usrid in number, vCursor out cur);
   procedure paginator(p_statment in varchar2, p_offset in number, p_count in number, sqlquery out varchar2);
  --Buque/Puertos/Muelles
   procedure detalles_tecnicos( vShipId in varchar2, usrid in number, vCursor out cur);
@@ -367,6 +368,16 @@ CREATE OR REPLACE package body dev_mbpc as
     --WHERE pdc.id IN (SELECT PUNTO FROM tbl_grupopunto WHERE GRUPO = vId);
   end zonas_del_grupo;
 
+  procedure grupo_de_zona( vZonaId in varchar2, usrid in number, vCursor out cur) is
+  begin
+    open vCursor for
+      SELECT grupo 
+        FROM tbl_grupopunto 
+        WHERE punto = vZonaId 
+        AND grupo IN 
+          (select gu_.GRUPO from tbl_usuariogrupo gu_ WHERE gu_.USUARIO=usrid) 
+        and ROWNUM=1;
+  end grupo_de_zona;
   -------------------------------------------------------------------------------------------------------------
   --Retorna todas las barcazas que esten fondeadas en el punto de control
   procedure barcazas_en_zona( vZonaId in varchar2, usrid in number, vCursor out cur) is
@@ -2304,6 +2315,44 @@ CREATE OR REPLACE package body dev_mbpc as
   -------------------------------------------------------------------------------------------------------------
   --
 
+  procedure autocomplete_viajes_usr( vQuery in varchar2, usrid in number, vCursor out cur) is
+    begin
+    open vCursor for
+    SELECT b.nombre||' ('||
+      CASE WHEN rck.km <> 0 then rc.nombre||' '||rck.unidad||' '||rck.km ELSE rc.nombre||' '||rck.unidad END
+      ||')' descripcion, pdc.id, v.id viaje
+
+      FROM tbl_viaje v
+      LEFT JOIN tbl_etapa e ON v.id=e.viaje_id AND v.etapa_actual=e.nro_etapa
+
+      left JOIN tbl_puntodecontrol pdc ON pdc.id=e.actual_id
+      left JOIN rios_canales_km rck on rck.id = pdc.rios_canales_km_id
+      left JOIN rios_canales rc on rck.id_rio_canal = rc.id
+
+      left JOIN buques_new b ON v.buque_id=b.id_buque
+
+      WHERE e.actual_id IN 
+        (SELECT punto FROM tbl_grupopunto WHERE grupo IN (
+            select gu_.GRUPO from tbl_usuariogrupo gu_ WHERE gu_.USUARIO=usrid
+          )
+        )
+      AND v.estado=0
+      AND (
+            upper(b.nombre) like upper('%'||vQuery||'%') or
+            upper(b.bandera) like upper('%'||vQuery||'%') or
+            upper(b.sdist) like upper('%'||vQuery||'%') or
+            upper(b.matricula) like upper('%'||vQuery||'%') or
+            upper(b.nro_omi) like upper('%'||vQuery||'%') or
+            upper(b.nro_ismm) like upper('%'||vQuery||'%')
+            )
+            AND ( b.TIPO_BUQUE IS NULL OR not (
+              UPPER(b.TIPO_BUQUE) like 'BARCAZA%' or UPPER(b.TIPO_BUQUE) like 'BALSA%'
+            ))
+            and rownum <= 12;
+  end autocomplete_viajes_usr;
+  -------------------------------------------------------------------------------------------------------------
+  --
+  
   procedure autocompleterioscanales(vQuery in varchar2, usrid in number, vCursor out cur) is
   begin
 

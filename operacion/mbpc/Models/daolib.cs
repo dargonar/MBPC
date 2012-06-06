@@ -412,6 +412,16 @@ public static class DaoLib
     return doCall("mbpc.zonas_del_grupo", parameters);
   }
 
+  public static object grupo_de_zona(string puntoId)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vPuntoId", OracleDbType.Varchar2, puntoId, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.grupo_de_zona", parameters)[0];
+  }
+
   public static List<object> grupos_del_usuario(int usuario)
   {
     var parameters = new OracleParameter[] 
@@ -1307,6 +1317,16 @@ public static class DaoLib
     };
 
     return doCall("mbpc.autocomplete_viajes_grp", parameters);
+  }
+
+  public static List<object> autocomplete_viajes_usr(string query)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input)
+    };
+
+    return doCall("mbpc.autocomplete_viajes_usr", parameters);
   }
 
   public static List<object> autocomplete_cargas(string query)
