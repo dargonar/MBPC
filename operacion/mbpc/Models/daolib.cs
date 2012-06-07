@@ -219,15 +219,13 @@ public static class DaoLib
   }
 
 
-  public static List<object> insertar_cambioestado(string etapa_id, string notas, decimal? latitud, decimal? longitud, string fecha, string estado, string riocanal, string muelle)
+  public static List<object> insertar_cambioestado(string etapa_id, string notas, string fecha, string estado, string riocanal, string muelle)
   {
     var parameters = new OracleParameter[] 
     { 
         new OracleParameter("vEtapa", OracleDbType.Varchar2, etapa_id, System.Data.ParameterDirection.Input),
         //new OracleParameter("vTipoEvento", OracleDbType.Varchar2, tipoevento, System.Data.ParameterDirection.Input),
         new OracleParameter("vNotas", OracleDbType.Varchar2, notas, System.Data.ParameterDirection.Input),
-        new OracleParameter("vLat", OracleDbType.Decimal, latitud, System.Data.ParameterDirection.Input),
-        new OracleParameter("vLon", OracleDbType.Decimal, longitud, System.Data.ParameterDirection.Input),
         new OracleParameter("vFecha", OracleDbType.Varchar2, fecha, System.Data.ParameterDirection.Input),
         new OracleParameter("vEstado", OracleDbType.Varchar2, estado, System.Data.ParameterDirection.Input),
         new OracleParameter("vRiocanal", OracleDbType.Varchar2, riocanal, System.Data.ParameterDirection.Input),
@@ -1360,9 +1358,6 @@ public static class DaoLib
     return doCall("mbpc.autocompleterioscanales", parameters);
   }
 
-
-
-
   public static List<object> autocompletebactivos(string query)
   {
     var parameters = new OracleParameter[] 
@@ -1371,6 +1366,18 @@ public static class DaoLib
     };
 
     return doCall("mbpc.autocompletebactivos", parameters);
+  }
+
+  public static List<object> autocompletebactivos_enpunto(string punto_id, string query)
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vPuntoId", OracleDbType.Varchar2, punto_id, System.Data.ParameterDirection.Input),
+        new OracleParameter("vQuery", OracleDbType.Varchar2, query, System.Data.ParameterDirection.Input)
+        
+    };
+
+    return doCall("mbpc.autocompletebactivos_enpunto", parameters);
   }
 
   public static List<object> autocomplete_muelles(string query)
@@ -1563,6 +1570,30 @@ public static class DaoLib
 
     return doCall("mbpc.reporte_metadata", parameters);
   }
+
+  public static List<object> reporte_clonar(int reporte_id) 
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vId", OracleDbType.Int32, reporte_id, System.Data.ParameterDirection.Input)
+        
+    };
+
+    return doCall("mbpc.reporte_clonar", parameters);
+  }
+
+  public static List<object> reporte_es_mio(int reporte_id) 
+  {
+    var parameters = new OracleParameter[] 
+    { 
+        new OracleParameter("vId", OracleDbType.Int32, reporte_id, System.Data.ParameterDirection.Input)
+        
+    };
+
+    return doCall("mbpc.reporte_es_mio", parameters);
+  }
+  
+  
 
   public static List<object> pbip_nuevo(int? v_viaje_id ,string v_puertodematricula, string v_bandera, string v_nroinmarsat ,string v_arqueobruto 
     , string v_compania ,string v_contactoocpm ,string v_objetivo ,string v_nro_imo  ,string v_buque_nombre ,string v_tipo_buque  

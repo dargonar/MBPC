@@ -87,6 +87,8 @@ namespace mbpc.Controllers
             //Nuevo
             Session["barcos_data"] = BarcosDataView.EN_ZONA;
 
+            DaoLib.login_usuario("dummy");
+
             return Redirect(Url.Content("~/"));
           }
 

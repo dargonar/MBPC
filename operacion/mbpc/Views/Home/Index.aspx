@@ -6,7 +6,15 @@
 </asp:Content>
 
 <asp:Content ID="Content0" ContentPlaceHolderID="HeadContent" runat="server">
-
+  <script type="text/javascript">
+    
+//    $(document).ready(function () {
+////      $(window).bind("beforeunload", function () {
+////        return inFormOrLink || confirm("Do you really want to close?");
+////      })
+//      
+//    });
+  </script>
 </asp:Content>
 
 

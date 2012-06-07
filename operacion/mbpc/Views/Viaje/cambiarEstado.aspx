@@ -17,9 +17,9 @@
       <label>Notas:</label><br />
       <textarea cols="31" rows="8" name="notas" /><br /><br />
 
-      <label>Posicion</label><br />
+      <!--label>Posicion</label><br />
       <input autocomplete="off" type="text" id="pos" name="pos" style="width:200px" /><br />
-      <label class="desc">Formato: 9000S18000W </label><br />
+      <label class="desc">Formato: 9000S18000W </label><br /-->
 
       <label>Fecha/Hora</label><br />
       <input autocomplete="off" type="text" id="fecha" name="fecha" style="width:200px"  /><br />
@@ -32,7 +32,7 @@
     <script type="text/javascript">
 
       $("#fecha").mask("99-99-99 99:99");
-      $("#pos").mask("9999S99999W");
+      //$("#pos").mask("9999S99999W");
 
       var url = '<%= Url.Content("~/Autocomplete/estados") %>';
       var url2 = '<%= Url.Content("~/Autocomplete/rioscanales") %>';

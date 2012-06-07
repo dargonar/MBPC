@@ -21,6 +21,15 @@ namespace mbpc.Controllers
         // GET: /Reporte/
       private static string fileName = "C:\\dago\\wdir\\mbpc\\operacion\\mbpc\\Res\\mbpc_sqlbuilder_metadata.xml";
         
+        public ActionResult clonar(string reporte_id){
+
+          List<object> res = DaoLib.reporte_clonar(Convert.ToInt32(reporte_id) );
+          Dictionary<string, string> resDict = ((res[0]) as Dictionary<string, string>);
+          string clonedReportId = Convert.ToString(resDict[resDict.Keys.ElementAt(0)]);
+
+          return this.RedirectToAction("editar", "Reporte", new { id = clonedReportId.ToString() });
+        } 
+
         public ActionResult Index()
         {
           Session["grupos"] = null;
@@ -63,7 +72,9 @@ namespace mbpc.Controllers
           xml.Load(ReporteController.xmlReader);
           
           ReporteController.xmlReader.Close();
-          
+          ReporteController.xmlReader = null;
+          System.GC.Collect();
+
           return xml;
         }
 
@@ -293,9 +304,17 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
         public ActionResult eliminar(string id)
         {
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
+
+          List<object> res = DaoLib.reporte_es_mio(Convert.ToInt32(id));
+          if (res.Count < 1)
+          {
+            //ViewData["deleted"] = "Usted no tiene permisos para eliminar este reporte.";
+            return this.RedirectToAction("listar", "Reporte", new { result_message = "Usted no tiene permisos para eliminar este reporte.", result_type = "err" });
+          }
+          
           DaoLib.reporte_eliminar(Convert.ToInt32(id));
-          ViewData["deleted"]="El reporte fue aliminado satisfactoriamente.";
-          return this.RedirectToAction("listar", "Reporte");
+          ViewData["deleted"]="El reporte fue eliminado satisfactoriamente.";
+          return this.RedirectToAction("listar", "Reporte", new { result_message = "El reporte fue eliminado satisfactoriamente.", result_type = "success" });
         }
 
         public ActionResult editar(string id) 
@@ -307,6 +326,7 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
 
           
           ViewData["editing"] = true;
+          ViewData["in_role"] = ((reporte["CREATED_BY"] == null ? DaoLib.userid.ToString() : reporte["CREATED_BY"]) == DaoLib.userid.ToString()) ? "1" : "0";
           ViewData["id"] = id;
           ViewData["reporte"] = reporte; 
           ViewData["reporte_metadata"] = reporte_metadata;
@@ -340,7 +360,6 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
           xmlDoc = null;
           System.GC.Collect();
 
-          
 
           return View("nuevo");
         }
@@ -372,11 +391,16 @@ return JsonConvert.SerializeXmlNode(xmlDoc.SelectSingleNode("/sqlbuilder/operato
           return View();
         }
 
-        public ActionResult listar() 
+        public ActionResult listar(string result_message, string result_type) 
         {
           ViewData["datos_del_usuario"] = DaoLib.datos_del_usuario(Session["usuario"].ToString());
           List<object> res = DaoLib.reporte_obtener_html_builded();
           ViewData["reportes"] = res;
+          if (!String.IsNullOrEmpty(result_type))
+          {
+            ViewData["result_type"] = result_type;
+            ViewData["result_message"] = result_message;
+          }
           return View();
         }
         

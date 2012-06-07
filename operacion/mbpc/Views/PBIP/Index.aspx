@@ -52,22 +52,8 @@
     .tabla_td_medida_proteccion input {width:65px; } 
     .tabla_td_medida_proteccion select {padding:1px 0px; width:45px; } 
     .tabla_td_medida_proteccion.wider input {width:120px; } 
+   
     
-    .msg_info{   
-      border: 1px solid;
-	    margin: 10px 0px;
-	    padding:15px 10px 15px 50px;
-	  }
-
-    .msg_info.msg_success {
-	    color: #4F8A10;
-	    background-color: #DFF2BF;
-    }
-    .msg_info.msg_err {
-	    color: #FFFFFF;
-	    background-color: #AA0000;
-    }
-
 </style>
 </asp:Content>
 
