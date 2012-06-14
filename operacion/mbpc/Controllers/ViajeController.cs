@@ -142,15 +142,9 @@ namespace mbpc.Controllers
             return View();
         }
 
-        public ActionResult insertarEventoCambioEstado(string etapa_id, string notas, string pos, string fecha, string estado, string riocanal, string muelle)
+        public ActionResult insertarEventoCambioEstado(string etapa_id, string notas, string fecha, string estado, string riocanal, string muelle)
         {
-            decimal?[] latlon = new decimal?[2];
-            if (pos != "")
-            {
-              latlon = DaoLib.parsePos(pos);
-            }
-
-            DaoLib.insertar_cambioestado(etapa_id, notas, latlon[0], latlon[1], fecha, estado, riocanal, muelle);
+            DaoLib.insertar_cambioestado(etapa_id, notas, fecha, estado, riocanal, muelle);
             return BuildResponse();
         }
 
@@ -228,12 +222,13 @@ namespace mbpc.Controllers
           return View();
         }
 
-        public ActionResult agregarReporte(string id, string nombre)
+        public ActionResult agregarReporte(string punto_id, string id, string nombre)
         {
           var now = DateTime.Now;
           ViewData["fecha"] = now.ToString("dd-MM-yy");
           ViewData["viaje_id"] = id;
           ViewData["nombre_buque"] = nombre;
+          ViewData["punto_id"] = punto_id;
           return View();
         }
 

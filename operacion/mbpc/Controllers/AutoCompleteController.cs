@@ -12,7 +12,8 @@ namespace mbpc.Controllers
     {
       var grupo = Session["grupo"].ToString();
 
-      var barcazas = DaoLib.autocomplete_viajes_grp(query, grupo);
+      //var barcazas = DaoLib.autocomplete_viajes_grp(query, grupo);
+      var barcazas = DaoLib.autocomplete_viajes_usr(query);
       return Json(barcazas, JsonRequestBehavior.AllowGet);
     }
     
@@ -44,6 +45,15 @@ namespace mbpc.Controllers
       return Json(buques, JsonRequestBehavior.AllowGet);
     }
 
+    public JsonResult view_buques_deptocontrol_json(string punto_id, string query)
+    {
+      var buques = new List<object>();
+      if (query != "")
+      {
+        buques = DaoLib.autocompletebactivos_enpunto(punto_id, query);
+      }
+      return Json(buques, JsonRequestBehavior.AllowGet);
+    }
 
     public JsonResult remolcadores(string query)
     {

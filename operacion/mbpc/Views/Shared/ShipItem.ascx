@@ -8,8 +8,8 @@
   </div>
 
   <!-- status icons -->
-  <div class="status-icons" style="background:#aaaaaa;margin-right:10px" >
-    <a style="position:relative; z-index:100;" title="<%=ship["ESTADO_TEXT"]%>"><%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : "N/A"%></a>
+  <div class="status-icons shipitem <%= ship["ESTADO_BUQUE"].ToString() == "" ? "alert" : "" %>" >
+    <a title="<%= ship["ESTADO_BUQUE"].ToString() == "" ? "Estado no disponible" : ship["ESTADO_TEXT"] %>" ><%= ship["ESTADO_BUQUE"].ToString() != "" ? ship["ESTADO_BUQUE"] : " N/A "%></a>
   </div>
   
     <% if (ViewData["showlinks"].ToString() != "0")
@@ -57,9 +57,8 @@
       <% } %>
     <% } %>
 
- <!--<div class="prox-dest">String.IsNullOrWhiteSpace(ship["PROXIMO"]) ? "" : "Proximo: " + ship["PROXIMO"]</div>-->
-
-  <div class="title" style="height:13px;">
+    
+  <div class="title shipitem <%= (ship["DESTINO_ID"] == null)?" no_destiny":""  %>">
   <table style="position: relative;top: -5px;">
   <tr>
     <td>

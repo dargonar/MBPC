@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset` "utf-8";
 
 .autocompletetext
 {
@@ -275,6 +275,13 @@ img {
 	padding:10px 5px 10px 5px;
 }
 
+.col .container .box .title.shipitem {
+height:13px;
+}
+
+.col .container .box .title.shipitem.no_destiny{
+  background-color:#FFFC40;
+}
 
 .col .container .box .title
 label {
@@ -400,6 +407,10 @@ label {
 	float:left;
 }
 
+.status-icons.shipitem {margin-right:10px; background:#aaaaaa;}
+.status-icons.shipitem.alert {margin-right:10px; background:#ff0000;font-weight:bold;margin-top:6px;}
+.status-icons.shipitem a{position:relative; z-index:100;}
+.status-icons.shipitem.alert a{padding:3px; display:block;}
 #area {
 	padding:5px 10px 0 10px;
 	border-bottom:#b4b4b4 solid 1px;
@@ -537,9 +548,11 @@ label span {
 
 .col .container .box-large {
 	border:1px solid #b4b4b4;
-	padding:10px;
-	margin:-6px 0 5px 0;
-	height:330px;
+	/*padding:10px;*/
+	margin:-6px 0 0px 0;
+	min-height:330px;
+	height:100%;
+	
 }
 
 .col .container .empty{
@@ -552,7 +565,8 @@ label span {
 	font-weight:bold;
 	color:#646464;
 	text-align:center;
-	padding-top:170px;
+	/*padding-top:170px;*/
+	padding-top:45%;
 	margin:0px;
 }
 
@@ -760,6 +774,11 @@ min-height:80px;
   background-image:url('/img/bg/arrow_top_alpha_white.png');
 }
 
+#columnas #leftcol.container, #columnas #rightcol.container
+{
+  overflow-x:hidden;  
+}
+
 #columnas #leftcol.container, #columnas #leftcol.container .box-large .empty
 {
 		background-image:url('/img/bg/arrow_bottom_alpha.png');
@@ -792,3 +811,28 @@ body div#modal_mask {
   position:absolute;  z-index:9000;  background-color:#E8EEF7;  display:none;
 }
    
+.col div.no_ship_container_bottom, .col div.no_ship_container {height:50px;}
+.col div.no_ship_container.right {float:right; width:100%;}
+
+.col div.no_ship_container_bottom {bottom:0px; position: absolute; width: 50%; float:left;}
+.col div.no_ship_container_bottom.right {float:right;}
+
+.col div.no_ship_link
+{
+  height:25px;padding:5px 0px 5px 10px; background-color:#f5f5f5;font-weight:bold;
+  }
+.col div.new_no_ship a.ver_viaje{color:#646464;}
+
+ .msg_info{   
+      border: 1px solid;
+	    margin: 10px 0px;
+	    padding:15px 10px 15px 50px;
+	  }
+
+    .msg_info.msg_success {
+	    color: #4F8A10;
+	    background-color: #DFF2BF;
+    }
+    .msg_info.msg_err {
+	    color: #FFFFFF;
+	    background-color: #AA0000;}

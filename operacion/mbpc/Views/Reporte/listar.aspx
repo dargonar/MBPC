@@ -42,6 +42,11 @@
 <% var reportes = ViewData["reportes"] as List<object>;%>
 <% var first = true; %>
 <div id="planilla" style="width: 100%;position: relative;">
+  <% if (!String.IsNullOrEmpty(Convert.ToString(ViewData["result_message"])))
+   { %>
+    <div class="msg_info msg_<%=ViewData["result_type"]%>"><%=ViewData["result_message"]%></div>
+<% } %>
+
   <h2 style="padding-left:10px;font-weight:normal;">Listado de reportes (generados con este IDE)</h2>
   <% if (reportes.Count == 0)
      {
@@ -74,10 +79,12 @@
       <td><%=kv.Value%></td>
       <% } %>
       <td>
-        <a href="<%= Url.Content("~/Reporte/eliminar")%>?id=<%=id %>" onclick="return confirm('Usted está a punto de eliminar un reporte. Esta acción es irreversible.¿Desea eliminar el reporte?');">Borrar</a><br/>
-        <div class="btn-new-class">
-          <a href="<%= Url.Content("~/Reporte/editar")%>?id=<%=id %>">Editar/modificar</a>
-        </div>
+        <center>
+          <div class="btn-new-class" style="float:left;">
+            <a href="<%= Url.Content("~/Reporte/editar")%>?id=<%=id %>">Ver/Editar</a>
+          </div>
+          <br/><a href="<%= Url.Content("~/Reporte/eliminar")%>?id=<%=id %>" onclick="return confirm('Usted está a punto de eliminar un reporte. Esta acción es irreversible.¿Desea eliminar el reporte?');">Borrar</a>
+        </center>
       </td>
     </tr>
     <% } %>

@@ -29,8 +29,12 @@
 
     <script type="text/javascript">
 
-      var url = '<%= Url.Content("~/Autocomplete/view_buquesjson") %>'
-      var url2 = '<%= Url.Content("~/Autocomplete/estados") %>'
+      <% if(ViewData["punto_id"]==null){ %>
+        var url = '<%= Url.Content("~/Autocomplete/view_buquesjson") %>';
+      <% }else{ %>
+        var url = '<%= Url.Content("~/Autocomplete/view_buques_deptocontrol_json")+"?punto_id="+ViewData["punto_id"] %>';
+      <% } %>
+      var url2 = '<%= Url.Content("~/Autocomplete/estados") %>';
 
 
         //$("#fecha").val('');

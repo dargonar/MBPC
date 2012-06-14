@@ -38,10 +38,10 @@
       <script src="<%= Url.Content("~/Scripts/jquery.numeric.js") %>" type="text/javascript" ></script>
       <script src="<%= Url.Content("~/Scripts/jquery.cluetip.all.min.js") %>" type="text/javascript" ></script>
       
-      <%: MvcMiniProfiler.MiniProfiler.RenderIncludes() %>
+      <!-- %: MvcMiniProfiler.MiniProfiler.RenderIncludes() % -->
 
       <script type="text/javascript">
-
+        
         function traer_barcos_perimetrales(obj) {
           $("#fullscreen").css("display", "block");
           $.ajax({
@@ -188,11 +188,12 @@
         <% if (Session["grupos"] != null) { %>
 
         <% var grps = (Session["grupos"] as List<object>); %>
+        <% var grps_autoselect = (ViewData["grupo_autoselect"] != null ? ViewData["grupo_autoselect"] : ""); %>
         <div style="float:right; width:100px; margin-right:128px; margin-top:4px;">
           <select style="font-size: 9px;width:200px" id="grupoactual" onchange="cambiar_grupo();">
             <% foreach (Dictionary<string, string> grp in grps)
                { %>
-            <option value="<%=grp["GRUPO"]%>"><%=grp["NOMBRE"]%></option>
+            <option value="<%=grp["GRUPO"]%>" <%= grp["GRUPO"]==grps_autoselect?"SELECTED":"" %> ><%=grp["NOMBRE"]%></option>
             <% } %>
           </select>
         </div>

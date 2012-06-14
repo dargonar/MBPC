@@ -792,9 +792,18 @@
 	  <h1 class="fprint" ><%= (ViewData["editing"] != null)?"Editar":"Nuevo" %> Reporte</h1>
     <% Html.RenderPartial("actions"); %>
 
-    <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
-    
-      <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="<%= (ViewData["editing"]!=null)? (ViewData["reporte"] as Dictionary<string, string>)["NOMBRE"]:"" %>" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" /></h2>
+    <% if (ViewData["editing"] != null && ViewData["in_role"] == "1")
+       {  %>
+      <form id="report-form" action="<%= Url.Content("~/Reporte/guardar") %><%= (ViewData["editing"] != null)?"?id="+ViewData["id"]:"" %>" method="post" onsubmit="return onSubmit();" >
+    <%}else{ %>
+      <form id="report-form" action="#" method="post" onsubmit="return false;" >
+    <%} %>
+      <h2 style="padding-left:10px;font-weight:normal;">Nombre: <input type="text" value="<%= (ViewData["editing"]!=null)? (ViewData["reporte"] as Dictionary<string, string>)["NOMBRE"]:"" %>" id="nombre_reporte" name="nombre_reporte" style="width:500px;" placeholder="de reporte" />
+        <% if (ViewData["editing"] != null)
+           {  %>
+            <a href="<%= Url.Content("~/Reporte/clonar") + "?reporte_id=" + ViewData["id"] %>" style="font-size:12px;" title="Genere un nuevo reporte idéntico a éste">Clonar reporte</a>
+        <% } %>
+      </h2>
       
       <div class="split-bar"></div>
     
@@ -920,7 +929,12 @@
             </div>
 
             <div id="reporte_button_bar" style="width:100%;padding: 10px 0px 10px 10px;">
-              <input type="submit" class="botonsubmit megaboton"  value="<%= (ViewData["editing"] != null)?"Guardar cambios":"Crear reporte" %>" />
+              <% if (ViewData["editing"]!=null && ViewData["in_role"]!="1"){ %>
+                   <p>Usted no está autorizado a modificar este reporte. Puede clonarlo y generar el suyo.
+                   <a href="<%= Url.Content("~/Reporte/clonar") + "?reporte_id=" + ViewData["id"] %>" style="font-size:12px;" title="Genere un nuevo reporte idéntico a éste">Clonar reporte</a> </p>
+                 <%}else{%>
+                  <input type="submit" class="botonsubmit megaboton"  value="<%= (ViewData["editing"] != null)?"Guardar cambios":"Crear reporte" %>" />
+                <% }%>
             </div>
           </div>
         </div>

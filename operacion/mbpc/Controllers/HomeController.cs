@@ -101,7 +101,9 @@ namespace mbpc.Controllers
           Session["punto"] = id;
           Session["barcos_data"] = BarcosDataView.EN_ZONA;
           recalcular_barcos_para_punto(id);
-          
+          // New tuti
+          ViewData["grupo_autoselect"] = DaoLib.grupo_de_zona(id);
+
           //1 - maritimo
           //0 - fluvial
 
