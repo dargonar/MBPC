@@ -55,6 +55,7 @@
                 <div style="background:#aaaaaa">
                   <!--<a style="position:relative; right:5px; float:right; top:4px; z-index:5" href="#" onclick="cancelar_edicion_carga(<%=carga["CARGA_ID"]%>)">X</a>-->
                   <input type="hidden" name="carga_id" value="<%= carga["CARGA_ID"]%>" />
+                  <input type="hidden" name="unidad_id" value="<%= carga["UNIDAD_ID"]%>" />
                   <input type="hidden" name="etapa_id" value="<%= ViewData["etapa_id"]%>" />
                   <table>
                     <tr>

@@ -183,7 +183,7 @@ namespace mbpc.Controllers
         return View();
       }
 
-      public ActionResult modificar(int carga_id, string tipo_modif, string cantidad_actual, string cantidad_entrada, string cantidad_salida, int etapa_id)
+      public ActionResult modificar(string unidad_id, int carga_id, string tipo_modif, string cantidad_actual, string cantidad_entrada, string cantidad_salida, int etapa_id)
       {
         if (tipo_modif == null)
         {
@@ -195,9 +195,17 @@ namespace mbpc.Controllers
           
           if ( tipo != "1" && tipo != "6" && estado != "PU")
             throw new Exception("No se puede cargar/descargar fuera de puerto o muelle o en estado distinto a PU");
-          
+
+          //HACK
+          if (unidad_id == "3")
+          {
+            cantidad_entrada = integerString(cantidad_entrada);
+            cantidad_salida = integerString(cantidad_salida);
+          }
+     
           cantidad_entrada = cantidad_entrada.Replace(',', '.');
           cantidad_salida = cantidad_salida.Replace(',', '.');
+
           DaoLib.modificar_carga(carga_id, cantidad_entrada, cantidad_salida);
         }
         else
@@ -217,6 +225,10 @@ namespace mbpc.Controllers
 
       public ActionResult agregar(int etapa_id, int carga_id, string cantidad, int unidad_id, string buque_id, string en_transito)
       {
+        //HACK
+        if (unidad_id == 3)
+          cantidad = integerString(cantidad);
+
         int m_en_transito = String.IsNullOrEmpty(en_transito) ? 0 : 1;
         ViewData["results"] = DaoLib.insertar_carga(etapa_id, carga_id, cantidad, unidad_id, buque_id, m_en_transito);
 

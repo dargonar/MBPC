@@ -10,6 +10,18 @@ namespace mbpc.Controllers
 {
   public class MyController : Controller
   {
+    protected string integerString(string c) 
+    {
+      c = c.Replace(",", ".");
+      
+      int inx = c.IndexOf('.');
+      if( inx == -1 )
+        inx = c.Length;
+
+      c = c.Substring(0, inx );
+      return c;
+    }
+
     protected override void OnActionExecuting(ActionExecutingContext ctx) {
 
       if (Session != null && Session["usuario"] != null)

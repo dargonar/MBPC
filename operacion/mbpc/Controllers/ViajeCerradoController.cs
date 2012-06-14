@@ -116,14 +116,9 @@ namespace mbpc.Controllers
         //HACK : Unidad id = 3
         if( unidad_id == "3" )
         {
-          cantidad_inicial = cantidad_inicial.Replace(",", ".");
-          cantidad_inicial = cantidad_inicial.Substring(0,cantidad_inicial.IndexOf('.'));
-
-          cantidad_entrada = cantidad_entrada.Replace(",", ".");
-          cantidad_entrada = cantidad_entrada.Substring(0,cantidad_entrada.IndexOf('.'));
-
-          cantidad_salida = cantidad_salida.Replace(",", ".");
-          cantidad_salida = cantidad_salida.Substring(0,cantidad_salida.IndexOf('.'));
+          cantidad_inicial = integerString(cantidad_inicial);
+          cantidad_entrada = integerString(cantidad_entrada);
+          cantidad_salida = integerString(cantidad_salida);
         }
 
         en_transito = en_transito != "false" ? "1" : "0";

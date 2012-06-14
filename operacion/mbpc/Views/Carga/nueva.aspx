@@ -254,7 +254,7 @@
       return false;
     }
 
-    var q = parseInt($('#cantidad').val());
+    var q = parseFloat($('#cantidad').val());
     if( q == 0 && $("#codigo").val() != 'BAL' && $("#codigo").val() != 'PND' )
     {
       alert("La cantidad ingresada no puede ser cero.");

@@ -1687,7 +1687,7 @@ CREATE OR REPLACE package body dev_mbpc as
   begin
     open vCursor for
     select tc.nombre, c.cantidad, c.cantidad_inicial, c.cantidad_entrada, c.cantidad_salida,
-           u.nombre unidad, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE
+           u.nombre unidad, tc.unidad_id, tc.codigo, c.tipocarga_id, c.id carga_id, b.nombre barcaza, b.ID_BUQUE
            from tbl_cargaetapa c
     join tbl_tipo_carga tc on c.tipocarga_id = tc.id
     join tbl_unidad u on tc.unidad_id = u.id
